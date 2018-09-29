@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 18.9.11
+Version: 18.9.29
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -15,7 +15,7 @@ BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: boost-devel
 BuildRequires: ctpp2-devel
-BuildRequires: fmt-devel
+BuildRequires: fmt-devel >= 5.2.0
 BuildRequires: libconfig-devel
 BuildRequires: libcurl-devel
 BuildRequires: xerces-c-devel
@@ -23,35 +23,35 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 18.9.5
-BuildRequires: smartmet-library-gis-devel >= 18.8.15
+BuildRequires: smartmet-library-spine-devel >= 18.9.29
+BuildRequires: smartmet-library-gis-devel >= 18.9.29
 BuildRequires: smartmet-library-locus-devel >= 18.8.21
-BuildRequires: smartmet-library-macgyver-devel >= 18.9.5
+BuildRequires: smartmet-library-macgyver-devel >= 18.9.29
 BuildRequires: smartmet-engine-contour-devel >= 18.7.25
-BuildRequires: smartmet-engine-geonames-devel >= 18.8.30
-BuildRequires: smartmet-engine-gis-devel >= 18.9.7
+BuildRequires: smartmet-engine-geonames-devel >= 18.9.29
+BuildRequires: smartmet-engine-gis-devel >= 18.9.19
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 18.9.3
+BuildRequires: smartmet-engine-observation-devel >= 18.9.29
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 18.8.20
+BuildRequires: smartmet-engine-querydata-devel >= 18.9.11
 BuildRequires: postgresql95-libs
 Requires: ctpp2
-Requires: fmt
+Requires: fmt >= 5.2.0
 Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
 Requires: smartmet-library-locus >= 18.8.21
-Requires: smartmet-library-macgyver >= 18.9.5
-Requires: smartmet-library-spine >= 18.9.5
-Requires: smartmet-library-gis >= 18.8.15
+Requires: smartmet-library-macgyver >= 18.9.29
+Requires: smartmet-library-spine >= 18.9.29
+Requires: smartmet-library-gis >= 18.9.29
 Requires: smartmet-engine-contour >= 18.7.25
-Requires: smartmet-engine-geonames >= 18.8.30
-Requires: smartmet-engine-gis >= 18.9.7
+Requires: smartmet-engine-geonames >= 18.9.29
+Requires: smartmet-engine-gis >= 18.9.19
 %if %{with observation}
-Requires: smartmet-engine-observation >= 18.9.3
+Requires: smartmet-engine-observation >= 18.9.29
 %endif
-Requires: smartmet-engine-querydata >= 18.8.20
-Requires: smartmet-server >= 18.8.22
+Requires: smartmet-engine-querydata >= 18.9.11
+Requires: smartmet-server >= 18.9.29
 Requires: xerces-c
 Requires: xqilla
 %if 0%{rhel} >= 7
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Sat Sep 29 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.9.29-1.fmi
+- Upgrade to latest fmt
+
 * Tue Sep 11 2018 Pertti Kinnia <pertti.kinnia@fmi.fi> - 18.9.11-1.fmi
 - Using querydata modification time as data result time for contours too
 
