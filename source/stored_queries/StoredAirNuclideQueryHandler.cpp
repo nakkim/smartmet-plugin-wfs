@@ -351,22 +351,19 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
           // Select only latest if wanted.
           if (latest)
           {
-            const int tmpstationId =
-                boost::lexical_cast<int>(bo::QueryResult::toString(stationIdIt, 0));
+            const int tmpstationId = std::stoi(bo::QueryResult::toString(stationIdIt, 0));
             LatestSet::const_iterator latestSetIt = latestSet.find(tmpstationId);
             if (latestSetIt == latestSet.end())
             {
               latestSet.insert(tmpstationId);
-              int tmpAnalysisId =
-                  boost::lexical_cast<int>(bo::QueryResult::toString(analysisIdIt, 0));
+              int tmpAnalysisId = std::stoi(bo::QueryResult::toString(analysisIdIt, 0));
               dataQueryParams.addOperation(
                   "OR_GROUP_analysis_id", "ANALYSIS_ID", "PropertyIsEqualTo", tmpAnalysisId);
             }
           }
           else
           {
-            int tmpAnalysisId =
-                boost::lexical_cast<int>(bo::QueryResult::toString(analysisIdIt, 0));
+            int tmpAnalysisId = std::stoi(bo::QueryResult::toString(analysisIdIt, 0));
             dataQueryParams.addOperation(
                 "OR_GROUP_analysis_id", "ANALYSIS_ID", "PropertyIsEqualTo", tmpAnalysisId);
           }

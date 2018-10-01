@@ -1,7 +1,6 @@
 #include "GeoServerDataIndex.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
 #include <gis/OGR.h>
 #include <macgyver/StringConversion.h>
@@ -70,7 +69,7 @@ bool find_srs(const std::string& gml, int& srs)
     if (match_results.size() >= 1)
     {
       std::string match = match_results[1];
-      srs = boost::lexical_cast<int>(match);
+      srs = std::stoi(match);
       return true;
     }
     else

@@ -339,7 +339,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
         {
           try
           {
-            NFmiPoint p1(boost::lexical_cast<double>(sx), boost::lexical_cast<double>(sy));
+            NFmiPoint p1(std::stod(sx), std::stod(sy));
             NFmiPoint p2 = to_bbox_transform->transform(p1);
 
             double x = bb_swap_coord ? p2.Y() : p2.X();

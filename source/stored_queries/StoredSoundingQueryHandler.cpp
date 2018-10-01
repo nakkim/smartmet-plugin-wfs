@@ -283,7 +283,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
                  sit != stations.end();
                  ++sit)
             {
-              if (boost::lexical_cast<std::string>(sit->fmisid) == currentStationId)
+              if (Fmi::to_string(sit->fmisid) == currentStationId)
               {
                 CTPP::CDT& station = group["station"];
                 station["fmisid"] = currentStationId;
@@ -575,7 +575,7 @@ void StoredSoundingQueryHandler::validateAndPopulateMeteoParametersToMap(
     bool isQCParameter = SupportsQualityParameters::isQCParameter(name);
 
     // Is the parameter a duplicate.
-    const ParamIdStr paramIdStr = boost::lexical_cast<ParamIdStr>(paramId);
+    const ParamIdStr paramIdStr = Fmi::to_string(paramId);
     MeteoParameterMap::iterator paramIdIt = meteoParameterMap.find(paramIdStr);
     if (paramIdIt != meteoParameterMap.end())
     {

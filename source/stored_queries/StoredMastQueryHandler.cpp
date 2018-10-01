@@ -245,7 +245,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
         bool isQCParameter = SupportsQualityParameters::isQCParameter(name);
 
         // Is the parameter a duplicate.
-        const std::string paramIdStr = boost::lexical_cast<std::string>(paramId);
+        const std::string paramIdStr = Fmi::to_string(paramId);
         MeteoParameterMap::iterator paramIdIt = meteoParameterMap.find(paramIdStr);
         if (paramIdIt != meteoParameterMap.end())
         {
@@ -503,7 +503,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
           std::string dataLevelStr = bo::QueryResult::toString(dataLevelIt, 1);
           std::string dataValueStr = bo::QueryResult::toString(dataValueIt, 1);
           std::string dataQualityStr = bo::QueryResult::toString(dataQualityIt, 0);
-          deltaHeight = boost::lexical_cast<double>(boost::any_cast<double>(*dataLevelIt));
+          deltaHeight = boost::any_cast<double>(*dataLevelIt);
 
           if (currentFmisid != fmisidStr or currentMeasurandId != measurandIdStr or
               currentDataTime != dataTimeStr)
@@ -527,7 +527,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
                  sit != stations.end();
                  ++sit)
             {
-              if (boost::lexical_cast<std::string>(sit->fmisid) == fmisidStr)
+              if (Fmi::to_string(sit->fmisid) == fmisidStr)
               {
                 station_geoid = std::to_string(static_cast<long long int>(sit->geoid));
                 station_wmo = std::to_string(static_cast<long long int>(sit->wmo));

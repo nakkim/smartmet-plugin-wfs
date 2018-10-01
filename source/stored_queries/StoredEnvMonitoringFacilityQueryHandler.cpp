@@ -266,8 +266,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query
         {
           SmartMet::Spine::LocationPtr stationLocPtr = locList.front();
           if (stationLocPtr->geoid != 0)
-            hash["stations"][stationCounter]["geoid"] =
-                boost::lexical_cast<std::string>(stationLocPtr->geoid);
+            hash["stations"][stationCounter]["geoid"] = Fmi::to_string(stationLocPtr->geoid);
           if (not stationLocPtr->area.empty())
             hash["stations"][stationCounter]["region"] = stationLocPtr->area;
           if (not stationLocPtr->country.empty())
@@ -823,8 +822,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getStationGroupData(
       if (station_id.empty())
         continue;
 
-      stationGroup.station_id = bo::QueryResult::castTo<int64_t>(
-          stationIdIt);  // boost::lexical_cast<int64_t>(boost::any_cast<double>(*stationIdIt));
+      stationGroup.station_id = bo::QueryResult::castTo<int64_t>(stationIdIt);
       stationGroup.group_id = groupIdIt;
       stationGroup.group_name = groupNameIt;
 

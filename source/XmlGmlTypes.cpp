@@ -4,7 +4,6 @@
 #include "XmlUtils.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/optional/optional_io.hpp>
 #include <macgyver/TypeName.h>
 #include <spine/Exception.h>
@@ -81,7 +80,7 @@ GmlSRSReferenceGroup read_gml_srs_reference_group(const xercesc::DOMElement& ele
 
     if (x_srs_dim.second)
     {
-      srs_reference.srs_dimension = boost::lexical_cast<unsigned>(x_srs_dim.first);
+      srs_reference.srs_dimension = std::stoul(x_srs_dim.first);
     }
 
     return srs_reference;
@@ -103,7 +102,7 @@ GmlDirectPositionType read_gml_direct_position_type(const xercesc::DOMElement& e
     ba::split(items, content, ba::is_any_of(" \t\r\n"), ba::token_compress_on);
     BOOST_FOREACH (const std::string& item, items)
     {
-      result.data.push_back(boost::lexical_cast<double>(item));
+      result.data.push_back(std::stod(item));
     }
 
     if (result.srs_reference.srs_dimension and

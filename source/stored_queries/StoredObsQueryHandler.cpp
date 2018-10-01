@@ -536,7 +536,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           {
             try
             {
-              const long geoid_long = boost::lexical_cast<long>(geoid);
+              const long geoid_long = Fmi::stol(geoid);
               std::string langCode = language;
               SupportsLocationParameters::engOrFinToEnOrFi(langCode);
               SmartMet::Spine::LocationPtr geoLoc = geo_engine->idSearch(geoid_long, langCode);
@@ -628,9 +628,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 
                 if (first)
                 {
-                  tzp = get_tz_for_site(boost::lexical_cast<double>(longitude),
-                                        boost::lexical_cast<double>(latitude),
-                                        tz_name);
+                  tzp = get_tz_for_site(std::stod(longitude), std::stod(latitude), tz_name);
                 }
 
                 CTPP::CDT obs_rec;

@@ -6,7 +6,6 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
-#include <boost/lexical_cast.hpp>
 #include <macgyver/TimeParser.h>
 #include <macgyver/TypeName.h>
 #include <spine/Exception.h>
@@ -155,7 +154,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_integer(
   {
     std::vector<SmartMet::Spine::Value> result;
     const std::string content = extract_text(elem);
-    int64_t int_val = boost::lexical_cast<int64_t>(content);
+    int64_t int_val = std::stol(content);
     if ((int_val >= lower_limit) and (int_val <= upper_limit))
     {
       SmartMet::Spine::Value value(int_val);
@@ -186,7 +185,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_unsigned_integer
   {
     std::vector<SmartMet::Spine::Value> result;
     const std::string content = extract_text(elem);
-    uint64_t uint_val = boost::lexical_cast<uint64_t>(content);
+    uint64_t uint_val = std::stoul(content);
     if ((uint_val >= lower_limit) and (uint_val <= upper_limit))
     {
       SmartMet::Spine::Value value(uint_val);
@@ -217,7 +216,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_double(
   {
     std::vector<SmartMet::Spine::Value> result;
     const std::string content = extract_text(elem);
-    const double double_val = boost::lexical_cast<double>(content);
+    const double double_val = std::stod(content);
     SmartMet::Spine::Value value(double_val);
     result.push_back(value);
     return result;
@@ -283,7 +282,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_double_list(
     ba::split(parts, content, ba::is_any_of(" "), ba::token_compress_on);
     BOOST_FOREACH (const std::string& name, parts)
     {
-      SmartMet::Spine::Value value(boost::lexical_cast<double>(name));
+      SmartMet::Spine::Value value(std::stod(name));
       result.push_back(value);
     }
     return result;
@@ -306,7 +305,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_integer_list(
     ba::split(parts, content, ba::is_any_of(" "), ba::token_compress_on);
     BOOST_FOREACH (const std::string& name, parts)
     {
-      int64_t int_value = boost::lexical_cast<int64_t>(name);
+      int64_t int_value = std::stol(name);
       SmartMet::Spine::Value value(int_value);
       result.push_back(value);
     }

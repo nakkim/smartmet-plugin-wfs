@@ -11,7 +11,6 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
-#include <boost/lexical_cast.hpp>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
 #include <smartmet/spine/Convenience.h>

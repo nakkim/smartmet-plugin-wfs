@@ -230,8 +230,7 @@ void StoredQueryHandlerBase::set_2D_coord(
 {
   try
   {
-    set_2D_coord(
-        transformation, boost::lexical_cast<double>(sx), boost::lexical_cast<double>(sy), hash);
+    set_2D_coord(transformation, std::stod(sx), std::stod(sy), hash);
   }
   catch (...)
   {

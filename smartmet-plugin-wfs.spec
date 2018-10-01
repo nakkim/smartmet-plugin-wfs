@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 18.9.29
+Version: 18.10.1
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -29,7 +29,7 @@ BuildRequires: smartmet-library-locus-devel >= 18.8.21
 BuildRequires: smartmet-library-macgyver-devel >= 18.9.29
 BuildRequires: smartmet-engine-contour-devel >= 18.7.25
 BuildRequires: smartmet-engine-geonames-devel >= 18.9.29
-BuildRequires: smartmet-engine-gis-devel >= 18.9.19
+BuildRequires: smartmet-engine-gis-devel >= 18.10.1
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 18.9.29
 %endif
@@ -46,7 +46,7 @@ Requires: smartmet-library-spine >= 18.9.29
 Requires: smartmet-library-gis >= 18.9.29
 Requires: smartmet-engine-contour >= 18.7.25
 Requires: smartmet-engine-geonames >= 18.9.29
-Requires: smartmet-engine-gis >= 18.9.19
+Requires: smartmet-engine-gis >= 18.10.1
 %if %{with observation}
 Requires: smartmet-engine-observation >= 18.9.29
 %endif
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Mon Oct  1 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.10.1-1.fmi
+- Do not use boost::lexical_cast
+
 * Sat Sep 29 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.9.29-1.fmi
 - Upgrade to latest fmt
 

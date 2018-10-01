@@ -355,7 +355,8 @@ void Plugin::query(const std::string& req_language,
 
             if (root_info.attr_map.count("version") == 0)
             {
-              SmartMet::Spine::Exception exception(BCP, "Missing the 'version' attribute!", nullptr);
+              SmartMet::Spine::Exception exception(
+                  BCP, "Missing the 'version' attribute!", nullptr);
               exception.addDetails(messages);
               if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
                 exception.addParameter(WFS_EXCEPTION_CODE, WFS_MISSING_PARAMETER_VALUE);
@@ -505,8 +506,7 @@ void Plugin::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
 
       if (status == SmartMet::Spine::HTTP::ok)
       {
-        std::string cachecontrol =
-            "public, max-age=" + boost::lexical_cast<std::string>(expires_seconds);
+        std::string cachecontrol = "public, max-age=" + Fmi::to_string(expires_seconds);
         std::string expiration = tformat->format(t_expires);
         std::string modification = tformat->format(t_now);
 

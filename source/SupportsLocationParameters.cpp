@@ -199,7 +199,7 @@ void bw::SupportsLocationParameters::get_geoids(
         else
         {
           SmartMet::Spine::LocationPtr loc = geo_engine->idSearch(id, language);
-          locations->push_back(std::make_pair(boost::lexical_cast<std::string>(id), loc));
+          locations->push_back(std::make_pair(Fmi::to_string(id), loc));
         }
       }
     }
@@ -238,7 +238,7 @@ void bw::SupportsLocationParameters::get_fmisids(
       }
       else
       {
-        std::string id_s = boost::lexical_cast<std::string>(id);
+        std::string id_s = Fmi::to_string(id);
         SmartMet::Spine::LocationList locList = geo_engine->nameSearch(opts, id_s);
         if (include_fmisids and locList.empty())
         {
@@ -287,7 +287,7 @@ void bw::SupportsLocationParameters::get_wmos(
       }
       else
       {
-        std::string id_s = boost::lexical_cast<std::string>(id);
+        std::string id_s = Fmi::to_string(id);
         SmartMet::Spine::LocationList locList = geo_engine->nameSearch(opts, id_s);
         if (include_wmos and locList.empty())
         {

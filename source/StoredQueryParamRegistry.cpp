@@ -3,6 +3,7 @@
 #include "ScalarParameterTemplate.h"
 #include "SupportsExtraHandlerParams.h"
 #include <boost/foreach.hpp>
+#include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
 #include <spine/Exception.h>
 #include <algorithm>
@@ -111,8 +112,8 @@ boost::shared_ptr<bw::RequestParameterMap> StoredQueryParamRegistry::process_par
 
           default:
             // Not supposed to happen
-            throw SmartMet::Spine::Exception(
-                BCP, "INTERNAL ERROR at line " + boost::lexical_cast<std::string>(__LINE__));
+            throw SmartMet::Spine::Exception(BCP,
+                                             "INTERNAL ERROR at line " + Fmi::to_string(__LINE__));
         }
       }
       else if (typeid(*map_item.second) == typeid(ArrayParameterRec))
@@ -185,15 +186,14 @@ boost::shared_ptr<bw::RequestParameterMap> StoredQueryParamRegistry::process_par
             default:
               // Not supposed to happen
               throw SmartMet::Spine::Exception(
-                  BCP, "INTERNAL ERROR at line " + boost::lexical_cast<std::string>(__LINE__));
+                  BCP, "INTERNAL ERROR at line " + Fmi::to_string(__LINE__));
           }
         }
       }
       else
       {
         // Not supposed to happen
-        throw SmartMet::Spine::Exception(
-            BCP, "INTERNAL ERROR at line " + boost::lexical_cast<std::string>(__LINE__));
+        throw SmartMet::Spine::Exception(BCP, "INTERNAL ERROR at line " + Fmi::to_string(__LINE__));
       }
     }
 

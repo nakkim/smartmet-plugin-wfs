@@ -136,8 +136,7 @@ void GetPropertyValue::finalize(boost::shared_ptr<xercesc::DOMDocument> result,
   {
     xercesc::DOMElement* result_root = result->getDocumentElement();
 
-    bwx::set_attr(
-        *result_root, "numberMatched", boost::lexical_cast<std::string>(cumulative_num_matched));
+    bwx::set_attr(*result_root, "numberMatched", Fmi::to_string(cumulative_num_matched));
     bwx::set_attr(*result_root, "numberReturned", str(format("%1%") % cumulative_num_returned));
 
     if (not is_timestamp_set)

@@ -4,7 +4,6 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
 #include <boost/lambda/lambda.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <macgyver/TimeParser.h>
 #include <macgyver/TypeName.h>
@@ -102,15 +101,15 @@ SmartMet::Spine::Value StoredQueryParamDef::readValue(const std::string& value) 
       switch (value_type)
       {
         case DOUBLE:
-          result.set_double(boost::lexical_cast<double>(value));
+          result.set_double(std::stod(value));
           break;
 
         case INT:
-          result.set_int(boost::lexical_cast<int64_t>(value));
+          result.set_int(std::stoi(value));
           break;
 
         case UINT:
-          result.set_uint(boost::lexical_cast<uint64_t>(value));
+          result.set_uint(std::stoul(value));
           break;
 
         case TIME:

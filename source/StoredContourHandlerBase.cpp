@@ -150,10 +150,8 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours(
         {
           if (!queryParameter.q->selectLevel(*options.level))
           {
-            throw SmartMet::Spine::Exception(BCP,
-                                             "Level value " +
-                                                 boost::lexical_cast<std::string>(*options.level) +
-                                                 " is not available.");
+            throw SmartMet::Spine::Exception(
+                BCP, "Level value " + Fmi::to_string(*options.level) + " is not available.");
           }
         }
 

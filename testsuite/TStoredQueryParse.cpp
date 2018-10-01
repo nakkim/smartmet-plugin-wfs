@@ -1,20 +1,20 @@
-#include <boost/test/included/unit_test.hpp>
-#include <fstream>
-#include <stdexcept>
-#include <string>
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <cerrno>
-#include <cstring>
-#include <boost/noncopyable.hpp>
-#include <macgyver/String.h>
-#include <spine/HTTP.h>
 #include "ArrayParameterTemplate.h"
+#include "ConfigBuild.h"
 #include "ScalarParameterTemplate.h"
 #include "StoredQuery.h"
 #include "WfsConst.h"
 #include "XmlEnvInit.h"
 #include "XmlUtils.h"
-#include "ConfigBuild.h"
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/noncopyable.hpp>
+#include <boost/test/included/unit_test.hpp>
+#include <macgyver/StringConversion.h>
+#include <spine/HTTP.h>
+#include <cerrno>
+#include <cstring>
+#include <fstream>
+#include <stdexcept>
+#include <string>
 
 using namespace boost::unit_test;
 
@@ -37,8 +37,8 @@ namespace bw = SmartMet::PluginWFS;
 namespace bwx = SmartMet::PluginWFS::Xml;
 namespace pt = boost::posix_time;
 using SmartMet::Spine::Value;
-using Test::TestConfig;
 using Test::add_values;
+using Test::TestConfig;
 typedef boost::shared_ptr<bw::StoredQueryConfig> StoredQueryConfigP;
 typedef boost::shared_ptr<bw::ArrayParameterTemplate> ArrayParameterTemplateP;
 typedef boost::shared_ptr<bw::ScalarParameterTemplate> ScalarParameterTemplateP;
@@ -91,7 +91,7 @@ void output_exception_info(const std::exception& err)
   std::cerr << "C++ exception of type " << SmartMet::get_type_name(&err)
             << " catched: " << err.what() << std::endl;
 }
-}
+}  // namespace
 
 #define LOG(x)                      \
   try                               \
@@ -137,8 +137,9 @@ boost::shared_ptr<libconfig::Config> create_initial_test_config()
   libconfig::Setting& root = config->getRoot();
   BOOST_REQUIRE_NO_THROW(root.add("id", libconfig::Setting::TypeString) = "foo::bar");
   BOOST_REQUIRE_NO_THROW(root.add("constructor_name", libconfig::Setting::TypeString) = "foo::bar");
-  BOOST_REQUIRE_NO_THROW(root.add("title", libconfig::Setting::TypeGroup)
-                             .add("eng", libconfig::Setting::TypeString) = "title");
+  BOOST_REQUIRE_NO_THROW(
+      root.add("title", libconfig::Setting::TypeGroup).add("eng", libconfig::Setting::TypeString) =
+          "title");
   BOOST_REQUIRE_NO_THROW(root.add("abstract", libconfig::Setting::TypeGroup)
                              .add("eng", libconfig::Setting::TypeString) = "abstract");
   BOOST_REQUIRE_NO_THROW(root.add("template", libconfig::Setting::TypeString) = "foo::bar.c2t");
@@ -158,10 +159,12 @@ void add_param(libconfig::Config& config,
   libconfig::Setting& params = config.lookup("parameters");
   libconfig::Setting& p = params.add(libconfig::Setting::TypeGroup);
   BOOST_REQUIRE_NO_THROW(p.add("name", libconfig::Setting::TypeString) = name);
-  BOOST_REQUIRE_NO_THROW(p.add("title", libconfig::Setting::TypeGroup)
-                             .add("eng", libconfig::Setting::TypeString) = "title");
-  BOOST_REQUIRE_NO_THROW(p.add("abstract", libconfig::Setting::TypeGroup)
-                             .add("eng", libconfig::Setting::TypeString) = "abstract");
+  BOOST_REQUIRE_NO_THROW(
+      p.add("title", libconfig::Setting::TypeGroup).add("eng", libconfig::Setting::TypeString) =
+          "title");
+  BOOST_REQUIRE_NO_THROW(
+      p.add("abstract", libconfig::Setting::TypeGroup).add("eng", libconfig::Setting::TypeString) =
+          "abstract");
   BOOST_REQUIRE_NO_THROW(p.add("xmlType", libconfig::Setting::TypeString) = xml_type);
   BOOST_REQUIRE_NO_THROW(p.add("type", libconfig::Setting::TypeString) = type);
   if (min_occurs != 0)
@@ -169,7 +172,7 @@ void add_param(libconfig::Config& config,
   if (max_occurs != 1)
     BOOST_REQUIRE_NO_THROW(p.add("maxOccurs", libconfig::Setting::TypeInt) = max_occurs);
 }
-}
+}  // namespace
 
 namespace
 {
@@ -192,7 +195,7 @@ std::ostream& operator<<(std::ostream& stream, const std::multimap<std::string, 
   }
   return stream;
 }
-}
+}  // namespace
 
 BOOST_AUTO_TEST_CASE(test_kvp_missing_mandatory_scalar_parameter)
 {
@@ -355,7 +358,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_scalar_parameter_4)
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   for (int i = 0; i < 99; i++)
-    request2.addParameter("p1", boost::lexical_cast<std::string>(i + 1));
+    request2.addParameter("p1", Fmi::to_string(i + 1));
   BOOST_REQUIRE_NO_THROW(LOG(bw::StoredQuery::extract_kvp_parameters(request2, *config, Q2)));
   const auto& P1 = Q2.get_param_map();
   BOOST_CHECK_EQUAL(99, (int)P1.size());
@@ -378,7 +381,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_scalar_parameter_5)
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   for (int i = 0; i < 100; i++)
-    request2.addParameter("p1", boost::lexical_cast<std::string>(i + 1));
+    request2.addParameter("p1", Fmi::to_string(i + 1));
   BOOST_REQUIRE_THROW(bw::StoredQuery::extract_kvp_parameters(request2, *config, Q2),
                       SmartMet::Spine::Exception);
 }

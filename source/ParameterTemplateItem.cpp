@@ -4,7 +4,6 @@
 #include "WfsException.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lambda/lambda.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <spine/Exception.h>
 #include <spine/Value.h>
