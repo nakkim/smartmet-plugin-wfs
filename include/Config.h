@@ -7,11 +7,10 @@
 // ======================================================================
 
 #include "WfsFeatureDef.h"
+#include <boost/filesystem.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/utility.hpp>
 #include <engines/gis/CRSRegistry.h>
-#include <macgyver/TemplateDirectory.h>
-#include <macgyver/TemplateFormatter.h>
 #include <spine/ConfigBase.h>
 #include <libconfig.h++>
 #include <string>
@@ -52,7 +51,7 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   bool getEnableConfigurationPolling() const { return enable_configuration_polling; }
   bool getSQRestrictions() const { return sq_restrictions; }
   int getDefaultExpiresSeconds() const { return default_expires_seconds; }
-  const Fmi::TemplateDirectory& get_template_directory() const { return *template_directory; }
+  const boost::filesystem::path& get_template_directory() const { return template_directory; }
   const std::string& get_geoserver_conn_string() const { return geoserver_conn_str; }
   const std::vector<std::string>& get_languages() const { return languages; }
   inline int getCacheSize() const { return cache_size; }
@@ -71,7 +70,7 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   int cache_time_constant;
   int default_expires_seconds;
   std::vector<std::string> languages;
-  std::unique_ptr<Fmi::TemplateDirectory> template_directory;
+  boost::filesystem::path template_directory;
   std::string xml_grammar_pool_dump;
   bool validate_output;
   bool enable_demo_queries;

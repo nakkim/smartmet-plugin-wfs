@@ -282,7 +282,7 @@ std::string ErrorResponseGenerator::format_message(CTPP::CDT& hash)
     try
     {
       auto exception_formatter = plugin_data.get_exception_formatter();
-      exception_formatter->get()->process(hash, output, log_messages);
+      exception_formatter->process(hash, output, log_messages);
     }
     catch (const std::exception& err)
     {

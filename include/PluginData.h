@@ -1,20 +1,19 @@
 #pragma once
 
-#include <engines/geonames/Engine.h>
-#include <engines/gis/CRSRegistry.h>
-#include <engines/gis/Engine.h>
-#include <engines/querydata/Engine.h>
-
 #include "Config.h"
 #include "GeoServerDB.h"
 #include "StoredQueryMap.h"
+#include "TemplateFactory.h"
 #include "TypeNameStoredQueryMap.h"
 #include "WfsCapabilities.h"
 #include "XmlEnvInit.h"
 #include "XmlParser.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/shared_ptr.hpp>
-#include <macgyver/TemplateFormatterMT.h>
+#include <engines/geonames/Engine.h>
+#include <engines/gis/CRSRegistry.h>
+#include <engines/gis/Engine.h>
+#include <engines/querydata/Engine.h>
 #include <macgyver/TimedCache.h>
 
 namespace SmartMet
@@ -39,34 +38,40 @@ class PluginData : public boost::noncopyable
   }
   inline Config& get_config() { return itsConfig; }
   inline const Config& get_config() const { return itsConfig; }
-  inline boost::shared_ptr<Fmi::TemplateFormatterMT> get_get_capabilities_formater() const
+  inline boost::shared_ptr<Fmi::TemplateFormatter> get_get_capabilities_formater() const
   {
     return getCapabilitiesFormatter;
   }
 
-  inline boost::shared_ptr<Fmi::TemplateFormatterMT> get_list_stored_queries_formatter() const
+  inline boost::shared_ptr<Fmi::TemplateFormatter> get_list_stored_queries_formatter() const
   {
     return listStoredQueriesFormatter;
   }
 
-  inline boost::shared_ptr<Fmi::TemplateFormatterMT> get_describe_stored_queries_formatter() const
+  inline boost::shared_ptr<Fmi::TemplateFormatter> get_describe_stored_queries_formatter() const
   {
     return describeStoredQueriesFormatter;
   }
 
-  inline boost::shared_ptr<Fmi::TemplateFormatterMT> get_feature_type_formatter() const
+  inline boost::shared_ptr<Fmi::TemplateFormatter> get_feature_type_formatter() const
   {
     return featureTypeFormatter;
   }
 
-  inline boost::shared_ptr<Fmi::TemplateFormatterMT> get_exception_formatter() const
+  inline boost::shared_ptr<Fmi::TemplateFormatter> get_exception_formatter() const
   {
     return exceptionFormatter;
   }
 
-  inline boost::shared_ptr<Fmi::TemplateFormatterMT> get_ctpp_dump_formatter() const
+  inline boost::shared_ptr<Fmi::TemplateFormatter> get_ctpp_dump_formatter() const
   {
     return ctppDumpFormatter;
+  }
+
+  inline boost::shared_ptr<Fmi::TemplateFormatter> get_stored_query_formatter(
+      const boost::filesystem::path& filename) const
+  {
+    return itsTemplateFactory.get(filename);
   }
 
   inline boost::shared_ptr<Xml::ParserMT> get_xml_parser() const { return xml_parser; }
@@ -104,12 +109,14 @@ class PluginData : public boost::noncopyable
   SmartMet::Engine::Querydata::Engine* itsQEngine;
   SmartMet::Engine::Gis::Engine* itsGisEngine;
 
-  boost::shared_ptr<Fmi::TemplateFormatterMT> getCapabilitiesFormatter;
-  boost::shared_ptr<Fmi::TemplateFormatterMT> listStoredQueriesFormatter;
-  boost::shared_ptr<Fmi::TemplateFormatterMT> describeStoredQueriesFormatter;
-  boost::shared_ptr<Fmi::TemplateFormatterMT> featureTypeFormatter;
-  boost::shared_ptr<Fmi::TemplateFormatterMT> exceptionFormatter;
-  boost::shared_ptr<Fmi::TemplateFormatterMT> ctppDumpFormatter;
+  TemplateFactory itsTemplateFactory;
+
+  boost::shared_ptr<Fmi::TemplateFormatter> getCapabilitiesFormatter;
+  boost::shared_ptr<Fmi::TemplateFormatter> listStoredQueriesFormatter;
+  boost::shared_ptr<Fmi::TemplateFormatter> describeStoredQueriesFormatter;
+  boost::shared_ptr<Fmi::TemplateFormatter> featureTypeFormatter;
+  boost::shared_ptr<Fmi::TemplateFormatter> exceptionFormatter;
+  boost::shared_ptr<Fmi::TemplateFormatter> ctppDumpFormatter;
   boost::shared_ptr<Xml::ParserMT> xml_parser;
   boost::shared_ptr<GeoServerDB> geo_server_db;
   std::unique_ptr<StoredQueryMap> stored_query_map;

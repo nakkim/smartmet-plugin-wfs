@@ -2,7 +2,6 @@
 
 #include "PluginData.h"
 #include "RequestBase.h"
-#include <macgyver/TemplateFormatterMT.h>
 #include <xercesc/dom/DOMDocument.hpp>
 
 namespace SmartMet

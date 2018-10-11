@@ -3,7 +3,6 @@
 #include "PluginData.h"
 #include "RequestBase.h"
 #include <boost/shared_ptr.hpp>
-#include <macgyver/TemplateFormatterMT.h>
 
 namespace SmartMet
 {

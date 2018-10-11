@@ -162,7 +162,7 @@ void bw::Request::DescribeStoredQueries::execute(std::ostream& output) const
     try
     {
       std::ostringstream response;
-      template_formatter->get()->process(hash, response, log_messages);
+      template_formatter->process(hash, response, log_messages);
       substitute_all(response.str(), output);
     }
     catch (const std::exception&)

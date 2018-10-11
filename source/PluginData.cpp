@@ -141,19 +141,14 @@ void bw::PluginData::create_template_formatters()
 
     const std::string dfn = itsConfig.get_mandatory_config_param<std::string>("ctppDumpTemplate");
 
-    getCapabilitiesFormatter = itsConfig.get_template_directory().create_template_formatter(gctn);
+    const auto template_dir = itsConfig.get_template_directory();
 
-    listStoredQueriesFormatter =
-        itsConfig.get_template_directory().create_template_formatter(lsqtn);
-
-    describeStoredQueriesFormatter =
-        itsConfig.get_template_directory().create_template_formatter(dsqtn);
-
-    featureTypeFormatter = itsConfig.get_template_directory().create_template_formatter(fttn);
-
-    exceptionFormatter = itsConfig.get_template_directory().create_template_formatter(etn);
-
-    ctppDumpFormatter = itsConfig.get_template_directory().create_template_formatter(dfn);
+    getCapabilitiesFormatter = itsTemplateFactory.get(template_dir / gctn);
+    listStoredQueriesFormatter = itsTemplateFactory.get(template_dir / lsqtn);
+    describeStoredQueriesFormatter = itsTemplateFactory.get(template_dir / dsqtn);
+    featureTypeFormatter = itsTemplateFactory.get(template_dir / fttn);
+    exceptionFormatter = itsTemplateFactory.get(template_dir / etn);
+    ctppDumpFormatter = itsTemplateFactory.get(template_dir / dfn);
   }
   catch (...)
   {

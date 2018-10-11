@@ -13,7 +13,7 @@
 #include <spine/Value.h>
 #include <spine/ValueFormatter.h>
 
-#include <macgyver/TemplateFormatterMT.h>
+#include <macgyver/TemplateFormatter.h>
 
 #include <boost/optional.hpp>
 #include <boost/shared_ptr.hpp>
@@ -39,7 +39,7 @@ class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
 {
   SmartMet::Spine::Reactor* reactor;
   boost::shared_ptr<StoredQueryConfig> config;
-  std::unique_ptr<Fmi::TemplateFormatterMT> tp_formatter;
+  boost::shared_ptr<Fmi::TemplateFormatter> tp_formatter;
   bool hidden;
 
  protected:

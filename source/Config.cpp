@@ -6,7 +6,6 @@
 
 #include "Config.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <spine/Convenience.h>
@@ -99,8 +98,7 @@ Config::Config(const string& configfile)
                                              " configuration directory is not a directory");
     }
     // Verify that stored queries template directory exists
-    fs::path sqtd(sq_template_dir);
-    template_directory.reset(new Fmi::TemplateDirectory(sq_template_dir));
+    template_directory = sq_template_dir;
   }
   catch (...)
   {

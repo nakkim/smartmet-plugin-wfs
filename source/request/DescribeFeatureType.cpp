@@ -118,7 +118,7 @@ void bw::Request::DescribeFeatureType::execute(std::ostream& output) const
     std::ostringstream log_messages;
     try
     {
-      template_formatter->get()->process(hash, output, log_messages);
+      template_formatter->process(hash, output, log_messages);
     }
     catch (const std::exception&)
     {

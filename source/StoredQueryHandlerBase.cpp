@@ -2,7 +2,6 @@
 #include "WfsException.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
-#include <macgyver/TemplateFormatter.h>
 #include <macgyver/TypeName.h>
 #include <newbase/NFmiPoint.h>
 #include <spine/Convenience.h>
@@ -33,7 +32,7 @@ StoredQueryHandlerBase::StoredQueryHandlerBase(SmartMet::Spine::Reactor* reactor
   {
     if (template_file_name)
     {
-      tp_formatter.reset(new Fmi::TemplateFormatterMT(*template_file_name));
+      tp_formatter = plugin_data.get_stored_query_formatter(*template_file_name);
     }
 
     const auto& return_types = config->get_return_type_names();
@@ -157,11 +156,11 @@ Fmi::TemplateFormatter* StoredQueryHandlerBase::get_formatter(bool debug_format)
   {
     if (debug_format)
     {
-      return plugin_data.get_ctpp_dump_formatter()->get();
+      return plugin_data.get_ctpp_dump_formatter().get();
     }
     else
     {
-      return tp_formatter->get();
+      return tp_formatter.get();
     }
   }
   catch (...)

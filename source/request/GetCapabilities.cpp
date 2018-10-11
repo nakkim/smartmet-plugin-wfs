@@ -106,7 +106,7 @@ void GetCapabilities::execute(std::ostream& output) const
       auto formatter = plugin_data.get_get_capabilities_formater();
       assert(formatter != 0);
       std::ostringstream response;
-      formatter->get()->process(hash, response, log_messages);
+      formatter->process(hash, response, log_messages);
       substitute_all(response.str(), output);
     }
     catch (const std::exception&)
