@@ -87,12 +87,12 @@ void check_time_interval(const boost::posix_time::ptime& start,
 
     if (start > end)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid time interval!");
-      exception.addDetail("The start time is later than the end time.");
-      exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      exception.addParameter("Start time", pt::to_simple_string(start));
-      exception.addParameter("End time", pt::to_simple_string(end));
-      throw exception;
+      throw SmartMet::Spine::Exception(BCP, "Invalid time interval!")
+          .addDetail("The start time is later than the end time.")
+          .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
+          .addParameter("Start time", pt::to_simple_string(start))
+          .addParameter("End time", pt::to_simple_string(end))
+          .disableStackTrace();
     }
 
     pt::time_duration interval_length = end - start;
@@ -100,12 +100,12 @@ void check_time_interval(const boost::posix_time::ptime& start,
     int mi_sec = static_cast<int>(std::floor(3600.0 * (max_hours - mi_hours)));
     if (interval_length > pt::hours(mi_hours) + pt::seconds(mi_sec))
     {
-      SmartMet::Spine::Exception exception(BCP, "Too long time interval requested!");
-      exception.addDetail("No more than " + std::to_string(max_hours) + " hours allowed.");
-      exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-      exception.addParameter("Start time", pt::to_simple_string(start));
-      exception.addParameter("End time", pt::to_simple_string(end));
-      throw exception;
+      throw SmartMet::Spine::Exception(BCP, "Too long time interval requested!")
+          .addDetail("No more than " + std::to_string(max_hours) + " hours allowed.")
+          .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED)
+          .addParameter("Start time", pt::to_simple_string(start))
+          .addParameter("End time", pt::to_simple_string(end))
+          .disableStackTrace();
     }
   }
   catch (...)

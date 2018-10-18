@@ -4,7 +4,7 @@
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
 Version: 18.10.18
-Release: 1%{?dist}.fmi
+Release: 2%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-wfs
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Oct 18 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.10.18-2.fmi
+- Disabled stack traces if user reqested time parameters are invalid
+
 * Thu Oct 18 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.10.18-1.fmi
 - Do not print a stack trace if user provided location name is unavailable to avoid unnecessary logging
 
