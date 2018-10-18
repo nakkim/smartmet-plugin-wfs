@@ -3,8 +3,8 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 18.10.11
-Release: 2%{?dist}.fmi
+Version: 18.10.18
+Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-wfs
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Oct 18 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.10.18-1.fmi
+- Do not print a stack trace if user provided location name is unavailable to avoid unnecessary logging
+
 * Thu Oct 11 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.10.11-2.fmi
 - Use C++11 thread_local instead of boost::thread_specific_ptr for thread safety
 
