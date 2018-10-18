@@ -708,9 +708,9 @@ SmartMet::Engine::Querydata::Producer bw::StoredForecastQueryHandler::select_pro
 
     if (producer.empty() && query.keyword.empty())
     {
-      SmartMet::Spine::Exception exception(BCP, "No data available for '" + location.name + "'!");
-      exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-      throw exception;
+      throw SmartMet::Spine::Exception(BCP, "No data available for '" + location.name + "'!")
+          .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED)
+          .disableStackTrace();
     }
 
     return producer;
