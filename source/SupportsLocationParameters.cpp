@@ -93,9 +93,9 @@ void bw::SupportsLocationParameters::get_location_options(
     param.get<double>(P_LATLONS, std::back_inserter(values), 0, 998, 2);
     if (values.size() & 1)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid location list in parameter 'latlon'!");
-      exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw SmartMet::Spine::Exception(BCP, "Invalid location list in parameter 'latlon'!")
+          .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
+          .disableStackTrace();
     }
     for (std::size_t i = 0; i < values.size(); i += 2)
     {
@@ -127,12 +127,12 @@ void bw::SupportsLocationParameters::get_location_options(
       SmartMet::Spine::LocationList ptrs = geo_engine->nameSearch(opts, name);
       if (ptrs.empty())
       {
-        SmartMet::Spine::Exception exception(
-            BCP, "No locations found for the place with the requested language!");
-        exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-        exception.addParameter("Place", name);
-        exception.addParameter("Language", language_requested);
-        throw exception;
+        throw SmartMet::Spine::Exception(
+            BCP, "No locations found for the place with the requested language!")
+            .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
+            .addParameter("Place", name)
+            .addParameter("Language", language_requested)
+            .disableStackTrace();
       }
       else
       {
@@ -154,10 +154,10 @@ void bw::SupportsLocationParameters::get_location_options(
             geo_engine->keywordSearch(opts, ba::trim_copy(keyword));
         if (places.empty())
         {
-          SmartMet::Spine::Exception exception(BCP, "No locations found for the keyword!");
-          exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-          exception.addParameter("Keyword", keyword);
-          throw exception;
+          throw SmartMet::Spine::Exception(BCP, "No locations found for the keyword!")
+              .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
+              .addParameter("Keyword", keyword)
+              .disableStackTrace();
         }
         else
         {
@@ -191,10 +191,10 @@ void bw::SupportsLocationParameters::get_geoids(
       {
         if (id < std::numeric_limits<long>::min() || id > std::numeric_limits<long>::max())
         {
-          SmartMet::Spine::Exception exception(BCP, "The 'geoid' value is out of the range!");
-          exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-          exception.addParameter("SmartMet::Spine::GeoId", std::to_string(id));
-          throw exception;
+          throw SmartMet::Spine::Exception(BCP, "The 'geoid' value is out of the range!")
+              .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
+              .addParameter("SmartMet::Spine::GeoId", std::to_string(id))
+              .disableStackTrace();
         }
         else
         {
@@ -231,10 +231,10 @@ void bw::SupportsLocationParameters::get_fmisids(
     {
       if (id < std::numeric_limits<long>::min() || id > std::numeric_limits<long>::max())
       {
-        SmartMet::Spine::Exception exception(BCP, "The 'fmisid' value is out of the range!");
-        exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-        exception.addParameter("Fmsid", std::to_string(id));
-        throw exception;
+        throw SmartMet::Spine::Exception(BCP, "The 'fmisid' value is out of the range!")
+            .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
+            .addParameter("Fmsid", std::to_string(id))
+            .disableStackTrace();
       }
       else
       {
@@ -242,10 +242,10 @@ void bw::SupportsLocationParameters::get_fmisids(
         SmartMet::Spine::LocationList locList = geo_engine->nameSearch(opts, id_s);
         if (include_fmisids and locList.empty())
         {
-          SmartMet::Spine::Exception exception(BCP, "Unknown 'fmisid' value!");
-          exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-          exception.addParameter("Fmsid", std::to_string(id));
-          throw exception;
+          throw SmartMet::Spine::Exception(BCP, "Unknown 'fmisid' value!")
+              .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
+              .addParameter("Fmsid", std::to_string(id))
+              .disableStackTrace();
         }
         // Including location of the current fmisid if enabled.
         if (include_fmisids)
@@ -280,10 +280,10 @@ void bw::SupportsLocationParameters::get_wmos(
     {
       if (id < std::numeric_limits<long>::min() || id > std::numeric_limits<long>::max())
       {
-        SmartMet::Spine::Exception exception(BCP, "The 'wmoid' value is out of the range!");
-        exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-        exception.addParameter("WmoId", std::to_string(id));
-        throw exception;
+        throw SmartMet::Spine::Exception(BCP, "The 'wmoid' value is out of the range!")
+            .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
+            .addParameter("WmoId", std::to_string(id))
+            .disableStackTrace();
       }
       else
       {
@@ -291,10 +291,10 @@ void bw::SupportsLocationParameters::get_wmos(
         SmartMet::Spine::LocationList locList = geo_engine->nameSearch(opts, id_s);
         if (include_wmos and locList.empty())
         {
-          SmartMet::Spine::Exception exception(BCP, "Unknown 'wmoid' value!");
-          exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-          exception.addParameter("WmoId", id_s);
-          throw exception;
+          throw SmartMet::Spine::Exception(BCP, "Unknown 'wmoid' value!")
+              .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
+              .addParameter("WmoId", id_s)
+              .disableStackTrace();
         }
         // Including location of the current wmo id if enabled.
         if (include_wmos)
