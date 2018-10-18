@@ -11,6 +11,21 @@ namespace Plugin
 {
 namespace WFS
 {
+// CT++ may not be thread safe - but using a thread specific
+// storage for cached copies makes using it thread safe
+
+struct TemplateInfo
+{
+  std::time_t modtime;
+  SharedFormatter formatter;
+
+  TemplateInfo() : modtime(0), formatter() {}
+};
+
+using TemplateMap = std::map<boost::filesystem::path, TemplateInfo>;
+using Templates = boost::thread_specific_ptr<TemplateMap>;
+thread_local Templates itsTemplates{};
+
 // ----------------------------------------------------------------------
 /*!
  * \brief Get a thread specific template formatter for given template

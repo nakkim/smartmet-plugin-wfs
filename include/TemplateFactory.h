@@ -1,9 +1,6 @@
 // ======================================================================
 /*!
  * \brief A factory for thread safe template formatting
- *
- * TODO: Should this be in macgyver instead of something as trivial
- *       as TemplateFormatterMT ?
  */
 // ======================================================================
 
@@ -27,21 +24,6 @@ class TemplateFactory : public boost::noncopyable
 {
  public:
   SharedFormatter get(const boost::filesystem::path& theFilename) const;
-
- private:
-  struct TemplateInfo
-  {
-    std::time_t modtime;
-    SharedFormatter formatter;
-
-    TemplateInfo() : modtime(0), formatter() {}
-  };
-
-  // CT++ may not be thread safe - but using a thread specific
-  // storage for cached copies makes using it thread safe
-  using TemplateMap = std::map<boost::filesystem::path, TemplateInfo>;
-  using Templates = boost::thread_specific_ptr<TemplateMap>;
-  mutable Templates itsTemplates;
 
 };  // class TemplateFactory
 
