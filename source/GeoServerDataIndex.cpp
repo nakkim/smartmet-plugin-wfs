@@ -113,14 +113,7 @@ bw::GeoServerDataIndex::LayerRec::LayerRec(
 
 bw::GeoServerDataIndex::LayerRec::~LayerRec()
 {
-  try
-  {
-    clear();
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
+  clear();
 }
 
 bw::GeoServerDataIndex::LayerRec& bw::GeoServerDataIndex::LayerRec::operator=(

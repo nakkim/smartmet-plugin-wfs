@@ -37,6 +37,7 @@ std::string double2string(double d, unsigned int precision)
   }
 }
 
+#if 0
 std::string bbox2string(const SmartMet::Spine::BoundingBox& bbox, OGRSpatialReference& targetSRS)
 {
   try
@@ -65,6 +66,7 @@ std::string bbox2string(const SmartMet::Spine::BoundingBox& bbox, OGRSpatialRefe
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
+#endif
 
 FmiParameterName get_parameter(boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryConfig> config,
                                const std::string& param_name)

@@ -86,19 +86,12 @@ XPathSnapshot::XPathSnapshot()
 
 XPathSnapshot::~XPathSnapshot()
 {
-  try
-  {
-    if (xpath_result)
-      xpath_result->release();
-    if (expression)
-      expression->release();
-    if (resolver)
-      resolver->release();
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
+  if (xpath_result)
+    xpath_result->release();
+  if (expression)
+    expression->release();
+  if (resolver)
+    resolver->release();
 }
 
 void XPathSnapshot::parse_dom_document(const std::string& src, const std::string& public_id)

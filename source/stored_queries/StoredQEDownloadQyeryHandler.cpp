@@ -91,7 +91,7 @@ StoredQEDownloadQueryHandler::StoredQEDownloadQueryHandler(
             << get_config()->get_query_id() << "] Supported producers:";
         std::for_each(producers.begin(), producers.end(), bl::var(msg) << " '" << bl::_1 << "'");
         msg << '\n';
-        std::cout << msg << std::flush;
+        std::cout << msg.str() << std::flush;
       }
     }
 
@@ -121,7 +121,7 @@ StoredQEDownloadQueryHandler::StoredQEDownloadQueryHandler(
           << "] Supported formats:";
       std::for_each(formats.begin(), formats.end(), bl::var(msg) << " '" << bl::_1 << "'");
       msg << '\n';
-      std::cout << msg << std::flush;
+      std::cout << msg.str() << std::flush;
     }
   }
   catch (...)

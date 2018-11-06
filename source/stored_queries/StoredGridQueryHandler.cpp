@@ -347,6 +347,7 @@ void handle_array_param(const bw::RequestParameterMap& params,
   }
 }
 
+#if 0
 void dump_meta_query_options(const qe::MetaQueryOptions& opt)
 {
   try
@@ -413,6 +414,8 @@ void dump_meta_query_options(const qe::MetaQueryOptions& opt)
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
+#endif
+
 }  // namespace
 
 std::pair<unsigned int, unsigned int> StoredGridQueryHandler::getDataIndexExtents(

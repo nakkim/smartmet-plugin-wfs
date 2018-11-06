@@ -42,14 +42,7 @@ EnvInit::EnvInit()
 
 EnvInit::~EnvInit()
 {
-  try
-  {
-    XQillaPlatformUtils::terminate();
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
+  XQillaPlatformUtils::terminate();
 }
 
 }  // namespace Xml

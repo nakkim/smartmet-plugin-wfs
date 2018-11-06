@@ -706,8 +706,6 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getStationCapabilities(
     bo::QueryResult::ValueVectorType::const_iterator scLatestDataIt =
         scResultContainer->begin("LATEST_DATA");
 
-    bo::QueryResult::ValueVectorType::const_iterator scStationIdIt = scStationIdBeginIt;
-
     for (bo::QueryResult::ValueVectorType::const_iterator scStationIdIt = scStationIdBeginIt;
          scStationIdIt != scStationIdEndIt;
          ++scStationIdIt,

@@ -3,8 +3,8 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 18.10.18
-Release: 3%{?dist}.fmi
+Version: 18.11.6
+Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-wfs
@@ -95,6 +95,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Tue Nov  6 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.11.6-1.fmi
+- Fixed destructors not to throw
+- Fixed std::ostringstream output to use str() methods
+
 * Thu Oct 18 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.10.18-3.fmi
 - Disabled stack traces if user requested parameters are invalid
 
