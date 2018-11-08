@@ -40,32 +40,32 @@ class PluginData : public boost::noncopyable
   inline const Config& get_config() const { return itsConfig; }
   inline boost::shared_ptr<Fmi::TemplateFormatter> get_get_capabilities_formater() const
   {
-    return getCapabilitiesFormatter;
+    return itsTemplateFactory.get(getCapabilitiesFormatterPath);
   }
 
   inline boost::shared_ptr<Fmi::TemplateFormatter> get_list_stored_queries_formatter() const
   {
-    return listStoredQueriesFormatter;
+    return itsTemplateFactory.get(listStoredQueriesFormatterPath);
   }
 
   inline boost::shared_ptr<Fmi::TemplateFormatter> get_describe_stored_queries_formatter() const
   {
-    return describeStoredQueriesFormatter;
+    return itsTemplateFactory.get(describeStoredQueriesFormatterPath);
   }
 
   inline boost::shared_ptr<Fmi::TemplateFormatter> get_feature_type_formatter() const
   {
-    return featureTypeFormatter;
+    return itsTemplateFactory.get(featureTypeFormatterPath);
   }
 
   inline boost::shared_ptr<Fmi::TemplateFormatter> get_exception_formatter() const
   {
-    return exceptionFormatter;
+    return itsTemplateFactory.get(exceptionFormatterPath);
   }
 
   inline boost::shared_ptr<Fmi::TemplateFormatter> get_ctpp_dump_formatter() const
   {
-    return ctppDumpFormatter;
+    return itsTemplateFactory.get(ctppDumpFormatterPath);
   }
 
   inline boost::shared_ptr<Fmi::TemplateFormatter> get_stored_query_formatter(
@@ -111,12 +111,13 @@ class PluginData : public boost::noncopyable
 
   TemplateFactory itsTemplateFactory;
 
-  boost::shared_ptr<Fmi::TemplateFormatter> getCapabilitiesFormatter;
-  boost::shared_ptr<Fmi::TemplateFormatter> listStoredQueriesFormatter;
-  boost::shared_ptr<Fmi::TemplateFormatter> describeStoredQueriesFormatter;
-  boost::shared_ptr<Fmi::TemplateFormatter> featureTypeFormatter;
-  boost::shared_ptr<Fmi::TemplateFormatter> exceptionFormatter;
-  boost::shared_ptr<Fmi::TemplateFormatter> ctppDumpFormatter;
+  boost::filesystem::path getCapabilitiesFormatterPath;
+  boost::filesystem::path listStoredQueriesFormatterPath;
+  boost::filesystem::path describeStoredQueriesFormatterPath;
+  boost::filesystem::path featureTypeFormatterPath;
+  boost::filesystem::path exceptionFormatterPath;
+  boost::filesystem::path ctppDumpFormatterPath;
+
   boost::shared_ptr<Xml::ParserMT> xml_parser;
   boost::shared_ptr<GeoServerDB> geo_server_db;
   std::unique_ptr<StoredQueryMap> stored_query_map;

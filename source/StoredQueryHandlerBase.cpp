@@ -25,16 +25,12 @@ StoredQueryHandlerBase::StoredQueryHandlerBase(SmartMet::Spine::Reactor* reactor
     : SupportsExtraHandlerParams(config),
       reactor(reactor),
       config(config),
+      template_file(template_file_name),
       hidden(false),
       plugin_data(plugin_data)
 {
   try
   {
-    if (template_file_name)
-    {
-      tp_formatter = plugin_data.get_stored_query_formatter(*template_file_name);
-    }
-
     const auto& return_types = config->get_return_type_names();
     hidden = config->get_optional_config_param<bool>("hidden", false);
 
@@ -150,17 +146,20 @@ const StoredQueryMap& StoredQueryHandlerBase::get_stored_query_map() const
   }
 }
 
-Fmi::TemplateFormatter* StoredQueryHandlerBase::get_formatter(bool debug_format) const
+boost::shared_ptr<Fmi::TemplateFormatter> StoredQueryHandlerBase::get_formatter(
+    bool debug_format) const
 {
   try
   {
     if (debug_format)
     {
-      return plugin_data.get_ctpp_dump_formatter().get();
+      return plugin_data.get_ctpp_dump_formatter();
     }
     else
     {
-      return tp_formatter.get();
+      if (!template_file)
+        throw Spine::Exception(BCP, "Template formatter not set for stored query!");
+      return plugin_data.get_stored_query_formatter(*template_file);
     }
   }
   catch (...)
@@ -176,7 +175,7 @@ void StoredQueryHandlerBase::format_output(CTPP::CDT hash,
   try
   {
     std::ostringstream formatter_log;
-    Fmi::TemplateFormatter* formatter = get_formatter(debug_format);
+    auto formatter = get_formatter(debug_format);
     try
     {
       formatter->process(hash, output, formatter_log);

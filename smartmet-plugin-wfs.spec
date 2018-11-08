@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 18.11.6
+Version: 18.11.8
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Nov  8 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.11.8-1.fmi
+- Fixed thread safety issues on caching template formatters
+
 * Tue Nov  6 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.11.6-1.fmi
 - Fixed destructors not to throw
 - Fixed std::ostringstream output to use str() methods

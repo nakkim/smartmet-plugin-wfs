@@ -143,12 +143,16 @@ void bw::PluginData::create_template_formatters()
 
     const auto template_dir = itsConfig.get_template_directory();
 
-    getCapabilitiesFormatter = itsTemplateFactory.get(template_dir / gctn);
-    listStoredQueriesFormatter = itsTemplateFactory.get(template_dir / lsqtn);
-    describeStoredQueriesFormatter = itsTemplateFactory.get(template_dir / dsqtn);
-    featureTypeFormatter = itsTemplateFactory.get(template_dir / fttn);
-    exceptionFormatter = itsTemplateFactory.get(template_dir / etn);
-    ctppDumpFormatter = itsTemplateFactory.get(template_dir / dfn);
+    // We do not actually create the formatters since using them is not
+    // thread safe. Instead, we store the name and ask the formatter
+    // factory for a thread local copy based on the name
+
+    getCapabilitiesFormatterPath = template_dir / gctn;
+    listStoredQueriesFormatterPath = template_dir / lsqtn;
+    describeStoredQueriesFormatterPath = template_dir / dsqtn;
+    featureTypeFormatterPath = template_dir / fttn;
+    exceptionFormatterPath = template_dir / etn;
+    ctppDumpFormatterPath = template_dir / dfn;
   }
   catch (...)
   {
