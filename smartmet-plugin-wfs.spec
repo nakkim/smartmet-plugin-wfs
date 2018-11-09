@@ -95,7 +95,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
-* Thu Oct 18 2018 Anssi Reponen <anssi.reponen@fmi.fi> - 18.10.18-2.fmi
+* Fri Nov  9 2018 Anssi Reponen <anssi.reponen@fmi.fi> - 18.11.9-2.fmi
 - Support for data_source-field added (BRAINSTORM-1233)
 
 * Fri Nov  9 2018 Anssi Reponen <anssi.reponen@fmi.fi> - 18.11.9-1.fmi
