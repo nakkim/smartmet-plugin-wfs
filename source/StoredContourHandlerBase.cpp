@@ -4,12 +4,14 @@
 #include <newbase/NFmiEnumConverter.h>
 
 #include <boost/algorithm/string/replace.hpp>
+#include <boost/format.hpp>
 #include <iomanip>
 
 namespace bw = SmartMet::Plugin::WFS;
 
 namespace
 {
+const char* P_LIMITS = "limits";
 const char* P_PRODUCER = "producer";
 const char* P_ORIGIN_TIME = "originTime";
 const char* P_CRS = "crs";
@@ -39,6 +41,8 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
     register_scalar_param<boost::posix_time::ptime>(P_ORIGIN_TIME, *config, false);
     register_scalar_param<std::string>(P_CRS, *config);
 
+    if (config->find_setting(config->get_root(), "handler_params.limits", false))
+      register_array_param<double>(P_LIMITS, *config, 0, 999, 2);
     if (config->find_setting(config->get_root(), "handler_params.smoothing", false))
       register_scalar_param<bool>(P_SMOOTHING, *config);
     if (config->find_setting(config->get_root(), "handler_params.smoothing_degree", false))
@@ -300,6 +304,24 @@ void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
     SmartMet::Spine::Parameter parameter(name, SmartMet::Spine::Parameter::Type::Data, id);
 
     boost::shared_ptr<ContourQueryParameter> query_param = getQueryParameter(parameter, q, sr);
+    CoverageQueryParameter* qParam = dynamic_cast<CoverageQueryParameter*>(query_param.get());
+    if (qParam)
+    {
+      std::vector<double> limits;
+      sq_params.get<double>(P_LIMITS, std::back_inserter(limits), 0, 998, 2);
+      if (limits.size() & 1)
+      {
+        SmartMet::Spine::Exception exception(BCP, "Invalid list of doubles in parameter 'limits'!");
+        exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
+        throw exception;
+      }
+      for (std::size_t i = 0; i < limits.size(); i += 2)
+      {
+        const double& lower = limits[i];
+        const double& upper = limits[i + 1];
+        qParam->limits.push_back(SmartMet::Engine::Contour::Range(lower, upper));
+      }
+    }
 
     query_param->smoothing = sq_params.get_optional<bool>(P_SMOOTHING, false);
     query_param->smoothing_degree = sq_params.get_optional<uint64_t>(P_SMOOTHING_DEGREE, 2);

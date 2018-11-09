@@ -19,15 +19,6 @@ bw::StoredWWCoverageQueryHandler::StoredWWCoverageQueryHandler(
   try
   {
     itsLimitNames = config->get_mandatory_config_array<std::string>("contour_param.limitNames");
-
-    // check number of names
-    if (itsLimitNames.size() * 2 != itsLimits.size())
-    {
-      SmartMet::Spine::Exception exception(
-          BCP, "Parameter 'contour_params.limitNames' contains wrong number of elements!");
-      exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
-      throw exception;
-    }
   }
   catch (...)
   {
@@ -42,15 +33,44 @@ std::vector<bw::ContourQueryResultPtr> bw::StoredWWCoverageQueryHandler::process
   {
     std::vector<ContourQueryResultPtr> query_results;
 
-    for (std::size_t nameIndex = 0; nameIndex < itsLimitNames.size(); nameIndex++)
-    {
-      std::size_t limitsIndex(nameIndex * 2);
-      double lolimit = itsLimits[limitsIndex];
-      double hilimit = itsLimits[limitsIndex + 1];
+    std::vector<double> limits;
 
-      std::string name = itsLimitNames[nameIndex];
-      (reinterpret_cast<CoverageQueryParameter&>(queryParameter))
-          .limits.push_back(SmartMet::Engine::Contour::Range(lolimit, hilimit));
+    std::vector<SmartMet::Engine::Contour::Range>& query_limits =
+        (reinterpret_cast<CoverageQueryParameter&>(queryParameter)).limits;
+    if (query_limits.size() > 0)
+    {
+      for (auto l : query_limits)
+      {
+        double lolimit = DBL_MIN;
+        double hilimit = DBL_MAX;
+        if (l.lolimit)
+          lolimit = *l.lolimit;
+        if (l.hilimit)
+          hilimit = *l.hilimit;
+        limits.push_back(lolimit);
+        limits.push_back(hilimit);
+      }
+    }
+    else
+    {
+      limits = itsLimits;
+      unsigned int numLimits(limits.size() / 2);
+      for (std::size_t i = 0; i < numLimits; i++)
+      {
+        std::size_t limitsIndex(i * 2);
+        double lolimit = limits[limitsIndex];
+        double hilimit = limits[limitsIndex + 1];
+        query_limits.push_back(SmartMet::Engine::Contour::Range(lolimit, hilimit));
+      }
+    }
+
+    // check number of names
+    if (itsLimitNames.size() * 2 != limits.size())
+    {
+      SmartMet::Spine::Exception exception(
+          BCP, "Parameter 'contour_params.limitNames' contains wrong number of elements!");
+      exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
+      throw exception;
     }
 
     // contains result for all coverages
@@ -70,8 +90,8 @@ std::vector<bw::ContourQueryResultPtr> bw::StoredWWCoverageQueryHandler::process
           CoverageQueryResultPtr result(new CoverageQueryResult);
           WeatherAreaGeometry wag = result_item->area_geoms[i];
           std::size_t limitsIndex(i * 2);
-          result->lolimit = itsLimits[limitsIndex];
-          result->hilimit = itsLimits[limitsIndex + 1];
+          result->lolimit = limits[limitsIndex];
+          result->hilimit = limits[limitsIndex + 1];
           result->name = itsLimitNames[i];
           result->area_geoms.push_back(wag);
           query_results.push_back(result);

@@ -1,0 +1,3057 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wfs:FeatureCollection timeStamp="2012-12-12T12:12:12Z" numberMatched="44" numberReturned="44"
+  xmlns:wfs="http://www.opengis.net/wfs/2.0" 
+  xmlns:gml="http://www.opengis.net/gml/3.2"
+  xmlns:om="http://www.opengis.net/om/2.0"
+  xmlns:omso="http://inspire.ec.europa.eu/schemas/omso/3.0"
+  xmlns:sam="http://www.opengis.net/sampling/2.0"
+  xmlns:sams="http://www.opengis.net/samplingSpatial/2.0"
+  xmlns:fmicov="http://xml.fmi.fi/namespace/weather/2015/09/18/coverages"
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd 
+                      http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd           
+                      http://www.opengis.net/om/2.0 http://schemas.opengis.net/om/2.0/observation.xsd 
+                      http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
+                      http://www.opengis.net/sampling/2.0 http://schemas.opengis.net/sampling/2.0/samplingFeature.xsd 
+                      http://www.opengis.net/samplingSpatial/2.0 http://schemas.opengis.net/samplingSpatial/2.0/spatialSamplingFeature.xsd 
+                      http://xml.fmi.fi/namespace/weather/2015/09/18/coverages metoceancoverages.xsd">
+  <!-- One member per time and parameter type -->
+  
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-1">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-1">
+	  <gml:timePosition>2008-08-04T18:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-1">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-1">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-1">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-1">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-04T18:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-1-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-1-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.047958 24.000000,61.000000 24.000000,61.000000 25.000000,60.203993 25.000000,60.133159 24.733227,60.085352 24.494524,60.078170 24.388791,60.056198 24.158729,60.047958 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-2">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-2">
+	  <gml:timePosition>2008-08-04T21:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-2">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-2">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-2">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-2">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-04T21:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-2-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-2-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.075181 24.000000,61.000000 24.000000,61.000000 25.000000,60.247836 25.000000,60.220885 24.883785,60.163738 24.697626,60.122772 24.513992,60.110528 24.350646,60.075451 24.006546,60.075181 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-3">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-3">
+	  <gml:timePosition>2008-08-05T00:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-3">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-3">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-3">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-3">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T00:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-3-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-3-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.101649 24.000000,61.000000 24.000000,61.000000 25.000000,60.272427 25.000000,60.271451 24.981916,60.232089 24.798543,60.191270 24.665572,60.159284 24.532988,60.138255 24.317960,60.111038 24.085048,60.101649 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-4">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-4">
+	  <gml:timePosition>2008-08-05T03:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-4">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-4">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-4">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-4">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T03:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-4-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-4-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.136982 24.000000,61.000000 24.000000,61.000000 25.000000,60.292379 25.000000,60.289941 24.960530,60.240146 24.737250,60.212489 24.640869,60.193562 24.550821,60.167145 24.283904,60.164941 24.264947,60.136479 24.007137,60.136982 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-5">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-5">
+	  <gml:timePosition>2008-08-05T06:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-5">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-5">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-5">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-5">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T06:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-5-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-5-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.179435 24.000000,61.000000 24.000000,61.000000 25.000000,60.324646 25.000000,60.320555 24.925124,60.248557 24.673264,60.232976 24.617017,60.222876 24.566072,60.211894 24.423005,60.200088 24.244755,60.180095 24.029083,60.179435 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-6">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-6">
+	  <gml:timePosition>2008-08-05T09:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-6">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-6">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-6">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-6">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T09:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-6-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-6-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.163538 24.000000,61.000000 24.000000,61.000000 25.000000,60.320952 25.000000,60.316437 24.929887,60.244228 24.706198,60.223587 24.627948,60.207172 24.557902,60.191700 24.354958,60.185794 24.261753,60.162670 24.020316,60.163538 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-7">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-7">
+	  <gml:timePosition>2008-08-05T12:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-7">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-7">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-7">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-7">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T12:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-7-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-7-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.116629 24.000000,61.000000 24.000000,61.000000 25.000000,60.264948 25.000000,60.264448 24.990015,60.224545 24.855939,60.189488 24.667648,60.160470 24.533605,60.149944 24.304181,60.130851 24.151171,60.116629 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-8">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-8">
+	  <gml:timePosition>2008-08-05T15:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-8">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-8">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-8">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-8">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T15:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-8-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-8-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.033631 24.000000,61.000000 24.000000,61.000000 25.000000,60.240156 25.000000,60.215656 24.923564,60.160750 24.701105,60.110655 24.507688,60.093206 24.371067,60.052558 24.187504,60.034473 24.031092,60.033631 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-9">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-9">
+	  <gml:timePosition>2008-08-05T18:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-9">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-9">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-9">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-9">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T18:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-9-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-9-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.111107 25.000000,60.060999 24.816765,60.002896 24.575737,60.000000 24.566314,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-10">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-10">
+	  <gml:timePosition>2008-08-05T21:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-10">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-10">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-10">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-10">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T21:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-10-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-10-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.042648 25.000000,60.042410 24.985630,60.013476 24.871611,60.000000 24.825852,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-11">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-11">
+	  <gml:timePosition>2008-08-06T00:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-11">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-11">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-11">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-11">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-06T00:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-11-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-11-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-12">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-12">
+	  <gml:timePosition>2008-08-06T03:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-12">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-12">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-12">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-12">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-06T03:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-12-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-12-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-13">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-13">
+	  <gml:timePosition>2008-08-06T06:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-13">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-13">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-13">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-13">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-06T06:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-13-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-13-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-14">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-14">
+	  <gml:timePosition>2008-08-06T09:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-14">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-14">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-14">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-14">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-06T09:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-14-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-14-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-15">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-15">
+	  <gml:timePosition>2008-08-06T12:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-15">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-15">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-15">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-15">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-06T12:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-15-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-15-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-16">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-16">
+	  <gml:timePosition>2008-08-06T15:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-16">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-16">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-16">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-16">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-06T15:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-16-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-16-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-17">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-17">
+	  <gml:timePosition>2008-08-06T18:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-17">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-17">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-17">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-17">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-06T18:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-17-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-17-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-18">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-18">
+	  <gml:timePosition>2008-08-06T21:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-18">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-18">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-18">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-18">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-06T21:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-18-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-18-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-19">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-19">
+	  <gml:timePosition>2008-08-07T00:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-19">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-19">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-19">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-19">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-07T00:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-19-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-19-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-20">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-20">
+	  <gml:timePosition>2008-08-07T03:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-20">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-20">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-20">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-20">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-07T03:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-20-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-20-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-21">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-21">
+	  <gml:timePosition>2008-08-07T06:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-21">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-21">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-21">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-21">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-07T06:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-21-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-21-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-22">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-22">
+	  <gml:timePosition>2008-08-07T09:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-22">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-22">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-22">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-22">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-07T09:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-22-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-22-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-23">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-23">
+	  <gml:timePosition>2008-08-07T12:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-23">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-23">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-23">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-23">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-07T12:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-23-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-23-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-24">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-24">
+	  <gml:timePosition>2008-08-07T15:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-24">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-24">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-24">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-24">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-07T15:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-24-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-24-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-25">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-25">
+	  <gml:timePosition>2008-08-07T18:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-25">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-25">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-25">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-25">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-07T18:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-25-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-25-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-26">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-26">
+	  <gml:timePosition>2008-08-07T21:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-26">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-26">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-26">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-26">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-07T21:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-26-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-26-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-27">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-27">
+	  <gml:timePosition>2008-08-08T00:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-27">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-27">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-27">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-27">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-08T00:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-27-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-27-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.148557 25.000000,60.069040 24.807485,60.003849 24.568476,60.000000 24.557441,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-28">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-28">
+	  <gml:timePosition>2008-08-08T03:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-28">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-28">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-28">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-28">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-08T03:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-28-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-28-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.044362 25.000000,60.044900 24.986967,60.015240 24.869575,60.000000 24.821229,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-29">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-29">
+	  <gml:timePosition>2008-08-08T06:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-29">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-29">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-29">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-29">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-08T06:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-29-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-29-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-30">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-30">
+	  <gml:timePosition>2008-08-08T09:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-30">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-30">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-30">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-30">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-08T09:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-30-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-30-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-31">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-31">
+	  <gml:timePosition>2008-08-08T12:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-31">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-31">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-31">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-31">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-08T12:00:00Z" parameter="WindSpeedMS" unit="m/s" low="0" high="10"
+      gml:id="fmicov-phenomenon-area-wfs-member-31-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-31-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-32">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-32">
+	  <gml:timePosition>2008-08-04T18:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-32">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-32">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-32">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-32">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-04T18:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      gml:id="fmicov-phenomenon-area-wfs-member-32-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-32-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,60.047958 24.000000,60.056198 24.158729,60.078170 24.388791,60.085352 24.494524,60.133159 24.733227,60.203993 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-33">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-33">
+	  <gml:timePosition>2008-08-04T21:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-33">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-33">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-33">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-33">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-04T21:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      gml:id="fmicov-phenomenon-area-wfs-member-33-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-33-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,60.075181 24.000000,60.075451 24.006546,60.110528 24.350646,60.122772 24.513992,60.163738 24.697626,60.220885 24.883785,60.247836 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-34">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-34">
+	  <gml:timePosition>2008-08-05T00:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-34">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-34">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-34">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-34">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T00:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      gml:id="fmicov-phenomenon-area-wfs-member-34-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-34-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,60.101649 24.000000,60.111038 24.085048,60.138255 24.317960,60.159284 24.532988,60.191270 24.665572,60.232089 24.798543,60.271451 24.981916,60.272427 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-35">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-35">
+	  <gml:timePosition>2008-08-05T03:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-35">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-35">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-35">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-35">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T03:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      gml:id="fmicov-phenomenon-area-wfs-member-35-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-35-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,60.136982 24.000000,60.136479 24.007137,60.164941 24.264947,60.167145 24.283904,60.193562 24.550821,60.212489 24.640869,60.240146 24.737250,60.289941 24.960530,60.292379 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-36">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-36">
+	  <gml:timePosition>2008-08-05T06:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-36">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-36">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-36">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-36">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T06:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      gml:id="fmicov-phenomenon-area-wfs-member-36-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-36-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,60.179435 24.000000,60.180095 24.029083,60.200088 24.244755,60.211894 24.423005,60.222876 24.566072,60.232976 24.617017,60.248557 24.673264,60.320555 24.925124,60.324646 25.000000,60.008459 25.000000,60.011571 24.969060,60.000000 24.926962,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-37">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-37">
+	  <gml:timePosition>2008-08-05T09:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-37">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-37">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-37">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-37">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T09:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      gml:id="fmicov-phenomenon-area-wfs-member-37-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-37-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,60.163538 24.000000,60.162670 24.020316,60.185794 24.261753,60.191700 24.354958,60.207172 24.557902,60.223587 24.627948,60.244228 24.706198,60.316437 24.929887,60.320952 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-38">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-38">
+	  <gml:timePosition>2008-08-05T12:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-38">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-38">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-38">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-38">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T12:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      gml:id="fmicov-phenomenon-area-wfs-member-38-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-38-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,60.116629 24.000000,60.130851 24.151171,60.149944 24.304181,60.160470 24.533605,60.189488 24.667648,60.224545 24.855939,60.264448 24.990015,60.264948 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-39">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-39">
+	  <gml:timePosition>2008-08-05T15:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-39">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-39">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-39">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-39">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T15:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      gml:id="fmicov-phenomenon-area-wfs-member-39-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-39-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.000000,60.033631 24.000000,60.034473 24.031092,60.052558 24.187504,60.093206 24.371067,60.110655 24.507688,60.160750 24.701105,60.215656 24.923564,60.240156 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-40">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-40">
+	  <gml:timePosition>2008-08-05T18:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-40">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-40">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-40">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-40">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T18:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      gml:id="fmicov-phenomenon-area-wfs-member-40-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-40-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.566314,60.002896 24.575737,60.060999 24.816765,60.111107 25.000000,60.000000 25.000000,60.000000 24.566314</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-41">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-41">
+	  <gml:timePosition>2008-08-05T21:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-41">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-41">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-41">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-41">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T21:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      gml:id="fmicov-phenomenon-area-wfs-member-41-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-41-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.825852,60.013476 24.871611,60.042410 24.985630,60.042648 25.000000,60.000000 25.000000,60.000000 24.825852</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-42">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-42">
+	  <gml:timePosition>2008-08-08T00:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-42">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-42">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-42">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-42">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-08T00:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      gml:id="fmicov-phenomenon-area-wfs-member-42-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-42-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.557441,60.003849 24.568476,60.069040 24.807485,60.148557 25.000000,60.000000 25.000000,60.000000 24.557441</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-43">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-43">
+	  <gml:timePosition>2008-08-08T03:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-43">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-43">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-43">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-43">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-08T03:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      gml:id="fmicov-phenomenon-area-wfs-member-43-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-43-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.821229,60.015240 24.869575,60.044900 24.986967,60.044362 25.000000,60.000000 25.000000,60.000000 24.821229</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+    <wfs:member>
+      <omso:GridSeriesObservation gml:id="wfs-member-44">
+	<!-- Data time stamp -->
+	<om:phenomenonTime>
+	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-44">
+	  <gml:timePosition>2008-08-05T06:00:00Z</gml:timePosition>
+	</gml:TimeInstant>
+      </om:phenomenonTime>
+      <!-- Model analysis time -->
+      <om:resultTime>
+	<gml:TimeInstant gml:id="result-time-wfs-member-44">
+	<gml:timePosition>2017-03-20T06:36:29Z</gml:timePosition>
+      </gml:TimeInstant>
+    </om:resultTime>
+    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
+    <om:parameter>
+      <om:NamedValue>
+        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:value>
+          <gml:TimeInstant gml:id="analysis-time-wfs-member-44">
+            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
+          </gml:TimeInstant>
+        </om:value>
+      </om:NamedValue>
+    </om:parameter>
+    <om:observedProperty
+        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+    <om:featureOfInterest>
+      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-44">
+      <sam:sampledFeature/>
+      <!-- Sampling feature is actually a requested bbox -->
+      <sams:shape>
+	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-44">
+        <gml:exterior>
+          <gml:LinearRing>
+            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
+          </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+    </sams:shape>
+  </sams:SF_SpatialSamplingFeature>
+</om:featureOfInterest>
+  <om:result>
+    
+      <fmicov:phenomenonArea dateTime="2008-08-05T06:00:00Z" parameter="WindSpeedMS" unit="m/s" low="15" high="25"
+      gml:id="fmicov-phenomenon-area-wfs-member-44-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+      
+	<gml:surfaceMember>
+	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-44-surface-member-1">
+	    <gml:patches>
+	      <gml:PolygonPatch>
+		<!-- exterior ring -->
+		<gml:exterior>
+		  <gml:LinearRing>
+		    <gml:coordinates>60.000000 24.926962,60.011571 24.969060,60.008459 25.000000,60.000000 25.000000,60.000000 24.926962</gml:coordinates>
+		  </gml:LinearRing>
+		</gml:exterior>
+		
+	      </gml:PolygonPatch>
+	    </gml:patches>
+	  </gml:Surface>
+	</gml:surfaceMember>
+      
+    </fmicov:phenomenonArea>
+  
+</om:result>
+</omso:GridSeriesObservation>
+</wfs:member>
+
+</wfs:FeatureCollection>

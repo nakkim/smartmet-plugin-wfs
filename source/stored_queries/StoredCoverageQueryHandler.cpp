@@ -17,7 +17,8 @@ bw::StoredCoverageQueryHandler::StoredCoverageQueryHandler(
 {
   try
   {
-    itsLimits = config->get_mandatory_config_array<double>("contour_param.limits");
+    if (config->find_setting(config->get_root(), "contour_param.limits", false))
+      itsLimits = config->get_mandatory_config_array<double>("contour_param.limits");
     itsUnit = config->get_optional_config_param<std::string>("contour_param.unit", "");
 
     // check number of limits
@@ -56,16 +57,35 @@ std::vector<bw::ContourQueryResultPtr> bw::StoredCoverageQueryHandler::processQu
   {
     std::vector<ContourQueryResultPtr> query_results;
 
-    unsigned int numLimits(itsLimits.size() / 2);
+    std::vector<double> limits;
 
-    for (std::size_t i = 0; i < numLimits; i++)
+    std::vector<SmartMet::Engine::Contour::Range>& query_limits =
+        (reinterpret_cast<CoverageQueryParameter&>(queryParameter)).limits;
+    if (query_limits.size() > 0)
     {
-      std::size_t limitsIndex(i * 2);
-      double lolimit = itsLimits[limitsIndex];
-      double hilimit = itsLimits[limitsIndex + 1];
-      std::string name = queryParameter.parameter.name();
-      (reinterpret_cast<CoverageQueryParameter&>(queryParameter))
-          .limits.push_back(SmartMet::Engine::Contour::Range(lolimit, hilimit));
+      for (auto l : query_limits)
+      {
+        double lolimit = DBL_MIN;
+        double hilimit = DBL_MAX;
+        if (l.lolimit)
+          lolimit = *l.lolimit;
+        if (l.hilimit)
+          hilimit = *l.hilimit;
+        limits.push_back(lolimit);
+        limits.push_back(hilimit);
+      }
+    }
+    else
+    {
+      limits = itsLimits;
+      unsigned int numLimits(limits.size() / 2);
+      for (std::size_t i = 0; i < numLimits; i++)
+      {
+        std::size_t limitsIndex(i * 2);
+        double lolimit = limits[limitsIndex];
+        double hilimit = limits[limitsIndex + 1];
+        query_limits.push_back(SmartMet::Engine::Contour::Range(lolimit, hilimit));
+      }
     }
 
     // contains result for all coverages
@@ -85,8 +105,8 @@ std::vector<bw::ContourQueryResultPtr> bw::StoredCoverageQueryHandler::processQu
           CoverageQueryResultPtr result(new CoverageQueryResult);
           WeatherAreaGeometry wag = result_item->area_geoms[i];
           std::size_t limitsIndex(i * 2);
-          result->lolimit = itsLimits[limitsIndex];
-          result->hilimit = itsLimits[limitsIndex + 1];
+          result->lolimit = limits[limitsIndex];
+          result->hilimit = limits[limitsIndex + 1];
           result->name = queryParameter.parameter.name();
           result->unit = itsUnit;
           result->area_geoms.push_back(wag);

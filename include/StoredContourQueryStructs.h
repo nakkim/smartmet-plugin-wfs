@@ -46,6 +46,7 @@ struct ContourQueryParameter
         smoothing_size(2)
   {
   }
+  virtual ~ContourQueryParameter() {}
 };
 
 struct CoverageQueryParameter : ContourQueryParameter

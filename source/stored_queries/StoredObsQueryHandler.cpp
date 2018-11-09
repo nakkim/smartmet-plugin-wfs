@@ -149,7 +149,45 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
     if (debug_level > 0)
       query.dump_query_info(std::cout);
 
-    const auto& params = query.get_param_map();
+    // If 'data_source'-field exists
+    // extend it so that for every meteo.parameter
+    // a corresponding '*data_source'-field is added,
+    // for example, Temperature -> Temperature_data_source
+    auto params = query.get_param_map();
+
+    std::set<std::string> keys = params.get_keys();
+    for (auto k : keys)
+    {
+      if (k == "meteoParameters")
+      {
+        std::vector<SmartMet::Spine::Value> values = params.get_values(k);
+        std::vector<std::string> mparams;
+        bool dataSourceFound = false;
+        for (auto v : values)
+        {
+          std::string val = v.to_string();
+          if (val == "data_source")
+          {
+            dataSourceFound = true;
+          }
+          else
+          {
+            mparams.push_back(val);
+          }
+        }
+        if (dataSourceFound && mparams.size() > 0)
+        {
+          params.remove("meteoParameters");
+          for (auto p : mparams)
+          {
+            std::string fieldname = p + "_data_source";
+            params.add("meteoParameters", p);
+            params.add("meteoParameters", fieldname);
+          }
+        }
+        break;
+      }
+    }
 
     try
     {

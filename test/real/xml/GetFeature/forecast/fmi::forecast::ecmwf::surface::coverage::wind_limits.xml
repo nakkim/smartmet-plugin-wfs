@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wfs:GetFeature
+         service="WFS"
+         version="2.0.0"
+         xmlns:wfs="http://www.opengis.net/wfs/2.0"
+         xmlns:gml="http://www.opengis.net/gml/3.2"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd">
+   <wfs:StoredQuery id="fmi::forecast::ecmwf::surface::coverage::wind">
+      <wfs:Parameter name="bbox">24.00,60.00,25.00,61.00</wfs:Parameter>
+      <wfs:Parameter name="crs">EPSG::4326</wfs:Parameter>
+      <wfs:Parameter name="starttime">2008-08-04T18:00:00Z</wfs:Parameter>
+      <wfs:Parameter name="endtime">2008-08-08T12:00:00Z</wfs:Parameter>
+      <wfs:Parameter name="timestep">180</wfs:Parameter>
+      <wfs:Parameter name="producer">ecmwf_eurooppa_pinta</wfs:Parameter>
+      <wfs:Parameter name="limits">0.0 10.0 10.0 15.0 15.0 25.0</wfs:Parameter>
+   </wfs:StoredQuery>
+</wfs:GetFeature>
