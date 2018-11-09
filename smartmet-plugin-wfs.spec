@@ -4,7 +4,7 @@
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
 Version: 18.11.9
-Release: 1%{?dist}.fmi
+Release: 2%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-wfs
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Oct 18 2018 Anssi Reponen <anssi.reponen@fmi.fi> - 18.10.18-2.fmi
+- Support for data_source-field added (BRAINSTORM-1233)
+
 * Fri Nov  9 2018 Anssi Reponen <anssi.reponen@fmi.fi> - 18.11.9-1.fmi
 - Limits of contours supported also as a URL-parameter (BRAINSTORM-864)
 - Support for data_source-field added (BRAINSTORM-1233)
