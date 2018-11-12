@@ -3,7 +3,6 @@
 #include "Config.h"
 #include "GeoServerDB.h"
 #include "StoredQueryMap.h"
-#include "TemplateFactory.h"
 #include "TypeNameStoredQueryMap.h"
 #include "WfsCapabilities.h"
 #include "XmlEnvInit.h"
@@ -14,6 +13,7 @@
 #include <engines/gis/CRSRegistry.h>
 #include <engines/gis/Engine.h>
 #include <engines/querydata/Engine.h>
+#include <macgyver/TemplateFactory.h>
 #include <macgyver/TimedCache.h>
 
 namespace SmartMet
@@ -109,7 +109,7 @@ class PluginData : public boost::noncopyable
   SmartMet::Engine::Querydata::Engine* itsQEngine;
   SmartMet::Engine::Gis::Engine* itsGisEngine;
 
-  TemplateFactory itsTemplateFactory;
+  Fmi::TemplateFactory itsTemplateFactory;
 
   boost::filesystem::path getCapabilitiesFormatterPath;
   boost::filesystem::path listStoredQueriesFormatterPath;

@@ -4,7 +4,6 @@
 #include "StoredQuery.h"
 #include "StoredQueryHandlerBase.h"
 #include <boost/filesystem.hpp>
-#include <macgyver/TemplateDirectory.h>
 #include <spine/Reactor.h>
 
 namespace SmartMet
@@ -36,12 +35,12 @@ class StoredQueryMap
 
   void add_handler(SmartMet::Spine::Reactor* theReactor,
                    const boost::filesystem::path& stored_query_config_file,
-                   const Fmi::TemplateDirectory& template_dir,
+                   const boost::filesystem::path& template_dir,
                    PluginData& plugin_data);
 
   void read_config_dir(SmartMet::Spine::Reactor* theReactor,
                        const boost::filesystem::path& config_dir,
-                       const Fmi::TemplateDirectory& template_dir,
+                       const boost::filesystem::path& template_dir,
                        PluginData& plugin_data);
 
   inline std::vector<std::string> get_handler_names() const { return handler_names; }
@@ -54,12 +53,12 @@ class StoredQueryMap
  private:
   void add_handler(SmartMet::Spine::Reactor* theReactor,
                    boost::shared_ptr<StoredQueryConfig> sqh_config,
-                   const Fmi::TemplateDirectory& template_dir,
+                   const boost::filesystem::path& template_dir,
                    PluginData& plugin_data);
 
   void add_handler_thread_proc(SmartMet::Spine::Reactor* theReactor,
                                boost::shared_ptr<StoredQueryConfig> config,
-                               const Fmi::TemplateDirectory& template_dir,
+                               const boost::filesystem::path& template_dir,
                                PluginData& plugin_data);
 
  private:

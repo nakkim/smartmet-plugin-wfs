@@ -3,7 +3,6 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
 #include <boost/filesystem.hpp>
-#include <macgyver/TemplateDirectory.h>
 #include <macgyver/TypeName.h>
 #include <spine/Convenience.h>
 #include <spine/Exception.h>
@@ -143,7 +142,7 @@ void bw::StoredQueryMap::add_handler(boost::shared_ptr<StoredQueryHandlerBase> h
 
 void bw::StoredQueryMap::add_handler(SmartMet::Spine::Reactor* theReactor,
                                      const boost::filesystem::path& stored_query_config_file,
-                                     const Fmi::TemplateDirectory& template_dir,
+                                     const boost::filesystem::path& template_dir,
                                      PluginData& plugin_data)
 {
   try
@@ -226,7 +225,7 @@ void bw::StoredQueryMap::add_handler(SmartMet::Spine::Reactor* theReactor,
 
 void bw::StoredQueryMap::read_config_dir(SmartMet::Spine::Reactor* theReactor,
                                          const boost::filesystem::path& config_dir,
-                                         const Fmi::TemplateDirectory& template_dir,
+                                         const boost::filesystem::path& template_dir,
                                          PluginData& plugin_data)
 {
   try
@@ -324,7 +323,7 @@ std::vector<std::string> bw::StoredQueryMap::get_return_type_names() const
 
 void bw::StoredQueryMap::add_handler(SmartMet::Spine::Reactor* theReactor,
                                      boost::shared_ptr<StoredQueryConfig> sqh_config,
-                                     const Fmi::TemplateDirectory& template_dir,
+                                     const boost::filesystem::path& template_dir,
                                      PluginData& plugin_data)
 {
   try
@@ -334,7 +333,7 @@ void bw::StoredQueryMap::add_handler(SmartMet::Spine::Reactor* theReactor,
       boost::optional<std::string> sqh_template_fn;
       if (sqh_config->have_template_fn())
       {
-        sqh_template_fn = template_dir.find_template(sqh_config->get_template_fn()).string();
+        sqh_template_fn = (template_dir / sqh_config->get_template_fn()).string();
       }
 
       boost::shared_ptr<StoredQueryHandlerBase> p_handler = StoredQueryHandlerFactoryDef::construct(
@@ -374,7 +373,7 @@ void bw::StoredQueryMap::add_handler(SmartMet::Spine::Reactor* theReactor,
 
 void bw::StoredQueryMap::add_handler_thread_proc(SmartMet::Spine::Reactor* theReactor,
                                                  boost::shared_ptr<bw::StoredQueryConfig> config,
-                                                 const Fmi::TemplateDirectory& template_dir,
+                                                 const boost::filesystem::path& template_dir,
                                                  bw::PluginData& plugin_data)
 {
   try
