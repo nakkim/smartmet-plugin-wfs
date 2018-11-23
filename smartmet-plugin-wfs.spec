@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 18.11.12
+Version: 18.11.23
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -31,9 +31,9 @@ BuildRequires: smartmet-engine-contour-devel >= 18.7.25
 BuildRequires: smartmet-engine-geonames-devel >= 18.9.29
 BuildRequires: smartmet-engine-gis-devel >= 18.10.1
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 18.9.29
+BuildRequires: smartmet-engine-observation-devel >= 18.11.12
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 18.10.19
+BuildRequires: smartmet-engine-querydata-devel >= 18.11.15
 BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 5.2.0
@@ -48,9 +48,9 @@ Requires: smartmet-engine-contour >= 18.7.25
 Requires: smartmet-engine-geonames >= 18.9.29
 Requires: smartmet-engine-gis >= 18.10.1
 %if %{with observation}
-Requires: smartmet-engine-observation >= 18.9.29
+Requires: smartmet-engine-observation >= 18.11.12
 %endif
-Requires: smartmet-engine-querydata >= 18.10.19
+Requires: smartmet-engine-querydata >= 18.11.15
 Requires: smartmet-server >= 18.11.8
 Requires: xerces-c
 Requires: xqilla
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Fri Nov 23 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.11.23-1.fmi
+- Fixed handling of timestep=0
+
 * Mon Nov 12 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.11.12-1.fmi
 - Refactored TemplateFactory into macgyver library
 
