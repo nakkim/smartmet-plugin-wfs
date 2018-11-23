@@ -104,7 +104,7 @@ class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
 
   inline SmartMet::Spine::Reactor* get_reactor() const { return reactor; }
   inline const PluginData& get_plugin_data() const { return plugin_data; }
-  void format_output(CTPP::CDT hash, std::ostream& output, bool debug_format) const;
+  void format_output(CTPP::CDT& hash, std::ostream& output, bool debug_format) const;
 
   static void set_2D_coord(
       boost::shared_ptr<SmartMet::Engine::Gis::CRSRegistry::Transformation> transformation,

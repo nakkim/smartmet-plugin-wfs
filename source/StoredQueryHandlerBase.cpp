@@ -168,12 +168,14 @@ boost::shared_ptr<Fmi::TemplateFormatter> StoredQueryHandlerBase::get_formatter(
   }
 }
 
-void StoredQueryHandlerBase::format_output(CTPP::CDT hash,
+void StoredQueryHandlerBase::format_output(CTPP::CDT& hash,
                                            std::ostream& output,
                                            bool debug_format) const
 {
   try
   {
+    // std::cout << "HASH=\n" << hash.Dump(0, false, true) << std::endl;
+
     std::ostringstream formatter_log;
     auto formatter = get_formatter(debug_format);
     try

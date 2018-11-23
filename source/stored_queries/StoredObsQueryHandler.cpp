@@ -325,7 +325,8 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       crs_registry.get_attribute(crs, "projEpochUri", &proj_epoch_uri);
 
       uint64_t timestep = params.get_single<uint64_t>(P_TIME_STEP);
-      query_params.timestep = (timestep > 0 ? timestep : 1);
+      // query_params.timestep = (timestep > 0 ? timestep : 1);
+      query_params.timestep = (timestep > 0 ? timestep : 0);
 
       query_params.allplaces = false;
 
