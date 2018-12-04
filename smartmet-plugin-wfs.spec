@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 18.11.23
+Version: 18.12.4
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -23,34 +23,34 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 18.11.9
+BuildRequires: smartmet-library-spine-devel >= 18.12.4
 BuildRequires: smartmet-library-gis-devel >= 18.9.29
-BuildRequires: smartmet-library-locus-devel >= 18.8.21
-BuildRequires: smartmet-library-macgyver-devel >= 18.11.12
+BuildRequires: smartmet-library-locus-devel >= 18.11.16
+BuildRequires: smartmet-library-macgyver-devel >= 18.11.24
 BuildRequires: smartmet-engine-contour-devel >= 18.7.25
-BuildRequires: smartmet-engine-geonames-devel >= 18.9.29
-BuildRequires: smartmet-engine-gis-devel >= 18.10.1
+BuildRequires: smartmet-engine-geonames-devel >= 18.12.4
+BuildRequires: smartmet-engine-gis-devel >= 18.11.22
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 18.11.12
+BuildRequires: smartmet-engine-observation-devel >= 18.12.4
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 18.11.15
+BuildRequires: smartmet-engine-querydata-devel >= 18.12.4
 BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 5.2.0
 Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
-Requires: smartmet-library-locus >= 18.8.21
-Requires: smartmet-library-macgyver >= 18.11.12
-Requires: smartmet-library-spine >= 18.11.9
+Requires: smartmet-library-locus >= 18.11.16
+Requires: smartmet-library-macgyver >= 18.11.24
+Requires: smartmet-library-spine >= 18.12.4
 Requires: smartmet-library-gis >= 18.9.29
 Requires: smartmet-engine-contour >= 18.7.25
-Requires: smartmet-engine-geonames >= 18.9.29
-Requires: smartmet-engine-gis >= 18.10.1
+Requires: smartmet-engine-geonames >= 18.12.4
+Requires: smartmet-engine-gis >= 18.11.22
 %if %{with observation}
-Requires: smartmet-engine-observation >= 18.11.12
+Requires: smartmet-engine-observation >= 18.12.4
 %endif
-Requires: smartmet-engine-querydata >= 18.11.15
+Requires: smartmet-engine-querydata >= 18.12.4
 Requires: smartmet-server >= 18.11.8
 Requires: xerces-c
 Requires: xqilla
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Tue Dec  4 2018 Pertti Kinnia <pertti.kinnia@fmi.fi> - 18.12.4-1.fmi
+- Repackaged since Spine::Table size changed
+
 * Fri Nov 23 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.11.23-1.fmi
 - Fixed handling of timestep=0
 
