@@ -186,7 +186,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
       query_params.timezone = "UTC";
       query_params.numberofstations = 1;
       query_params.missingtext = missing_text;
-      query_params.localename = "fi_FI.utf8";
+      query_params.localename = get_locale_name();
       query_params.starttimeGiven = true;
 
       const std::string tz_name = get_tz_name(params);
