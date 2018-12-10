@@ -56,6 +56,7 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   const std::vector<std::string>& get_languages() const { return languages; }
   inline int getCacheSize() const { return cache_size; }
   inline int getCacheTimeConstant() const { return cache_time_constant; }
+  inline const std::string& get_default_locale() const { return default_locale; }
   std::vector<boost::shared_ptr<WfsFeatureDef> > read_features_config(
       SmartMet::Engine::Gis::CRSRegistry& theCRSRegistry);
 
@@ -66,6 +67,7 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   std::string getFeatureById;
   std::vector<std::string> sq_config_dirs;
   std::string geoserver_conn_str;
+  std::string default_locale;
   int cache_size;
   int cache_time_constant;
   int default_expires_seconds;
