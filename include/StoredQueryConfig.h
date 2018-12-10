@@ -18,6 +18,8 @@ namespace Plugin
 {
 namespace WFS
 {
+
+class Config;
 class StoredQueryHandlerBase;
 
 /**
@@ -101,8 +103,8 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
   };
 
  public:
-  StoredQueryConfig(const std::string& fn);
-  StoredQueryConfig(boost::shared_ptr<libconfig::Config> config);
+    StoredQueryConfig(const std::string& fn, const Config& plugin_config);
+  StoredQueryConfig(boost::shared_ptr<libconfig::Config> config, const Config& plugin_config);
   virtual ~StoredQueryConfig();
 
   inline bool is_disabled() const { return disabled; }
@@ -172,10 +174,27 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
    */
   bool last_write_time_changed() const;
 
+ protected:
+
+  /**
+   *  Set locale with specified name for stored query handler
+   *
+   *  Intended only to be used when parsing stored query configuration
+   */
+  void set_locale(const std::string& name);
+
+  const std::string& get_locale_name() const { return locale_name; }
+
+  /**
+   *  Returns locale to be used for stored query
+   */
+  std::locale get_locale() const;
+
  private:
   void parse_config();
 
  private:
+  std::string locale_name;
   std::string query_id;
   std::time_t config_last_write_time;
 

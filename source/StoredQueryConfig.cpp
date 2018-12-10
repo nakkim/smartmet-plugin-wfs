@@ -1,4 +1,5 @@
 #include "StoredQueryConfig.h"
+#include "Config.h"
 #include "ParameterTemplateBase.h"
 #include "StoredQueryHandlerBase.h"
 #include <boost/algorithm/string.hpp>
@@ -13,11 +14,13 @@
 
 namespace bw = SmartMet::Plugin::WFS;
 
-SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(const std::string& config_file)
+SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(const std::string& config_file,
+							    const Config& plugin_config)
     : SmartMet::Spine::ConfigBase(config_file, "WFS stored query configuration")
 {
   try
   {
+    locale_name = plugin_config.get_default_locale();
     config_last_write_time = config_write_time();
     parse_config();
   }
@@ -28,11 +31,14 @@ SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(const std::string& c
 }
 
 SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(
-    boost::shared_ptr<libconfig::Config> config)
+    boost::shared_ptr<libconfig::Config> config,
+    const Config& plugin_config)
+
     : SmartMet::Spine::ConfigBase(config, "WFS stored query configuration")
 {
   try
   {
+    locale_name = plugin_config.get_default_locale();
     config_last_write_time = config_write_time();
     parse_config();
   }
@@ -469,6 +475,16 @@ bool SmartMet::Plugin::WFS::StoredQueryConfig::last_write_time_changed() const
     msg << "Failed to test write time of '" << get_file_name() << "' file.";
     throw SmartMet::Spine::Exception::Trace(BCP, msg.str());
   }
+}
+
+void SmartMet::Plugin::WFS::StoredQueryConfig::set_locale(const std::string& name)
+{
+  locale_name = name;
+}
+
+std::locale SmartMet::Plugin::WFS::StoredQueryConfig::get_locale() const
+{
+  return std::locale(get_locale_name().c_str());
 }
 
 /**
