@@ -18,7 +18,8 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
 }
 
 using namespace SmartMet;
-using namespace SmartMet::PluginWFS;
+using namespace SmartMet::Plugin::WFS;
+using SmartMet::Spine::Value;
 
 namespace
 {

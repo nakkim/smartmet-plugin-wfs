@@ -8,7 +8,7 @@
 #include "ConfigBuild.h"
 
 using namespace boost::unit_test;
-using SmartMet::PluginWFS::RequestParameterMap;
+using SmartMet::Plugin::WFS::RequestParameterMap;
 
 test_suite* init_unit_test_suite(int argc, char* argv[])
 {
@@ -58,7 +58,7 @@ void dummy_proc(const char* text)
 {
   (void)text;
 }
-namespace bw = SmartMet::PluginWFS;
+namespace bw = SmartMet::Plugin::WFS;
 namespace pt = boost::posix_time;
 
 using SmartMet::Spine::Value;

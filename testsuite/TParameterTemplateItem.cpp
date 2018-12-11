@@ -19,7 +19,7 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
   return NULL;
 }
 
-using SmartMet::PluginWFS::ParameterTemplateItem;
+using SmartMet::Plugin::WFS::ParameterTemplateItem;
 using SmartMet::Spine::Value;
 
 BOOST_AUTO_TEST_CASE(param_templ_item_not_string)
@@ -177,7 +177,7 @@ BOOST_AUTO_TEST_CASE(param_templ_item_garbage_after_param_ref)
   BOOST_TEST_MESSAGE("+ [ParameterTemplateItem] Garbage after parameter reference");
   ParameterTemplateItem item;
   std::string s1;
-  BOOST_REQUIRE_THROW(item.parse(std::string("%{foobar}:XXXX"), false), std::runtime_error);
-  BOOST_REQUIRE_THROW(item.parse(std::string("%{} XXXX"), false), std::runtime_error);
-  BOOST_REQUIRE_THROW(item.parse(std::string("%{foo[3] > bar} jfjhf "), false), std::runtime_error);
+  BOOST_REQUIRE_THROW(item.parse(std::string("%{foobar}:XXXX"), false), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(item.parse(std::string("%{} XXXX"), false), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(item.parse(std::string("%{foo[3] > bar} jfjhf "), false), SmartMet::Spine::Exception);
 }

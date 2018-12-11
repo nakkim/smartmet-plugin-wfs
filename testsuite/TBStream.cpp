@@ -3,9 +3,8 @@
 #include <boost/foreach.hpp>
 #include <boost/test/included/unit_test.hpp>
 #include <BStream.h>
-#include "CRSRegistry.h"
-
 #include <boost/algorithm/hex.hpp>
+#include <spine/Exception.h>
 
 using namespace boost::unit_test;
 
@@ -20,8 +19,8 @@ test_suite *init_unit_test_suite(int argc, char *argv[])
   return NULL;
 }
 
-using SmartMet::PluginWFS::IBStream;
-using SmartMet::PluginWFS::OBStream;
+using SmartMet::Plugin::WFS::IBStream;
+using SmartMet::Plugin::WFS::OBStream;
 
 BOOST_AUTO_TEST_CASE(test_writing_and_reading_bits_1)
 {
@@ -47,7 +46,7 @@ BOOST_AUTO_TEST_CASE(test_writing_and_reading_bits_1)
   BOOST_CHECK(not in.get_bit());
   BOOST_CHECK(not in.get_bit());
   BOOST_CHECK(not in.get_bit());
-  BOOST_CHECK_THROW(in.get_bit(), std::runtime_error);
+  BOOST_CHECK_THROW(in.get_bit(), SmartMet::Spine::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(test_writing_and_reading_bits_2)

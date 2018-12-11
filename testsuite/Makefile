@@ -58,7 +58,8 @@ objdir = obj
 
 INCLUDES = -I$(includedir) \
 	-I$(includedir)/smartmet \
-	-I$(includedir)/mysql
+	-I$(includedir)/mysql \
+	-Iinclude
 
 LIBS = -L$(libdir) \
 	-lsmartmet-spine \
@@ -75,7 +76,7 @@ LIBS = -L$(libdir) \
         -lxqilla \
 	-lxerces-c \
 	-lgdal \
-	-lpqxx /usr/pgsql-9.3/lib/libpq.a \
+	-lpqxx -lpq \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \
@@ -83,7 +84,8 @@ LIBS = -L$(libdir) \
 	-lcrypto \
 	-lbz2 -lz \
 	-lpthread \
-	-lm
+	-lm \
+	-ldl
 
 INCLUDES := -I$(TOP)/include $(INCLUDES)
 
@@ -125,7 +127,7 @@ check-valgrind:	../libwfs.a $(TESTSUITE_TARGETS)
 $(TESTSUITE_TARGETS) : ../libwfs.a
 
 %.test : obj/%.o ; @echo "Building $@"
-	@$(CC) -o $@ $(TESTSUITE_CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) -L.. -lwfs $(LIBS)
+	$(CXX) -o $@ $(TESTSUITE_CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) -L.. -lwfs $(LIBS)
 
 CFLAGS += -I include
 

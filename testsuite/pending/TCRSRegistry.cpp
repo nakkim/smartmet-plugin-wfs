@@ -1,7 +1,8 @@
+// FIXME: move to smartmet-engine-gis
 #include <iostream>
 #include <boost/test/included/unit_test.hpp>
 #include <newbase/NFmiPoint.h>
-#include "CRSRegistry.h"
+#include <smartmet/engines/gis/CRSRegistry.h>
 
 using namespace boost::unit_test;
 
@@ -18,7 +19,7 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
 
 BOOST_AUTO_TEST_CASE(test_coordinate_transformation_1)
 {
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Engine::Gis;
   // namespace pt = boost::posix_time;
 
   BOOST_TEST_MESSAGE("+ [Coordinate system registry class]");
@@ -61,7 +62,7 @@ BOOST_AUTO_TEST_CASE(test_coordinate_transformation_1)
 
 BOOST_AUTO_TEST_CASE(test_coordinate_transformation_2)
 {
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Engine::Gis;
   // namespace pt = boost::posix_time;
 
   BOOST_TEST_MESSAGE("+ [Coordinate system registry class] conversion (swap coordinates)");
@@ -105,7 +106,7 @@ BOOST_AUTO_TEST_CASE(test_coordinate_transformation_2)
 
 BOOST_AUTO_TEST_CASE(test_finding_ccordinates_using_regex)
 {
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Engine::Gis;
 
   BOOST_TEST_MESSAGE("+ [Finding CRS using REGEX]");
 
@@ -133,7 +134,7 @@ BOOST_AUTO_TEST_CASE(test_finding_ccordinates_using_regex)
 
 BOOST_AUTO_TEST_CASE(test_crs_attrib)
 {
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Engine::Gis;
 
   BOOST_TEST_MESSAGE("+ [Test attaching attributes to CRS]");
 

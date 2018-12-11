@@ -1,9 +1,10 @@
+// FIXME: move elsewhere
 #include <iostream>
 #include <boost/thread.hpp>
 #include <newbase/NFmiPoint.h>
-#include "CRSRegistry.h"
+#include <smartmet/engines/gis/CRSRegistry.h>
 
-using namespace SmartMet::PluginWFS;
+using namespace SmartMet::Engine::Gis;
 
 //
 // Test for using same CRSRegistry::Transformation

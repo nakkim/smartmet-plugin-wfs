@@ -17,7 +17,7 @@ test_suite *init_unit_test_suite(int argc, char *argv[])
   return NULL;
 }
 
-using namespace SmartMet::PluginWFS::Xml;
+using namespace SmartMet::Plugin::WFS::Xml;
 
 static const char *src =
     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"

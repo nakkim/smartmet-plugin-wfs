@@ -17,7 +17,7 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
 BOOST_AUTO_TEST_CASE(test_multi_language_string_1)
 {
   using libconfig::Setting;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE("+ [Parse from configuration]");
 
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(test_multi_language_string_1)
 BOOST_AUTO_TEST_CASE(test_multi_language_string_2)
 {
   using libconfig::Setting;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE("+ [Parse from configuration: default language translation missing]");
 
@@ -61,5 +61,5 @@ BOOST_AUTO_TEST_CASE(test_multi_language_string_2)
   ml_root.add("fin", Setting::TypeString) = "Esimerkki";
   ml_root.add("LAV", Setting::TypeString) = "Piemērs";
 
-  BOOST_REQUIRE_THROW(MultiLanguageString::create("rus", ml_root), std::runtime_error);
+  BOOST_REQUIRE_THROW(MultiLanguageString::create("rus", ml_root), SmartMet::Spine::Exception);
 }

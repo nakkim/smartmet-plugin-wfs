@@ -4,6 +4,7 @@
 #include <boost/test/included/unit_test.hpp>
 #include <newbase/NFmiPoint.h>
 #include <macgyver/TypeName.h>
+#include <spine/Exception.h>
 #include "UrlTemplateGenerator.h"
 
 using namespace boost::unit_test;
@@ -19,13 +20,13 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
   return NULL;
 }
 
-using namespace SmartMet::PluginWFS;
+using namespace SmartMet::Plugin::WFS;
 
 namespace
 {
 void output_exception_info(const std::exception& err)
 {
-  std::cerr << "C++ exception of type " << SmartMet::get_type_name(&err)
+  std::cerr << "C++ exception of type " << Fmi::get_type_name(&err)
             << " catched: " << err.what() << std::endl;
 }
 }
@@ -253,5 +254,5 @@ BOOST_AUTO_TEST_CASE(test_template_url_generator_8)
   BOOST_REQUIRE_EQUAL(0, (int)pm.size());
 
   BOOST_REQUIRE_THROW(result = test->generate(boost::bind(&get_param, ::_1, &param_map)),
-                      std::runtime_error);
+                      SmartMet::Spine::Exception);
 }

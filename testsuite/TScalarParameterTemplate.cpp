@@ -9,7 +9,9 @@
 #include "StoredQueryConfig.h"
 
 using namespace boost::unit_test;
-using SmartMet::PluginWFS::RequestParameterMap;
+using SmartMet::Plugin::WFS::RequestParameterMap;
+using SmartMet::Spine::Point;
+using SmartMet::Spine::BoundingBox;
 
 test_suite* init_unit_test_suite(int argc, char* argv[])
 {
@@ -78,7 +80,7 @@ void add(RequestParameterMap& param_map, const std::string& name, ValueType valu
 BOOST_AUTO_TEST_CASE(simple_param_no_default)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE("+ [Testing simple scalar parameter without default value]");
 
@@ -101,7 +103,7 @@ BOOST_AUTO_TEST_CASE(simple_param_no_default)
 BOOST_AUTO_TEST_CASE(simple_point_param)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE("+ [Testing simple SmartMet::Spine::Point parameter without default value]");
 
@@ -133,7 +135,7 @@ BOOST_AUTO_TEST_CASE(simple_point_param)
 BOOST_AUTO_TEST_CASE(simple_bbox_param)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE("+ [Testing simple SmartMet::Spine::BoundingBox parameter without default value]");
 
@@ -169,7 +171,7 @@ BOOST_AUTO_TEST_CASE(simple_bbox_param)
 BOOST_AUTO_TEST_CASE(simple_param_weak_ref_no_default)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE("+ [Testing simple scalar parameter (weak reference) without default value]");
 
@@ -193,7 +195,7 @@ BOOST_AUTO_TEST_CASE(simple_param_weak_ref_no_default)
 BOOST_AUTO_TEST_CASE(simple_param_no_default_non_root)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE("+ [Testing simple scalar parameter without default value (not root)]");
 
@@ -204,7 +206,7 @@ BOOST_AUTO_TEST_CASE(simple_param_no_default_non_root)
 
   boost::shared_ptr<ScalarParameterTemplate> pt;
   BOOST_REQUIRE_THROW(pt.reset(new ScalarParameterTemplate(*config, "fo", "bar")),
-                      std::runtime_error);
+                      SmartMet::Spine::Exception);
   BOOST_REQUIRE_NO_THROW(pt.reset(new ScalarParameterTemplate(*config, "foo", "bar")));
 
   const ParameterTemplateItem& item = pt->get_item();
@@ -218,7 +220,7 @@ BOOST_AUTO_TEST_CASE(simple_param_no_default_non_root)
 BOOST_AUTO_TEST_CASE(simple_param_with_default)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE("+ [Testing simple scalar parameter with default value]");
 
@@ -257,7 +259,7 @@ BOOST_AUTO_TEST_CASE(simple_param_with_default)
 BOOST_AUTO_TEST_CASE(simple_param_weak_ref_with_default)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE("+ [Testing simple scalar parameter (weak reference) with default value]");
 
@@ -293,7 +295,7 @@ BOOST_AUTO_TEST_CASE(simple_param_weak_ref_with_default)
 BOOST_AUTO_TEST_CASE(simple_param_with_default_containing_space)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE(
       "+ [Testing simple scalar parameter without default value which contains space]");
@@ -333,7 +335,7 @@ BOOST_AUTO_TEST_CASE(simple_param_with_default_containing_space)
 BOOST_AUTO_TEST_CASE(simple_param_from_array_no_default)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE("+ [Testing reading scalar parameter an array element]");
 
@@ -369,8 +371,8 @@ BOOST_AUTO_TEST_CASE(simple_param_from_array_no_default)
   BOOST_CHECK_NO_THROW(dvalue = pt->get_double_value(param_map));
   BOOST_CHECK_CLOSE(dvalue, (double)4, 1e-10);
 
-  BOOST_CHECK_THROW(pt->get_ptime_value(param_map), std::runtime_error);
-  BOOST_CHECK_THROW(pt->get_string_value(param_map), std::runtime_error);
+  BOOST_CHECK_THROW(pt->get_ptime_value(param_map), SmartMet::Spine::Exception);
+  BOOST_CHECK_THROW(pt->get_string_value(param_map), SmartMet::Spine::Exception);
 }
 
 namespace
@@ -385,7 +387,7 @@ std::ostream& operator<<(std::ostream& ost, const boost::posix_time::ptime& t)
 BOOST_AUTO_TEST_CASE(simple_param_from_array_with_default)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
   using namespace boost::posix_time;
 
   BOOST_TEST_MESSAGE(
@@ -431,7 +433,7 @@ BOOST_AUTO_TEST_CASE(simple_param_from_array_with_default)
 BOOST_AUTO_TEST_CASE(reference_to_non_existing_request_parameter)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE("+ [Testing reference to non existing parameter]");
 
@@ -441,13 +443,13 @@ BOOST_AUTO_TEST_CASE(reference_to_non_existing_request_parameter)
   unlink(fn.c_str());
 
   boost::shared_ptr<ScalarParameterTemplate> pt;
-  BOOST_REQUIRE_THROW(pt.reset(new ScalarParameterTemplate(*config, "foo")), std::runtime_error);
+  BOOST_REQUIRE_THROW(pt.reset(new ScalarParameterTemplate(*config, "foo")), SmartMet::Spine::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(request_of_copying_entire_array_to_scalar)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE("+ [Testing an attempt to read an array parameter as a scalar]");
 
@@ -457,13 +459,13 @@ BOOST_AUTO_TEST_CASE(request_of_copying_entire_array_to_scalar)
   unlink(fn.c_str());
 
   boost::shared_ptr<ScalarParameterTemplate> pt;
-  BOOST_REQUIRE_THROW(pt.reset(new ScalarParameterTemplate(*config, "foo")), std::runtime_error);
+  BOOST_REQUIRE_THROW(pt.reset(new ScalarParameterTemplate(*config, "foo")), SmartMet::Spine::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(using_absent_parameters)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   BOOST_TEST_MESSAGE("+ [Testing an use of absent parameters]");
 
@@ -484,6 +486,6 @@ BOOST_AUTO_TEST_CASE(using_absent_parameters)
   double foo;
   RequestParameterMap param_map;
   add(param_map, "test", 1.0);
-  BOOST_CHECK_THROW(pt->get_double_value(param_map), std::runtime_error);
+  BOOST_CHECK_THROW(pt->get_double_value(param_map), SmartMet::Spine::Exception);
   BOOST_CHECK_NO_THROW(not pt->get(param_map, &foo));
 }

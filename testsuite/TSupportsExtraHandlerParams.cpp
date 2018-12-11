@@ -114,7 +114,7 @@ void add(std::multimap<std::string, Value>& param_map, const std::string& name, 
 BOOST_AUTO_TEST_CASE(test_parameters_redirection_1)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   auto raw_config = create_config();
   boost::shared_ptr<StoredQueryConfig> config;

@@ -20,7 +20,7 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
 }
 
 using SmartMet::Spine::Value;
-using SmartMet::PluginWFS::RequestParameterMap;
+using SmartMet::Plugin::WFS::RequestParameterMap;
 
 namespace
 {
@@ -105,7 +105,7 @@ void add(RequestParameterMap& param_map, const std::string& name, ValueType valu
 BOOST_AUTO_TEST_CASE(array_param_1)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\"]");
   boost::shared_ptr<StoredQueryConfig> config;
@@ -147,7 +147,7 @@ BOOST_AUTO_TEST_CASE(array_param_1)
 BOOST_AUTO_TEST_CASE(array_param_1_non_root)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\"]", "bar");
   boost::shared_ptr<StoredQueryConfig> config;
@@ -156,7 +156,7 @@ BOOST_AUTO_TEST_CASE(array_param_1_non_root)
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
   BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "baz", "foo")),
-                      std::runtime_error);
+                      SmartMet::Spine::Exception);
   BOOST_REQUIRE_NO_THROW(pt.reset(new ArrayParameterTemplate(*config, "bar", "foo")));
 
   const std::vector<ParameterTemplateItem>& items = pt->get_items();
@@ -191,7 +191,7 @@ BOOST_AUTO_TEST_CASE(array_param_1_non_root)
 BOOST_AUTO_TEST_CASE(mix_of_predefined_and_given_parameters_1)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn = create_config("test", "double", "foo", "[\"1.1\", \"${test}\", \"1.3\"]");
   boost::shared_ptr<StoredQueryConfig> config;
@@ -238,7 +238,7 @@ BOOST_AUTO_TEST_CASE(mix_of_predefined_and_given_parameters_1)
 BOOST_AUTO_TEST_CASE(mix_of_predefined_and_given_parameters_2)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn =
       create_config("test", "double[2]", "foo", "[\"1.1\", \"${test}\", \"1.3\"]");
@@ -288,7 +288,7 @@ BOOST_AUTO_TEST_CASE(mix_of_predefined_and_given_parameters_2)
 BOOST_AUTO_TEST_CASE(array_parameter_shuffle)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn =
       create_config("test",
@@ -321,7 +321,7 @@ BOOST_AUTO_TEST_CASE(array_parameter_shuffle)
 BOOST_AUTO_TEST_CASE(array_parameter_shuffle_2)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn =
       create_config("test",
@@ -383,7 +383,7 @@ BOOST_AUTO_TEST_CASE(array_parameter_shuffle_2)
 BOOST_AUTO_TEST_CASE(array_parameter_shuffle_out_of_range_index)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn =
       create_config("test",
@@ -396,13 +396,13 @@ BOOST_AUTO_TEST_CASE(array_parameter_shuffle_out_of_range_index)
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
-  BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo")), std::runtime_error);
+  BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo")), SmartMet::Spine::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(typo_in_parameter_reference)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn =
       create_config("test",
@@ -415,13 +415,13 @@ BOOST_AUTO_TEST_CASE(typo_in_parameter_reference)
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
-  BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo")), std::runtime_error);
+  BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo")), SmartMet::Spine::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(array_size_detection_1)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\"]");
 
@@ -436,7 +436,7 @@ BOOST_AUTO_TEST_CASE(array_size_detection_1)
 BOOST_AUTO_TEST_CASE(array_size_detection_error_1)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\"]");
 
@@ -446,13 +446,13 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_1)
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
   BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo", 1, 3)),
-                      std::runtime_error);
+                      SmartMet::Spine::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(array_size_detection_2)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
 
@@ -467,7 +467,7 @@ BOOST_AUTO_TEST_CASE(array_size_detection_2)
 BOOST_AUTO_TEST_CASE(array_size_detection_error_2)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
 
@@ -477,13 +477,13 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_2)
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
   BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo", 12, 12)),
-                      std::runtime_error);
+                      SmartMet::Spine::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(array_size_detection_3)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
 
@@ -498,7 +498,7 @@ BOOST_AUTO_TEST_CASE(array_size_detection_3)
 BOOST_AUTO_TEST_CASE(array_size_detection_error_3)
 {
   using namespace SmartMet;
-  using namespace SmartMet::PluginWFS;
+  using namespace SmartMet::Plugin::WFS;
 
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
 
@@ -508,5 +508,5 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_3)
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
   BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo", 2, 2)),
-                      std::runtime_error);
+                      SmartMet::Spine::Exception);
 }

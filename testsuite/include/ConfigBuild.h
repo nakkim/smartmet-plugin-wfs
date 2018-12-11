@@ -9,7 +9,7 @@ namespace Test
 {
 using ::libconfig::Setting;
 using SmartMet::Spine::Value;
-using SmartMet::PluginWFS::RequestParameterMap;
+using SmartMet::Plugin::WFS::RequestParameterMap;
 
 class ParamProxy
 {

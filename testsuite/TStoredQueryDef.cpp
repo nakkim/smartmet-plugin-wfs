@@ -2,6 +2,7 @@
 
 #include "StoredQueryParamDef.h"
 #include "WfsException.h"
+#include <spine/Exception.h>
 
 using namespace boost::unit_test;
 
@@ -17,7 +18,8 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
 }
 
 using namespace SmartMet;
-using namespace SmartMet::PluginWFS;
+using namespace SmartMet::Plugin::WFS;
+using SmartMet::Spine::Value;
 
 BOOST_AUTO_TEST_CASE(test_scalar_string_def)
 {

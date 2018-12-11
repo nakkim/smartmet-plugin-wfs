@@ -18,7 +18,7 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
   return NULL;
 }
 
-using namespace SmartMet::PluginWFS;
+using namespace SmartMet::Plugin::WFS;
 
 BOOST_AUTO_TEST_CASE(test_utc_selection)
 {

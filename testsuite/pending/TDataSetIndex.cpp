@@ -1,6 +1,6 @@
 #include <iostream>
 #include <boost/test/included/unit_test.hpp>
-#include <macgyver/String.h>
+#include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
 #include "DataSetIndex.h"
 
@@ -19,13 +19,16 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
 
 namespace
 {
+
+const std::string test_dir = "/home/pavenis/smartmet/plugins/smartmet-plugin-wfs";
+
 boost::shared_ptr<libconfig::Config> create_config()
 {
   using libconfig::Setting;
   boost::shared_ptr<libconfig::Config> config(new libconfig::Config);
   auto& root = config->getRoot();
   root.add("name", Setting::TypeString) = "Test1";
-  root.add("dir", Setting::TypeString) = "../../../data/pal";
+  root.add("dir", Setting::TypeString) = test_dir;
   root.add("file_regex", Setting::TypeString) = ".*";
   root.add("origin_time_extract", Setting::TypeString) = "^\\d{12}_";
   auto& transl = root.add("origin_time_translate", Setting::TypeArray);
@@ -50,7 +53,7 @@ boost::shared_ptr<libconfig::Config> create_config()
 }
 
 using SmartMet::Spine::ConfigBase;
-using SmartMet::PluginWFS::DataSetDefinition;
+using SmartMet::Plugin::WFS::DataSetDefinition;
 namespace bg = boost::gregorian;
 namespace pt = boost::posix_time;
 using namespace boost::filesystem;
@@ -66,7 +69,7 @@ BOOST_AUTO_TEST_CASE(test_parse_config)
   {
     auto ds_def = DataSetDefinition::create(config, raw_config->getRoot());
     BOOST_CHECK_EQUAL(std::string("Test1"), ds_def->get_name());
-    BOOST_CHECK_EQUAL(std::string("../../../data/pal"), ds_def->get_dir().string());
+    BOOST_CHECK_EQUAL(std::string(test_dir), ds_def->get_dir().string());
   }
   catch (const std::exception& err)
   {
@@ -142,7 +145,7 @@ BOOST_AUTO_TEST_CASE(test_query_files)
 
 BOOST_AUTO_TEST_CASE(test_bbox_intersection)
 {
-  typedef DataSetDefinition::point_t point_t;
+  //typedef DataSetDefinition::point_t point_t;
   typedef DataSetDefinition::box_t box_t;
 
   BOOST_TEST_MESSAGE("+ [Testing area intersection]");

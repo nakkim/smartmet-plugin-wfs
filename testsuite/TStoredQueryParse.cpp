@@ -33,12 +33,13 @@ void dummy_proc(const char* text)
 {
   (void)text;
 }
-namespace bw = SmartMet::PluginWFS;
-namespace bwx = SmartMet::PluginWFS::Xml;
+namespace bw = SmartMet::Plugin::WFS;
+namespace bwx = SmartMet::Plugin::WFS::Xml;
 namespace pt = boost::posix_time;
 using SmartMet::Spine::Value;
 using Test::add_values;
 using Test::TestConfig;
+using SmartMet::Spine::HTTP::RequestMethod;
 typedef boost::shared_ptr<bw::StoredQueryConfig> StoredQueryConfigP;
 typedef boost::shared_ptr<bw::ArrayParameterTemplate> ArrayParameterTemplateP;
 typedef boost::shared_ptr<bw::ScalarParameterTemplate> ScalarParameterTemplateP;
@@ -48,7 +49,7 @@ BOOST_AUTO_TEST_CASE(test_extract_kvp_stored_query_id)
   BOOST_TEST_MESSAGE("+ [Testing retrieving stored query ID from KVP request]");
 
   SmartMet::Spine::HTTP::Request request;
-  request.setMethod("GET");
+  request.setMethod(RequestMethod::GET);
   request.addParameter("request", "GetFeature");
   request.addParameter("a1", "12");
   request.addParameter("a2", "foo,bar");
@@ -88,7 +89,7 @@ namespace
 {
 void output_exception_info(const std::exception& err)
 {
-  std::cerr << "C++ exception of type " << SmartMet::get_type_name(&err)
+  std::cerr << "C++ exception of type " << Fmi::get_type_name(&err)
             << " catched: " << err.what() << std::endl;
 }
 }  // namespace
@@ -210,7 +211,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_missing_mandatory_scalar_parameter)
 
   StoredQueryWrapper Q1;
   SmartMet::Spine::HTTP::Request request1;
-  request1.setMethod("GET");
+  request1.setMethod(RequestMethod::GET);
   request1.addParameter("request", "GetFeature");
   request1.addParameter("storedquery_id", "foo:bar");
   BOOST_CHECK_THROW(bw::StoredQuery::extract_kvp_parameters(request1, *config, Q1),
@@ -230,7 +231,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_single_scalar_parameter)
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
-  request2.setMethod("GET");
+  request2.setMethod(RequestMethod::GET);
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   request2.addParameter("p1", "foobar");
@@ -256,7 +257,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_scalar_parameter_1)
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
-  request2.setMethod("GET");
+  request2.setMethod(RequestMethod::GET);
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   BOOST_REQUIRE_NO_THROW(LOG(bw::StoredQuery::extract_kvp_parameters(request2, *config, Q2)));
@@ -283,7 +284,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_scalar_parameter_2)
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
-  request2.setMethod("GET");
+  request2.setMethod(RequestMethod::GET);
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   request2.addParameter("p1", "Helsinki,Suomi");
@@ -316,7 +317,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_scalar_parameter_3)
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
-  request2.setMethod("GET");
+  request2.setMethod(RequestMethod::GET);
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   request2.addParameter("p1", "Helsinki,Suomi");
@@ -354,7 +355,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_scalar_parameter_4)
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
-  request2.setMethod("GET");
+  request2.setMethod(RequestMethod::GET);
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   for (int i = 0; i < 99; i++)
@@ -377,7 +378,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_scalar_parameter_5)
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
-  request2.setMethod("GET");
+  request2.setMethod(RequestMethod::GET);
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   for (int i = 0; i < 100; i++)
@@ -399,7 +400,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_single_scalar_parameter_too_many_occurrences)
 
   StoredQueryWrapper Q1;
   SmartMet::Spine::HTTP::Request request;
-  request.setMethod("GET");
+  request.setMethod(RequestMethod::GET);
   request.addParameter("request", "GetFeature");
   request.addParameter("storedquery_id", "foo:bar");
   request.addParameter("p1", "foobar");
@@ -417,7 +418,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_single_scalar_parameter_too_many_occurrences)
     //          << Fmi::current_exception_type()
     //          << "': message='" << err.what() << "'"
     //          << std::endl;
-    BOOST_REQUIRE_THROW(throw, bw::WfsException);
+    BOOST_REQUIRE_THROW(throw, SmartMet::Spine::Exception);
   };
 }
 
@@ -437,7 +438,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_mandatory_array_parameter_of_fixed_length_1)
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
-  request2.setMethod("GET");
+  request2.setMethod(RequestMethod::GET);
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   request2.addParameter("p1", "12.5,6.25");
@@ -467,7 +468,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_ommited
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
-  request2.setMethod("GET");
+  request2.setMethod(RequestMethod::GET);
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   BOOST_REQUIRE_NO_THROW(LOG(bw::StoredQuery::extract_kvp_parameters(request2, *config, Q2)));
@@ -496,7 +497,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_once)
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
-  request2.setMethod("GET");
+  request2.setMethod(RequestMethod::GET);
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   request2.addParameter("p1", "12.5,25.0");
@@ -532,7 +533,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_twice)
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
-  request2.setMethod("GET");
+  request2.setMethod(RequestMethod::GET);
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   request2.addParameter("p1", "12.5,25.0");
@@ -574,13 +575,13 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_mixed_u
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
-  request2.setMethod("GET");
+  request2.setMethod(RequestMethod::GET);
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   request2.addParameter("p1", "12.5,25.0,1.5");
   request2.addParameter("p1", "2.5");
   BOOST_REQUIRE_THROW(bw::StoredQuery::extract_kvp_parameters(request2, *config, Q2),
-                      bw::WfsException);
+                      SmartMet::Spine::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_mixed_up_2)
@@ -599,13 +600,13 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_mixed_u
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
-  request2.setMethod("GET");
+  request2.setMethod(RequestMethod::GET);
   request2.addParameter("request", "GetFeature");
   request2.addParameter("storedquery_id", "foo:bar");
   request2.addParameter("p1", "1.0,2.0,3.0");
   request2.addParameter("p1", "4.0");
   BOOST_REQUIRE_THROW(bw::StoredQuery::extract_kvp_parameters(request2, *config, Q2),
-                      bw::WfsException);
+                      SmartMet::Spine::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(test_parse_sample_kvp_stored_query_id)
@@ -613,7 +614,7 @@ BOOST_AUTO_TEST_CASE(test_parse_sample_kvp_stored_query_id)
   BOOST_TEST_MESSAGE("+ [Testing parsing sample KVP format stored query]");
 
   SmartMet::Spine::HTTP::Request request;
-  request.setMethod("GET");
+  request.setMethod(RequestMethod::GET);
   request.addParameter("request", "GetFeature");
   request.addParameter("time", "2012-11-15T12:36:45Z");
   request.addParameter("name", "foo:bar");
