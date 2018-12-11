@@ -7,6 +7,7 @@
 #include <boost/spirit/include/qi.hpp>
 #include <macgyver/TimeParser.h>
 #include <macgyver/TypeName.h>
+#include <macgyver/StringConversion.h>
 #include <spine/Exception.h>
 #include <algorithm>
 #include <sstream>
@@ -101,15 +102,15 @@ SmartMet::Spine::Value StoredQueryParamDef::readValue(const std::string& value) 
       switch (value_type)
       {
         case DOUBLE:
-          result.set_double(std::stod(value));
+          result.set_double(Fmi::stod(value));
           break;
 
         case INT:
-          result.set_int(std::stoi(value));
+          result.set_int(Fmi::stoi(value));
           break;
 
         case UINT:
-          result.set_uint(std::stoul(value));
+          result.set_uint(Fmi::stoul(value));
           break;
 
         case TIME:
