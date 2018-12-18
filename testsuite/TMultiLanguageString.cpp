@@ -63,3 +63,23 @@ BOOST_AUTO_TEST_CASE(test_multi_language_string_2)
 
   BOOST_REQUIRE_THROW(MultiLanguageString::create("rus", ml_root), SmartMet::Spine::Exception);
 }
+
+BOOST_AUTO_TEST_CASE(test_multi_language_string_3)
+{
+  using libconfig::Setting;
+  using namespace SmartMet::Plugin::WFS;
+
+  BOOST_TEST_MESSAGE("+ [Parse from configuration: string provided instead of a group]");
+
+  boost::shared_ptr<libconfig::Config> config(new libconfig::Config);
+  auto& root = config->getRoot();
+  auto& test = root.add("test", Setting::TypeString);
+  test = "foobar";
+
+  MultiLanguageStringP ml_string;
+  BOOST_REQUIRE_NO_THROW(ml_string = MultiLanguageString::create("rus", test));
+  BOOST_CHECK_EQUAL(std::string("rus"), ml_string->get_default_language());
+  BOOST_CHECK_EQUAL(std::string("foobar"), ml_string->get());
+  BOOST_CHECK_EQUAL(std::string("foobar"), ml_string->get("eng"));
+  BOOST_CHECK_EQUAL(std::string("foobar"), ml_string->get());
+}
