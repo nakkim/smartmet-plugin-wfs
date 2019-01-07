@@ -86,12 +86,12 @@ bw::MultiLanguageString::MultiLanguageString(const std::string& default_language
   }
 }
 
-boost::shared_ptr<bw::MultiLanguageString> bw::MultiLanguageString::create(
+std::shared_ptr<bw::MultiLanguageString> bw::MultiLanguageString::create(
     const std::string& default_language, libconfig::Setting& setting)
 {
   try
   {
-    boost::shared_ptr<bw::MultiLanguageString> result(
+    std::shared_ptr<bw::MultiLanguageString> result(
         new bw::MultiLanguageString(default_language, setting));
     return result;
   }

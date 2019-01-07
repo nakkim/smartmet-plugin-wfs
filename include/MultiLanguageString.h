@@ -1,8 +1,8 @@
 #pragma once
 
-#include <boost/shared_ptr.hpp>
 #include <spine/ConfigBase.h>
 #include <map>
+#include <memory>
 #include <string>
 
 namespace SmartMet
@@ -16,7 +16,7 @@ class MultiLanguageString
  public:
   MultiLanguageString(const std::string& default_language, libconfig::Setting& setting);
 
-  static boost::shared_ptr<MultiLanguageString> create(const std::string& default_language,
+  static std::shared_ptr<MultiLanguageString> create(const std::string& default_language,
                                                        libconfig::Setting& setting);
 
   virtual ~MultiLanguageString();
@@ -32,7 +32,7 @@ class MultiLanguageString
   std::map<std::string, std::string> data;
 };
 
-typedef boost::shared_ptr<MultiLanguageString> MultiLanguageStringP;
+typedef std::shared_ptr<MultiLanguageString> MultiLanguageStringP;
 
 }  // namespace WFS
 }  // namespace Plugin
