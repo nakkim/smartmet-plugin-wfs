@@ -12,6 +12,7 @@
 
 #include <engines/contour/Engine.h>
 #include <engines/querydata/Engine.h>
+#include <grid-content/queryServer/definition/Query.h>
 
 #include <gis/OGR.h>
 
@@ -32,6 +33,7 @@ struct ContourQueryParameter
   unsigned short smoothing_degree;
   unsigned short smoothing_size;
   SmartMet::Spine::TimeSeriesGenerator::LocalTimeList tlist;
+  QueryServer::Query gridQuery;
 
   ContourQueryParameter(const SmartMet::Spine::Parameter& p,
                         const SmartMet::Engine::Querydata::Q& qe,
@@ -46,7 +48,6 @@ struct ContourQueryParameter
         smoothing_size(2)
   {
   }
-  virtual ~ContourQueryParameter() {}
 };
 
 struct CoverageQueryParameter : ContourQueryParameter
