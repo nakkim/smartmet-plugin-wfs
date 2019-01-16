@@ -174,6 +174,13 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
    */
   bool last_write_time_changed() const;
 
+  const std::string& get_locale_name() const { return locale_name; }
+
+  /**
+   *  Returns locale to be used for stored query
+   */
+  std::shared_ptr<const std::locale> get_locale() const;
+
  protected:
 
   /**
@@ -183,18 +190,12 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
    */
   void set_locale(const std::string& name);
 
-  const std::string& get_locale_name() const { return locale_name; }
-
-  /**
-   *  Returns locale to be used for stored query
-   */
-  std::locale get_locale() const;
-
  private:
   void parse_config();
 
  private:
   std::string locale_name;
+  std::shared_ptr<std::locale> locale;
   std::string query_id;
   std::time_t config_last_write_time;
 

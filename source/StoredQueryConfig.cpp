@@ -20,7 +20,7 @@ SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(const std::string& c
 {
   try
   {
-    locale_name = plugin_config.get_default_locale();
+    set_locale(plugin_config.get_default_locale());
     config_last_write_time = config_write_time();
     parse_config();
   }
@@ -480,11 +480,12 @@ bool SmartMet::Plugin::WFS::StoredQueryConfig::last_write_time_changed() const
 void SmartMet::Plugin::WFS::StoredQueryConfig::set_locale(const std::string& name)
 {
   locale_name = name;
+  locale.reset(new std::locale(name.c_str()));
 }
 
-std::locale SmartMet::Plugin::WFS::StoredQueryConfig::get_locale() const
+std::shared_ptr<const std::locale> SmartMet::Plugin::WFS::StoredQueryConfig::get_locale() const
 {
-  return std::locale(get_locale_name().c_str());
+  return locale;
 }
 
 /**
