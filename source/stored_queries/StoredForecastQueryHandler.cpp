@@ -130,7 +130,7 @@ void bw::StoredForecastQueryHandler::query(const StoredQuery& stored_query,
     if (debug_level > 0)
       stored_query.dump_query_info(std::cout);
 
-    bw::StoredForecastQueryHandler::Query query;
+    bw::StoredForecastQueryHandler::Query query(get_config());
 
     query.language = language;
     const auto& params = stored_query.get_param_map();
@@ -865,7 +865,7 @@ bw::StoredForecastQueryHandler::get_model_parameters(const std::string& producer
   }
 }
 
-bw::StoredForecastQueryHandler::Query::Query()
+bw::StoredForecastQueryHandler::Query::Query(boost::shared_ptr<const StoredQueryConfig> config)
     : max_distance(20000.0),
       missing_text("nan"),
       language("lan"),
@@ -881,7 +881,7 @@ bw::StoredForecastQueryHandler::Query::Query()
 {
   try
   {
-    output_locale.reset(new std::locale("fi_FI.utf8"));
+    output_locale = config->get_locale();
     time_formatter.reset(Fmi::TimeFormatter::create("iso"));
     value_formatter->setMissingText(missing_text);
   }

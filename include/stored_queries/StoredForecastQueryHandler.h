@@ -41,7 +41,7 @@ class StoredForecastQueryHandler : public StoredQueryHandlerBase,
     double max_np_distance;
     std::string missing_text;
     std::string language;
-    std::unique_ptr<std::locale> output_locale;
+    std::shared_ptr<const std::locale> output_locale;
     bool find_nearest_valid_point;
     std::string tz_name;
 
@@ -70,7 +70,7 @@ class StoredForecastQueryHandler : public StoredQueryHandlerBase,
     std::size_t last_data_ind;
 
    public:
-    Query();
+    Query(boost::shared_ptr<const StoredQueryConfig> config);
     virtual ~Query();
     void set_locale(const std::string& locale_name);
     void set_value_formatter(const SmartMet::Spine::ValueFormatterParam& vf_param);
