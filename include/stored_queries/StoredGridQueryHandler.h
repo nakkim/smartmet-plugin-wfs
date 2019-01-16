@@ -76,7 +76,7 @@ class StoredGridQueryHandler : public StoredQueryHandlerBase,
     std::vector<SmartMet::Spine::Parameter> data_params;
     std::string missing_text;
     std::string language;
-    std::unique_ptr<std::locale> output_locale;
+    std::shared_ptr<const std::locale> output_locale;
 
     Result result;
 
@@ -107,7 +107,7 @@ class StoredGridQueryHandler : public StoredQueryHandlerBase,
 
     bool includeDebugData;
 
-    Query();
+    Query(boost::shared_ptr<const StoredQueryConfig> config);
     ~Query();
   };
 

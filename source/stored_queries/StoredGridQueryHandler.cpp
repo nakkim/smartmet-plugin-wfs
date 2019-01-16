@@ -127,7 +127,7 @@ void StoredGridQueryHandler::init_handler()
   }
 }
 
-StoredGridQueryHandler::Query::Query()
+StoredGridQueryHandler::Query::Query(boost::shared_ptr<const StoredQueryConfig> config)
     : missing_text("nan"),
       language("lan"),
       value_formatter(new SmartMet::Spine::ValueFormatter(SmartMet::Spine::ValueFormatterParam())),
@@ -140,7 +140,7 @@ StoredGridQueryHandler::Query::Query()
 {
   try
   {
-    output_locale.reset(new std::locale("fi_FI.utf8"));
+    output_locale = config->get_locale();
     time_formatter.reset(Fmi::TimeFormatter::create("iso"));
     value_formatter->setMissingText(missing_text);
   }
@@ -1097,7 +1097,7 @@ void StoredGridQueryHandler::query(const StoredQuery& stored_query,
     using namespace SmartMet;
     using namespace SmartMet::Plugin::WFS;
 
-    Query query;
+    Query query(get_config());
     query.language = language;
 
     int debug_level = get_config()->get_debug_level();
