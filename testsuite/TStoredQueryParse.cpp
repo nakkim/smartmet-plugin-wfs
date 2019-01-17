@@ -207,7 +207,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_missing_mandatory_scalar_parameter)
   raw_config->add_scalar("s1", "${p1}");
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q1;
   SmartMet::Spine::HTTP::Request request1;
@@ -227,7 +227,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_single_scalar_parameter)
   raw_config->add_scalar("s1", "${p1}");
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
@@ -253,7 +253,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_scalar_parameter_1)
   raw_config->add_array("s1", "${p1}");
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
@@ -280,7 +280,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_scalar_parameter_2)
   raw_config->add_array("s1", "${p1}");
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
@@ -313,7 +313,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_scalar_parameter_3)
   raw_config->add_array("s1", "${p1}");
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
@@ -351,7 +351,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_scalar_parameter_4)
   raw_config->add_scalar("s1", "${p1}");
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
@@ -374,7 +374,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_scalar_parameter_5)
   raw_config->add_scalar("s1", "${p1}");
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
@@ -396,7 +396,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_single_scalar_parameter_too_many_occurrences)
   raw_config->add_scalar("s1", "${p1}");
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q1;
   SmartMet::Spine::HTTP::Request request;
@@ -434,7 +434,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_mandatory_array_parameter_of_fixed_length_1)
   raw_config->add_array<1>("s1", p001);
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
@@ -464,7 +464,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_ommited
   raw_config->add_array<1>("s1", p001);
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
@@ -493,7 +493,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_once)
   raw_config->add_array<1>("s1", p001);
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
@@ -529,7 +529,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_twice)
   raw_config->add_array<1>("s1", p001);
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
@@ -571,7 +571,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_mixed_u
   // raw_config->add_array<1>("s1", p001);
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
@@ -596,7 +596,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_mixed_u
   // raw_config->add_array<1>("s1", p001);
 
   StoredQueryConfigP config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
 
   StoredQueryWrapper Q2;
   SmartMet::Spine::HTTP::Request request2;
@@ -630,7 +630,7 @@ BOOST_AUTO_TEST_CASE(test_parse_sample_kvp_stored_query_id)
 
   BOOST_TEST_MESSAGE("    + [part 1: 2 scalar values of different types]");
   TemporaryConfigFile cfg_file_1(*config);
-  BOOST_REQUIRE_NO_THROW(sqc.reset(new bw::StoredQueryConfig(cfg_file_1.get_name())));
+  BOOST_REQUIRE_NO_THROW(sqc.reset(new bw::StoredQueryConfig(cfg_file_1.get_name(), nullptr)));
   BOOST_REQUIRE_NO_THROW(bw::StoredQuery::extract_kvp_parameters(request, *sqc, Q1));
   const auto& P1 = Q1.get_param_map();
   BOOST_REQUIRE_EQUAL((int)P1.size(), 2);
@@ -723,7 +723,7 @@ BOOST_AUTO_TEST_CASE(test_parse_sample_xml_stored_query_id)
 
   BOOST_TEST_MESSAGE("    + [part 1: 2 scalar values of different types]");
   TemporaryConfigFile cfg_file_1(*config);
-  BOOST_REQUIRE_NO_THROW(sqc.reset(new bw::StoredQueryConfig(cfg_file_1.get_name())));
+  BOOST_REQUIRE_NO_THROW(sqc.reset(new bw::StoredQueryConfig(cfg_file_1.get_name(), nullptr)));
   BOOST_REQUIRE_NO_THROW(bw::StoredQuery::extract_xml_parameters(*root, *sqc, Q1));
   BOOST_REQUIRE_EQUAL(1, (int)Q1.get_param_values("time").size());
   BOOST_REQUIRE_EQUAL(1, (int)Q1.get_param_values("name").size());

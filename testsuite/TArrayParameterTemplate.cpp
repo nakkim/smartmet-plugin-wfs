@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE(array_param_1)
 
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\"]");
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
@@ -151,7 +151,7 @@ BOOST_AUTO_TEST_CASE(array_param_1_non_root)
 
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\"]", "bar");
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
@@ -195,7 +195,7 @@ BOOST_AUTO_TEST_CASE(mix_of_predefined_and_given_parameters_1)
 
   const std::string fn = create_config("test", "double", "foo", "[\"1.1\", \"${test}\", \"1.3\"]");
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
@@ -243,7 +243,7 @@ BOOST_AUTO_TEST_CASE(mix_of_predefined_and_given_parameters_2)
   const std::string fn =
       create_config("test", "double[2]", "foo", "[\"1.1\", \"${test}\", \"1.3\"]");
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
@@ -297,7 +297,7 @@ BOOST_AUTO_TEST_CASE(array_parameter_shuffle)
                     "[\"${test[1]}\", \"${test[0]}\", \"${test[3]}\", \"${test[2]}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
@@ -330,7 +330,7 @@ BOOST_AUTO_TEST_CASE(array_parameter_shuffle_2)
                     "[\"${test[1]:a1}\", \"${test[0]:a2}\", \"${test[3]:a3}\", \"${test[2]:a4}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
@@ -392,7 +392,7 @@ BOOST_AUTO_TEST_CASE(array_parameter_shuffle_out_of_range_index)
                     "[\"${test[1]}\", \"${test[4]}\", \"${test[3]}\", \"${test[2]}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
@@ -411,7 +411,7 @@ BOOST_AUTO_TEST_CASE(typo_in_parameter_reference)
                     "[\"${test[1]}\", \"${test[0]}\", \"${tset[3]}\", \"${test[2]}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
@@ -426,7 +426,7 @@ BOOST_AUTO_TEST_CASE(array_size_detection_1)
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
@@ -441,7 +441,7 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_1)
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
@@ -457,7 +457,7 @@ BOOST_AUTO_TEST_CASE(array_size_detection_2)
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
@@ -472,7 +472,7 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_2)
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
@@ -488,7 +488,7 @@ BOOST_AUTO_TEST_CASE(array_size_detection_3)
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
@@ -503,7 +503,7 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_3)
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;

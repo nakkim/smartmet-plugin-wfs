@@ -157,7 +157,7 @@ void bw::StoredQueryMap::add_handler(SmartMet::Spine::Reactor* theReactor,
       const std::string file_name = stored_query_config_file.string();
 
       boost::shared_ptr<StoredQueryConfig> sqh_config
-	(new StoredQueryConfig(file_name, plugin_data.get_config()));
+	(new StoredQueryConfig(file_name, &plugin_data.get_config()));
 
       if (sqh_config->is_test())
       {
@@ -413,7 +413,7 @@ void bw::StoredQueryMap::update_handlers(Spine::Reactor* theReactor, bw::PluginD
         if (handler->get_config()->last_write_time_changed())
         {
           boost::shared_ptr<StoredQueryConfig> sqh_config(
-              new StoredQueryConfig(handler->get_config()->get_file_name(), plugin_data.get_config()));
+              new StoredQueryConfig(handler->get_config()->get_file_name(), &plugin_data.get_config()));
 
           if (sqName != sqh_config->get_query_id())
           {

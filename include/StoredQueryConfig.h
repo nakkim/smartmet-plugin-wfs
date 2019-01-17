@@ -103,8 +103,8 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
   };
 
  public:
-    StoredQueryConfig(const std::string& fn, const Config& plugin_config);
-  StoredQueryConfig(boost::shared_ptr<libconfig::Config> config, const Config& plugin_config);
+  StoredQueryConfig(const std::string& fn, const Config* plugin_config);
+  StoredQueryConfig(boost::shared_ptr<libconfig::Config> config, const Config* plugin_config);
   virtual ~StoredQueryConfig();
 
   inline bool is_disabled() const { return disabled; }
@@ -181,12 +181,8 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
    */
   std::shared_ptr<const std::locale> get_locale() const;
 
- protected:
-
   /**
    *  Set locale with specified name for stored query handler
-   *
-   *  Intended only to be used when parsing stored query configuration
    */
   void set_locale(const std::string& name);
 

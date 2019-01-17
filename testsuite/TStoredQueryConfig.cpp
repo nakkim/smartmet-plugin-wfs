@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE(test_single_scalar_parameter_without_default)
   StoredQueryConfigP config;
   ScalarParameterTemplateP param;
   // SmartMet::Spine::ConfigBase::dump_config(std::cout, *raw_config);
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
   BOOST_REQUIRE_NO_THROW(param.reset(new bw::ScalarParameterTemplate(*config, "p")));
 
   // No mandatory parameter provided
@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_CASE(test_single_scalar_parameter_with_default_value)
   StoredQueryConfigP config;
   ScalarParameterTemplateP param;
   // SmartMet::Spine::ConfigBase::dump_config(std::cout, *raw_config);
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
   BOOST_REQUIRE_NO_THROW(param.reset(new bw::ScalarParameterTemplate(*config, "p")));
 
   // No mandatory parameter provided
@@ -180,7 +180,7 @@ BOOST_AUTO_TEST_CASE(test_single_scalar_parameter_with_lower_limit)
   StoredQueryConfigP config;
   ScalarParameterTemplateP param;
   // SmartMet::Spine::ConfigBase::dump_config(std::cout, *raw_config);
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
   BOOST_REQUIRE_NO_THROW(param.reset(new bw::ScalarParameterTemplate(*config, "p")));
 
   // No mandatory parameter provided
@@ -223,7 +223,7 @@ BOOST_AUTO_TEST_CASE(test_single_mandatory_array_parameter_with_fixed_length)
 
   // SmartMet::Spine::ConfigBase::dump_config(std::cout, *raw_config);
 
-  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new bw::StoredQueryConfig(raw_config, nullptr)));
   BOOST_REQUIRE_NO_THROW(param.reset(new bw::ArrayParameterTemplate(*config, "p", 2, 2)));
 
   // Mandatory array with 2 elements required not provided at all

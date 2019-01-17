@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE(test_parameters_redirection_1)
 
   auto raw_config = create_config();
   boost::shared_ptr<StoredQueryConfig> config;
-  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(raw_config)));
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(raw_config, nullptr)));
 
   // config->dump_config(std::cout, *raw_config);
   // std::cout << std::endl;
