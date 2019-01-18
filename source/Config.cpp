@@ -156,7 +156,7 @@ std::vector<boost::shared_ptr<WfsFeatureDef> > Config::read_features_config(
                     << " file '" << entry.string() << "'" << std::endl;
 
           SmartMet::Spine::Exception exception(
-              BCP, "Error while reading feature desctiption!", nullptr);
+              BCP, "Error while reading feature description!", nullptr);
           exception.addParameter("File", entry.string());
           throw exception;
         }
