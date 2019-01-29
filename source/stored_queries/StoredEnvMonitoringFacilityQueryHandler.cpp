@@ -10,8 +10,8 @@
 
 #include <boost/icl/type_traits/to_string.hpp>
 #include <functional>
+#include <future>
 #include <memory>
-#include <thread>
 #include <unordered_map>
 
 namespace bw = SmartMet::Plugin::WFS;
@@ -140,47 +140,39 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query
 
     // Get capability data from obsengine.
     StationCapabilityMap stationCapabilityMap;
-    bo::MastQuery scQuery;
-    std::thread thread1;
-    if (showObservingCapability)
-    {
-      thread1 = std::thread(
-          boost::bind(&bw::StoredEnvMonitoringFacilityQueryHandler::getStationCapabilities,
-                      this,
-                      boost::ref(scQuery),
-                      boost::ref(stationCapabilityMap),
-                      boost::ref(params),
-                      boost::ref(validStations)));
+    std::future<void> fObservingCapability;
+    if (showObservingCapability) {
+      fObservingCapability =
+	std::async(std::launch::async,
+		   [this, &stationCapabilityMap, &params, &validStations]() {
+		     bo::MastQuery scQuery;
+		     getStationCapabilities(scQuery, stationCapabilityMap, params, validStations);
+		   });
     }
 
     // Get station group data from Observation
     StationGroupMap stationGroupMap;
-    bo::MastQuery sgQuery;
-    std::thread thread2(
-        boost::bind(&bw::StoredEnvMonitoringFacilityQueryHandler::getStationGroupData,
-                    this,
-                    language,
-                    boost::ref(sgQuery),
-                    boost::ref(stationGroupMap),
-                    boost::ref(params),
-                    boost::ref(validStations)));
+    std::future<void> fStationGroupData =
+      std::async(std::launch::async,
+		 [this, &language, &stationGroupMap, &params, &validStations]() {
+		   bo::MastQuery sgQuery;
+		   getStationGroupData(language, sgQuery, stationGroupMap, params, validStations);
+		 });
 
     // Get network membership data from Observation
     NetworkMembershipMap networkMemberShipMap;
-    bo::MastQuery emfQuery;
-    std::thread thread3(
-        boost::bind(&bw::StoredEnvMonitoringFacilityQueryHandler::getStationNetworkMembershipData,
-                    this,
-                    language,
-                    boost::ref(emfQuery),
-                    boost::ref(networkMemberShipMap),
-                    boost::ref(params),
-                    boost::ref(validStations)));
+    std::future<void> fNetworkMembershipMap =
+      std::async(std::launch::async,
+		 [this, &language, &networkMemberShipMap, &params, &validStations]() {
+		   bo::MastQuery emfQuery;
+		   getStationNetworkMembershipData(language, emfQuery, networkMemberShipMap, params, validStations);
+		 });
 
-    if (thread1.joinable())
-      thread1.join();
-    thread2.join();
-    thread3.join();
+    if (showObservingCapability) {
+      fObservingCapability.wait();
+    }
+    fStationGroupData.wait();
+    fNetworkMembershipMap.wait();
 
     CTPP::CDT hash;
     params.dump_params(hash["query_parameters"]);
