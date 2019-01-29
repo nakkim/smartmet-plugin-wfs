@@ -357,6 +357,13 @@ dump</a></td>
 </tr>
 
 <tr>
+<td>@b locale</td>
+<td>string</td>
+<td>optional</td>
+<td>Locale to use.</td>
+</tr>
+
+<tr>
 <td>@b featuresDir</td>
 <td>string</td>
 <td>mandatory</td>
