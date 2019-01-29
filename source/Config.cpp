@@ -10,6 +10,7 @@
 #include <boost/format.hpp>
 #include <spine/Convenience.h>
 #include <spine/Exception.h>
+#include "WfsConvenience.h"
 #include <locale>
 #include <sstream>
 #include <stdexcept>
@@ -40,18 +41,12 @@ Config::Config(const string& configfile)
 {
   try
   {
-    std::locale user_locale("");
-    std::string user_locale_name = user_locale.name();
-    if (user_locale_name == "*") {
-        user_locale_name = "en_US.utf8";
-    }
-
     itsDefaultUrl = get_optional_config_param<std::string>("url", itsDefaultUrl);
     sq_config_dirs = get_mandatory_path_array("storedQueryConfigDirs", 1);
     const std::string sq_template_dir = get_mandatory_path("storedQueryTemplateDir");
     getFeatureById = get_optional_config_param<std::string>("getFeatureById", c_get_feature_by_id);
     geoserver_conn_str = get_mandatory_config_param<std::string>("geoserverConnStr");
-    default_locale = get_optional_config_param<std::string>("locale", user_locale_name);
+    default_locale = get_optional_config_param<std::string>("locale", guess_default_locale());
     cache_size = get_optional_config_param<int>("cacheSize", 100);
     cache_time_constant = get_optional_config_param<int>("cacheTimeConstant", 60);
     default_expires_seconds = get_optional_config_param<int>("defaultExpiresSeconds", 60);

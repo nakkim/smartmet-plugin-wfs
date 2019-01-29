@@ -23,8 +23,7 @@ SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(const std::string& c
     if (plugin_config) {
       set_locale(plugin_config->get_default_locale());
     } else {
-      const std::string name = std::locale("").name();
-      set_locale(name == "*" ? name : std::string("en_EN.utf8"));
+      set_locale(bw::guess_default_locale());
     }
     config_last_write_time = config_write_time();
     parse_config();
@@ -46,8 +45,7 @@ SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(
     if (plugin_config) {
       locale_name = plugin_config->get_default_locale();
     } else {
-      const std::string name = std::locale("").name();
-      set_locale(name == "*" ? std::string("en_US.utf8") : name);
+      set_locale(bw::guess_default_locale());
     }
     config_last_write_time = config_write_time();
     parse_config();

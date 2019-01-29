@@ -145,6 +145,8 @@ std::string as_string(
 
 std::string remove_trailing_0(const std::string& src);
 
+std::string guess_default_locale();
+
 }  // namespace WFS
 }  // namespace Plugin
 }  // namespace SmartMet

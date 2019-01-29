@@ -187,6 +187,16 @@ std::string remove_trailing_0(const std::string& src)
   }
 }
 
+std::string guess_default_locale()
+{
+  std::locale user_locale("");
+  std::string user_locale_name = user_locale.name();
+  if (user_locale_name == "*") {
+    user_locale_name = "en_US.utf8";
+  }
+  return user_locale_name;
+}
+
 }  // namespace WFS
 }  // namespace Plugin
 }  // namespace SmartMet
