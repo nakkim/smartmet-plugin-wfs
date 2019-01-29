@@ -321,7 +321,9 @@ void bw::StoredGeoserverQueryHandler::update_parameters(
           const auto dest_coords = it2->get_dest_coords();
           BOOST_FOREACH (double value, dest_coords)
           {
-            pm1->add("destBoundary", value);
+            char tmp[80];
+	    snprintf(tmp, sizeof(tmp), "%.6f", value);
+            pm1->add("destBoundary", tmp);
           }
 
           pm1->add("origSrsDim", it2->orig_geom->getCoordinateDimension());
