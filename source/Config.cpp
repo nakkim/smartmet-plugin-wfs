@@ -39,6 +39,10 @@ Config::Config(const string& configfile)
     : SmartMet::Spine::ConfigBase(configfile, "WFS plugin")
     , itsDefaultUrl(default_url)
 {
+  std::cout << (SmartMet::Spine::log_time_str()
+		+ " [WFS] Using plugin configuration file "
+		+ configfile) << std::endl;
+
   try
   {
     itsDefaultUrl = get_optional_config_param<std::string>("url", itsDefaultUrl);
@@ -57,6 +61,10 @@ Config::Config(const string& configfile)
         get_optional_config_param<bool>("enableConfigurationPolling", false);
 
     sq_restrictions = get_optional_config_param<bool>("storedQueryRestrictions", true);
+
+    std::cout << (SmartMet::Spine::log_time_str()
+		  + "[WFS] Using locale "
+		  + default_locale) << std::endl;
 
     std::vector<std::string> xml_grammar_pool_fns;
     // Ensure that setting exists (or report an error otherwise)
