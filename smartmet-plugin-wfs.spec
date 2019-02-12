@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 18.12.4
+Version: 19.2.12
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -23,17 +23,17 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 18.12.4
-BuildRequires: smartmet-library-gis-devel >= 18.9.29
+BuildRequires: smartmet-library-spine-devel >= 18.12.13
+BuildRequires: smartmet-library-gis-devel >= 18.12.10
 BuildRequires: smartmet-library-locus-devel >= 18.11.16
 BuildRequires: smartmet-library-macgyver-devel >= 18.11.24
-BuildRequires: smartmet-engine-contour-devel >= 18.7.25
-BuildRequires: smartmet-engine-geonames-devel >= 18.12.4
+BuildRequires: smartmet-engine-contour-devel >= 19.2.12
+BuildRequires: smartmet-engine-geonames-devel >= 19.1.28
 BuildRequires: smartmet-engine-gis-devel >= 18.11.22
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 18.12.4
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 18.12.4
+BuildRequires: smartmet-engine-querydata-devel >= 19.2.8
 BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 5.2.0
@@ -42,16 +42,16 @@ Requires: libcurl
 Requires: libpqxx
 Requires: smartmet-library-locus >= 18.11.16
 Requires: smartmet-library-macgyver >= 18.11.24
-Requires: smartmet-library-spine >= 18.12.4
-Requires: smartmet-library-gis >= 18.9.29
-Requires: smartmet-engine-contour >= 18.7.25
-Requires: smartmet-engine-geonames >= 18.12.4
+Requires: smartmet-library-spine >= 18.12.13
+Requires: smartmet-library-gis >= 18.12.10
+Requires: smartmet-engine-contour >= 19.2.12
+Requires: smartmet-engine-geonames >= 19.1.28
 Requires: smartmet-engine-gis >= 18.11.22
 %if %{with observation}
 Requires: smartmet-engine-observation >= 18.12.4
 %endif
-Requires: smartmet-engine-querydata >= 18.12.4
-Requires: smartmet-server >= 18.11.8
+Requires: smartmet-engine-querydata >= 19.2.8
+Requires: smartmet-server >= 18.12.14
 Requires: xerces-c
 Requires: xqilla
 %if 0%{rhel} >= 7
@@ -95,6 +95,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Tue Feb 12 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.2.12-1.fmi
+- Use futures instead of threads to avoid exit on exceptions
+- Limit floating point accuracy of printed coordinates
+- More logging
+- Get locale from configuration files
+
 * Tue Dec  4 2018 Pertti Kinnia <pertti.kinnia@fmi.fi> - 18.12.4-1.fmi
 - Repackaged since Spine::Table size changed
 
