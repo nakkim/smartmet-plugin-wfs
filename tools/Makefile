@@ -3,7 +3,7 @@ CXX = g++
 CXXFLAGS = -O2 -Wall -Wextra -Werror -g -std=c++11
 LIBS = -lboost_serialization -lboost_filesystem -lboost_system -lxerces-c -lcurl -lcrypto
 
-TARGETS = XMLGrammarPoolDump XMLGrammarPool.dump
+TARGETS = XMLGrammarPoolDump XMLGrammarPool.dump XSDCacheAdd
 
 XML_REQUEST_SAMPLES = $(wildcard xml_samples/request/*.xml)
 XML_RESPONSE_SAMPLES = $(patsubst xml_samples/request/%.xml,xml_samples/response/%.xml,$(XML_REQUEST_SAMPLES))
@@ -21,6 +21,9 @@ s-update-responses:
 	( cd xml_samples && ./PerformQueries.sh )
 
 XMLGrammarPoolDump: 	XMLGrammarPoolDump.cpp
+	$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS)
+
+XSDCacheAdd: XSDCacheAdd.cpp
 	$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS)
 
 XMLGrammarPool.dump:	s-update-responses XMLGrammarPoolDump
