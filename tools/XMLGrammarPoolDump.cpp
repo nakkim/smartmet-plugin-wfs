@@ -25,6 +25,7 @@
 #include <xercesc/util/XMLEntityResolver.hpp>
 #include <getopt.h>
 #include <curl/curl.h>
+#include <openssl/sha.h>
 
 namespace ba = boost::algorithm;
 namespace fs = boost::filesystem;
@@ -103,9 +104,10 @@ class MyEntityResolver : public xercesc::XMLEntityResolver
   CURL *curl;
 
   std::map<std::string, std::string> cache;
+  bool verbose;
 
  public:
-  MyEntityResolver() { curl = curl_easy_init(); }
+  MyEntityResolver(bool verbose = false) : verbose(verbose) { curl = curl_easy_init(); }
   virtual ~MyEntityResolver() { curl_easy_cleanup(curl); }
   virtual xercesc::InputSource *resolveEntity(xercesc::XMLResourceIdentifier *resource_identifier)
   {
@@ -145,12 +147,31 @@ class MyEntityResolver : public xercesc::XMLEntityResolver
       xercesc::Janitor<XMLCh> x_remote_id(xercesc::XMLString::transcode(remote_uri.c_str()));
       return new xercesc::MemBufInputSource(
           reinterpret_cast<XMLByte *>(data), len, x_remote_id.get(), true /* adopt buffer */);
+    } else {
+        std::ostringstream fn_str;
+        unsigned char md[SHA256_DIGEST_LENGTH];
+        SHA256(reinterpret_cast<const unsigned char*>(remote_uri.c_str()), remote_uri.length(), md);
+        fn_str << "local_cache/";
+        for (unsigned i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+            char tmp[3];
+            snprintf(tmp, 3, "%02X", md[i]);
+            fn_str << tmp;
+        }
+        const std::string fn = fn_str.str();
+        try {
+            if (boost::filesystem::exists(fn)) {
+                xercesc::Janitor<XMLCh> x_remote_id(xercesc::XMLString::transcode(fn.c_str()));
+                return new xercesc::LocalFileInputSource(x_remote_id.get());
+            }
+        } catch (const std::exception& e) {
+            std::cerr << "fn: " << e.what() << std::endl;
+        }
     }
 
     std::cout << "## Resolving  system_id='" << system_id << "'   base_uri='" << base_uri << "'"
               << std::endl;
 
-    const int verbose = 0;
+    const int verbose = this->verbose ? 1 : 0;
     const int autoreferer = 1;
     const int fail_on_error = 1;
     const int content_decoding = 1;
@@ -168,7 +189,7 @@ class MyEntityResolver : public xercesc::XMLEntityResolver
     curl_easy_setopt(curl, CURLOPT_URL, remote_uri.c_str());
     curl_easy_setopt(curl, CURLOPT_AUTOREFERER, &autoreferer);
     curl_easy_setopt(curl, CURLOPT_FAILONERROR, &fail_on_error);
-    curl_easy_setopt(curl, CURLOPT_ACCEPT_ENCODING, &accept_encoding);
+    curl_easy_setopt(curl, CURLOPT_ACCEPT_ENCODING, accept_encoding);
     curl_easy_setopt(curl, CURLOPT_HTTP_CONTENT_DECODING, &content_decoding);
     curl_easy_setopt(curl, CURLOPT_HTTP_TRANSFER_DECODING, &transfer_cododing);
 
@@ -256,11 +277,14 @@ void usage(const char *argv0)
             << "   -w    specifies top of directory hierarchy where to write XML schemas\n"
             << "         read from network (the default actions is not to write loaded\n"
             << "         schemas anywhere\n"
-            << "   -s    serializes loaded schemas to provided file\n" << std::endl;
+            << "   -s    serializes loaded schemas to provided file\n"
+            << "   -v    verbose libCURL output\n"
+            << std::endl;
 }
 
 int run(int argc, char *argv[])
 {
+  bool verbose = false;
   std::string input_fn = "";
   std::string output_fn = "XMLGrammarPool.dump";
   boost::optional<std::string> output_dir;
@@ -268,7 +292,7 @@ int run(int argc, char *argv[])
   std::vector<std::string> files_to_parse;
 
   int opt;
-  while ((opt = getopt(argc, argv, "hi:o:s:w:")) != -1)
+  while ((opt = getopt(argc, argv, "hi:o:s:w:v")) != -1)
   {
     switch (opt)
     {
@@ -286,6 +310,10 @@ int run(int argc, char *argv[])
 
       case 's':
         serialize_fn = optarg;
+        break;
+
+      case 'v':
+        verbose = true;
         break;
 
       default:
@@ -306,7 +334,7 @@ int run(int argc, char *argv[])
   }
 
   MyErrorHandler error_handler;
-  MyEntityResolver entity_resolver;
+  MyEntityResolver entity_resolver(verbose);
 
   xercesc::XMLGrammarPoolImpl grammar_pool;
 

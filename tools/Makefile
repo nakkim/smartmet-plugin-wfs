@@ -1,7 +1,7 @@
 CXX = g++
 
 CXXFLAGS = -O2 -Wall -Wextra -Werror -g -std=c++11
-LIBS = -lboost_serialization -lboost_filesystem -lboost_system -lxerces-c -lcurl
+LIBS = -lboost_serialization -lboost_filesystem -lboost_system -lxerces-c -lcurl -lcrypto
 
 TARGETS = XMLGrammarPoolDump XMLGrammarPool.dump
 
