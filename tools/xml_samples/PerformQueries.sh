@@ -9,7 +9,7 @@ set -x
 brainstorm_rc=${HOME}/.brainstormrc
 
 # Default target server
-server=data.fmi.fi
+server=opendata.fmi.fi
 
 # read user defined parameters
 if [ -f ${brainstorm_rc} ]; then
