@@ -517,16 +517,16 @@ uint StoredGridForecastQueryHandler::processGridQuery(
                 geometryId = gridQuery.mQueryParameterList[p].mValueList[t].mGeometryId;
             }
 
-            T::GridValue *val = gridQuery.mQueryParameterList[p].mValueList[t].mValueList.getGridValueByIndex(v);
-            if (val != NULL && (val->mValue != ParamValueMissing || val->mValueString.length() > 0))
+            T::GridValue val;
+            if (gridQuery.mQueryParameterList[p].mValueList[t].mValueList.getGridValueByIndex(v,val) && (val.mValue != ParamValueMissing || val.mValueString.length() > 0))
             {
-              if (val->mValueString.length() > 0)
+              if (val.mValueString.length() > 0)
               {
                 // The parameter value is a string
                 if (vLen == 1)
                 {
                   // The parameter has only single value in the timestep
-                  output->set(col, row, val->mValueString);
+                  output->set(col, row, val.mValueString);
                 }
                 else
                 {
@@ -544,7 +544,7 @@ uint StoredGridForecastQueryHandler::processGridQuery(
                   if (gridQuery.mQueryParameterList[p].mPrecision >= 0)
                     precision = gridQuery.mQueryParameterList[p].mPrecision;
 
-                  std::string ss = wfsQuery.value_formatter->format(val->mValue,precision);
+                  std::string ss = wfsQuery.value_formatter->format(val.mValue,precision);
                   output->set(col, row, ss);
                   //output->set(col, row, std::to_string(val->mValue));
                 }
