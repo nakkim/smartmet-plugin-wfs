@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wfs:FeatureCollection timeStamp="<TMPL_var response_timestamp>" numberMatched="<TMPL_var number_matched>" numberReturned="<TMPL_var number_returned>"
   xmlns:wfs="http://www.opengis.net/wfs/2.0"
-  xmlns:wp="http://xml.fmi.fi/namespace/aviation-weather/special-products/2015/02/18"
+  xmlns:wp="http://xml.fmi.fi/namespace/aviation-weather/special-products/2015/09/29"
   xmlns:gml="http://www.opengis.net/gml/3.2" 
   xmlns:om="http://www.opengis.net/om/2.0"
   xmlns:sam="http://www.opengis.net/sampling/2.0"
@@ -13,7 +13,7 @@
 					   http://www.opengis.net/om/2.0 http://schemas.opengis.net/om/2.0/observation.xsd					   
 					   http://www.opengis.net/sampling/2.0 http://schemas.opengis.net/sampling/2.0/samplingFeature.xsd
 					   http://www.opengis.net/samplingSpatial/2.0 http://schemas.opengis.net/samplingSpatial/2.0/spatialSamplingFeature.xsd
-					   http://xml.fmi.fi/namespace/aviation-weather/special-products/2015/02/18 http://xml.fmi.fi/schema/aviation-weather/special-products/2015/02/18/WinterPrecipitation.xsd">
+					   http://xml.fmi.fi/namespace/aviation-weather/special-products/2015/09/29 http://xml.fmi.fi/schema/aviation-weather/special-products/2015/09/29/WinterPrecipitation.xsd">
   <!-- Request bbox -->
   <wfs:boundedBy>
     <gml:Envelope axisLabels="<TMPL_var axis_labels>" srsName="<TMPL_var proj_uri>"

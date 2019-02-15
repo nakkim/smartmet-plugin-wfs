@@ -13,7 +13,7 @@
 		       xmlns:gmlcov="http://www.opengis.net/gmlcov/1.0"
 		       xmlns:sam="http://www.opengis.net/sampling/2.0"
 		       xmlns:sams="http://www.opengis.net/samplingSpatial/2.0"
-		       xmlns:target="http://xml.fmi.fi/namespace/om/atmosphericfeatures/0.95"
+		       xmlns:target="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0"
 		       timeStamp="<TMPL_var responseTimestamp>"
 		       numberMatched="<TMPL_var numberMatched>"
 		       numberReturned="<TMPL_var numberReturned>"
@@ -24,7 +24,7 @@
 					   http://www.opengis.net/swe/2.0 http://schemas.opengis.net/sweCommon/2.0/swe.xsd
 					   http://inspire.ec.europa.eu/schemas/ompr/3.0 http://inspire.ec.europa.eu/schemas/ompr/3.0/Processes.xsd
 					   http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
-					   http://xml.fmi.fi/namespace/om/atmosphericfeatures/0.95 http://xml.fmi.fi/schema/om/atmosphericfeatures/0.95/atmosphericfeatures.xsd
+					   http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0 http://xml.fmi.fi/schema/om/atmosphericfeatures/1.0/atmosphericfeatures.xsd
 					   http://www.opengis.net/gml/3.3/lr http://schemas.opengis.net/gml/3.3/linearRef.xsd">
     <TMPL_if (numberReturned > 0)><TMPL_if DEFINED(groups)><TMPL_foreach groups as group><wfs:member>
         <omso:ProfileObservation gml:id="<TMPL_var group.featureId>">
