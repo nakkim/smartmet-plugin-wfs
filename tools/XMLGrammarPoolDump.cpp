@@ -370,6 +370,11 @@ int run(int argc, char *argv[])
     parser.parse(it->c_str());
   }
 
+  if (output_dir)
+  {
+    entity_resolver.write_schemas(*output_dir);
+  }
+
   if (error_handler.isOk())
   {
     std::cout << "##\n"
@@ -377,11 +382,6 @@ int run(int argc, char *argv[])
               << "##" << std::endl;
     xercesc::BinFileOutputStream output(output_fn.c_str());
     grammar_pool.serializeGrammars(&output);
-
-    if (output_dir)
-    {
-      entity_resolver.write_schemas(*output_dir);
-    }
 
     if (serialize_fn)
     {
