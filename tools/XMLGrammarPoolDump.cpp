@@ -90,7 +90,8 @@ class MyErrorHandler : public xercesc::ErrorHandler
   {
     std::cerr << prefix << ": " << to_string(exc.getMessage()) << " at " << exc.getLineNumber()
               << ':' << exc.getColumnNumber() << ", publicId='" << to_string(exc.getPublicId())
-              << "', systemId='" << to_string(exc.getSystemId()) << "'";
+              << "', systemId='" << to_string(exc.getSystemId()) << "'"
+	      << std::endl;
   }
 
  private:
