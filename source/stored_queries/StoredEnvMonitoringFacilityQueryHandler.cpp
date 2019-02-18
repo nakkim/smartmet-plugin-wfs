@@ -141,30 +141,30 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query
     // Get capability data from obsengine.
     StationCapabilityMap stationCapabilityMap;
     std::future<void> fObservingCapability;
+    bo::MastQuery scQuery;
     if (showObservingCapability) {
       fObservingCapability =
 	std::async(std::launch::async,
-		   [this, &stationCapabilityMap, &params, &validStations]() {
-		     bo::MastQuery scQuery;
+		   [this, &scQuery, &stationCapabilityMap, &params, &validStations]() {
 		     getStationCapabilities(scQuery, stationCapabilityMap, params, validStations);
 		   });
     }
 
     // Get station group data from Observation
     StationGroupMap stationGroupMap;
+    bo::MastQuery sgQuery;
     std::future<void> fStationGroupData =
       std::async(std::launch::async,
-		 [this, &language, &stationGroupMap, &params, &validStations]() {
-		   bo::MastQuery sgQuery;
+		 [this, &sgQuery, &language, &stationGroupMap, &params, &validStations]() {
 		   getStationGroupData(language, sgQuery, stationGroupMap, params, validStations);
 		 });
 
     // Get network membership data from Observation
     NetworkMembershipMap networkMemberShipMap;
+    bo::MastQuery emfQuery;
     std::future<void> fNetworkMembershipMap =
       std::async(std::launch::async,
-		 [this, &language, &networkMemberShipMap, &params, &validStations]() {
-		   bo::MastQuery emfQuery;
+		 [this, &emfQuery, &language, &networkMemberShipMap, &params, &validStations]() {
 		   getStationNetworkMembershipData(language, emfQuery, networkMemberShipMap, params, validStations);
 		 });
 
