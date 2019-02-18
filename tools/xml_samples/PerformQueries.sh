@@ -8,8 +8,8 @@ set -x
 
 brainstorm_rc=${HOME}/.brainstormrc
 
-# Default target server
-server=opendata.fmi.fi
+# target server
+server=${SMARTMET_SERVER-opendata.fmi.fi}
 
 # read user defined parameters
 if [ -f ${brainstorm_rc} ]; then
@@ -30,7 +30,10 @@ fi
 
 # Use proxy if the script is not run on the same host as target server.
 host_name=$(hostname);
-if [ ! -z ${http_proxy} ] && [ "${host_name}" != "${server}" ]; then
+if echo $server | egrep -q '^(127\.0\.|192\.168\.)' ; then
+  proxy="";
+  export http_proxy=$proxy
+elif [ ! -z ${http_proxy} ] && [ "${host_name}" != "${server}" ]; then
   proxy="--proxy ${http_proxy}"
   echo "Using http_proxy: ${http_proxy}";
 else
