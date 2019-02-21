@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 #include <boost/foreach.hpp>
 #include <boost/test/included/unit_test.hpp>
 #include <newbase/NFmiPoint.h>
@@ -101,4 +102,40 @@ BOOST_AUTO_TEST_CASE(test_edit_params)
   {
     BOOST_REQUIRE(false);
   }
+}
+
+BOOST_AUTO_TEST_CASE(test_2)
+{
+  int num_err = 0;
+  const unsigned num_tests = 100;
+  const char* stored_query_id = "fmi::test::query";
+  std::mt19937 rng;
+  std::uniform_real_distribution<double> rn(0.0, 1.0);
+  for (unsigned i = 0; i < num_tests; i++) {
+    int k = 0;
+    std::multimap<std::string, Value> params;
+    while (true) {
+      double val = rn(rng);
+      std::string name = "A" + std::to_string(++k);
+      if (val > 0.99) {
+	break;
+      } else if (val > 0.7) {
+	params.insert(std::make_pair(name, Value((val - 0.7)/0.29)));
+      } else if (val > 0.3) {
+	params.insert(std::make_pair(name, Value(k*k-25)));
+      } else {
+	params.insert(std::make_pair(name, Value("B"+ std::to_string(k*k))));
+      }
+      const double c_bbox[4] = {21.0, 60.0, 23.0, 62.0};
+      FeatureID id1(stored_query_id, params);
+      id1.add_param("bbox", c_bbox, c_bbox + 4);
+      boost::shared_ptr<FeatureID> id2 = FeatureID::create_from_id(id1.get_id());
+      if (id1.get_params() != id2->get_params()) {
+	num_err++;
+      }
+    }
+    if (i > 0 && (i % 100) == 0) { std::cout << i << "  " << params.size() << "  " << num_err << std::endl; }
+  }
+  std::cout << "Finished" << std::endl;
+  BOOST_REQUIRE_EQUAL(num_err, 0);
 }
