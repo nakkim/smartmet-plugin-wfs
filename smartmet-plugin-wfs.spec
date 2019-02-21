@@ -4,7 +4,7 @@
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
 Version: 19.2.21
-Release: 1%{?dist}.fmi
+Release: 2%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-wfs
@@ -24,10 +24,10 @@ BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-spine-devel >= 18.12.13
-BuildRequires: smartmet-library-gis-devel >= 18.12.10
+BuildRequires: smartmet-library-gis-devel >= 19.2.21
 BuildRequires: smartmet-library-locus-devel >= 18.11.16
 BuildRequires: smartmet-library-macgyver-devel >= 18.11.24
-BuildRequires: smartmet-engine-contour-devel >= 19.2.12
+BuildRequires: smartmet-engine-contour-devel >= 19.2.21
 BuildRequires: smartmet-engine-geonames-devel >= 19.1.28
 BuildRequires: smartmet-engine-gis-devel >= 18.11.22
 %if %{with observation}
@@ -43,8 +43,8 @@ Requires: libpqxx
 Requires: smartmet-library-locus >= 18.11.16
 Requires: smartmet-library-macgyver >= 18.11.24
 Requires: smartmet-library-spine >= 18.12.13
-Requires: smartmet-library-gis >= 18.12.10
-Requires: smartmet-engine-contour >= 19.2.12
+Requires: smartmet-library-gis >= 19.2.21
+Requires: smartmet-engine-contour >= 19.2.21
 Requires: smartmet-engine-geonames >= 19.1.28
 Requires: smartmet-engine-gis >= 18.11.22
 %if %{with observation}
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Feb 21 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.2.21-2.fmi
+- Repackaged since Contour::Options size changed
+
 * Thu Feb 21 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.2.21-1.fmi
 - Add client IP to console stack traces
 
