@@ -110,27 +110,19 @@ boost::shared_ptr<xercesc::DOMDocument> Parser::parse_input(
   {
     error_handler->resetErrors();
 
-    try
-    {
-      this->root_element_cb = root_element_cb;
-      this->parse(input);
-    }
-    catch (XmlError &error)
-    {
-      // Add messages to the exception object if an exception
-      // has been thrown while parsing and messages are not yet added
-      if (error.get_messages().empty())
-      {
-        error.add_messages(error_handler->get_messages());
-      }
-      throw SmartMet::Spine::Exception::Trace(BCP, "XML error!");
-    }
+    this->root_element_cb = root_element_cb;
+    this->parse(input);
 
     // Verify that there are no errors. Throw an exception otherwise
     error_handler->check_errors("XML parser failed");
 
     boost::shared_ptr<xercesc::DOMDocument> result(this->adoptDocument());
     return result;
+  }
+  catch (const XmlError&)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "XML error!")
+      .addDetails(error_handler->get_messages());
   }
   catch (...)
   {
