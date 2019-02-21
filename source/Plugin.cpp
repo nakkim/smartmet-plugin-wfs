@@ -525,6 +525,7 @@ void Plugin::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
 
       SmartMet::Spine::Exception exception(BCP, "Request processing exception!", nullptr);
       exception.addParameter("URI", theRequest.getURI());
+      exception.addParameter("ClientIP", theRequest.getClientIP());
       exception.printError();
 
       // FIXME: implement correct processing phase support (parsing, processing)
