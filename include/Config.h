@@ -15,6 +15,7 @@
 #include <libconfig.h++>
 #include <string>
 #include <vector>
+#include "CapabilitiesConf.h"
 
 namespace SmartMet
 {
@@ -59,8 +60,12 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   inline const std::string& get_default_locale() const { return default_locale; }
   std::vector<boost::shared_ptr<WfsFeatureDef> > read_features_config(
       SmartMet::Engine::Gis::CRSRegistry& theCRSRegistry);
+  const CapabilitiesConf& get_capabilities_config() const { return capabilities_conf; }
 
   void read_typename_config(std::map<std::string, std::string>& typename_storedqry);
+
+ private:
+  void read_capabilities_config();
 
  private:
   std::string itsDefaultUrl;
@@ -79,6 +84,7 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   bool enable_test_queries;
   bool enable_configuration_polling;
   bool sq_restrictions;
+  CapabilitiesConf capabilities_conf;
 
 };  // class Config
 

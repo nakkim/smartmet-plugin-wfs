@@ -17,110 +17,45 @@
   http://inspire.ec.europa.eu/schemas/inspire_dls/1.0 http://inspire.ec.europa.eu/schemas/inspire_dls/1.0/inspire_dls.xsd
   http://inspire.ec.europa.eu/schemas/common/1.0 http://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
   http://inspire.ec.europa.eu/schemas/ef/4.0 http://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
-<TMPL_if in_set(language, "fin")>
   <ows:ServiceIdentification>
-    <ows:Title>Ilmatieteen laitoksen kaupalliset latauspalvelut</ows:Title>
-    <ows:Abstract>
-      Ilmatieteen laitoksen kaupallisessa latauspalvelussa on saatavilla tietoaineistoja
-      jotka eivät ole käytettävissä maksutta.
+<TMPL_if (defined(title))>    <ows:Title><TMPL_var XMLESCAPE(title)></ows:Title>
+</TMPL_if><TMPL_if (defined(abstract))>    <ows:Abstract>
+      <TMPL_var XMLESCAPE(abstract)>
     </ows:Abstract>
-    <ows:Keywords>
-      <ows:Keyword>Sää</ows:Keyword>
-      <ows:Keyword>Meri</ows:Keyword>
-      <ows:Keyword>Tutka</ows:Keyword>
-      <ows:Keyword>Havainto</ows:Keyword>
-      <ows:Keyword>Ennuste</ows:Keyword>
-      <ows:Keyword>Ennustemalli</ows:Keyword>
-      <ows:Keyword>Hirlam</ows:Keyword>
-      <ows:Keyword>Säteily</ows:Keyword>
-      <ows:Keyword>Radioaktiivisuus</ows:Keyword>
-      <ows:Keyword>Ilmanlaatu</ows:Keyword>
-      <ows:Type>String</ows:Type>
-    </ows:Keywords>
-    <ows:ServiceType>WFS</ows:ServiceType>
+</TMPL_if><TMPL_if (defined(keywords))>    <ows:Keywords>
+<TMPL_FOREACH keywords AS keyword>      <ows:Keyword><TMPL_var XMLESCAPE(keyword)></ows:Keyword>
+</TMPL_FOREACH>    </ows:Keywords>
+</TMPL_if>    <ows:ServiceType>WFS</ows:ServiceType>
     <ows:ServiceTypeVersion>2.0.0</ows:ServiceTypeVersion>
-    <ows:Fees>
-      Tämän palvelun käyttö sekä palvelusta ladattu data on maksullista. Käyttäjien
-      tulee rekisteröityä palveluun sekä hyväksyä käyttöehdot saadakseen pääsyn palveluun.
+<TMPL_if (defined(fees))>    <ows:Fees><TMPL_var XMLESCAPE(fees)>
     </ows:Fees>
-    <ows:AccessConstraints>
-<TMPL_else>
-  <ows:ServiceIdentification>
-    <ows:Title>Finnish Meteorological Institute's Commercial Data Download Service</ows:Title>
-    <ows:Abstract>
-      Finnish Meteorological Institute's Commercial Data Download Service provides data
-      which is not available free-of-charge.
-    </ows:Abstract>
-    <ows:Keywords>
-      <ows:Keyword>Weather</ows:Keyword>
-      <ows:Keyword>Ocean</ows:Keyword>
-      <ows:Keyword>Radar</ows:Keyword>
-      <ows:Keyword>Observation</ows:Keyword>
-      <ows:Keyword>Forecast</ows:Keyword>
-      <ows:Keyword>Model</ows:Keyword>
-      <ows:Keyword>Hirlam</ows:Keyword>
-      <ows:Keyword>Radiation</ows:Keyword>
-      <ows:Keyword>Radioactivity</ows:Keyword>
-      <ows:Keyword>Airquality</ows:Keyword>
-      <ows:Type>String</ows:Type>
-    </ows:Keywords>
-    <ows:ServiceType>WFS</ows:ServiceType>
-    <ows:ServiceTypeVersion>2.0.0</ows:ServiceTypeVersion>
-    <ows:Fees>
-      The use of this service and the returned data is not free-of-charge. Users must
-      register and agree to the terms of service to gain access to the data.
-    </ows:Fees>
-    <ows:AccessConstraints>
+</TMPL_if> <TMPL_if (defined(accessConstraints))>    <ows:AccessConstraints>
+<TMPL_var XMLESCAPE(accessConstraints)>
+  </ows:AccessConstraints>
 </TMPL_if>
-<TMPL_if in_set(language, "fin")>
-</ows:AccessConstraints>
   </ows:ServiceIdentification>
+
   <ows:ServiceProvider>
-    <ows:ProviderName>Ilmatieteen laitos</ows:ProviderName>
-    <ows:ProviderSite xlink:href="http://ilmatieteenlaitos.fi"/>
-    <ows:ServiceContact>
+<TMPL_if (defined(providerName))>    <ows:ProviderName><TMPL_var XMLESCAPE(providerName)></ows:ProviderName>
+</TMPL_if><TMPL_if (defined(providerSite))>    <ows:ProviderSite xlink:href="<TMPL_var providerSite>"/>
+</TMPL_if>    <ows:ServiceContact>
       <ows:ContactInfo>
-        <ows:Phone>
-          <ows:Voice>+358 29 539 1000</ows:Voice>
-          <ows:Facsimile>+358 29 539 2303</ows:Facsimile>
-        </ows:Phone>
-        <ows:Address>
-          <ows:DeliveryPoint>PL 503</ows:DeliveryPoint>
-          <ows:City>Helsinki</ows:City>
-          <ows:AdministrativeArea>Uusimaa</ows:AdministrativeArea>
-          <ows:PostalCode>00101</ows:PostalCode>
-          <ows:Country>Suomi</ows:Country>
-          <ows:ElectronicMailAddress>santeri.oksman@fmi.fi</ows:ElectronicMailAddress>
-        </ows:Address>
-<TMPL_else>
-</ows:AccessConstraints>
-  </ows:ServiceIdentification>
-  <ows:ServiceProvider>
-    <ows:ProviderName>Finnish Meteorological Institute</ows:ProviderName>
-    <ows:ProviderSite xlink:href="http://en.ilmatieteenlaitos.fi"/>
-    <ows:ServiceContact>
-      <ows:ContactInfo>
-        <ows:Phone>
-          <ows:Voice>+358 29 539 1000</ows:Voice>
-          <ows:Facsimile>+358 29 539 2303</ows:Facsimile>
-        </ows:Phone>
-        <ows:Address>
-          <ows:DeliveryPoint>P.O. BOX 503</ows:DeliveryPoint>
-          <ows:City>Helsinki</ows:City>
-          <ows:AdministrativeArea>Uusimaa</ows:AdministrativeArea>
-          <ows:PostalCode>00101</ows:PostalCode>
-          <ows:Country>Finland</ows:Country>
-          <ows:ElectronicMailAddress>santeri.oksman@fmi.fi</ows:ElectronicMailAddress>
-        </ows:Address>
+<TMPL_if (defined(phone))>        <ows:Phone>
+<TMPL_if (defined(phone.voice))>          <ows:Voice><TMPL_var phone.voice></ows:Voice>
+</TMPL_if><TMPL_if (defined(phone.fax))>          <ows:Facsimile><TMPL_var phone.fax></ows:Facsimile>
+</TMPL_if>        </ows:Phone>
+</TMPL_if><TMPL_if (defined(address))>        <ows:Address>
+<TMPL_if (defined(address.deliveryPoint))>          <ows:DeliveryPoint><TMPL_var XMLESCAPE(address.deliveryPoint)></ows:DeliveryPoint>
+</TMPL_if><TMPL_if (defined(address.city))>          <ows:City><TMPL_var XMLESCAPE(address.city)></ows:City>
+</TMPL_if><TMPL_if (defined(address.area))>          <ows:AdministrativeArea><TMPL_var XMLESCAPE(address.area)></ows:AdministrativeArea>
+</TMPL_if><TMPL_if (defined(address.postalCode))>          <ows:PostalCode><TMPL_var XMLESCAPE(address.postalCode)></ows:PostalCode>
+</TMPL_if><TMPL_if (defined(address.country))>          <ows:Country><TMPL_var XMLESCAPE(address.country)></ows:Country>
+</TMPL_if><TMPL_if (defined(address.email))>          <ows:ElectronicMailAddress><TMPL_var address.email></ows:ElectronicMailAddress>
+</TMPL_if>        </ows:Address>
+</TMPL_if><TMPL_if (defined(onlineResource))>      <ows:OnlineResource xlink:href="<TMPL_var onlineResource>"/>
 </TMPL_if>
-        <TMPL_if in_set(language, "fin")><ows:OnlineResource xlink:href="http://ilmatieteenlaitos.fi/avoin-data"/><TMPL_else><ows:OnlineResource xlink:href="http://en.ilmatieteenlaitos.fi/open-data"/></TMPL_if>
-        <ows:ContactInstructions>
-<TMPL_if in_set(language, "fin")>
-          Saadaksesi teknistä apua tai antaaksesi palvelua koskevia virheilmoituksia, ole hyvä ja ota yhteyttä osoitteen support@weatherproof.fi.
-<TMPL_else>
-          For technical help or error reports considering FMI Open Data Web Services, please contact support@weatherproof.fi.
+<TMPL_if (defined(contactInstructions))>    <ows:ContactInstructions><TMPL_var XMLESCAPE(contactInstructions)></ows:ContactInstructions>
 </TMPL_if>
-        </ows:ContactInstructions>
       </ows:ContactInfo>
       <ows:Role>PointOfContact</ows:Role>
     </ows:ServiceContact>
@@ -129,8 +64,8 @@
     <ows:Operation name="GetCapabilities">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
-          <ows:Post xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+          <ows:Get xlink:href="<TMPL_var wfsUrl>"/>
+          <ows:Post xlink:href="<TMPL_var wfsUrl>"/>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="AcceptVersions">
@@ -142,8 +77,8 @@
     <TMPL_if (defined(operation.supportsDescribeFeatureType))><ows:Operation name="DescribeFeatureType">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
-          <ows:Post xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+          <ows:Get xlink:href="<TMPL_var wfsUrl>"/>
+          <ows:Post xlink:href="<TMPL_var wfsUrl>"/>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="outputFormat">
@@ -158,32 +93,32 @@
     </TMPL_if><TMPL_if (defined(operation.supportsListStoredQueries))><ows:Operation name="ListStoredQueries">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
-          <ows:Post xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+          <ows:Get xlink:href="<TMPL_var wfsUrl>"/>
+          <ows:Post xlink:href="<TMPL_var wfsUrl>"/>
         </ows:HTTP>
       </ows:DCP>
     </ows:Operation>
     </TMPL_if><TMPL_if (defined(operation.supportsDescribeStoredQueries))><ows:Operation name="DescribeStoredQueries">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
-          <ows:Post xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+          <ows:Get xlink:href="<TMPL_var wfsUrl>"/>
+          <ows:Post xlink:href="<TMPL_var wfsUrl>"/>
         </ows:HTTP>
       </ows:DCP>
     </ows:Operation>
     </TMPL_if><TMPL_if (defined(operation.supportsGetPropertyValue))><ows:Operation name="GetPropertyValue">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
-          <ows:Post xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+          <ows:Get xlink:href="<TMPL_var wfsUrl>"/>
+          <ows:Post xlink:href="<TMPL_var wfsUrl>"/>
         </ows:HTTP>
       </ows:DCP>
     </ows:Operation>
     </TMPL_if><TMPL_if (defined(operation.supportsGetFeature))><ows:Operation name="GetFeature">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
-          <ows:Post xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+          <ows:Get xlink:href="<TMPL_var wfsUrl>"/>
+          <ows:Post xlink:href="<TMPL_var wfsUrl>"/>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="outputFormat">

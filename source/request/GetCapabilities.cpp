@@ -100,7 +100,11 @@ void GetCapabilities::execute(std::ostream& output) const
       f["namespace"] = map_item.second;
     }
 
+    plugin_data.get_config().get_capabilities_config().apply(hash, language);
+    //std::cout << hash.RecursiveDump(10) << std::endl;
+
     std::ostringstream log_messages;
+
     try
     {
       auto formatter = plugin_data.get_get_capabilities_formater();

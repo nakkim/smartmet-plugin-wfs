@@ -8,6 +8,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
+#include <spine/ConfigTools.h>
 #include <spine/Convenience.h>
 #include <spine/Exception.h>
 #include "WfsConvenience.h"
@@ -109,6 +110,9 @@ Config::Config(const string& configfile)
                                              " provided as stored queries"
                                              " configuration directory is not a directory");
     }
+
+    read_capabilities_config();
+
     // Verify that stored queries template directory exists
     template_directory = sq_template_dir;
   }
@@ -207,6 +211,35 @@ void Config::read_typename_config(std::map<std::string, std::string>& typename_s
       std::cerr << "Failed to parse stored query configuration file '" << get_file_name() << "'"
                 << std::endl;
       handle_libconfig_exceptions(METHOD_NAME);
+    }
+  }
+  catch (...)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+void Config::read_capabilities_config()
+{
+  try
+  {
+    const char* setting_name = "capabilities_config";
+    if (get_config().exists(setting_name)) {
+      libconfig::Setting& s1 = get_config().lookup(setting_name);
+      const std::string default_language = languages.empty() ? std::string("eng") : *languages.begin();
+      if (s1.getType() == libconfig::Setting::TypeString) {
+	const std::string fn = get_mandatory_path("capabilities_config");
+	libconfig::Config raw_capabilities_conf;
+	std::cout << SmartMet::Spine::log_time_str()
+		  << " [WFS][INFO] Reading capabilities information from '" << fn << '\''
+		  << std::endl;
+	raw_capabilities_conf.readFile(fn.c_str());
+	capabilities_conf.parse(default_language, raw_capabilities_conf.getRoot());
+      } else if (s1.getType() == libconfig::Setting::TypeGroup) {
+	capabilities_conf.parse(default_language, s1);
+      } else {
+	throw SmartMet::Spine::Exception::Trace(BCP, "Incorrect value of configuration entry capabilities_config");
+      }
     }
   }
   catch (...)
