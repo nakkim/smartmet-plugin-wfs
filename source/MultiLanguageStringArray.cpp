@@ -5,6 +5,38 @@
 
 using SmartMet::Plugin::WFS::MultiLanguageStringArray;
 
+/**
+
+@page WFS_CFG_MULTI_LANGUAGE_STRING_ARRAY cfgMultiLanguageStringArray
+
+This configuration object contains values of string array in several langugaes.
+
+The default language is specified when reading multilanguage string array rom
+libconfig type configuration file. A translation to the default language
+is required to be present. The size of the array is required to be identical for
+all provided languages.
+
+An example:
+
+@verbatim
+numbers:
+{
+    eng: [ "one", "two", "three", "four" ];
+    fin: [ "yksi", "kaksi", "kolme", "neljä" ];
+    lav: [ "viens", "divi", "trīs", "četri" ];
+};
+@endverbatim
+
+One can alternatively specify a single string array like:
+
+@verbatim
+numbers: [ "one", "two", "three", "four" ];
+@endverbatim
+
+In this case it is assumed that strings are provided for the default language.
+
+ */
+
 MultiLanguageStringArray::MultiLanguageStringArray(
     const std::string& default_language, libconfig::Setting& setting)
 
