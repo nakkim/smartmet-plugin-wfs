@@ -63,7 +63,7 @@ Config::Config(const string& configfile)
     sq_restrictions = get_optional_config_param<bool>("storedQueryRestrictions", true);
 
     std::cout << (SmartMet::Spine::log_time_str()
-		  + "[WFS] Using locale "
+		  + " [WFS] Using locale "
 		  + default_locale) << std::endl;
 
     std::vector<std::string> xml_grammar_pool_fns;
