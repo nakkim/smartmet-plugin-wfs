@@ -21,6 +21,14 @@ An example:
 title: { eng: "An example"; fin: "Esimerkki"; lav:"Piemērs"; };
 @endverbatim
 
+One can alternatively specify a single string like:
+
+@verbatim
+title: "An example";
+@endverbatim
+
+In this case it is assumed that it is provided for the default language.
+
  */
 
 namespace bw = SmartMet::Plugin::WFS;
