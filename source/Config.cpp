@@ -223,12 +223,12 @@ void Config::read_capabilities_config()
 {
   try
   {
-    const char* setting_name = "capabilities_config";
+    const char* setting_name = "capabilitiesConfig";
     if (get_config().exists(setting_name)) {
       libconfig::Setting& s1 = get_config().lookup(setting_name);
       const std::string default_language = languages.empty() ? std::string("eng") : *languages.begin();
       if (s1.getType() == libconfig::Setting::TypeString) {
-	const std::string fn = get_mandatory_path("capabilities_config");
+	const std::string fn = get_mandatory_path(setting_name);
 	libconfig::Config raw_capabilities_conf;
 	std::cout << SmartMet::Spine::log_time_str()
 		  << " [WFS][INFO] Reading capabilities information from '" << fn << '\''
