@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WFS_Capabilities xmlns="http://www.opengis.net/wfs/2.0"
+  xmlns:gml="http://www.opengis.net/gml/3.2"
+  xmlns:fes="http://www.opengis.net/fes/2.0"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:ows="http://www.opengis.net/ows/1.1"
+  xmlns:omso="http://inspire.ec.europa.eu/schemas/omso/3.0"
+  xmlns:ef="http://inspire.ec.europa.eu/schemas/ef/4.0"
+  xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0"
+  xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  version="2.0.0"
+  xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd
+  http://www.opengis.net/ows/1.1 http://schemas.opengis.net/ows/1.1.0/owsAll.xsd
+  http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
+  http://inspire.ec.europa.eu/schemas/inspire_dls/1.0 http://inspire.ec.europa.eu/schemas/inspire_dls/1.0/inspire_dls.xsd
+  http://inspire.ec.europa.eu/schemas/common/1.0 http://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
+  http://inspire.ec.europa.eu/schemas/ef/4.0 http://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
+  <ows:ServiceIdentification>
+<TMPL_if (defined(title))>    <ows:Title><TMPL_var XMLESCAPE(title)></ows:Title>
+</TMPL_if><TMPL_if (defined(abstract))>    <ows:Abstract>
+      <TMPL_var XMLESCAPE(abstract)>
+    </ows:Abstract>
+</TMPL_if><TMPL_if (defined(keywords))>    <ows:Keywords>
+<TMPL_FOREACH keywords AS keyword>      <ows:Keyword><TMPL_var XMLESCAPE(keyword)></ows:Keyword>
+</TMPL_FOREACH>    </ows:Keywords>
+</TMPL_if>    <ows:ServiceType>WFS</ows:ServiceType>
+    <ows:ServiceTypeVersion>2.0.0</ows:ServiceTypeVersion>
+<TMPL_if (defined(fees))>    <ows:Fees><TMPL_var XMLESCAPE(fees)>
+    </ows:Fees>
+</TMPL_if> <TMPL_if (defined(accessConstraints))>    <ows:AccessConstraints>
+<TMPL_var XMLESCAPE(accessConstraints)>
+  </ows:AccessConstraints>
+</TMPL_if>
+  </ows:ServiceIdentification>
+
+  <ows:ServiceProvider>
+<TMPL_if (defined(providerName))>    <ows:ProviderName><TMPL_var XMLESCAPE(providerName)></ows:ProviderName>
+</TMPL_if><TMPL_if (defined(providerSite))>    <ows:ProviderSite xlink:href="<TMPL_var providerSite>"/>
+</TMPL_if>    <ows:ServiceContact>
+      <ows:ContactInfo>
+<TMPL_if (defined(phone))>        <ows:Phone>
+<TMPL_if (defined(phone.voice))>          <ows:Voice><TMPL_var phone.voice></ows:Voice>
+</TMPL_if><TMPL_if (defined(phone.fax))>          <ows:Facsimile><TMPL_var phone.fax></ows:Facsimile>
+</TMPL_if>        </ows:Phone>
+</TMPL_if><TMPL_if (defined(address))>        <ows:Address>
+<TMPL_if (defined(address.deliveryPoint))>          <ows:DeliveryPoint><TMPL_var XMLESCAPE(address.deliveryPoint)></ows:DeliveryPoint>
+</TMPL_if><TMPL_if (defined(address.city))>          <ows:City><TMPL_var XMLESCAPE(address.city)></ows:City>
+</TMPL_if><TMPL_if (defined(address.area))>          <ows:AdministrativeArea><TMPL_var XMLESCAPE(address.area)></ows:AdministrativeArea>
+</TMPL_if><TMPL_if (defined(address.postalCode))>          <ows:PostalCode><TMPL_var XMLESCAPE(address.postalCode)></ows:PostalCode>
+</TMPL_if><TMPL_if (defined(address.country))>          <ows:Country><TMPL_var XMLESCAPE(address.country)></ows:Country>
+</TMPL_if><TMPL_if (defined(address.email))>          <ows:ElectronicMailAddress><TMPL_var address.email></ows:ElectronicMailAddress>
+</TMPL_if>        </ows:Address>
+</TMPL_if><TMPL_if (defined(onlineResource))>      <ows:OnlineResource xlink:href="<TMPL_var onlineResource>"/>
+</TMPL_if>
+<TMPL_if (defined(contactInstructions))>    <ows:ContactInstructions><TMPL_var XMLESCAPE(contactInstructions)></ows:ContactInstructions>
+</TMPL_if>
+      </ows:ContactInfo>
+      <ows:Role>PointOfContact</ows:Role>
+    </ows:ServiceContact>
+  </ows:ServiceProvider>
+  <ows:OperationsMetadata>
+    <ows:Operation name="GetCapabilities">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+          <ows:Post xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+        </ows:HTTP>
+      </ows:DCP>
+      <ows:Parameter name="AcceptVersions">
+        <ows:AllowedValues>
+          <ows:Value>2.0.0</ows:Value>
+        </ows:AllowedValues>
+      </ows:Parameter>
+    </ows:Operation>
+    <TMPL_if (defined(operation.supportsDescribeFeatureType))><ows:Operation name="DescribeFeatureType">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+          <ows:Post xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+        </ows:HTTP>
+      </ows:DCP>
+      <ows:Parameter name="outputFormat">
+        <ows:AllowedValues>
+          <ows:Value>text/xml; subtype=gml/3.2</ows:Value>
+          <ows:Value>text/xml; version=3.2</ows:Value>
+          <ows:Value>application/gml+xml; subtype=gml/3.2</ows:Value>
+          <ows:Value>application/gml+xml; version=3.2</ows:Value>
+        </ows:AllowedValues>
+      </ows:Parameter>
+    </ows:Operation>
+    </TMPL_if><TMPL_if (defined(operation.supportsListStoredQueries))><ows:Operation name="ListStoredQueries">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+          <ows:Post xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+        </ows:HTTP>
+      </ows:DCP>
+    </ows:Operation>
+    </TMPL_if><TMPL_if (defined(operation.supportsDescribeStoredQueries))><ows:Operation name="DescribeStoredQueries">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+          <ows:Post xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+        </ows:HTTP>
+      </ows:DCP>
+    </ows:Operation>
+    </TMPL_if><TMPL_if (defined(operation.supportsGetPropertyValue))><ows:Operation name="GetPropertyValue">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+          <ows:Post xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+        </ows:HTTP>
+      </ows:DCP>
+    </ows:Operation>
+    </TMPL_if><TMPL_if (defined(operation.supportsGetFeature))><ows:Operation name="GetFeature">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+          <ows:Post xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/wfs/<TMPL_var language>"/>
+        </ows:HTTP>
+      </ows:DCP>
+      <ows:Parameter name="outputFormat">
+        <ows:AllowedValues>
+          <ows:Value>text/xml; subtype=gml/3.2</ows:Value>
+          <ows:Value>text/xml; version=3.2</ows:Value>
+          <ows:Value>application/gml+xml; subtype=gml/3.2</ows:Value>
+          <ows:Value>application/gml+xml; version=3.2</ows:Value>
+        </ows:AllowedValues>
+      </ows:Parameter>
+    </ows:Operation></TMPL_if>
+    <ows:Parameter name="version">
+      <ows:AllowedValues>
+        <ows:Value>2.0.0</ows:Value>
+      </ows:AllowedValues>
+    </ows:Parameter>
+    <!--
+      *****************************************************
+    -->
+    <!--
+      * CONFORMANCE DECLARATION *
+    -->
+    <!--
+      *****************************************************
+    -->
+    <ows:Constraint name="ImplementsBasicWFS">
+      <ows:NoValues/>
+      <ows:DefaultValue>TRUE</ows:DefaultValue>
+    </ows:Constraint>
+    <ows:Constraint name="ImplementsTransactionalWFS">
+      <ows:NoValues/>
+      <ows:DefaultValue>FALSE</ows:DefaultValue>
+    </ows:Constraint>
+    <ows:Constraint name="ImplementsLockingWFS">
+      <ows:NoValues/>
+      <ows:DefaultValue>FALSE</ows:DefaultValue>
+    </ows:Constraint>
+    <ows:Constraint name="KVPEncoding">
+      <ows:NoValues/>
+      <ows:DefaultValue>TRUE</ows:DefaultValue>
+    </ows:Constraint>
+    <ows:Constraint name="XMLEncoding">
+      <ows:NoValues/>
+      <ows:DefaultValue>TRUE</ows:DefaultValue>
+    </ows:Constraint>
+    <ows:Constraint name="SOAPEncoding">
+      <ows:NoValues/>
+      <ows:DefaultValue>FALSE</ows:DefaultValue>
+    </ows:Constraint>
+    <ows:Constraint name="ImplementsInheritance">
+      <ows:NoValues/>
+      <ows:DefaultValue>FALSE</ows:DefaultValue>
+    </ows:Constraint>
+    <ows:Constraint name="ImplementsRemoteResolve">
+      <ows:NoValues/>
+      <ows:DefaultValue>FALSE</ows:DefaultValue>
+    </ows:Constraint>
+    <ows:Constraint name="ImplementsResultPaging">
+      <ows:NoValues/>
+      <ows:DefaultValue>FALSE</ows:DefaultValue>
+    </ows:Constraint>
+    <ows:Constraint name="ImplementsStandardJoins">
+      <ows:NoValues/>
+      <ows:DefaultValue>FALSE</ows:DefaultValue>
+    </ows:Constraint>
+    <ows:Constraint name="ImplementsSpatialJoins">
+      <ows:NoValues/>
+      <ows:DefaultValue>FALSE</ows:DefaultValue>
+    </ows:Constraint>
+    <ows:Constraint name="ImplementsTemporalJoins">
+      <ows:NoValues/>
+      <ows:DefaultValue>FALSE</ows:DefaultValue>
+    </ows:Constraint>
+    <ows:Constraint name="ImplementsFeatureVersioning">
+      <ows:NoValues/>
+      <ows:DefaultValue>FALSE</ows:DefaultValue>
+    </ows:Constraint>
+    <ows:Constraint name="ManageStoredQueries">
+      <ows:NoValues/>
+      <ows:DefaultValue>FALSE</ows:DefaultValue>
+    </ows:Constraint>
+
+    <!-- Limited by estimation calculated before actual data quarry as following: 
+	 time steps * locations * parameters. -->
+    <ows:Constraint name="CountDefault">
+      <ows:NoValues/>
+      <ows:DefaultValue>20000</ows:DefaultValue>
+    </ows:Constraint>
+
+    <!-- Supports both AdHocQueries and StoredQueries -->
+    <ows:Constraint name="QueryExpressions">
+      <ows:AllowedValues>
+        <ows:Value>wfs:Query</ows:Value>
+        <ows:Value>wfs:StoredQuery</ows:Value>
+      </ows:AllowedValues>
+    </ows:Constraint>
+
+    <!--
+      *****************************************************
+    -->
+   <!-- * INSPIRE extended capabilities
+   -->
+    <!--
+      *****************************************************
+    -->
+    <ows:ExtendedCapabilities>
+      <inspire_dls:ExtendedCapabilities>
+        <inspire_common:MetadataUrl>
+          <inspire_common:URL>http://catalog.fmi.fi/geonetwork/srv/en/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;ID=9fec2667-ccdd-431b-99e0-fd2ed5de4ca1&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full</inspire_common:URL>
+          <inspire_common:MediaType>application/gml+xml</inspire_common:MediaType>
+        </inspire_common:MetadataUrl>
+        <!-- Language support -->
+        <inspire_common:SupportedLanguages>
+          <inspire_common:DefaultLanguage>
+            <inspire_common:Language>fin</inspire_common:Language>
+          </inspire_common:DefaultLanguage>
+          <inspire_common:SupportedLanguage>
+            <inspire_common:Language>eng</inspire_common:Language>
+          </inspire_common:SupportedLanguage>
+        </inspire_common:SupportedLanguages>
+        <!-- The language of this response document: -->
+        <inspire_common:ResponseLanguage>
+          <inspire_common:Language><TMPL_var language></inspire_common:Language>
+        </inspire_common:ResponseLanguage>
+
+<TMPL_FOREACH dataSets as dataSet>        <inspire_dls:SpatialDataSetIdentifier>
+          <inspire_common:Code><TMPL_var dataSet.code></inspire_common:Code>
+          <inspire_common:Namespace><TMPL_var dataSet.namespace></inspire_common:Namespace>
+        </inspire_dls:SpatialDataSetIdentifier>
+</TMPL_FOREACH>
+      </inspire_dls:ExtendedCapabilities>
+    </ows:ExtendedCapabilities>
+  </ows:OperationsMetadata>
+
+  <!-- Returned FeatureTypes -->
+  <FeatureTypeList>
+    <TMPL_FOREACH features AS feature><FeatureType xmlns:<TMPL_var feature.nsAlias>="<TMPL_var feature.ns>"<TMPL_if (DEFINED(feature.loc))> xsi:schemaLocation="<TMPL_var feature.ns> <TMPL_var feature.loc>"</TMPL_if>>
+      <Name><TMPL_var feature.nsAlias>:<TMPL_var feature.xmlType></Name>
+      <Title><TMPL_var XMLESCAPE(feature.title)></Title>
+      <Abstract><TMPL_var XMLESCAPE(feature.abstract)></Abstract>
+      <DefaultCRS><TMPL_var feature.defaultCrs></DefaultCRS>
+      <TMPL_FOREACH feature.otherCrs AS uri><OtherCRS><TMPL_var uri></OtherCRS>
+      </TMPL_FOREACH><ows:WGS84BoundingBox>
+        <ows:LowerCorner>-180 -90</ows:LowerCorner>
+        <ows:UpperCorner>180 90</ows:UpperCorner>
+      </ows:WGS84BoundingBox>
+    </FeatureType>
+    </TMPL_FOREACH>
+  </FeatureTypeList>
+
+  <fes:Filter_Capabilities>
+    <fes:Conformance>
+      <fes:Constraint name="ImplementsQuery">
+        <ows:NoValues/>
+        <ows:DefaultValue>TRUE</ows:DefaultValue>
+      </fes:Constraint>
+      <fes:Constraint name="ImplementsAdHocQuery">
+        <ows:NoValues/>
+        <ows:DefaultValue>TRUE</ows:DefaultValue>
+      </fes:Constraint>
+      <fes:Constraint name="ImplementsFunctions">
+        <ows:NoValues/>
+        <ows:DefaultValue>FALSE</ows:DefaultValue>
+      </fes:Constraint>
+      <fes:Constraint name="ImplementsMinStandardFilter">
+        <ows:NoValues/>
+        <ows:DefaultValue>TRUE</ows:DefaultValue>
+      </fes:Constraint>
+      <fes:Constraint name="ImplementsStandardFilter">
+        <ows:NoValues/>
+        <ows:DefaultValue>FALSE</ows:DefaultValue>
+      </fes:Constraint>
+      <fes:Constraint name="ImplementsMinSpatialFilter">
+        <ows:NoValues/>
+        <ows:DefaultValue>TRUE</ows:DefaultValue>
+      </fes:Constraint>
+      <fes:Constraint name="ImplementsSpatialFilter">
+        <ows:NoValues/>
+        <ows:DefaultValue>FALSE</ows:DefaultValue>
+      </fes:Constraint>
+      <fes:Constraint name="ImplementsMinTemporalFilter">
+        <ows:NoValues/>
+        <ows:DefaultValue>TRUE</ows:DefaultValue>
+      </fes:Constraint>
+      <fes:Constraint name="ImplementsTemporalFilter">
+        <ows:NoValues/>
+        <ows:DefaultValue>FALSE</ows:DefaultValue>
+      </fes:Constraint>
+      <fes:Constraint name="ImplementsVersionNav">
+        <ows:NoValues/>
+        <ows:DefaultValue>FALSE</ows:DefaultValue>
+      </fes:Constraint>
+      <fes:Constraint name="ImplementsSorting">
+        <ows:NoValues/>
+        <ows:DefaultValue>FALSE</ows:DefaultValue>
+      </fes:Constraint>
+      <fes:Constraint name="ImplementsExtendedOperators">
+        <ows:NoValues/>
+        <ows:DefaultValue>FALSE</ows:DefaultValue>
+      </fes:Constraint>
+    </fes:Conformance>
+  </fes:Filter_Capabilities>
+</WFS_Capabilities>
