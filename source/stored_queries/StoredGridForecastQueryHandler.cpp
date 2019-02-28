@@ -860,12 +860,34 @@ Table_sptr StoredGridForecastQueryHandler::extract_forecast(Query& wfsQuery) con
       char tmp[10000];
       tmp[0] = '\0';
       char *p = tmp;
+
       for (auto param = wfsQuery.data_params.begin(); param != wfsQuery.data_params.end(); ++param)
       {
-        std::string name = param->name();
-
         if (param != wfsQuery.data_params.begin())
           p += sprintf(p,",");
+
+        std::string paramName = param->name();
+        std::string name = paramName;
+
+        for (auto it = wfsQuery.models.begin(); it != wfsQuery.models.end(); ++it)
+        {
+          std::string producerName = *it;
+
+          std::vector < std::string > pnameList;
+          std::vector < std::string > geometryIdList;
+          std::vector < std::string > levelIdList;
+          std::vector < std::string > levelList;
+
+          std::string key = producerName + ";" + paramName;
+
+          gridEngine->getProducerNameAndLevelIdList(producerName,paramName,pnameList,geometryIdList,levelIdList,levelList);
+
+          size_t len = pnameList.size();
+          if (len > 0  &&  strcasecmp(pnameList[0].c_str(),key.c_str()) != 0)
+            name = paramName + ":" + pnameList[0] + ":" + geometryIdList[0] + ":" + levelIdList[0] + ":" + levelList[0];
+          else
+            name = paramName;
+        }
 
         p += sprintf(p,"%s",name.c_str());
       }
@@ -873,14 +895,14 @@ Table_sptr StoredGridForecastQueryHandler::extract_forecast(Query& wfsQuery) con
       attributeList.addAttribute("param",tmp);
 
       QueryServer::Query query;
-      attributeList.print(std::cout,0,0);
+      //attributeList.print(std::cout,0,0);
       queryConfigurator.configure(query,attributeList);
 
-      query.print(std::cout,0,0);
+      //query.print(std::cout,0,0);
 
       rowCount = processGridQuery(wfsQuery,tloc->first,loc,country,query,output,rowCount);
     }
-
+/*
 
     printf("*******************\n");
     auto cols = output->columns();
@@ -894,7 +916,7 @@ Table_sptr StoredGridForecastQueryHandler::extract_forecast(Query& wfsQuery) con
       }
       std::cout << "\n";
     }
-
+*/
     return output;
   }
   catch (...)
