@@ -18,6 +18,10 @@ bw::PluginData::PluginData(SmartMet::Spine::Reactor *theReactor, const char *the
       throw SmartMet::Spine::Exception(BCP, msg.str());
     }
 
+    query_cache.reset(new QueryResponseCache(
+        itsConfig.getCacheSize(),
+        std::chrono::seconds(itsConfig.getCacheTimeConstant())));
+
     void *engine = theReactor->getSingleton("Geonames", nullptr);
     if (engine == nullptr)
       throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");

@@ -30,9 +30,11 @@ using boost::format;
 using boost::str;
 
 bw::Request::GetFeature::GetFeature(const std::string& language,
-                                    PluginData& plugin_data,
-                                    QueryResponseCache& query_cache)
-    : RequestBase(language), plugin_data(plugin_data), query_cache(query_cache)
+                                    PluginData& plugin_data)
+
+				    : RequestBase(language)
+				    , plugin_data(plugin_data)
+				    , query_cache(plugin_data.get_query_cache())
 {
 }
 
@@ -557,8 +559,7 @@ void bw::Request::GetFeature::assert_use_default_format() const
 boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    PluginData& plugin_data,
-    QueryResponseCache& query_cache)
+    PluginData& plugin_data)
 {
   try
   {
@@ -568,7 +569,7 @@ boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_
     const StoredQueryMap& stored_query_map = plugin_data.get_stored_query_map();
 
     boost::shared_ptr<bw::Request::GetFeature> result(
-        new bw::Request::GetFeature(language, plugin_data, query_cache));
+        new bw::Request::GetFeature(language, plugin_data));
 
     // Verify whether we have request=getFeature in HTTP request
     auto request = http_request.getParameter("request");
@@ -616,8 +617,7 @@ boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_
 boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_xml(
     const std::string& language,
     const xercesc::DOMDocument& document,
-    PluginData& plugin_data,
-    QueryResponseCache& query_cache)
+    PluginData& plugin_data)
 {
   try
   {
@@ -628,7 +628,7 @@ boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_
 
     const char* method_name = "SmartMet::Plugin::WFS::Request::GetFeature::create_from_xml";
     boost::shared_ptr<bw::Request::GetFeature> result(
-        new bw::Request::GetFeature(language, plugin_data, query_cache));
+        new bw::Request::GetFeature(language, plugin_data));
 
     result->check_mandatory_attributes(document);
     result->spp.read_from_xml(*root);

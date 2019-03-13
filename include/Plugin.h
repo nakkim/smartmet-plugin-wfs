@@ -132,8 +132,6 @@ class Plugin : public SmartMetPlugin, virtual private boost::noncopyable, privat
 
   std::unique_ptr<PluginData> plugin_data;
 
-  std::unique_ptr<QueryResponseCache> query_cache;
-
   /**
    *   @brief An object that reads actual requests and creates request objects
    */

@@ -74,6 +74,8 @@ class PluginData : public boost::noncopyable
     return itsTemplateFactory.get(filename);
   }
 
+  inline QueryResponseCache& get_query_cache() { return *query_cache; }
+
   inline boost::shared_ptr<Xml::ParserMT> get_xml_parser() const { return xml_parser; }
   inline boost::shared_ptr<GeoServerDB> get_geo_server_database() const { return geo_server_db; }
   inline const StoredQueryMap& get_stored_query_map() const { return *stored_query_map; }
@@ -104,6 +106,8 @@ class PluginData : public boost::noncopyable
 
  private:
   Config itsConfig;
+
+  std::unique_ptr<QueryResponseCache> query_cache;
 
   SmartMet::Engine::Geonames::Engine* itsGeonames;
   SmartMet::Engine::Querydata::Engine* itsQEngine;

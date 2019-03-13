@@ -83,9 +83,6 @@ void Plugin::init()
     try
     {
       plugin_data.reset(new PluginData(itsReactor, itsConfig));
-      query_cache.reset(new QueryResponseCache(
-          plugin_data->get_config().getCacheSize(),
-          std::chrono::seconds(plugin_data->get_config().getCacheTimeConstant())));
       request_factory.reset(new RequestFactory(*plugin_data));
 
       if (itsReactor->getRequiredAPIVersion() != SMARTMET_API_VERSION)
@@ -714,7 +711,7 @@ RequestBaseP Plugin::parse_kvp_get_feature_request(const std::string& language,
 {
   try
   {
-    return Request::GetFeature::create_from_kvp(language, request, *plugin_data, *query_cache);
+    return Request::GetFeature::create_from_kvp(language, request, *plugin_data);
   }
   catch (...)
   {
@@ -729,7 +726,7 @@ RequestBaseP Plugin::parse_xml_get_feature_request(const std::string& language,
   try
   {
     (void)root;
-    return Request::GetFeature::create_from_xml(language, document, *plugin_data, *query_cache);
+    return Request::GetFeature::create_from_xml(language, document, *plugin_data);
   }
   catch (...)
   {
@@ -742,8 +739,7 @@ RequestBaseP Plugin::parse_kvp_get_property_value_request(
 {
   try
   {
-    return Request::GetPropertyValue::create_from_kvp(
-        language, request, *plugin_data, *query_cache);
+    return Request::GetPropertyValue::create_from_kvp(language, request, *plugin_data);
   }
   catch (...)
   {
@@ -758,8 +754,7 @@ RequestBaseP Plugin::parse_xml_get_property_value_request(const std::string& lan
   try
   {
     (void)root;
-    return Request::GetPropertyValue::create_from_xml(
-        language, document, *plugin_data, *query_cache);
+    return Request::GetPropertyValue::create_from_xml(language, document, *plugin_data);
   }
   catch (...)
   {

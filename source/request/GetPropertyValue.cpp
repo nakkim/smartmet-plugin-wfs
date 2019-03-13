@@ -38,9 +38,10 @@ static void decrease(boost::optional<int>& value)
 }
 
 GetPropertyValue::GetPropertyValue(const std::string& language,
-                                   QueryResponseCache& query_cache,
-                                   const PluginData& plugin_data)
-    : bw::RequestBase(language), query_cache(query_cache), plugin_data(plugin_data)
+                                   PluginData& plugin_data)
+    : bw::RequestBase(language)
+    , query_cache(plugin_data.get_query_cache())
+    , plugin_data(plugin_data)
 {
 }
 
@@ -449,8 +450,7 @@ bool GetPropertyValue::copy_timestamp(const xercesc::DOMElement* source,
 boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    const PluginData& plugin_data,
-    QueryResponseCache& query_cache)
+    PluginData& plugin_data)
 {
   try
   {
@@ -481,7 +481,7 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_kvp(
 
     const StoredQueryMap& stored_query_map = plugin_data.get_stored_query_map();
     boost::shared_ptr<GetPropertyValue> result(
-        new GetPropertyValue(language, query_cache, plugin_data));
+       new GetPropertyValue(language, plugin_data));
     result->spp.read_from_kvp(http_request);
     result->xpath_string = *value_reference;
 
@@ -518,8 +518,7 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_kvp(
 boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_xml(
     const std::string& language,
     const xercesc::DOMDocument& document,
-    const PluginData& plugin_data,
-    QueryResponseCache& query_cache)
+    PluginData& plugin_data)
 {
   try
   {
@@ -529,7 +528,7 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_xml(
 
     const char* method_name = "SmartMet::Plugin::WFS::Request::GetPropertyValue::create_from_xml";
     boost::shared_ptr<GetPropertyValue> result(
-        new GetPropertyValue(language, query_cache, plugin_data));
+        new GetPropertyValue(language, plugin_data));
 
     result->check_mandatory_attributes(document);
     result->spp.read_from_xml(*root);
