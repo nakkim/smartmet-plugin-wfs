@@ -6,7 +6,7 @@
 namespace bw = SmartMet::Plugin::WFS;
 namespace pt = boost::posix_time;
 
-bw::PluginData::PluginData(SmartMet::Spine::Reactor *theReactor, const char *theConfig)
+bw::PluginImpl::PluginImpl(SmartMet::Spine::Reactor *theReactor, const char *theConfig)
     : itsConfig(theConfig), wfs_capabilities(new bw::WfsCapabilities)
 {
   try
@@ -73,9 +73,9 @@ bw::PluginData::PluginData(SmartMet::Spine::Reactor *theReactor, const char *the
   }
 }
 
-bw::PluginData::~PluginData() {}
+bw::PluginImpl::~PluginImpl() {}
 
-void bw::PluginData::updateStoredQueryMap(Spine::Reactor *theReactor)
+void bw::PluginImpl::updateStoredQueryMap(Spine::Reactor *theReactor)
 {
   try
   {
@@ -87,7 +87,7 @@ void bw::PluginData::updateStoredQueryMap(Spine::Reactor *theReactor)
   }
 }
 
-boost::posix_time::ptime bw::PluginData::get_time_stamp() const
+boost::posix_time::ptime bw::PluginImpl::get_time_stamp() const
 {
   try
   {
@@ -106,7 +106,7 @@ boost::posix_time::ptime bw::PluginData::get_time_stamp() const
   }
 }
 
-boost::posix_time::ptime bw::PluginData::get_local_time_stamp() const
+boost::posix_time::ptime bw::PluginImpl::get_local_time_stamp() const
 {
   try
   {
@@ -125,7 +125,7 @@ boost::posix_time::ptime bw::PluginData::get_local_time_stamp() const
   }
 }
 
-void bw::PluginData::create_template_formatters()
+void bw::PluginImpl::create_template_formatters()
 {
   try
   {
@@ -164,7 +164,7 @@ void bw::PluginData::create_template_formatters()
   }
 }
 
-void bw::PluginData::create_xml_parser()
+void bw::PluginImpl::create_xml_parser()
 {
   try
   {
@@ -185,7 +185,7 @@ void bw::PluginData::create_xml_parser()
   }
 }
 
-void bw::PluginData::init_geo_server_access()
+void bw::PluginImpl::init_geo_server_access()
 {
   try
   {
@@ -206,7 +206,7 @@ void bw::PluginData::init_geo_server_access()
   }
 }
 
-void bw::PluginData::create_typename_stored_query_map()
+void bw::PluginImpl::create_typename_stored_query_map()
 {
   try
   {
@@ -223,7 +223,7 @@ void bw::PluginData::create_typename_stored_query_map()
   }
 }
 
-void bw::PluginData::create_stored_query_map(SmartMet::Spine::Reactor *theReactor)
+void bw::PluginImpl::create_stored_query_map(SmartMet::Spine::Reactor *theReactor)
 {
   try
   {

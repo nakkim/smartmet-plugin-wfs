@@ -34,7 +34,7 @@ class RequestFactory
       parse_xml_t;
 
  public:
-  RequestFactory(PluginData& plugin_data);
+  RequestFactory(PluginImpl& plugin_data);
 
   virtual ~RequestFactory();
 
@@ -102,7 +102,7 @@ class RequestFactory
   std::map<std::string, TypeRec> type_map;
   std::set<std::string> unimplemented_requests;
 
-  PluginData& plugin_data;
+  PluginImpl& plugin_data;
 };
 
 }  // namespace WFS

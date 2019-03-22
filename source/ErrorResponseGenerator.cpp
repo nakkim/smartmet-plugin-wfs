@@ -14,7 +14,7 @@ using SmartMet::Plugin::WFS::ErrorResponseGenerator;
 namespace ba = boost::algorithm;
 namespace pt = boost::posix_time;
 
-ErrorResponseGenerator::ErrorResponseGenerator(SmartMet::Plugin::WFS::PluginData& plugin_data)
+ErrorResponseGenerator::ErrorResponseGenerator(SmartMet::Plugin::WFS::PluginImpl& plugin_data)
     : plugin_data(plugin_data)
 {
 }

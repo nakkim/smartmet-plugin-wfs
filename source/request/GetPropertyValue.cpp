@@ -38,7 +38,7 @@ static void decrease(boost::optional<int>& value)
 }
 
 GetPropertyValue::GetPropertyValue(const std::string& language,
-                                   PluginData& plugin_data)
+                                   PluginImpl& plugin_data)
     : bw::RequestBase(language)
     , query_cache(plugin_data.get_query_cache())
     , plugin_data(plugin_data)
@@ -450,7 +450,7 @@ bool GetPropertyValue::copy_timestamp(const xercesc::DOMElement* source,
 boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    PluginData& plugin_data)
+    PluginImpl& plugin_data)
 {
   try
   {
@@ -518,7 +518,7 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_kvp(
 boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_xml(
     const std::string& language,
     const xercesc::DOMDocument& document,
-    PluginData& plugin_data)
+    PluginImpl& plugin_data)
 {
   try
   {

@@ -17,10 +17,10 @@ namespace Request
  */
 class ListStoredQueries : public RequestBase
 {
-  const PluginData& plugin_data;
+  const PluginImpl& plugin_data;
 
  private:
-  ListStoredQueries(const std::string& language, const PluginData& plugin_data);
+  ListStoredQueries(const std::string& language, const PluginImpl& plugin_data);
 
  public:
   virtual ~ListStoredQueries();
@@ -32,11 +32,11 @@ class ListStoredQueries : public RequestBase
   static boost::shared_ptr<ListStoredQueries> create_from_kvp(
       const std::string& language,
       const SmartMet::Spine::HTTP::Request& http_request,
-      const PluginData& plugin_data);
+      const PluginImpl& plugin_data);
 
   static boost::shared_ptr<ListStoredQueries> create_from_xml(const std::string& language,
                                                               const xercesc::DOMDocument& document,
-                                                              const PluginData& plugin_data);
+                                                              const PluginImpl& plugin_data);
 
   virtual int get_response_expires_seconds() const;
 };

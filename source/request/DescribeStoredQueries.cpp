@@ -27,7 +27,7 @@ struct XmlNamespeceDef
 
 bw::Request::DescribeStoredQueries::DescribeStoredQueries(const std::string& language,
                                                           const std::vector<std::string>& ids,
-                                                          const bw::PluginData& plugin_data)
+                                                          const bw::PluginImpl& plugin_data)
     : RequestBase(language), plugin_data(plugin_data)
 {
   try
@@ -184,7 +184,7 @@ boost::shared_ptr<bw::Request::DescribeStoredQueries>
 bw::Request::DescribeStoredQueries::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    const PluginData& plugin_data)
+    const PluginImpl& plugin_data)
 {
   try
   {
@@ -221,7 +221,7 @@ bw::Request::DescribeStoredQueries::create_from_kvp(
 boost::shared_ptr<bw::Request::DescribeStoredQueries>
 bw::Request::DescribeStoredQueries::create_from_xml(const std::string& language,
                                                     const xercesc::DOMDocument& document,
-                                                    const PluginData& plugin_data)
+                                                    const PluginImpl& plugin_data)
 {
   try
   {

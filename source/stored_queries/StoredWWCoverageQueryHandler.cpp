@@ -11,7 +11,7 @@ namespace bw = SmartMet::Plugin::WFS;
 bw::StoredWWCoverageQueryHandler::StoredWWCoverageQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<bw::StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
       StoredCoverageQueryHandler(reactor, config, plugin_data, template_file_name)
@@ -131,7 +131,7 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_winterweather_coverage_query_handler_create(SmartMet::Spine::Reactor* reactor,
                                                 boost::shared_ptr<StoredQueryConfig> config,
-                                                PluginData& plugin_data,
+                                                PluginImpl& plugin_data,
                                                 boost::optional<std::string> template_file_name)
 {
   try

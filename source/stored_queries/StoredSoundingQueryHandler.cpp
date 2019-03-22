@@ -25,7 +25,7 @@ namespace WFS
 StoredSoundingQueryHandler::StoredSoundingQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& pluginData,
+    PluginImpl& pluginData,
     boost::optional<std::string> templateFileName)
     : SupportsExtraHandlerParams(config),
       StoredQueryHandlerBase(reactor, config, pluginData, templateFileName),
@@ -877,7 +877,7 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfsStoredSoundingHandlerCreate(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& pluginData,
+    PluginImpl& pluginData,
     boost::optional<std::string> templateFileName)
 {
   try

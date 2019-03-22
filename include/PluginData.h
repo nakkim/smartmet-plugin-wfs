@@ -26,11 +26,11 @@ class StoredQueryMap;
 
 typedef Fmi::TimedCache::Cache<std::string, std::string> QueryResponseCache;
 
-class PluginData : public boost::noncopyable
+class PluginImpl : public boost::noncopyable
 {
  public:
-  PluginData(SmartMet::Spine::Reactor* theReactor, const char* theConfig);
-  virtual ~PluginData();
+  PluginImpl(SmartMet::Spine::Reactor* theReactor, const char* theConfig);
+  virtual ~PluginImpl();
 
   inline SmartMet::Engine::Gis::CRSRegistry& get_crs_registry() const
   {

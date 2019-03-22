@@ -18,7 +18,7 @@ namespace Request
 class GetCapabilities : public RequestBase
 {
  public:
-  GetCapabilities(const std::string& language, const PluginData& plugin_data);
+  GetCapabilities(const std::string& language, const PluginImpl& plugin_data);
 
   virtual ~GetCapabilities();
 
@@ -29,16 +29,16 @@ class GetCapabilities : public RequestBase
   static boost::shared_ptr<GetCapabilities> create_from_kvp(
       const std::string& language,
       const SmartMet::Spine::HTTP::Request& http_request,
-      const PluginData& plugin_data);
+      const PluginImpl& plugin_data);
 
   static boost::shared_ptr<GetCapabilities> create_from_xml(const std::string& language,
                                                             const xercesc::DOMDocument& document,
-                                                            const PluginData& plugin_data);
+                                                            const PluginImpl& plugin_data);
 
   virtual int get_response_expires_seconds() const;
 
  private:
-  const PluginData& plugin_data;
+  const PluginImpl& plugin_data;
   std::set<std::string> languages;
   boost::optional<std::string> requested_language;
 };

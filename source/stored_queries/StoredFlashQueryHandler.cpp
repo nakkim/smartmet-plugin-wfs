@@ -19,7 +19,7 @@ const char* bw::StoredFlashQueryHandler::P_CRS = "crs";
 bw::StoredFlashQueryHandler::StoredFlashQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
       StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -421,7 +421,7 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_flash_handler_create(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 {
   try

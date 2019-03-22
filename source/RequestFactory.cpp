@@ -10,7 +10,7 @@
 namespace bw = SmartMet::Plugin::WFS;
 namespace ba = boost::algorithm;
 
-bw::RequestFactory::RequestFactory(PluginData& plugin_data) : plugin_data(plugin_data) {}
+bw::RequestFactory::RequestFactory(PluginImpl& plugin_data) : plugin_data(plugin_data) {}
 
 bw::RequestFactory::~RequestFactory() {}
 

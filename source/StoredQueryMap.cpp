@@ -143,7 +143,7 @@ void bw::StoredQueryMap::add_handler(boost::shared_ptr<StoredQueryHandlerBase> h
 void bw::StoredQueryMap::add_handler(SmartMet::Spine::Reactor* theReactor,
                                      const boost::filesystem::path& stored_query_config_file,
                                      const boost::filesystem::path& template_dir,
-                                     PluginData& plugin_data)
+                                     PluginImpl& plugin_data)
 {
   try
   {
@@ -227,7 +227,7 @@ void bw::StoredQueryMap::add_handler(SmartMet::Spine::Reactor* theReactor,
 void bw::StoredQueryMap::read_config_dir(SmartMet::Spine::Reactor* theReactor,
                                          const boost::filesystem::path& config_dir,
                                          const boost::filesystem::path& template_dir,
-                                         PluginData& plugin_data)
+                                         PluginImpl& plugin_data)
 {
   try
   {
@@ -325,7 +325,7 @@ std::vector<std::string> bw::StoredQueryMap::get_return_type_names() const
 void bw::StoredQueryMap::add_handler(SmartMet::Spine::Reactor* theReactor,
                                      boost::shared_ptr<StoredQueryConfig> sqh_config,
                                      const boost::filesystem::path& template_dir,
-                                     PluginData& plugin_data)
+                                     PluginImpl& plugin_data)
 {
   try
   {
@@ -375,7 +375,7 @@ void bw::StoredQueryMap::add_handler(SmartMet::Spine::Reactor* theReactor,
 void bw::StoredQueryMap::add_handler_thread_proc(SmartMet::Spine::Reactor* theReactor,
                                                  boost::shared_ptr<bw::StoredQueryConfig> config,
                                                  const boost::filesystem::path& template_dir,
-                                                 bw::PluginData& plugin_data)
+                                                 bw::PluginImpl& plugin_data)
 {
   try
   {
@@ -399,7 +399,7 @@ void bw::StoredQueryMap::add_handler_thread_proc(SmartMet::Spine::Reactor* theRe
   }
 }
 
-void bw::StoredQueryMap::update_handlers(Spine::Reactor* theReactor, bw::PluginData& plugin_data)
+void bw::StoredQueryMap::update_handlers(Spine::Reactor* theReactor, bw::PluginImpl& plugin_data)
 {
   try
   {

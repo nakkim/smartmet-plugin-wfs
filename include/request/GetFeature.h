@@ -21,7 +21,7 @@ namespace Request
 class GetFeature : public RequestBase
 {
  private:
-  GetFeature(const std::string& language, PluginData& plugin_data);
+  GetFeature(const std::string& language, PluginImpl& plugin_data);
 
  public:
   virtual ~GetFeature();
@@ -35,11 +35,11 @@ class GetFeature : public RequestBase
   static boost::shared_ptr<GetFeature> create_from_kvp(
       const std::string& language,
       const SmartMet::Spine::HTTP::Request& http_request,
-      PluginData& plugin_data);
+      PluginImpl& plugin_data);
 
   static boost::shared_ptr<GetFeature> create_from_xml(const std::string& language,
                                                        const xercesc::DOMDocument& document,
-                                                       PluginData& plugin_data);
+                                                       PluginImpl& plugin_data);
 
  private:
   bool get_cached_responses();
@@ -67,7 +67,7 @@ class GetFeature : public RequestBase
   void assert_use_default_format() const;
 
  private:
-  PluginData& plugin_data;
+  PluginImpl& plugin_data;
   std::vector<boost::shared_ptr<QueryBase> > queries;
   StandardPresentationParameters spp;
   QueryResponseCache& query_cache;

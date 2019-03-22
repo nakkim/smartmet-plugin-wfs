@@ -118,7 +118,7 @@ class StoredWWProbabilityQueryHandler : public StoredQueryHandlerBase,
  public:
   StoredWWProbabilityQueryHandler(SmartMet::Spine::Reactor* reactor,
                                   boost::shared_ptr<StoredQueryConfig> config,
-                                  PluginData& plugin_data,
+                                  PluginImpl& plugin_data,
                                   boost::optional<std::string> templateFileileName);
 
   virtual ~StoredWWProbabilityQueryHandler();

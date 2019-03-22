@@ -24,7 +24,7 @@ class GetPropertyValue : public RequestBase
 {
  private:
   GetPropertyValue(const std::string& language,
-                   PluginData& plugin_data);
+                   PluginImpl& plugin_data);
 
  public:
   virtual ~GetPropertyValue();
@@ -49,7 +49,7 @@ class GetPropertyValue : public RequestBase
   static boost::shared_ptr<GetPropertyValue> create_from_kvp(
       const std::string& language,
       const SmartMet::Spine::HTTP::Request& http_request,
-      PluginData& plugin_data);
+      PluginImpl& plugin_data);
 
   /**
    *   @brief Create request from http GET request
@@ -61,7 +61,7 @@ class GetPropertyValue : public RequestBase
    */
   static boost::shared_ptr<GetPropertyValue> create_from_xml(const std::string& language,
                                                              const xercesc::DOMDocument& document,
-                                                             PluginData& plugin_data);
+                                                             PluginImpl& plugin_data);
 
   /**
    *   @brief Get response expiration time
@@ -269,7 +269,7 @@ class GetPropertyValue : public RequestBase
   std::string xpath_string;
   StandardPresentationParameters spp;
   QueryResponseCache& query_cache;
-  PluginData& plugin_data;
+  PluginImpl& plugin_data;
   bool fast;
 };
 

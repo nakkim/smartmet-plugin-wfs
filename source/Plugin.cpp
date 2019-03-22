@@ -82,7 +82,7 @@ void Plugin::init()
   {
     try
     {
-      plugin_data.reset(new PluginData(itsReactor, itsConfig));
+      plugin_data.reset(new PluginImpl(itsReactor, itsConfig));
       request_factory.reset(new RequestFactory(*plugin_data));
 
       if (itsReactor->getRequiredAPIVersion() != SMARTMET_API_VERSION)

@@ -12,7 +12,7 @@ namespace Plugin
 {
 namespace WFS
 {
-class PluginData;
+class PluginImpl;
 class StoredQueryConfig;
 class StoredQueryHandlerBase;
 
@@ -36,30 +36,30 @@ class StoredQueryMap
   void add_handler(SmartMet::Spine::Reactor* theReactor,
                    const boost::filesystem::path& stored_query_config_file,
                    const boost::filesystem::path& template_dir,
-                   PluginData& plugin_data);
+                   PluginImpl& plugin_data);
 
   void read_config_dir(SmartMet::Spine::Reactor* theReactor,
                        const boost::filesystem::path& config_dir,
                        const boost::filesystem::path& template_dir,
-                       PluginData& plugin_data);
+                       PluginImpl& plugin_data);
 
   inline std::vector<std::string> get_handler_names() const { return handler_names; }
   boost::shared_ptr<StoredQueryHandlerBase> get_handler_by_name(const std::string name) const;
 
   virtual std::vector<std::string> get_return_type_names() const;
 
-  void update_handlers(Spine::Reactor* theReactor, PluginData& plugin_data);
+  void update_handlers(Spine::Reactor* theReactor, PluginImpl& plugin_data);
 
  private:
   void add_handler(SmartMet::Spine::Reactor* theReactor,
                    boost::shared_ptr<StoredQueryConfig> sqh_config,
                    const boost::filesystem::path& template_dir,
-                   PluginData& plugin_data);
+                   PluginImpl& plugin_data);
 
   void add_handler_thread_proc(SmartMet::Spine::Reactor* theReactor,
                                boost::shared_ptr<StoredQueryConfig> config,
                                const boost::filesystem::path& template_dir,
-                               PluginData& plugin_data);
+                               PluginImpl& plugin_data);
 
  private:
   bool background_init;

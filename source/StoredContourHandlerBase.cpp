@@ -23,7 +23,7 @@ const char* P_SMOOTHING_SIZE = "smoothing_size";
 bw::StoredContourQueryHandler::StoredContourQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<bw::StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),

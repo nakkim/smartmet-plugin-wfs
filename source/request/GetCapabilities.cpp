@@ -12,7 +12,7 @@ namespace bwx = SmartMet::Plugin::WFS::Xml;
 
 using SmartMet::Plugin::WFS::Request::GetCapabilities;
 
-GetCapabilities::GetCapabilities(const std::string& language, const PluginData& plugin_data)
+GetCapabilities::GetCapabilities(const std::string& language, const PluginImpl& plugin_data)
     : RequestBase(language), plugin_data(plugin_data)
 {
   try
@@ -130,7 +130,7 @@ void GetCapabilities::execute(std::ostream& output) const
 boost::shared_ptr<GetCapabilities> GetCapabilities::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    const PluginData& plugin_data)
+    const PluginImpl& plugin_data)
 {
   try
   {
@@ -150,7 +150,7 @@ boost::shared_ptr<GetCapabilities> GetCapabilities::create_from_kvp(
 boost::shared_ptr<GetCapabilities> GetCapabilities::create_from_xml(
     const std::string& language,
     const xercesc::DOMDocument& document,
-    const PluginData& plugin_data)
+    const PluginImpl& plugin_data)
 {
   try
   {

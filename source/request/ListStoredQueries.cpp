@@ -6,7 +6,7 @@
 namespace bw = SmartMet::Plugin::WFS;
 
 bw::Request::ListStoredQueries::ListStoredQueries(const std::string& language,
-                                                  const PluginData& plugin_data)
+                                                  const PluginImpl& plugin_data)
     : RequestBase(language), plugin_data(plugin_data)
 {
 }
@@ -104,7 +104,7 @@ void bw::Request::ListStoredQueries::execute(std::ostream& output) const
 boost::shared_ptr<bw::Request::ListStoredQueries> bw::Request::ListStoredQueries::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    const bw::PluginData& plugin_data)
+    const bw::PluginImpl& plugin_data)
 
 {
   try
@@ -126,7 +126,7 @@ boost::shared_ptr<bw::Request::ListStoredQueries> bw::Request::ListStoredQueries
 boost::shared_ptr<bw::Request::ListStoredQueries> bw::Request::ListStoredQueries::create_from_xml(
     const std::string& language,
     const xercesc::DOMDocument& document,
-    const bw::PluginData& plugin_data)
+    const bw::PluginImpl& plugin_data)
 {
   try
   {

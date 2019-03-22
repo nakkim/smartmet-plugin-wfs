@@ -69,7 +69,7 @@ class StoredSoundingQueryHandler : protected virtual SupportsExtraHandlerParams,
  public:
   StoredSoundingQueryHandler(SmartMet::Spine::Reactor* reactor,
                              boost::shared_ptr<StoredQueryConfig> config,
-                             PluginData& pluginData,
+                             PluginImpl& pluginData,
                              boost::optional<std::string> templateFileName);
 
   virtual ~StoredSoundingQueryHandler();

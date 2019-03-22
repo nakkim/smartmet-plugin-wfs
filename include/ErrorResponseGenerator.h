@@ -12,7 +12,7 @@ namespace Plugin
 {
 namespace WFS
 {
-class PluginData;
+class PluginImpl;
 class StoredQuery;
 // class WfsException;
 
@@ -34,7 +34,7 @@ class ErrorResponseGenerator
   };
 
  public:
-  ErrorResponseGenerator(PluginData& plugin_data);
+  ErrorResponseGenerator(PluginImpl& plugin_data);
 
   virtual ~ErrorResponseGenerator();
 
@@ -67,7 +67,7 @@ class ErrorResponseGenerator
   std::string format_log_message(CTPP::CDT& hash);
 
  private:
-  PluginData& plugin_data;
+  PluginImpl& plugin_data;
 };
 
 }  // namespace WFS

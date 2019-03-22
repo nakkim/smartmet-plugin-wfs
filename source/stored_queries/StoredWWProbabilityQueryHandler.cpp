@@ -162,7 +162,7 @@ namespace WFS
 StoredWWProbabilityQueryHandler::StoredWWProbabilityQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& pluginData,
+    PluginImpl& pluginData,
     boost::optional<std::string> templateFileName)
     : SupportsExtraHandlerParams(config, false),
       StoredQueryHandlerBase(reactor, config, pluginData, templateFileName),
@@ -609,7 +609,7 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_winterweather_probabilities_query_handler_create(SmartMet::Spine::Reactor* reactor,
                                                      boost::shared_ptr<StoredQueryConfig> config,
-                                                     PluginData& pluginData,
+                                                     PluginImpl& pluginData,
                                                      boost::optional<std::string> templateFileName)
 {
   try

@@ -30,7 +30,7 @@ using boost::format;
 using boost::str;
 
 bw::Request::GetFeature::GetFeature(const std::string& language,
-                                    PluginData& plugin_data)
+                                    PluginImpl& plugin_data)
 
 				    : RequestBase(language)
 				    , plugin_data(plugin_data)
@@ -559,7 +559,7 @@ void bw::Request::GetFeature::assert_use_default_format() const
 boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    PluginData& plugin_data)
+    PluginImpl& plugin_data)
 {
   try
   {
@@ -617,7 +617,7 @@ boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_
 boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_xml(
     const std::string& language,
     const xercesc::DOMDocument& document,
-    PluginData& plugin_data)
+    PluginImpl& plugin_data)
 {
   try
   {

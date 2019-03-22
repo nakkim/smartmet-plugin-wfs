@@ -17,7 +17,7 @@ namespace ba = boost::algorithm;
 bw::Request::DescribeFeatureType::DescribeFeatureType(
     const std::string& language,
     const std::vector<std::pair<std::string, std::string> >& type_names,
-    const PluginData& plugin_data)
+    const PluginImpl& plugin_data)
     : RequestBase(language), type_names(type_names), plugin_data(plugin_data)
 {
 }
@@ -145,7 +145,7 @@ boost::shared_ptr<bw::Request::DescribeFeatureType>
 bw::Request::DescribeFeatureType::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    const PluginData& plugin_data)
+    const PluginImpl& plugin_data)
 {
   try
   {
@@ -197,7 +197,7 @@ bw::Request::DescribeFeatureType::create_from_kvp(
 boost::shared_ptr<bw::Request::DescribeFeatureType>
 bw::Request::DescribeFeatureType::create_from_xml(const std::string& language,
                                                   const xercesc::DOMDocument& document,
-                                                  const PluginData& plugin_data)
+                                                  const PluginImpl& plugin_data)
 {
   try
   {
