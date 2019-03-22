@@ -267,7 +267,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
       hash["language"] = language;
 
       hash["responseTimestamp"] =
-          Fmi::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+          Fmi::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
       hash["queryNum"] = query.get_query_id();
 
       hash["featureId"] = feature_id.get_id();

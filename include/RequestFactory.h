@@ -1,12 +1,12 @@
 #pragma once
 
-#include "PluginImpl.h"
 #include "RequestBase.h"
 #include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
 #include <spine/HTTP.h>
 #include <xercesc/dom/DOMDocument.hpp>
 #include <map>
+#include <set>
 #include <string>
 
 namespace SmartMet
@@ -15,6 +15,9 @@ namespace Plugin
 {
 namespace WFS
 {
+
+  class PluginImpl;
+
 /**
  *   @brief Factory class for creating apropriate WFS request objects from
  *          KVP and XML format WFS requests
@@ -34,7 +37,7 @@ class RequestFactory
       parse_xml_t;
 
  public:
-  RequestFactory(PluginImpl& plugin_data);
+  RequestFactory(PluginImpl& plugin_impl);
 
   virtual ~RequestFactory();
 
@@ -102,7 +105,7 @@ class RequestFactory
   std::map<std::string, TypeRec> type_map;
   std::set<std::string> unimplemented_requests;
 
-  PluginImpl& plugin_data;
+  PluginImpl& plugin_impl;
 };
 
 }  // namespace WFS

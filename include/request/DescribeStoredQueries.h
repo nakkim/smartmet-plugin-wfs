@@ -18,14 +18,14 @@ namespace Request
  */
 class DescribeStoredQueries : public RequestBase
 {
-  const PluginImpl& plugin_data;
+  const PluginImpl& plugin_impl;
   std::vector<std::string> ids;
   bool show_hidden;
 
  private:
   DescribeStoredQueries(const std::string& language,
                         const std::vector<std::string>& ids,
-                        const PluginImpl& plugin_data);
+                        const PluginImpl& plugin_impl);
 
  public:
   virtual ~DescribeStoredQueries();
@@ -37,12 +37,12 @@ class DescribeStoredQueries : public RequestBase
   static boost::shared_ptr<DescribeStoredQueries> create_from_kvp(
       const std::string& language,
       const SmartMet::Spine::HTTP::Request& http_request,
-      const PluginImpl& plugin_data);
+      const PluginImpl& plugin_impl);
 
   static boost::shared_ptr<DescribeStoredQueries> create_from_xml(
       const std::string& language,
       const xercesc::DOMDocument& document,
-      const PluginImpl& plugin_data);
+      const PluginImpl& plugin_impl);
 
   virtual int get_response_expires_seconds() const;
 };

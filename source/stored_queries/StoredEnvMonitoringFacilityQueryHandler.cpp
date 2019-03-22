@@ -182,7 +182,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query
 
     if (not validStations.empty())
     {
-      SmartMet::Engine::Gis::CRSRegistry &crs_registry = get_plugin_data().get_crs_registry();
+      SmartMet::Engine::Gis::CRSRegistry &crs_registry = get_plugin_impl().get_crs_registry();
 
       // Stations are bounded by..
       const std::string boundedByCRS = "EPSG:4258";
@@ -381,7 +381,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query
     hash["stationsMatched"] = stationsMatched;
     hash["stationsReturned"] = stationsMatched;
     hash["responseTimestamp"] =
-        boost::posix_time::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+        boost::posix_time::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
     hash["queryId"] = query.get_query_id();
     hash["fmi_apikey"] = QueryBase::FMI_APIKEY_SUBST;
     hash["fmi_apikey_prefix"] = bw::QueryBase::FMI_APIKEY_PREFIX_SUBST;

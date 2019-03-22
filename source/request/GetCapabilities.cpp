@@ -12,12 +12,12 @@ namespace bwx = SmartMet::Plugin::WFS::Xml;
 
 using SmartMet::Plugin::WFS::Request::GetCapabilities;
 
-GetCapabilities::GetCapabilities(const std::string& language, const PluginImpl& plugin_data)
-    : RequestBase(language), plugin_data(plugin_data)
+GetCapabilities::GetCapabilities(const std::string& language, const PluginImpl& plugin_impl)
+    : RequestBase(language), plugin_impl(plugin_impl)
 {
   try
   {
-    const auto lang_vect = plugin_data.get_languages();
+    const auto lang_vect = plugin_impl.get_languages();
     std::copy(lang_vect.begin(), lang_vect.end(), std::inserter(languages, languages.begin()));
   }
   catch (...)
@@ -38,15 +38,15 @@ void GetCapabilities::execute(std::ostream& output) const
   try
   {
     CTPP::CDT hash;
-    const auto& capabilities = plugin_data.get_capabilities();
+    const auto& capabilities = plugin_impl.get_capabilities();
 
     auto fmi_apikey = get_fmi_apikey();
     hash["fmi_apikey"] = fmi_apikey ? *fmi_apikey : "";
     hash["fmi_apikey_prefix"] = QueryBase::FMI_APIKEY_PREFIX_SUBST;
     auto hostname = get_hostname();
-    hash["hostname"] = hostname ? *hostname : plugin_data.get_fallback_hostname();
+    hash["hostname"] = hostname ? *hostname : plugin_impl.get_fallback_hostname();
     auto protocol = get_protocol();
-    hash["protocol"] = (protocol ? *protocol : plugin_data.get_fallback_protocol()) + "://";
+    hash["protocol"] = (protocol ? *protocol : plugin_impl.get_fallback_protocol()) + "://";
 
     std::string language;
     if (requested_language and languages.count(*requested_language) > 0)
@@ -100,14 +100,14 @@ void GetCapabilities::execute(std::ostream& output) const
       f["namespace"] = map_item.second;
     }
 
-    plugin_data.get_config().get_capabilities_config().apply(hash, language);
+    plugin_impl.get_config().get_capabilities_config().apply(hash, language);
     //std::cout << hash.RecursiveDump(10) << std::endl;
 
     std::ostringstream log_messages;
 
     try
     {
-      auto formatter = plugin_data.get_get_capabilities_formater();
+      auto formatter = plugin_impl.get_get_capabilities_formater();
       assert(formatter != 0);
       std::ostringstream response;
       formatter->process(hash, response, log_messages);
@@ -130,14 +130,14 @@ void GetCapabilities::execute(std::ostream& output) const
 boost::shared_ptr<GetCapabilities> GetCapabilities::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    const PluginImpl& plugin_data)
+    const PluginImpl& plugin_impl)
 {
   try
   {
     check_request_name(http_request, "GetCapabilities");
     boost::shared_ptr<GetCapabilities> request;
     // FIXME: verify required stuff from the request
-    request.reset(new GetCapabilities(language, plugin_data));
+    request.reset(new GetCapabilities(language, plugin_impl));
     request->requested_language = http_request.getParameter("language");
     return request;
   }
@@ -150,13 +150,13 @@ boost::shared_ptr<GetCapabilities> GetCapabilities::create_from_kvp(
 boost::shared_ptr<GetCapabilities> GetCapabilities::create_from_xml(
     const std::string& language,
     const xercesc::DOMDocument& document,
-    const PluginImpl& plugin_data)
+    const PluginImpl& plugin_impl)
 {
   try
   {
     check_request_name(document, "GetCapabilities");
     boost::shared_ptr<GetCapabilities> request;
-    request.reset(new GetCapabilities(language, plugin_data));
+    request.reset(new GetCapabilities(language, plugin_impl));
     return request;
   }
   catch (...)
@@ -169,7 +169,7 @@ int bw::Request::GetCapabilities::get_response_expires_seconds() const
 {
   try
   {
-    return plugin_data.get_config().getDefaultExpiresSeconds();
+    return plugin_impl.get_config().getDefaultExpiresSeconds();
   }
   catch (...)
   {

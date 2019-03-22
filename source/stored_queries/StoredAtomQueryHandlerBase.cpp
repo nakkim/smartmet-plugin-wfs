@@ -56,7 +56,7 @@ void bw::StoredAtomQueryHandlerBase::query(const bw::StoredQuery& query,
     CTPP::CDT hash;
     hash["language"] = language;
     hash["responseTimestamp"] =
-        Fmi::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+        Fmi::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
 
     const RequestParameterMap& req_param_map = query.get_param_map();
     std::vector<boost::shared_ptr<RequestParameterMap> > param_sets;

@@ -6,8 +6,8 @@
 namespace bw = SmartMet::Plugin::WFS;
 
 bw::Request::ListStoredQueries::ListStoredQueries(const std::string& language,
-                                                  const PluginImpl& plugin_data)
-    : RequestBase(language), plugin_data(plugin_data)
+                                                  const PluginImpl& plugin_impl)
+    : RequestBase(language), plugin_impl(plugin_impl)
 {
 }
 
@@ -23,8 +23,8 @@ void bw::Request::ListStoredQueries::execute(std::ostream& output) const
   try
   {
     const std::string language = get_language();
-    const auto& stored_query_map = plugin_data.get_stored_query_map();
-    auto template_formatter = plugin_data.get_list_stored_queries_formatter();
+    const auto& stored_query_map = plugin_impl.get_stored_query_map();
+    auto template_formatter = plugin_impl.get_list_stored_queries_formatter();
 
     CTPP::CDT hash;
 
@@ -32,9 +32,9 @@ void bw::Request::ListStoredQueries::execute(std::ostream& output) const
     hash["fmi_apikey"] = fmi_apikey ? *fmi_apikey : "";
     hash["fmi_apikey_prefix"] = QueryBase::FMI_APIKEY_PREFIX_SUBST;
     auto hostname = get_hostname();
-    hash["hostname"] = hostname ? *hostname : plugin_data.get_fallback_hostname();
+    hash["hostname"] = hostname ? *hostname : plugin_impl.get_fallback_hostname();
     auto protocol = get_protocol();
-    hash["protocol"] = (protocol ? *protocol : plugin_data.get_fallback_protocol()) + "://";
+    hash["protocol"] = (protocol ? *protocol : plugin_impl.get_fallback_protocol()) + "://";
 
     std::vector<std::string> names = stored_query_map.get_handler_names();
 
@@ -57,7 +57,7 @@ void bw::Request::ListStoredQueries::execute(std::ostream& output) const
         {
           const std::string& name = return_types[k];
           CTPP::CDT& return_type = sq["returnTypes"][k];
-          const auto* feature = plugin_data.get_capabilities().find_feature(name);
+          const auto* feature = plugin_impl.get_capabilities().find_feature(name);
           if (feature)
           {
             return_type["name"] = feature->get_xml_type();
@@ -104,7 +104,7 @@ void bw::Request::ListStoredQueries::execute(std::ostream& output) const
 boost::shared_ptr<bw::Request::ListStoredQueries> bw::Request::ListStoredQueries::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    const bw::PluginImpl& plugin_data)
+    const bw::PluginImpl& plugin_impl)
 
 {
   try
@@ -114,7 +114,7 @@ boost::shared_ptr<bw::Request::ListStoredQueries> bw::Request::ListStoredQueries
 
     boost::shared_ptr<bw::Request::ListStoredQueries> result;
     // FIXME: verify required stuff from the request
-    result.reset(new bw::Request::ListStoredQueries(language, plugin_data));
+    result.reset(new bw::Request::ListStoredQueries(language, plugin_impl));
     return result;
   }
   catch (...)
@@ -126,13 +126,13 @@ boost::shared_ptr<bw::Request::ListStoredQueries> bw::Request::ListStoredQueries
 boost::shared_ptr<bw::Request::ListStoredQueries> bw::Request::ListStoredQueries::create_from_xml(
     const std::string& language,
     const xercesc::DOMDocument& document,
-    const bw::PluginImpl& plugin_data)
+    const bw::PluginImpl& plugin_impl)
 {
   try
   {
     bw::Request::ListStoredQueries::check_request_name(document, "ListStoredQueries");
     boost::shared_ptr<bw::Request::ListStoredQueries> result;
-    result.reset(new bw::Request::ListStoredQueries(language, plugin_data));
+    result.reset(new bw::Request::ListStoredQueries(language, plugin_impl));
     result->check_mandatory_attributes(document);
     // FIXME: extract language from the request
     return result;
@@ -147,7 +147,7 @@ int bw::Request::ListStoredQueries::get_response_expires_seconds() const
 {
   try
   {
-    return plugin_data.get_config().getDefaultExpiresSeconds();
+    return plugin_impl.get_config().getDefaultExpiresSeconds();
   }
   catch (...)
   {

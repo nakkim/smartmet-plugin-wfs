@@ -95,7 +95,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       const std::string requestedCrs = params.get_single<std::string>(P_CRS);
 
       const char* DATA_CRS_NAME = "urn:ogc:def:crs:EPSG::4326";
-      SmartMet::Engine::Gis::CRSRegistry& crs_registry = plugin_data.get_crs_registry();
+      SmartMet::Engine::Gis::CRSRegistry& crs_registry = plugin_impl.get_crs_registry();
 
       // Output CRS priority: user defined -> default in stored query -> feature type default crs
       const std::string crs = requestedCrs.empty() ? DATA_CRS_NAME : requestedCrs;
@@ -447,7 +447,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       hash["featureId"] = feature_id.get_id();
 
       hash["responseTimestamp"] =
-          Fmi::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+          Fmi::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
       hash["fmi_apikey"] = QueryBase::FMI_APIKEY_SUBST;
       hash["fmi_apikey_prefix"] = bw::QueryBase::FMI_APIKEY_PREFIX_SUBST;
       hash["hostname"] = QueryBase::HOSTNAME_SUBST;

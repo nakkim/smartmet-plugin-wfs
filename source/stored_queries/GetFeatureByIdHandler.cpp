@@ -41,7 +41,7 @@ void bw::GetFeatureByIdHandler::query(const StoredQuery& query,
     const auto& params = query.get_param_map();
     const std::string id = params.get_single<std::string>(P_ID);
     auto query_p = bw::StoredQuery::create_from_feature_id(
-        id, get_plugin_data().get_stored_query_map(), query);
+        id, get_plugin_impl().get_stored_query_map(), query);
     query_p->execute(output, language);
   }
   catch (...)

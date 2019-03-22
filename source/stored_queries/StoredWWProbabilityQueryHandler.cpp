@@ -284,10 +284,10 @@ void StoredWWProbabilityQueryHandler::parseQueryResults(
     }
 
     std::string proj_uri = "UNKNOWN";
-    plugin_data.get_crs_registry().get_attribute(requestedCRS, "projUri", &proj_uri);
+    plugin_impl.get_crs_registry().get_attribute(requestedCRS, "projUri", &proj_uri);
 
     boost::local_time::time_zone_ptr tzp = get_time_zone(tz_name);
-    std::string runtime_timestamp = format_local_time(plugin_data.get_time_stamp(), tzp);
+    std::string runtime_timestamp = format_local_time(plugin_impl.get_time_stamp(), tzp);
 
     hash["proj_uri"] = proj_uri;
     hash["fmi_apikey"] = QueryBase::FMI_APIKEY_SUBST;
@@ -575,7 +575,7 @@ void StoredWWProbabilityQueryHandler::query(const StoredQuery& query,
       query_results.insert(make_pair(airp_loc.loc, wwprobs));
     }
 
-    SmartMet::Engine::Gis::CRSRegistry& crsRegistry = plugin_data.get_crs_registry();
+    SmartMet::Engine::Gis::CRSRegistry& crsRegistry = plugin_impl.get_crs_registry();
     CTPP::CDT hash;
 
     parseQueryResults(query_results,

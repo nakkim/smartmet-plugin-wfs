@@ -30,11 +30,11 @@ using boost::format;
 using boost::str;
 
 bw::Request::GetFeature::GetFeature(const std::string& language,
-                                    PluginImpl& plugin_data)
+                                    PluginImpl& plugin_impl)
 
 				    : RequestBase(language)
-				    , plugin_data(plugin_data)
-				    , query_cache(plugin_data.get_query_cache())
+				    , plugin_impl(plugin_impl)
+				    , query_cache(plugin_impl.get_query_cache())
 {
 }
 
@@ -112,7 +112,7 @@ int bw::Request::GetFeature::get_response_expires_seconds() const
 
     // return default value if no any query present.
     return (smallest_value >= 0) ? smallest_value
-                                 : plugin_data.get_config().getDefaultExpiresSeconds();
+                                 : plugin_impl.get_config().getDefaultExpiresSeconds();
   }
   catch (...)
   {
@@ -376,7 +376,7 @@ void bw::Request::GetFeature::execute_multiple_queries(std::ostream& ost) const
     if (not time_stamp)
     {
       namespace pt = boost::posix_time;
-      const std::string tm = Fmi::to_iso_extended_string(plugin_data.get_time_stamp()) + "Z";
+      const std::string tm = Fmi::to_iso_extended_string(plugin_impl.get_time_stamp()) + "Z";
       time_stamp = tm;
     }
 
@@ -502,7 +502,7 @@ bool bw::Request::GetFeature::collect_query_responses(std::vector<std::string>& 
 
             if (p_sq)
             {
-              ErrorResponseGenerator err_gen(plugin_data);
+              ErrorResponseGenerator err_gen(plugin_impl);
               auto error_response =
                   err_gen.create_error_response(ErrorResponseGenerator::REQ_PROCESSING, *p_sq);
               std::ostringstream msg;
@@ -559,17 +559,17 @@ void bw::Request::GetFeature::assert_use_default_format() const
 boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    PluginImpl& plugin_data)
+    PluginImpl& plugin_impl)
 {
   try
   {
     bw::Request::GetFeature::check_request_name(http_request, "GetFeature");
     check_wfs_version(http_request);
 
-    const StoredQueryMap& stored_query_map = plugin_data.get_stored_query_map();
+    const StoredQueryMap& stored_query_map = plugin_impl.get_stored_query_map();
 
     boost::shared_ptr<bw::Request::GetFeature> result(
-        new bw::Request::GetFeature(language, plugin_data));
+        new bw::Request::GetFeature(language, plugin_impl));
 
     // Verify whether we have request=getFeature in HTTP request
     auto request = http_request.getParameter("request");
@@ -597,7 +597,7 @@ boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_
     else
     {
       const TypeNameStoredQueryMap& typename_stored_query_map =
-          plugin_data.get_typename_stored_query_map();
+          plugin_impl.get_typename_stored_query_map();
       bw::AdHocQuery::create_from_kvp(language,
                                       result->spp,
                                       http_request,
@@ -617,18 +617,18 @@ boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_
 boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_xml(
     const std::string& language,
     const xercesc::DOMDocument& document,
-    PluginImpl& plugin_data)
+    PluginImpl& plugin_impl)
 {
   try
   {
     bw::Request::GetFeature::check_request_name(document, "GetFeature");
     const xercesc::DOMElement* root = get_xml_root(document);
 
-    const StoredQueryMap& stored_query_map = plugin_data.get_stored_query_map();
+    const StoredQueryMap& stored_query_map = plugin_impl.get_stored_query_map();
 
     const char* method_name = "SmartMet::Plugin::WFS::Request::GetFeature::create_from_xml";
     boost::shared_ptr<bw::Request::GetFeature> result(
-        new bw::Request::GetFeature(language, plugin_data));
+        new bw::Request::GetFeature(language, plugin_impl));
 
     result->check_mandatory_attributes(document);
     result->spp.read_from_xml(*root);
@@ -646,7 +646,7 @@ boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_
       if (name == "Query")
       {
         const TypeNameStoredQueryMap& typename_stored_query_map =
-            plugin_data.get_typename_stored_query_map();
+            plugin_impl.get_typename_stored_query_map();
         bw::AdHocQuery::create_from_xml(language,
                                         result->spp,
                                         *child,

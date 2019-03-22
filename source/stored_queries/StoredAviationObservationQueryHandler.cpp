@@ -113,7 +113,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
       params.get<std::string>(P_ICAO_CODE, std::back_inserter(icaoCodeVector));
 
       const char* DATA_CRS_NAME = "urn:ogc:def:crs:EPSG::4326";
-      SmartMet::Engine::Gis::CRSRegistry& crs_registry = plugin_data.get_crs_registry();
+      SmartMet::Engine::Gis::CRSRegistry& crs_registry = plugin_impl.get_crs_registry();
 
       // Default output CRS.
       const std::string crs = DATA_CRS_NAME;
@@ -353,7 +353,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
       hash["numMatched"] = s_numMatched;
 
       hash["responseTimestamp"] =
-          Fmi::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+          Fmi::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
       hash["queryId"] = query.get_query_id();
 
       hash["projSrsDim"] = (show_height ? 3 : 2);

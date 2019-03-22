@@ -79,7 +79,7 @@ class StoredForecastQueryHandler : public StoredQueryHandlerBase,
  public:
   StoredForecastQueryHandler(SmartMet::Spine::Reactor* reactor,
                              boost::shared_ptr<StoredQueryConfig> config,
-                             PluginImpl& plugin_data,
+                             PluginImpl& plugin_impl,
                              boost::optional<std::string> template_file_name);
 
   virtual ~StoredForecastQueryHandler();

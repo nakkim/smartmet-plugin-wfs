@@ -509,7 +509,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       }
 
       hash["responseTimestamp"] =
-          Fmi::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+          Fmi::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
       hash["numMatched"] = num_groups;
       hash["numReturned"] = num_groups;
       hash["numParam"] = param_names.size();

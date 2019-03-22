@@ -130,7 +130,7 @@ class Plugin : public SmartMetPlugin, virtual private boost::noncopyable, privat
  private:
   const std::string itsModuleName;
 
-  std::unique_ptr<PluginImpl> plugin_data;
+  std::unique_ptr<PluginImpl> plugin_impl;
 
   /**
    *   @brief An object that reads actual requests and creates request objects

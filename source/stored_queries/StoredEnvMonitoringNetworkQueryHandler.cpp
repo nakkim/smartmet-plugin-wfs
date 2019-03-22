@@ -196,7 +196,7 @@ void bw::StoredEnvMonitoringNetworkQueryHandler::query(const StoredQuery& query,
     dump_named_params(params, hash["named_parameters"]);
     hash["authorityDomain"] = authorityDomain;
     hash["responseTimestamp"] =
-        boost::posix_time::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+        boost::posix_time::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
     hash["queryId"] = query.get_query_id();
 
     // Container with the data fetched from obsengine.

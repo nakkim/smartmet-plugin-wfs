@@ -82,8 +82,8 @@ void Plugin::init()
   {
     try
     {
-      plugin_data.reset(new PluginImpl(itsReactor, itsConfig));
-      request_factory.reset(new RequestFactory(*plugin_data));
+      plugin_impl.reset(new PluginImpl(itsReactor, itsConfig));
+      request_factory.reset(new RequestFactory(*plugin_impl));
 
       if (itsReactor->getRequiredAPIVersion() != SMARTMET_API_VERSION)
       {
@@ -131,10 +131,10 @@ void Plugin::init()
           .register_unimplemented_request_type("DropStoredQuery")
           .register_unimplemented_request_type("Transaction");
 
-      const std::vector<std::string>& languages = plugin_data->get_languages();
+      const std::vector<std::string>& languages = plugin_impl->get_languages();
       BOOST_FOREACH (const auto& language, languages)
       {
-        const std::string url = plugin_data->get_config().defaultUrl() + "/" + language;
+        const std::string url = plugin_impl->get_config().defaultUrl() + "/" + language;
         if (!itsReactor->addContentHandler(
                 this, url, boost::bind(&Plugin::realRequestHandler, this, _1, language, _2, _3)))
         {
@@ -145,7 +145,7 @@ void Plugin::init()
       }
 
       // Begin the update loop if enabled
-      if (plugin_data->get_config().getEnableConfigurationPolling())
+      if (plugin_impl->get_config().getEnableConfigurationPolling())
         itsUpdateLoopThread.reset(new std::thread(std::bind(&Plugin::updateLoop, this)));
     }
     catch (...)
@@ -155,7 +155,7 @@ void Plugin::init()
 
     if (!itsReactor->addContentHandler(
             this,
-            plugin_data->get_config().defaultUrl(),
+            plugin_impl->get_config().defaultUrl(),
             boost::bind(&Plugin::realRequestHandler, this, _1, "", _2, _3)))
     {
       throw SmartMet::Spine::Exception(
@@ -247,18 +247,18 @@ void Plugin::query(const std::string& req_language,
     else if (const auto header_host = req.getHeader("Host"))
       hostname = *header_host;
     else
-      hostname = plugin_data->get_fallback_hostname();
+      hostname = plugin_impl->get_fallback_hostname();
 
     std::string protocol;
     if (const auto header_x_forwarded_protocol = req.getProtocol())
       protocol = *header_x_forwarded_protocol;
     else
-      protocol = plugin_data->get_fallback_protocol();
+      protocol = plugin_impl->get_fallback_protocol();
 
     const std::string fmi_apikey_prefix = "/fmi-apikey/";
 
     const std::string language =
-        req_language == "" ? *plugin_data->get_config().get_languages().begin() : req_language;
+        req_language == "" ? *plugin_impl->get_config().get_languages().begin() : req_language;
 
     if (method == SmartMet::Spine::HTTP::RequestMethod::GET)
     {
@@ -438,7 +438,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
   try
   {
     std::string language = "eng";
-    std::string defaultPath = plugin_data->get_config().defaultUrl();
+    std::string defaultPath = plugin_impl->get_config().defaultUrl();
     std::string requestPath = theRequest.getResource();
 
     if ((defaultPath.length() + 2) < requestPath.length())
@@ -476,7 +476,7 @@ void Plugin::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
       // Latter (false) should newer happen.
       const int expires_seconds = (result.expires_seconds)
                                       ? result.expires_seconds.get()
-                                      : plugin_data->get_config().getDefaultExpiresSeconds();
+                                      : plugin_impl->get_config().getDefaultExpiresSeconds();
 
       // Build cache expiration time info
 
@@ -526,7 +526,7 @@ void Plugin::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
       exception.printError();
 
       // FIXME: implement correct processing phase support (parsing, processing)
-      ErrorResponseGenerator error_response_generator(*plugin_data);
+      ErrorResponseGenerator error_response_generator(*plugin_impl);
       const auto error_response = error_response_generator.create_error_response(
           ErrorResponseGenerator::REQ_PROCESSING, theRequest);
       theResponse.setContent(error_response.response);
@@ -555,7 +555,7 @@ void Plugin::maybe_validate_output(const SmartMet::Spine::HTTP::Request& req,
 {
   try
   {
-    if (plugin_data->get_config().getValidateXmlOutput())
+    if (plugin_impl->get_config().getValidateXmlOutput())
     {
       try
       {
@@ -641,7 +641,7 @@ Xml::Parser* Plugin::get_xml_parser() const
 {
   try
   {
-    return plugin_data->get_xml_parser()->get();
+    return plugin_impl->get_xml_parser()->get();
   }
   catch (...)
   {
@@ -654,7 +654,7 @@ RequestBaseP Plugin::parse_kvp_get_capabilities_request(
 {
   try
   {
-    return Request::GetCapabilities::create_from_kvp(language, request, *plugin_data);
+    return Request::GetCapabilities::create_from_kvp(language, request, *plugin_impl);
   }
   catch (...)
   {
@@ -670,7 +670,7 @@ RequestBaseP Plugin::parse_xml_get_capabilities_request(const std::string& langu
   {
     (void)root;
 
-    return Request::GetCapabilities::create_from_xml(language, document, *plugin_data);
+    return Request::GetCapabilities::create_from_xml(language, document, *plugin_impl);
   }
   catch (...)
   {
@@ -683,7 +683,7 @@ RequestBaseP Plugin::parse_kvp_describe_feature_type_request(
 {
   try
   {
-    return Request::DescribeFeatureType::create_from_kvp(language, request, *plugin_data);
+    return Request::DescribeFeatureType::create_from_kvp(language, request, *plugin_impl);
   }
   catch (...)
   {
@@ -698,7 +698,7 @@ RequestBaseP Plugin::parse_xml_describe_feature_type_request(const std::string& 
   try
   {
     (void)root;
-    return Request::DescribeFeatureType::create_from_xml(language, document, *plugin_data);
+    return Request::DescribeFeatureType::create_from_xml(language, document, *plugin_impl);
   }
   catch (...)
   {
@@ -711,7 +711,7 @@ RequestBaseP Plugin::parse_kvp_get_feature_request(const std::string& language,
 {
   try
   {
-    return Request::GetFeature::create_from_kvp(language, request, *plugin_data);
+    return Request::GetFeature::create_from_kvp(language, request, *plugin_impl);
   }
   catch (...)
   {
@@ -726,7 +726,7 @@ RequestBaseP Plugin::parse_xml_get_feature_request(const std::string& language,
   try
   {
     (void)root;
-    return Request::GetFeature::create_from_xml(language, document, *plugin_data);
+    return Request::GetFeature::create_from_xml(language, document, *plugin_impl);
   }
   catch (...)
   {
@@ -739,7 +739,7 @@ RequestBaseP Plugin::parse_kvp_get_property_value_request(
 {
   try
   {
-    return Request::GetPropertyValue::create_from_kvp(language, request, *plugin_data);
+    return Request::GetPropertyValue::create_from_kvp(language, request, *plugin_impl);
   }
   catch (...)
   {
@@ -754,7 +754,7 @@ RequestBaseP Plugin::parse_xml_get_property_value_request(const std::string& lan
   try
   {
     (void)root;
-    return Request::GetPropertyValue::create_from_xml(language, document, *plugin_data);
+    return Request::GetPropertyValue::create_from_xml(language, document, *plugin_impl);
   }
   catch (...)
   {
@@ -767,7 +767,7 @@ RequestBaseP Plugin::parse_kvp_list_stored_queries_request(
 {
   try
   {
-    return Request::ListStoredQueries::create_from_kvp(language, request, *plugin_data);
+    return Request::ListStoredQueries::create_from_kvp(language, request, *plugin_impl);
   }
   catch (...)
   {
@@ -782,7 +782,7 @@ RequestBaseP Plugin::parse_xml_list_stored_queries_request(const std::string& la
   try
   {
     (void)root;
-    return Request::ListStoredQueries::create_from_xml(language, document, *plugin_data);
+    return Request::ListStoredQueries::create_from_xml(language, document, *plugin_impl);
   }
   catch (...)
   {
@@ -795,7 +795,7 @@ RequestBaseP Plugin::parse_kvp_describe_stored_queries_request(
 {
   try
   {
-    return Request::DescribeStoredQueries::create_from_kvp(language, request, *plugin_data);
+    return Request::DescribeStoredQueries::create_from_kvp(language, request, *plugin_impl);
   }
   catch (...)
   {
@@ -810,7 +810,7 @@ RequestBaseP Plugin::parse_xml_describe_stored_queries_request(const std::string
   try
   {
     (void)root;
-    return Request::DescribeStoredQueries::create_from_xml(language, document, *plugin_data);
+    return Request::DescribeStoredQueries::create_from_xml(language, document, *plugin_impl);
   }
   catch (...)
   {
@@ -831,7 +831,7 @@ void Plugin::updateLoop()
           boost::this_thread::sleep(boost::posix_time::milliseconds(1000));
 
         if (not itsShutdownRequested)
-          plugin_data->updateStoredQueryMap(itsReactor);
+          plugin_impl->updateStoredQueryMap(itsReactor);
       }
       catch (...)
       {

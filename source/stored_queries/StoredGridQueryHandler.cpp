@@ -1192,7 +1192,7 @@ void StoredGridQueryHandler::query(const StoredQuery& stored_query,
 
       hash["language"] = language;
       hash["responseTimestamp"] =
-          Fmi::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+          Fmi::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
       hash["fmi_apikey"] = bw::QueryBase::FMI_APIKEY_SUBST;
       hash["fmi_apikey_prefix"] = bw::QueryBase::FMI_APIKEY_PREFIX_SUBST;
       hash["hostname"] = QueryBase::HOSTNAME_SUBST;

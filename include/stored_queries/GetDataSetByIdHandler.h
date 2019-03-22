@@ -20,7 +20,7 @@ class GetDataSetByIdHandler : public StoredQueryHandlerBase
  public:
   GetDataSetByIdHandler(SmartMet::Spine::Reactor* reactor,
                         boost::shared_ptr<StoredQueryConfig> config,
-                        PluginImpl& plugin_data);
+                        PluginImpl& plugin_impl);
 
   virtual ~GetDataSetByIdHandler();
 

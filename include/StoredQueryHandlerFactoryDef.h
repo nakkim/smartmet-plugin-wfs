@@ -20,7 +20,7 @@ class StoredQueryHandlerFactoryDef
   typedef boost::shared_ptr<StoredQueryHandlerBase> (*factory_t)(
       SmartMet::Spine::Reactor* reactor,
       boost::shared_ptr<StoredQueryConfig> config,
-      PluginImpl& plugin_data,
+      PluginImpl& plugin_impl,
       boost::optional<std::string> template_file_name);
 
  private:
@@ -36,7 +36,7 @@ class StoredQueryHandlerFactoryDef
       const std::string& symbol_name,
       SmartMet::Spine::Reactor* reactor,
       boost::shared_ptr<StoredQueryConfig> config,
-      PluginImpl& plugin_data,
+      PluginImpl& plugin_impl,
       boost::optional<std::string> template_file_name);
 
  private:
