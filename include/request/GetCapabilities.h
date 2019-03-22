@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PluginData.h"
+#include "PluginImpl.h"
 #include "RequestBase.h"
 #include <boost/shared_ptr.hpp>
 

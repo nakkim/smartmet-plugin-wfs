@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PluginData.h"
+#include "PluginImpl.h"
 #include "RequestBase.h"
 #include <xercesc/dom/DOMDocument.hpp>
 
@@ -10,6 +10,7 @@ namespace Plugin
 {
 namespace WFS
 {
+
 namespace Request
 {
 /**

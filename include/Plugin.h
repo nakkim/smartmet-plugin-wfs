@@ -8,7 +8,7 @@
 
 #include "Config.h"
 #include "GeoServerDB.h"
-#include "PluginData.h"
+#include "PluginImpl.h"
 #include "RequestFactory.h"
 #include "StoredQueryMap.h"
 #include "XmlEnvInit.h"

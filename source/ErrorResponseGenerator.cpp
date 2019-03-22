@@ -1,6 +1,6 @@
 #include "ErrorResponseGenerator.h"
 #include "AdHocQuery.h"
-#include "PluginData.h"
+#include "PluginImpl.h"
 #include "StoredQuery.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>

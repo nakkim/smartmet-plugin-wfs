@@ -412,7 +412,7 @@ dump</a></td>
 <td>mandatory</td>
 <td>Specifies CTPP2 template to use for generation of GetCapabilities response. The file is searched
 in directory specified in parameter @b storedQueryTemplateDir unless absolute path provided. Read in
-SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
+SmartMet::Plugin::WFS::PluginImpl::create_template_formatters</td>
 </tr>
 
 <tr>
@@ -422,7 +422,7 @@ SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
 <td>Specifies CTPP2 template to use for generation of ListStoredQueries response. The file is
 searched in directory specified in parameter @b storedQueryTemplateDir unless absolute path
 provided. Read in
-SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
+SmartMet::Plugin::WFS::PluginImpl::create_template_formatters</td>
 </tr>
 
 <tr>
@@ -432,7 +432,7 @@ SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
 <td>Specifies CTPP2 template to use for generation of DescribeStoredQueries response. The file is
 searched in directory specified in parameter @b storedQueryTemplateDir unless absolute path
 provided. Read in
-SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
+SmartMet::Plugin::WFS::PluginImpl::create_template_formatters</td>
 </tr>
 
 <tr>
@@ -442,7 +442,7 @@ SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
 <td>Specifies CTPP2 template to use for generation of DescribeFeatureType response. The file is
 searched in directory specified in parameter @b storedQueryTemplateDir unless absolute path
 provided. Read in
-SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
+SmartMet::Plugin::WFS::PluginImpl::create_template_formatters</td>
 </tr>
 
 <tr>
@@ -451,7 +451,7 @@ SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
 <td>mandatory</td>
 <td>Specifies CTPP2 template to use for generation of error report. The file is searched in
 directory specified in parameter @b storedQueryTemplateDir unless absolute path provided. Read in
-SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
+SmartMet::Plugin::WFS::PluginImpl::create_template_formatters</td>
 </tr>
 
 <tr>
@@ -460,7 +460,7 @@ SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
 <td>mandatory</td>
 <td>Specifies CTPP2 template to use for generation of debug format response. The file is searched in
 directory specified in parameter @b storedQueryTemplateDir unless absolute path provided. Read in
-SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
+SmartMet::Plugin::WFS::PluginImpl::create_template_formatters</td>
 </tr>
 
 <tr>
@@ -472,7 +472,7 @@ when schema
     resolution using locked XML grammar pool fails. Providing this parameter can be useful if XML
 output
     validation is enabled. It should not be needed for validating incoming requests. Read in
-    SmartMet::Plugin::WFS::PluginData::create_xml_parser</td>
+    SmartMet::Plugin::WFS::PluginImpl::create_xml_parser</td>
 </tr>
 
 <tr>
@@ -484,7 +484,7 @@ initialization
     of stored query handlers. Plugin is immediately ready to handle incoming requests if this
 feature
     is enabled, but stored query handlers become available when they are initialized. Read in
-    SmartMet::Plugin::WFS::PluginData::create_stored_query_map</td>
+    SmartMet::Plugin::WFS::PluginImpl::create_stored_query_map</td>
 </tr>
 
 <tr>

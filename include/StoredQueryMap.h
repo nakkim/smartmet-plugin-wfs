@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PluginData.h"
+#include "PluginImpl.h"
 #include "StoredQuery.h"
 #include "StoredQueryHandlerBase.h"
 #include <boost/filesystem.hpp>

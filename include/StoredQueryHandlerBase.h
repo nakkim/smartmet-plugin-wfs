@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PluginData.h"
+#include "PluginImpl.h"
 #include "StandardPresentationParameters.h"
 #include "StoredQuery.h"
 #include "StoredQueryConfig.h"
