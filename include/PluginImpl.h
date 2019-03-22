@@ -2,6 +2,8 @@
 
 #include "Config.h"
 #include "GeoServerDB.h"
+#include "RequestBase.h"
+#include "RequestFactory.h"
 #include "StoredQueryMap.h"
 #include "TypeNameStoredQueryMap.h"
 #include "WfsCapabilities.h"
@@ -28,16 +30,53 @@ typedef Fmi::TimedCache::Cache<std::string, std::string> QueryResponseCache;
 
 class PluginImpl : public boost::noncopyable
 {
+  struct RequestResult;
+
  public:
   PluginImpl(SmartMet::Spine::Reactor* theReactor, const char* theConfig);
   virtual ~PluginImpl();
+
+  virtual void realRequestHandler(SmartMet::Spine::Reactor& theReactor,
+                                  const std::string& language,
+                                  const SmartMet::Spine::HTTP::Request& theRequest,
+                                  SmartMet::Spine::HTTP::Response& theResponse);
 
   inline SmartMet::Engine::Gis::CRSRegistry& get_crs_registry() const
   {
     return itsGisEngine->getCRSRegistry();
   }
+
   inline Config& get_config() { return itsConfig; }
+
   inline const Config& get_config() const { return itsConfig; }
+
+  inline int get_debug_level() const { return debug_level; }
+
+  inline WfsCapabilities& get_capabilities() { return *wfs_capabilities; }
+
+  inline const WfsCapabilities& get_capabilities() const { return *wfs_capabilities; }
+
+  inline const std::vector<std::string>& get_languages() const { return itsConfig.get_languages(); }
+
+  boost::posix_time::ptime get_time_stamp() const;
+
+  boost::posix_time::ptime get_local_time_stamp() const;
+
+  inline const StoredQueryMap& get_stored_query_map() const { return *stored_query_map; }
+
+  inline const TypeNameStoredQueryMap& get_typename_stored_query_map() const
+  {
+    return *type_name_stored_query_map;
+  }
+
+  inline boost::shared_ptr<GeoServerDB> get_geo_server_database() const { return geo_server_db; }
+
+  inline std::string get_fallback_hostname() const { return fallback_hostname; }
+
+  inline std::string get_fallback_protocol() const { return fallback_protocol; }
+
+  inline QueryResponseCache& get_query_cache() { return *query_cache; }
+
   inline boost::shared_ptr<Fmi::TemplateFormatter> get_get_capabilities_formater() const
   {
     return itsTemplateFactory.get(getCapabilitiesFormatterPath);
@@ -74,28 +113,62 @@ class PluginImpl : public boost::noncopyable
     return itsTemplateFactory.get(filename);
   }
 
-  inline QueryResponseCache& get_query_cache() { return *query_cache; }
-
-  inline boost::shared_ptr<Xml::ParserMT> get_xml_parser() const { return xml_parser; }
-  inline boost::shared_ptr<GeoServerDB> get_geo_server_database() const { return geo_server_db; }
-  inline const StoredQueryMap& get_stored_query_map() const { return *stored_query_map; }
-  inline const TypeNameStoredQueryMap& get_typename_stored_query_map() const
-  {
-    return *type_name_stored_query_map;
-  }
-
-  inline const std::vector<std::string>& get_languages() const { return itsConfig.get_languages(); }
-  inline int get_debug_level() const { return debug_level; }
-  inline std::string get_fallback_hostname() const { return fallback_hostname; }
-  inline std::string get_fallback_protocol() const { return fallback_protocol; }
-  boost::posix_time::ptime get_time_stamp() const;
-
-  boost::posix_time::ptime get_local_time_stamp() const;
-
-  inline WfsCapabilities& get_capabilities() { return *wfs_capabilities; }
-  inline const WfsCapabilities& get_capabilities() const { return *wfs_capabilities; }
-
   void updateStoredQueryMap(Spine::Reactor* theReactor);
+
+ private:
+  void query(const std::string& language,
+             const SmartMet::Spine::HTTP::Request& req,
+             RequestResult& result);
+
+  RequestBaseP parse_kvp_get_capabilities_request(const std::string& language,
+                                                  const SmartMet::Spine::HTTP::Request& request);
+
+  RequestBaseP parse_xml_get_capabilities_request(const std::string& language,
+                                                  const xercesc::DOMDocument& document,
+                                                  const xercesc::DOMElement& root);
+
+  RequestBaseP parse_kvp_describe_feature_type_request(
+      const std::string& language, const SmartMet::Spine::HTTP::Request& request);
+
+  RequestBaseP parse_xml_describe_feature_type_request(const std::string& language,
+                                                       const xercesc::DOMDocument& document,
+                                                       const xercesc::DOMElement& root);
+
+  RequestBaseP parse_kvp_get_feature_request(const std::string& language,
+                                             const SmartMet::Spine::HTTP::Request& request);
+
+  RequestBaseP parse_xml_get_feature_request(const std::string& language,
+                                             const xercesc::DOMDocument& document,
+                                             const xercesc::DOMElement& root);
+
+  RequestBaseP parse_kvp_get_property_value_request(const std::string& language,
+                                                    const SmartMet::Spine::HTTP::Request& request);
+
+  RequestBaseP parse_xml_get_property_value_request(const std::string& language,
+                                                    const xercesc::DOMDocument& document,
+                                                    const xercesc::DOMElement& root);
+
+  RequestBaseP parse_kvp_list_stored_queries_request(const std::string& language,
+                                                     const SmartMet::Spine::HTTP::Request& request);
+
+  RequestBaseP parse_xml_list_stored_queries_request(const std::string& language,
+                                                     const xercesc::DOMDocument& document,
+                                                     const xercesc::DOMElement& root);
+
+  RequestBaseP parse_kvp_describe_stored_queries_request(
+      const std::string& language, const SmartMet::Spine::HTTP::Request& request);
+
+  RequestBaseP parse_xml_describe_stored_queries_request(const std::string& language,
+                                                         const xercesc::DOMDocument& document,
+                                                         const xercesc::DOMElement& root);
+
+  boost::optional<std::string> get_fmi_apikey(
+      const SmartMet::Spine::HTTP::Request& theRequest) const;
+
+  void maybe_validate_output(const SmartMet::Spine::HTTP::Request& req,
+                             SmartMet::Spine::HTTP::Response& response) const;
+
+  //inline boost::shared_ptr<Xml::ParserMT> get_xml_parser() const { return xml_parser; }
 
  private:
   void create_template_formatters();
@@ -108,6 +181,11 @@ class PluginImpl : public boost::noncopyable
   Config itsConfig;
 
   std::unique_ptr<QueryResponseCache> query_cache;
+
+  /**
+   *   @brief An object that reads actual requests and creates request objects
+   */
+  std::unique_ptr<RequestFactory> request_factory;
 
   SmartMet::Engine::Geonames::Engine* itsGeonames;
   SmartMet::Engine::Querydata::Engine* itsQEngine;
