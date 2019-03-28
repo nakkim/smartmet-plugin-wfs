@@ -217,11 +217,14 @@ html::
 objdir:
 	@mkdir -p $(objdir)
 
+# Forcibly lower RPM_BUILD_NCPUs in CircleCI cloud(but not on local builds)
+RPMBUILD=$(shell test "$$CIRCLE_BUILD_NUMBER" && echo RPM_BUILD_NCPUS=2 rpmbuild || echo rpmbuild)
+
 rpm: clean file-list $(SPEC).spec
 	rm -f $(SPEC).tar.gz # Clean a possible leftover from previous attempt
 	tar -czvf $(SPEC).tar.gz \
 		--transform "s,^,plugins/$(SPEC)/," $(shell cat files.list)
-	rpmbuild -ta $(SPEC).tar.gz
+	$(RPMBUILD) -ta $(SPEC).tar.gz
 	rm -f $(SPEC).tar.gz
 
 file-list:	cnf/XMLGrammarPool.dump
