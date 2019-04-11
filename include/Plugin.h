@@ -27,9 +27,11 @@
 #include <boost/thread.hpp>
 #include <boost/utility.hpp>
 
+#include <condition_variable>
 #include <iostream>
 #include <list>
 #include <map>
+#include <mutex>
 #include <string>
 #include <thread>
 
@@ -68,6 +70,8 @@ class Plugin : public SmartMetPlugin, virtual private boost::noncopyable, privat
 
   void updateLoop();
 
+  void stopUpdateLoop();
+
  private:
   const std::string itsModuleName;
 
@@ -77,11 +81,10 @@ class Plugin : public SmartMetPlugin, virtual private boost::noncopyable, privat
 
   const char* itsConfig;
 
-  boost::atomic<bool> itsShutdownRequested;
-  boost::atomic<int> itsUpdateLoopThreadCount;
-
+  bool itsShuttingDown;
   std::unique_ptr<std::thread> itsUpdateLoopThread;
-
+  std::condition_variable itsUpdateNotifyCond;
+  std::mutex itsUpdateNotifyMutex;
 };  // class Plugin
 
 }  // namespace WFS

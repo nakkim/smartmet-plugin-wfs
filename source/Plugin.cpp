@@ -28,8 +28,7 @@ Plugin::Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig)
       itsModuleName("WFS"),
       itsReactor(theReactor),
       itsConfig(theConfig),
-      itsShutdownRequested(false),
-      itsUpdateLoopThreadCount(0)
+      itsShuttingDown(false)
 {
 }
 
@@ -95,21 +94,7 @@ void Plugin::init()
 
 void Plugin::shutdown()
 {
-  try
-  {
-    std::cout << "  -- Shutdown requested (wfs)\n";
-    itsShutdownRequested = true;
-
-    while (itsUpdateLoopThreadCount > 0)
-      std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
-    if (itsUpdateLoopThread and itsUpdateLoopThread->joinable())
-      itsUpdateLoopThread->join();
-  }
-  catch (...)
-  {
-    throw Spine::Exception::Trace(BCP, "Starting shutdown failed!");
-  }
+  stopUpdateLoop();
 }
 // ----------------------------------------------------------------------
 /*!
@@ -117,7 +102,11 @@ void Plugin::shutdown()
  */
 // ----------------------------------------------------------------------
 
-Plugin::~Plugin() {}
+Plugin::~Plugin()
+{
+  stopUpdateLoop();
+  plugin_impl.reset();
+}
 // ----------------------------------------------------------------------
 /*!
  * \brief Return the plugin name
@@ -190,20 +179,23 @@ bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request& /* theRequest */)
 
 void Plugin::updateLoop()
 {
+  auto updateCheck = [this]() -> bool
+    {
+      std::unique_lock<std::mutex> lock(itsUpdateNotifyMutex);
+      if (not itsShuttingDown) {
+	itsUpdateNotifyCond.wait_for(lock, std::chrono::seconds(1));
+      }
+      return not isShutdownRequested();
+    };
+
   try
   {
-    itsUpdateLoopThreadCount++;
-    while (not(itsShutdownRequested or isShutdownRequested()))
+    while (updateCheck())
     {
       try
       {
-        for (int i = 0; (not itsShutdownRequested && i < 5); i++)
-          boost::this_thread::sleep(boost::posix_time::milliseconds(1000));
-
-        if (not itsShutdownRequested) {
-          boost::shared_ptr<PluginImpl> impl = plugin_impl;
-	  plugin_impl->updateStoredQueryMap(itsReactor);
-	}
+	boost::shared_ptr<PluginImpl> impl = plugin_impl;
+	plugin_impl->updateStoredQueryMap(itsReactor);
       }
       catch (...)
       {
@@ -211,11 +203,25 @@ void Plugin::updateLoop()
         exception.printError();
       }
     }
-    itsUpdateLoopThreadCount--;
   }
   catch (...)
   {
-    throw Spine::Exception::Trace(BCP, "Capabilities update failed!");
+    throw Spine::Exception::Trace(BCP, "Update loop failed!");
+  }
+}
+
+void Plugin::stopUpdateLoop()
+{
+  itsShuttingDown = true;
+  std::unique_ptr<std::thread> tmp;
+  std::unique_lock<std::mutex> lock(itsUpdateNotifyMutex);
+  if (itsUpdateLoopThread) {
+    std::swap(tmp, itsUpdateLoopThread);
+    itsUpdateNotifyCond.notify_all();
+  }
+  lock.unlock();
+  if (tmp and tmp->joinable()) {
+    tmp->join();
   }
 }
 
