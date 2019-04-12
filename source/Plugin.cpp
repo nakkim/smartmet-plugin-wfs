@@ -28,7 +28,8 @@ Plugin::Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig)
       itsModuleName("WFS"),
       itsReactor(theReactor),
       itsConfig(theConfig),
-      itsShuttingDown(false)
+      itsShuttingDown(false),
+      itsReloading(false)
 {
 }
 
@@ -38,7 +39,7 @@ void Plugin::init()
   {
     try
     {
-      plugin_impl.reset(new PluginImpl(itsReactor, itsConfig));
+      boost::shared_ptr<PluginImpl> new_impl(new PluginImpl(itsReactor, itsConfig));
 
       if (itsReactor->getRequiredAPIVersion() != SMARTMET_API_VERSION)
       {
@@ -49,10 +50,12 @@ void Plugin::init()
         throw SmartMet::Spine::Exception(BCP, msg.str());
       }
 
-      const std::vector<std::string>& languages = plugin_impl->get_languages();
+      itsReactor->removeContentHandlers(this);
+
+      const std::vector<std::string>& languages = new_impl->get_languages();
       for (const auto& language : languages)
       {
-        const std::string url = plugin_impl->get_config().defaultUrl() + "/" + language;
+        const std::string url = new_impl->get_config().defaultUrl() + "/" + language;
         if (!itsReactor->addContentHandler(
                 this, url, boost::bind(&Plugin::realRequestHandler, this, _1, language, _2, _3)))
         {
@@ -62,14 +65,17 @@ void Plugin::init()
         }
       }
 
-      // Begin the update loop if enabled
-      if (plugin_impl->get_config().getEnableConfigurationPolling())
-        itsUpdateLoopThread.reset(new std::thread(std::bind(&Plugin::updateLoop, this)));
+      stopUpdateLoop();
+
+      boost::atomic_store(&plugin_impl, new_impl);
+      startUpdateLoop();
     }
     catch (...)
     {
       throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
     }
+
+    auto adminCred = plugin_impl->get_config().get_admin_credentials();
 
     if (!itsReactor->addContentHandler(
             this,
@@ -78,6 +84,13 @@ void Plugin::init()
     {
       throw SmartMet::Spine::Exception(
           BCP, "Failed to register WFS content handler for default language");
+    }
+
+    if (adminCred) {
+      addUser(adminCred->first, adminCred->second);
+      itsReactor->addContentHandler(this,
+				    "/wfs/reload",
+				    boost::bind(&Plugin::reloadHandler, this, _1, _2, _3));
     }
   }
   catch (...)
@@ -128,6 +141,25 @@ int Plugin::getRequiredAPIVersion() const
   return SMARTMET_API_VERSION;
 }
 
+bool Plugin::reload(const char* theConfig)
+{
+  if (itsReloading) {
+    return false;
+  } else {
+    // FIXME: Use atomic
+    itsReloading = true;
+    std::cout << "Plugin reload requested" << std::endl;
+    try {
+      itsConfig = theConfig;
+      init();
+    } catch (...) {
+      throw SmartMet::Spine::Exception(BCP, "Reload failed");
+    }
+    itsReloading = false;
+    return true;
+  }
+}
+
 // ----------------------------------------------------------------------
 /*!
  * \brief Main content handler
@@ -140,8 +172,9 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
 {
   try
   {
+    auto impl = boost::atomic_load(&plugin_impl);
     std::string language = "eng";
-    std::string defaultPath = plugin_impl->get_config().defaultUrl();
+    std::string defaultPath = impl->get_config().defaultUrl();
     std::string requestPath = theRequest.getResource();
 
     if ((defaultPath.length() + 2) < requestPath.length())
@@ -155,6 +188,11 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
   }
 }
 
+std::string Plugin::getRealm() const
+{
+  return "SmartMet WFS2 plugin";
+}
+
 void Plugin::realRequestHandler(SmartMet::Spine::Reactor& theReactor,
                                 const std::string& language,
                                 const SmartMet::Spine::HTTP::Request& theRequest,
@@ -162,12 +200,31 @@ void Plugin::realRequestHandler(SmartMet::Spine::Reactor& theReactor,
 {
   try
   {
-    boost::shared_ptr<PluginImpl> impl = plugin_impl;
+    auto impl = boost::atomic_load(&plugin_impl);
     impl->realRequestHandler(theReactor, language, theRequest, theResponse);
   }
   catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+void Plugin::reloadHandler(SmartMet::Spine::Reactor& theReactor,
+			   const SmartMet::Spine::HTTP::Request& theRequest,
+			   SmartMet::Spine::HTTP::Response& theResponse)
+{
+  if (authenticateRequest(theRequest, theResponse)) {
+    bool ok = reload(itsConfig);
+    theResponse.setStatus(200);
+    theResponse.setHeader("Content-type", "text/html; charset=UTF-8");
+    std::ostringstream content;
+    content << "<html><title>WFS plugin reload</title>";
+    if (ok) {
+      content << "<body>Reload successful</body></html>\n";
+    } else {
+      content << "<body>Reload failed</body></html>\n";
+    }
+    theResponse.setContent(content.str());
   }
 }
 
@@ -185,7 +242,7 @@ void Plugin::updateLoop()
       if (not itsShuttingDown) {
 	itsUpdateNotifyCond.wait_for(lock, std::chrono::seconds(1));
       }
-      return not isShutdownRequested();
+      return not itsShuttingDown;
     };
 
   try
@@ -194,8 +251,8 @@ void Plugin::updateLoop()
     {
       try
       {
-	boost::shared_ptr<PluginImpl> impl = plugin_impl;
-	plugin_impl->updateStoredQueryMap(itsReactor);
+	auto impl = boost::atomic_load(&plugin_impl);
+	impl->updateStoredQueryMap(itsReactor);
       }
       catch (...)
       {
@@ -208,6 +265,14 @@ void Plugin::updateLoop()
   {
     throw Spine::Exception::Trace(BCP, "Update loop failed!");
   }
+}
+
+void Plugin::startUpdateLoop()
+{
+  itsShuttingDown = false;
+  // Begin the update loop if enabled
+  if (plugin_impl->get_config().getEnableConfigurationPolling())
+    itsUpdateLoopThread.reset(new std::thread(std::bind(&Plugin::updateLoop, this)));
 }
 
 void Plugin::stopUpdateLoop()
@@ -223,6 +288,7 @@ void Plugin::stopUpdateLoop()
   if (tmp and tmp->joinable()) {
     tmp->join();
   }
+  itsShuttingDown = false;
 }
 
 }  // namespace WFS

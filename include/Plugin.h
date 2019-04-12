@@ -17,6 +17,7 @@
 #include <spine/HTTP.h>
 #include <spine/Reactor.h>
 #include <spine/SmartMetPlugin.h>
+#include <spine/HTTPAuthentication.h>
 
 #include <ctpp2/CDT.hpp>
 
@@ -41,7 +42,11 @@ namespace Plugin
 {
 namespace WFS
 {
-class Plugin : public SmartMetPlugin, virtual private boost::noncopyable, private Xml::EnvInit
+class Plugin
+  : public SmartMetPlugin
+  , virtual private boost::noncopyable
+  , private Xml::EnvInit
+  , private SmartMet::Spine::HTTP::Authentication
 {
  public:
   Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig);
@@ -50,12 +55,15 @@ class Plugin : public SmartMetPlugin, virtual private boost::noncopyable, privat
   const std::string& getPluginName() const;
   int getRequiredAPIVersion() const;
 
+  bool reload(const char* theConfig);
+
  protected:
   void init();
   void shutdown();
   void requestHandler(SmartMet::Spine::Reactor& theReactor,
                       const SmartMet::Spine::HTTP::Request& theRequest,
                       SmartMet::Spine::HTTP::Response& theResponse);
+  std::string getRealm() const override;
 
  private:
   Plugin();
@@ -68,8 +76,13 @@ class Plugin : public SmartMetPlugin, virtual private boost::noncopyable, privat
 			  const SmartMet::Spine::HTTP::Request& theRequest,
 			  SmartMet::Spine::HTTP::Response& theResponse);
 
+  void reloadHandler(SmartMet::Spine::Reactor& theReactor,
+		     const SmartMet::Spine::HTTP::Request& theRequest,
+		     SmartMet::Spine::HTTP::Response& theResponse);
+
   void updateLoop();
 
+  void startUpdateLoop();
   void stopUpdateLoop();
 
  private:
@@ -81,7 +94,8 @@ class Plugin : public SmartMetPlugin, virtual private boost::noncopyable, privat
 
   const char* itsConfig;
 
-  bool itsShuttingDown;
+  std::atomic<bool> itsShuttingDown;
+  std::atomic<bool> itsReloading;
   std::unique_ptr<std::thread> itsUpdateLoopThread;
   std::condition_variable itsUpdateNotifyCond;
   std::mutex itsUpdateNotifyMutex;

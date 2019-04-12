@@ -115,6 +115,8 @@ Config::Config(const string& configfile)
 
     // Verify that stored queries template directory exists
     template_directory = sq_template_dir;
+
+    read_admin_cred();
   }
   catch (...)
   {
@@ -246,6 +248,24 @@ void Config::read_capabilities_config()
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
+}
+
+void Config::read_admin_cred()
+{
+  try {
+    const char* setting_name = "admin";
+    if (get_config().exists(setting_name)) {
+      libconfig::Setting& s1 = assert_is_group(get_config().lookup(setting_name));
+      const std::string user = get_optional_config_param<std::string>(s1, "admin", "admin");
+      const std::string password = get_mandatory_config_param<std::string>(s1, "password");
+      adminCred = std::make_pair(user, password);
+
+      std::cout << "Got admin credentials " << user << ':' << password << std::endl;
+    }
+  } catch (...)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  } 
 }
 
 }  // namespace WFS
