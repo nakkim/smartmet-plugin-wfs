@@ -5,11 +5,14 @@ TOP = $(shell pwd)
 
 # Compiler options
 
+include $(HOME)/.smartmet.mk
+GCC_DIAG_COLOR ?= always
+
 DEFINES = -DUNIX -D_REENTRANT
 
 FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter \
 	-fno-omit-frame-pointer \
-	-fdiagnostics-color=always \
+	-fdiagnostics-color=$(GCC_DIAG_COLOR) \
 	-Wno-unknown-pragmas \
       -Wcast-align \
       -Wcast-qual \
