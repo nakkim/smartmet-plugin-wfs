@@ -3,8 +3,8 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.2.21
-Release: 2%{?dist}.fmi
+Version: 19.4.24
+Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-wfs
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Wed Apr 24 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.4.24-1.fmi
+- Repackaged due to obsengine changes
+
 * Thu Feb 21 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.2.21-2.fmi
 - Repackaged since Contour::Options size changed
 
