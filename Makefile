@@ -5,7 +5,7 @@ TOP = $(shell pwd)
 
 # Compiler options
 
-include $(HOME)/.smartmet.mk
+-include $(HOME)/.smartmet.mk
 GCC_DIAG_COLOR ?= always
 
 DEFINES = -DUNIX -D_REENTRANT
