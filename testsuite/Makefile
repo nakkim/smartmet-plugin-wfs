@@ -3,6 +3,9 @@ TOP = $(shell pwd)/..
 
 # Compiler options
 
+-include $(HOME)/.smartmet.mk
+GCC_DIAG_COLOR ?= always
+
 DEFINES = -DUNIX -D_REENTRANT
 
 
@@ -15,6 +18,7 @@ FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter -Wno-unknown-pragmas \
       -Woverloaded-virtual  \
       -Wpointer-arith \
       -Wredundant-decls \
+      -fdiagnostics-color=$(GCC_DIAG_COLOR) \
       -Wwrite-strings
 
 # Compile options in detault, debug and profile modes
