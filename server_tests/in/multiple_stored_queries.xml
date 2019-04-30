@@ -4,16 +4,16 @@
          xmlns:wfs="http://www.opengis.net/wfs/2.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd">
-   <wfs:StoredQuery id="fmi::forecast::hirlam::ground::point::multipointcoverage">
+   <wfs:StoredQuery id="fmi::forecast::hirlam::surface::point::multipointcoverage">
      <wfs:Parameter name="place">Lielvircava</wfs:Parameter>
      <wfs:Parameter name="timestep">0</wfs:Parameter>
      <wfs:Parameter name="parameters">elevation</wfs:Parameter>
      <wfs:Parameter name="parameters">temperature pressure </wfs:Parameter>
      <wfs:Parameter name="parameters">WindSpeedMS WindDirection</wfs:Parameter>
      <wfs:Parameter name="parameters">Precipitation1h</wfs:Parameter>
-     <wfs:Parameter name="crs">EPSG::7243</wfs:Parameter>
+     <wfs:Parameter name="crs">EPSG::7423</wfs:Parameter>
    </wfs:StoredQuery>
-   <wfs:StoredQuery id="fmi::observations::weather::realtime::place::multipointcoverage">
+   <wfs:StoredQuery id="fmi::observations::weather::multipointcoverage">
      <wfs:Parameter name="place">Helsinki</wfs:Parameter>
      <wfs:Parameter name="timestep">60</wfs:Parameter>
      <wfs:Parameter name="maxlocations">10</wfs:Parameter>
