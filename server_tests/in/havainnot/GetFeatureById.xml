@@ -6,7 +6,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd">
    <wfs:StoredQuery id="urn:ogc:def:query:OGC-WFS::GetFeatureById">
-     <wfs:Parameter name="id">fmi::observations::weather::realtime::area::multipointcoverage</wfs:Parameter>
+     <wfs:Parameter name="id">WFS-D7LH__x64dO6_qatcoW_99DUt9.JTowuYWbbpdOs2_llx4efR060aeWzDtdOufXlmw48rp1w36d3R0629dnTTw36d3THv7ZeWHPlhaWLLn07qmnbltR_wpHzlFqY2PlzrUi0Kcd06btGTNnZd2Spp25bUf8KVC5UfwnBm07sk7Lh5ZefSth2ackhmZ8u_Tk51mNGrdy2YOjXl899_LJf39svLvy09MOLZliaWzL2y7KnnhlqZmzfjw7MtambTfjSV3XpmcNbbh8RNPPph3Y8tK1dCA1tunnz07s9TL46VjTsM5lbd.TLsrM0aeWzDtZXDDyw7a0suzL2w9NO_dWt0y7eGXlh6deWWtDhyy8.fXllrWr6d2Snwy5ck2nW1X07skTTyy4.mnfureocsuPTw09MPTTv3MdDc59N_LLk49cvLzf05K8ws23S6dZt_LLjw8.jp1o08tmHa6dc.vLNhx5XTrhv07ujp1t67Omnhv07umPf2y8sOfK0Omnblp9MvCZodNO3La37stY1WpDA</wfs:Parameter>
      <wfs:Parameter name="place">Helsinki</wfs:Parameter>
      <wfs:Parameter name="place">Oulu</wfs:Parameter>
      <wfs:Parameter name="timestep">60</wfs:Parameter>
