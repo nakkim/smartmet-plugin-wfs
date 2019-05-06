@@ -523,7 +523,7 @@ effect may
 <td>Specifies authentication settings (and possibly other parameters in the future) for performing
 administrative operations. Currently only such operation is WFS plugin configuration reloading.
 This group consists of parameters:
-- user - user name (optional, default is 'admin')
+- admin - admin user name (optional, default is 'admin')
 - password - password (mandatory)
 </tr>
 
