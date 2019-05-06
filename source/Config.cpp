@@ -259,13 +259,11 @@ void Config::read_admin_cred()
       const std::string user = get_optional_config_param<std::string>(s1, "admin", "admin");
       const std::string password = get_mandatory_config_param<std::string>(s1, "password");
       adminCred = std::make_pair(user, password);
-
-      std::cout << "Got admin credentials " << user << ':' << password << std::endl;
     }
   } catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  } 
+  }
 }
 
 }  // namespace WFS
