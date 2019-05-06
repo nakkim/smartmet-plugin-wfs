@@ -518,6 +518,17 @@ effect may
     explained in the handler class documentation.</td>
 </tr>
 
+<tr>
+<td>admin</td>
+<td>config group</td>
+<td>optional</td>
+<td>Specifies authentication settings (and possibly other parameters in the future) for performing
+administrative operations. Currently only such operation is WFS plugin configuration reloading.
+This group consists of parameters:
+- user - user name (optional, default is 'admin')
+- password - password (mandatory)
+</tr>
+
 </table>
 
  */
