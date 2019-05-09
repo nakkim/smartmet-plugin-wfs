@@ -13,6 +13,7 @@
 
 #include <engines/contour/Engine.h>
 #include <engines/querydata/Engine.h>
+#include <engines/grid/Engine.h>
 
 #include <gis/OGR.h>
 
@@ -45,6 +46,17 @@ class StoredContourQueryHandler : public StoredQueryHandlerBase,
   virtual void init_handler();
 
  protected:
+
+  virtual void  query_qEngine(
+                    const StoredQuery& query,
+                    const std::string& language,
+                    std::ostream& output) const;
+
+  virtual void  query_gridEngine(
+                    const StoredQuery& query,
+                    const std::string& language,
+                    std::ostream& output) const;
+
   virtual void clipGeometry(OGRGeometryPtr& geom, Fmi::Box& bbox) const = 0;
   virtual std::vector<ContourQueryResultPtr> processQuery(
       ContourQueryParameter& queryParameter) const = 0;
@@ -58,6 +70,8 @@ class StoredContourQueryHandler : public StoredQueryHandlerBase,
                                   const ContourQueryResult& resultItem) const = 0;
 
   ContourQueryResultSet getContours(const ContourQueryParameter& queryParameter) const;
+  ContourQueryResultSet getContours_qEngine(const ContourQueryParameter& queryParameter) const;
+  ContourQueryResultSet getContours_gridEngine(const ContourQueryParameter& queryParameter) const;
 
   std::string name;
   FmiParameterName id;
@@ -66,6 +80,7 @@ class StoredContourQueryHandler : public StoredQueryHandlerBase,
   SmartMet::Engine::Querydata::Engine* itsQEngine;
   SmartMet::Engine::Geonames::Engine* itsGeonames;
   SmartMet::Engine::Contour::Engine* itsContourEngine;
+  SmartMet::Engine::Grid::Engine*  itsGridEngine;
 
   std::string formatCoordinates(const OGRGeometry* geom,
                                 bool latLonOrder,

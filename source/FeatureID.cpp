@@ -77,10 +77,10 @@ boost::shared_ptr<FeatureID> FeatureID::create_from_id(const std::string& id)
 
     unsigned char md[SHA_DIGEST_LENGTH];
     SHA_CTX ctx;
-    SHA_Init(&ctx);
-    SHA_Update(&ctx, magic, strlen(magic));
-    SHA_Update(&ctx, raw_id.c_str(), raw_id.length());
-    SHA_Final(md, &ctx);
+    SHA1_Init(&ctx);
+    SHA1_Update(&ctx, magic, strlen(magic));
+    SHA1_Update(&ctx, raw_id.c_str(), raw_id.length());
+    SHA1_Final(md, &ctx);
     if (std::string(md, md + SHA_DIGEST_LENGTH) != sha)
     {
       std::ostringstream msg;
@@ -148,10 +148,10 @@ std::string FeatureID::get_id() const
     const std::string raw_data = stream.raw_data();
     unsigned char md[20];
     SHA_CTX ctx;
-    SHA_Init(&ctx);
-    SHA_Update(&ctx, magic, strlen(magic));
-    SHA_Update(&ctx, raw_data.c_str(), raw_data.length());
-    SHA_Final(md, &ctx);
+    SHA1_Init(&ctx);
+    SHA1_Update(&ctx, magic, strlen(magic));
+    SHA1_Update(&ctx, raw_data.c_str(), raw_data.length());
+    SHA1_Final(md, &ctx);
 
     std::string raw_id(md, md + 20);
     raw_id += raw_data;
