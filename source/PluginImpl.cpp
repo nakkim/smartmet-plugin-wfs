@@ -212,6 +212,17 @@ boost::posix_time::ptime PluginImpl::get_local_time_stamp() const
   }
 }
 
+boost::shared_ptr<GeoServerDB> PluginImpl::get_geo_server_database() const
+{
+  if (geo_server_db) {
+    return geo_server_db;
+  } else {
+    SmartMet::Spine::Exception exception(BCP, "GeoServer database is not available");
+    exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
+    throw exception;
+  }
+}
+
 void PluginImpl::create_template_formatters()
 {
   try
@@ -278,7 +289,10 @@ void PluginImpl::init_geo_server_access()
   {
     try
     {
-      geo_server_db.reset(new GeoServerDB(itsConfig.get_geoserver_conn_string(), 5));
+      const std::string geoserver_conn_str = itsConfig.get_geoserver_conn_string();
+      if (geoserver_conn_str != "") {
+	geo_server_db.reset(new GeoServerDB(itsConfig.get_geoserver_conn_string(), 5));
+      }
     }
     catch (...)
     {

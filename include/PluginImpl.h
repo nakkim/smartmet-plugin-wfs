@@ -69,7 +69,7 @@ class PluginImpl : public boost::noncopyable
     return *type_name_stored_query_map;
   }
 
-  inline boost::shared_ptr<GeoServerDB> get_geo_server_database() const { return geo_server_db; }
+  boost::shared_ptr<GeoServerDB> get_geo_server_database() const;
 
   inline std::string get_fallback_hostname() const { return fallback_hostname; }
 
