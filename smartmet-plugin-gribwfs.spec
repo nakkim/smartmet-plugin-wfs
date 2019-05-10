@@ -1,5 +1,5 @@
 %bcond_without observation
-%define DIRNAME wfs
+%define DIRNAME gribwfs
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
@@ -88,7 +88,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(0775,root,root,0775)
-%{_datadir}/smartmet/plugins/%{DIRNAME}.so
+%{_datadir}/smartmet/plugins/wfs.so
 %defattr(0664,root,root,0775)
 %{_sysconfdir}/smartmet/plugins/wfs/templates/*.c2t
 %{_sysconfdir}/smartmet/plugins/wfs/XMLGrammarPool.dump
