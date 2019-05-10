@@ -86,6 +86,7 @@ void Plugin::init()
           BCP, "Failed to register WFS content handler for default language");
     }
 
+    clearUsers();
     if (adminCred) {
       addUser(adminCred->first, adminCred->second);
       itsReactor->addContentHandler(this,
