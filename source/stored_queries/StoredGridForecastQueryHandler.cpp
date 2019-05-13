@@ -873,18 +873,15 @@ Table_sptr StoredGridForecastQueryHandler::extract_forecast(Query& wfsQuery) con
         {
           std::string producerName = *it;
 
-          std::vector < std::string > pnameList;
-          std::vector < std::string > geometryIdList;
-          std::vector < std::string > levelIdList;
-          std::vector < std::string > levelList;
+          Engine::Grid::ParameterDetails_vec parameters;
 
           std::string key = producerName + ";" + paramName;
 
-          gridEngine->getProducerNameAndLevelIdList(producerName,paramName,pnameList,geometryIdList,levelIdList,levelList);
+          gridEngine->getParameterDetails(producerName,paramName,parameters);
 
-          size_t len = pnameList.size();
-          if (len > 0  &&  strcasecmp(pnameList[0].c_str(),key.c_str()) != 0)
-            name = paramName + ":" + pnameList[0] + ":" + geometryIdList[0] + ":" + levelIdList[0] + ":" + levelList[0];
+          size_t len = parameters.size();
+          if (len > 0  &&  strcasecmp(parameters[0].mProducerName.c_str(),key.c_str()) != 0)
+            name = paramName + ":" + parameters[0].mProducerName + ":" + parameters[0].mGeometryId + ":" + parameters[0].mLevelId[0] + ":" + parameters[0].mLevel[0] + ":" + parameters[0].mForecastType[0] + ":" + parameters[0].mForecastNumber[0];
           else
             name = paramName;
         }

@@ -640,42 +640,43 @@ void bw::StoredContourQueryHandler::query_gridEngine(
     }
 
 
-    std::vector < std::string > pnameList;
-    std::vector < std::string > geometryIdList;
-    std::vector < std::string > levelIdList;
-    std::vector < std::string > levelList;
+    Engine::Grid::ParameterDetails_vec parameters;
 
     std::string key = producer + ";" + name;
 
-    itsGridEngine->getProducerNameAndLevelIdList(producer,name,pnameList,geometryIdList,levelIdList,levelList);
+    itsGridEngine->getParameterDetails(producer,name,parameters);
 
     std::string prod;
     std::string geomId;
     std::string level;
     std::string levelId;
+    std::string forecastType;
+    std::string forecastNumber;
 
-    size_t len = pnameList.size();
-    if (len > 0  &&  strcasecmp(pnameList[0].c_str(),key.c_str()) != 0)
+    size_t len = parameters.size();
+    if (len > 0  &&  strcasecmp(parameters[0].mProducerName.c_str(),key.c_str()) != 0)
     {
       for (size_t t = 0; t < len; t++)
       {
-        if (levelList[t] > "")
-        {
-          level = levelList[t];
-        }
+        if (parameters[t].mLevelId > "")
+          levelId = parameters[t].mLevelId;
 
-        if (levelIdList[t] > "")
-        {
-          levelId = levelIdList[t];
-        }
+        if (parameters[t].mLevel > "")
+          level = parameters[t].mLevel;
 
-        if (geometryIdList[t] > "")
+        if (parameters[t].mForecastType > "")
+          forecastType = parameters[t].mForecastType;
+
+        if (parameters[t].mForecastNumber > "")
+          forecastNumber = parameters[t].mForecastNumber;
+
+        if (parameters[t].mGeometryId > "")
         {
-          prod = pnameList[t];
-          geomId = geometryIdList[t];
+          prod = parameters[t].mProducerName;
+          geomId = parameters[t].mGeometryId;
         }
       }
-      std::string param = name + ":" + prod + ":" + geomId + ":" + levelId + ":" + level;
+      std::string param = name + ":" + prod + ":" + geomId + ":" + levelId + ":" + level+ ":" + forecastType + ":" + forecastNumber;
       attributeList.addAttribute("param",param);
     }
     else
