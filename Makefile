@@ -1,5 +1,5 @@
 SUBNAME = wfs
-SPEC = smartmet-plugin-$(SUBNAME)
+SPEC = smartmet-plugin-grib$(SUBNAME)
 INCDIR = smartmet/plugins/$(SUBNAME)
 TOP = $(shell pwd)
 
