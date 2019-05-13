@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.5.6
+Version: 19.5.13
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Mon May 13 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.5.13-1.fmi
+- Make config param geoserverConnStr optional
+
 * Mon May  6 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.5.6-1.fmi
 - Plugin reload support (BRAINSTORM-1030)
 
