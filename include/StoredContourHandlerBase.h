@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PluginData.h"
+#include "PluginImpl.h"
 #include "StoredContourQueryStructs.h"
 #include "StoredQueryConfig.h"
 #include "StoredQueryHandlerBase.h"
@@ -35,7 +35,7 @@ class StoredContourQueryHandler : public StoredQueryHandlerBase,
  public:
   StoredContourQueryHandler(SmartMet::Spine::Reactor* reactor,
                             boost::shared_ptr<StoredQueryConfig> config,
-                            PluginData& plugin_data,
+                            PluginImpl& plugin_impl,
                             boost::optional<std::string> template_file_name);
   virtual ~StoredContourQueryHandler();
   virtual void query(const StoredQuery& query,

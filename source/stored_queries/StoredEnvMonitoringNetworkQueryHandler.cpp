@@ -28,7 +28,7 @@ const char* P_AUTHORITY_DOMAIN = "authorityDomain";
 bw::StoredEnvMonitoringNetworkQueryHandler::StoredEnvMonitoringNetworkQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : bw::SupportsExtraHandlerParams(config),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -196,7 +196,7 @@ void bw::StoredEnvMonitoringNetworkQueryHandler::query(const StoredQuery& query,
     dump_named_params(params, hash["named_parameters"]);
     hash["authorityDomain"] = authorityDomain;
     hash["responseTimestamp"] =
-        boost::posix_time::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+        boost::posix_time::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
     hash["queryId"] = query.get_query_id();
 
     // Container with the data fetched from obsengine.
@@ -323,7 +323,7 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_stored_env_monitoring_network_handler_create(SmartMet::Spine::Reactor* reactor,
                                                  boost::shared_ptr<StoredQueryConfig> config,
-                                                 PluginData& plugin_data,
+                                                 PluginImpl& plugin_data,
                                                  boost::optional<std::string> template_file_name)
 {
   try

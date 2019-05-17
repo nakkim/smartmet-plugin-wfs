@@ -29,7 +29,7 @@ const char* P_RETURN_ONLY_LATEST = "returnOnlyLatest";
 bw::StoredAviationObservationQueryHandler::StoredAviationObservationQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : bw::SupportsExtraHandlerParams(config),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -113,7 +113,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
       params.get<std::string>(P_ICAO_CODE, std::back_inserter(icaoCodeVector));
 
       const char* DATA_CRS_NAME = "urn:ogc:def:crs:EPSG::4326";
-      SmartMet::Engine::Gis::CRSRegistry& crs_registry = plugin_data.get_crs_registry();
+      SmartMet::Engine::Gis::CRSRegistry& crs_registry = plugin_impl.get_crs_registry();
 
       // Default output CRS.
       const std::string crs = DATA_CRS_NAME;
@@ -353,7 +353,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
       hash["numMatched"] = s_numMatched;
 
       hash["responseTimestamp"] =
-          Fmi::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+          Fmi::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
       hash["queryId"] = query.get_query_id();
 
       hash["projSrsDim"] = (show_height ? 3 : 2);
@@ -398,7 +398,7 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_stored_aviation_observation_handler_create(SmartMet::Spine::Reactor* reactor,
                                                boost::shared_ptr<StoredQueryConfig> config,
-                                               PluginData& plugin_data,
+                                               PluginImpl& plugin_data,
                                                boost::optional<std::string> template_file_name)
 {
   try

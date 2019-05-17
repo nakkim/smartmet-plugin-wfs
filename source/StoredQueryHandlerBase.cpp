@@ -20,14 +20,14 @@ namespace WFS
 {
 StoredQueryHandlerBase::StoredQueryHandlerBase(SmartMet::Spine::Reactor* reactor,
                                                boost::shared_ptr<StoredQueryConfig> config,
-                                               PluginData& plugin_data,
+                                               PluginImpl& plugin_impl,
                                                boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config),
       reactor(reactor),
       config(config),
       template_file(template_file_name),
       hidden(false),
-      plugin_data(plugin_data)
+      plugin_impl(plugin_impl)
 {
   try
   {
@@ -38,7 +38,7 @@ StoredQueryHandlerBase::StoredQueryHandlerBase(SmartMet::Spine::Reactor* reactor
     {
       BOOST_FOREACH (const auto& tn, return_types)
       {
-        plugin_data.get_capabilities().register_feature_use(tn);
+        plugin_impl.get_capabilities().register_feature_use(tn);
       }
     }
   }
@@ -138,7 +138,7 @@ const StoredQueryMap& StoredQueryHandlerBase::get_stored_query_map() const
 {
   try
   {
-    return plugin_data.get_stored_query_map();
+    return plugin_impl.get_stored_query_map();
   }
   catch (...)
   {
@@ -153,13 +153,13 @@ boost::shared_ptr<Fmi::TemplateFormatter> StoredQueryHandlerBase::get_formatter(
   {
     if (debug_format)
     {
-      return plugin_data.get_ctpp_dump_formatter();
+      return plugin_impl.get_ctpp_dump_formatter();
     }
     else
     {
       if (!template_file)
         throw Spine::Exception(BCP, "Template formatter not set for stored query!");
-      return plugin_data.get_stored_query_formatter(*template_file);
+      return plugin_impl.get_stored_query_formatter(*template_file);
     }
   }
   catch (...)

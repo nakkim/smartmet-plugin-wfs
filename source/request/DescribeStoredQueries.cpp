@@ -27,15 +27,15 @@ struct XmlNamespeceDef
 
 bw::Request::DescribeStoredQueries::DescribeStoredQueries(const std::string& language,
                                                           const std::vector<std::string>& ids,
-                                                          const bw::PluginData& plugin_data)
-    : RequestBase(language), plugin_data(plugin_data)
+                                                          const bw::PluginImpl& plugin_impl)
+    : RequestBase(language), plugin_impl(plugin_impl)
 {
   try
   {
     if (ids.empty())
     {
       show_hidden = false;
-      this->ids = plugin_data.get_stored_query_map().get_handler_names();
+      this->ids = plugin_impl.get_stored_query_map().get_handler_names();
       // Ensure that stored query IDs are sorted if not specified explicitly.
       // This is mostly to get repeatable results when running tests.
       std::sort(this->ids.begin(), this->ids.end());
@@ -67,8 +67,8 @@ void bw::Request::DescribeStoredQueries::execute(std::ostream& output) const
     //        a possibilty.
     const std::string language = get_language();
 
-    const auto& stored_query_map = plugin_data.get_stored_query_map();
-    auto template_formatter = plugin_data.get_describe_stored_queries_formatter();
+    const auto& stored_query_map = plugin_impl.get_stored_query_map();
+    auto template_formatter = plugin_impl.get_describe_stored_queries_formatter();
 
     int cnt = 0;
     CTPP::CDT hash;
@@ -77,9 +77,9 @@ void bw::Request::DescribeStoredQueries::execute(std::ostream& output) const
     hash["fmi_apikey"] = fmi_apikey ? *fmi_apikey : "";
     hash["fmi_apikey_prefix"] = QueryBase::FMI_APIKEY_PREFIX_SUBST;
     auto hostname = get_hostname();
-    hash["hostname"] = hostname ? *hostname : plugin_data.get_fallback_hostname();
+    hash["hostname"] = hostname ? *hostname : plugin_impl.get_fallback_hostname();
     auto protocol = get_protocol();
-    hash["protocol"] = (protocol ? *protocol : plugin_data.get_fallback_protocol()) + "://";
+    hash["protocol"] = (protocol ? *protocol : plugin_impl.get_fallback_protocol()) + "://";
 
     BOOST_FOREACH (const auto& id, ids)
     {
@@ -110,7 +110,7 @@ void bw::Request::DescribeStoredQueries::execute(std::ostream& output) const
         for (std::size_t k = 0; k < return_types.size(); k++)
         {
           const std::string& name = return_types[k];
-          const auto* feature = plugin_data.get_capabilities().find_feature(name);
+          const auto* feature = plugin_impl.get_capabilities().find_feature(name);
           if (feature)
           {
             const std::string ns = feature->get_xml_namespace();
@@ -148,7 +148,7 @@ void bw::Request::DescribeStoredQueries::execute(std::ostream& output) const
         {
           const std::string& name = return_types[k];
           CTPP::CDT& return_type = sq["returnTypes"][k];
-          const auto* feature = plugin_data.get_capabilities().find_feature(name);
+          const auto* feature = plugin_impl.get_capabilities().find_feature(name);
           // No need to check for nullptr as it is done in earlier loop
           const std::string& xml_type = feature->get_xml_type();
           const std::string& ns = feature->get_xml_namespace();
@@ -184,11 +184,11 @@ boost::shared_ptr<bw::Request::DescribeStoredQueries>
 bw::Request::DescribeStoredQueries::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    const PluginData& plugin_data)
+    const PluginImpl& plugin_impl)
 {
   try
   {
-    assert((bool)plugin_data.get_describe_stored_queries_formatter());
+    assert((bool)plugin_impl.get_describe_stored_queries_formatter());
 
     bw::Request::DescribeStoredQueries::check_request_name(http_request, "DescribeStoredQueries");
     check_wfs_version(http_request);
@@ -209,7 +209,7 @@ bw::Request::DescribeStoredQueries::create_from_kvp(
       }
     }
 
-    result.reset(new bw::Request::DescribeStoredQueries(language, ids, plugin_data));
+    result.reset(new bw::Request::DescribeStoredQueries(language, ids, plugin_impl));
     return result;
   }
   catch (...)
@@ -221,11 +221,11 @@ bw::Request::DescribeStoredQueries::create_from_kvp(
 boost::shared_ptr<bw::Request::DescribeStoredQueries>
 bw::Request::DescribeStoredQueries::create_from_xml(const std::string& language,
                                                     const xercesc::DOMDocument& document,
-                                                    const PluginData& plugin_data)
+                                                    const PluginImpl& plugin_impl)
 {
   try
   {
-    assert((bool)plugin_data.get_describe_stored_queries_formatter());
+    assert((bool)plugin_impl.get_describe_stored_queries_formatter());
 
     check_request_name(document, "DescribeStoredQueries");
 
@@ -239,7 +239,7 @@ bw::Request::DescribeStoredQueries::create_from_xml(const std::string& language,
       ids.push_back(ba::trim_copy(bwx::extract_text(*elem)));
     }
 
-    result.reset(new bw::Request::DescribeStoredQueries(language, ids, plugin_data));
+    result.reset(new bw::Request::DescribeStoredQueries(language, ids, plugin_impl));
     result->check_mandatory_attributes(document);
     // FIXME: extract language from the request
     return result;
@@ -254,7 +254,7 @@ int bw::Request::DescribeStoredQueries::get_response_expires_seconds() const
 {
   try
   {
-    return plugin_data.get_config().getDefaultExpiresSeconds();
+    return plugin_impl.get_config().getDefaultExpiresSeconds();
   }
   catch (...)
   {

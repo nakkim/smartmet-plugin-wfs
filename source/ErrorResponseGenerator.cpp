@@ -1,6 +1,6 @@
 #include "ErrorResponseGenerator.h"
 #include "AdHocQuery.h"
-#include "PluginData.h"
+#include "PluginImpl.h"
 #include "StoredQuery.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -14,8 +14,8 @@ using SmartMet::Plugin::WFS::ErrorResponseGenerator;
 namespace ba = boost::algorithm;
 namespace pt = boost::posix_time;
 
-ErrorResponseGenerator::ErrorResponseGenerator(SmartMet::Plugin::WFS::PluginData& plugin_data)
-    : plugin_data(plugin_data)
+ErrorResponseGenerator::ErrorResponseGenerator(SmartMet::Plugin::WFS::PluginImpl& plugin_impl)
+    : plugin_impl(plugin_impl)
 {
 }
 
@@ -127,7 +127,7 @@ CTPP::CDT ErrorResponseGenerator::handle_std_exception(const std::exception& err
   try
   {
     std::ostringstream msg;
-    msg << pt::to_simple_string(plugin_data.get_local_time_stamp()) << " C++ exception '"
+    msg << pt::to_simple_string(plugin_impl.get_local_time_stamp()) << " C++ exception '"
         << Fmi::get_type_name(&err) << "': " << err.what();
 
     CTPP::CDT hash;
@@ -146,7 +146,7 @@ CTPP::CDT ErrorResponseGenerator::handle_unknown_exception(processing_phase_t ph
   try
   {
     std::ostringstream msg;
-    std::cerr << pt::to_simple_string(plugin_data.get_local_time_stamp()) << " error: "
+    std::cerr << pt::to_simple_string(plugin_impl.get_local_time_stamp()) << " error: "
               << "Unknown exception '" << Fmi::current_exception_type() << "'";
 
     CTPP::CDT hash;
@@ -281,7 +281,7 @@ std::string ErrorResponseGenerator::format_message(CTPP::CDT& hash)
     std::ostringstream output, log_messages;
     try
     {
-      auto exception_formatter = plugin_data.get_exception_formatter();
+      auto exception_formatter = plugin_impl.get_exception_formatter();
       exception_formatter->process(hash, output, log_messages);
     }
     catch (const std::exception& err)

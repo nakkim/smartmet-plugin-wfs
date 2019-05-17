@@ -26,7 +26,7 @@ const char* bw::StoredGeoserverQueryHandler::P_CRS = "crs";
 bw::StoredGeoserverQueryHandler::StoredGeoserverQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : bw::SupportsExtraHandlerParams(config),
       bw::StoredAtomQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -218,7 +218,7 @@ void bw::StoredGeoserverQueryHandler::update_parameters(
     double bb[4] = {
         requested_bbox.xMin, requested_bbox.yMin, requested_bbox.xMax, requested_bbox.yMax};
 
-    auto& db = *get_plugin_data().get_geo_server_database();
+    auto& db = *get_plugin_impl().get_geo_server_database();
     std::unique_ptr<bw::GeoServerDataIndex> gs_index;
     if (layer_db_table_name_format)
     {
@@ -379,7 +379,7 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_stored_geoserver_handler_create(SmartMet::Spine::Reactor* reactor,
                                     boost::shared_ptr<StoredQueryConfig> config,
-                                    PluginData& plugin_data,
+                                    PluginImpl& plugin_data,
                                     boost::optional<std::string> template_file_name)
 {
   try

@@ -25,7 +25,7 @@ namespace WFS
 StoredSoundingQueryHandler::StoredSoundingQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& pluginData,
+    PluginImpl& pluginData,
     boost::optional<std::string> templateFileName)
     : SupportsExtraHandlerParams(config),
       StoredQueryHandlerBase(reactor, config, pluginData, templateFileName),
@@ -92,7 +92,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
     auto missingValue = params.get_single<std::string>(P_MISSING_TEXT);
     const int debugLevel = get_config()->get_debug_level();
     const std::string crs = solveCrs(params);
-    SmartMet::Engine::Gis::CRSRegistry& crsRegistry = get_plugin_data().get_crs_registry();
+    SmartMet::Engine::Gis::CRSRegistry& crsRegistry = get_plugin_impl().get_crs_registry();
     auto transformation = crsRegistry.create_transformation(DATA_CRS_NAME, crs);
 
     bool showHeight = false;
@@ -150,7 +150,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
     CTPP::CDT hash;
     int numberMatched = 0;
 
-    boost::posix_time::ptime queryStartTime = get_plugin_data().get_time_stamp();
+    boost::posix_time::ptime queryStartTime = get_plugin_impl().get_time_stamp();
 
     // Execute query
     QueryResultShared dataContainer;
@@ -160,7 +160,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
 
     if (queryInitializationOK)
     {
-      boost::posix_time::ptime queryEndTime = get_plugin_data().get_time_stamp();
+      boost::posix_time::ptime queryEndTime = get_plugin_impl().get_time_stamp();
       if (debugLevel > 2)
         std::cerr << "Data query time delta: " << (queryEndTime - queryStartTime).total_seconds()
                   << " seconds\n";
@@ -440,14 +440,14 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
 
       if (debugLevel > 2)
       {
-        boost::posix_time::ptime xmlEndTime = get_plugin_data().get_time_stamp();
+        boost::posix_time::ptime xmlEndTime = get_plugin_impl().get_time_stamp();
         std::cerr << "Hash population time delta: " << (xmlEndTime - queryEndTime).total_seconds()
                   << " seconds\n";
       }
     }
 
     hash["responseTimestamp"] =
-        pt::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+        pt::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
     hash["fmi_apikey"] = QueryBase::FMI_APIKEY_SUBST;
     hash["fmi_apikey_prefix"] = QueryBase::FMI_APIKEY_PREFIX_SUBST;
     hash["hostname"] = QueryBase::HOSTNAME_SUBST;
@@ -456,12 +456,12 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
     hash["numberMatched"] = numberMatched;
     hash["numberReturned"] = numberMatched;
 
-    boost::posix_time::ptime outputFormatTime = get_plugin_data().get_time_stamp();
+    boost::posix_time::ptime outputFormatTime = get_plugin_impl().get_time_stamp();
     format_output(hash, output, query.get_use_debug_format());
 
     if (debugLevel > 2)
     {
-      boost::posix_time::ptime outputFormatTimeEnd = get_plugin_data().get_time_stamp();
+      boost::posix_time::ptime outputFormatTimeEnd = get_plugin_impl().get_time_stamp();
       std::cerr << "Output XML format time delta: "
                 << (outputFormatTimeEnd - outputFormatTime).total_seconds() << " seconds\n"
                 << "Total time delta: " << (outputFormatTimeEnd - queryStartTime).total_seconds()
@@ -877,7 +877,7 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfsStoredSoundingHandlerCreate(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& pluginData,
+    PluginImpl& pluginData,
     boost::optional<std::string> templateFileName)
 {
   try

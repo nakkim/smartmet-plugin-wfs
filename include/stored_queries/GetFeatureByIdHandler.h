@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PluginData.h"
+#include "PluginImpl.h"
 #include "ScalarParameterTemplate.h"
 #include "StoredQueryConfig.h"
 #include "StoredQueryHandlerBase.h"
@@ -20,7 +20,7 @@ class GetFeatureByIdHandler : public StoredQueryHandlerBase
  public:
   GetFeatureByIdHandler(SmartMet::Spine::Reactor* reactor,
                         boost::shared_ptr<StoredQueryConfig> config,
-                        PluginData& plugin_data);
+                        PluginImpl& plugin_impl);
 
   virtual ~GetFeatureByIdHandler();
 

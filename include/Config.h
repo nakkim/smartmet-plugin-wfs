@@ -61,11 +61,12 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   std::vector<boost::shared_ptr<WfsFeatureDef> > read_features_config(
       SmartMet::Engine::Gis::CRSRegistry& theCRSRegistry);
   const CapabilitiesConf& get_capabilities_config() const { return capabilities_conf; }
+  boost::optional<std::pair<std::string, std::string> > get_admin_credentials() const { return adminCred; }
 
   void read_typename_config(std::map<std::string, std::string>& typename_storedqry);
-
  private:
   void read_capabilities_config();
+  void read_admin_cred();
 
  private:
   std::string itsDefaultUrl;
@@ -85,6 +86,13 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   bool enable_configuration_polling;
   bool sq_restrictions;
   CapabilitiesConf capabilities_conf;
+
+  /**
+   *   @brief Admin user name and password if provided
+   *
+   *   Currently only used for reload request
+   */
+  boost::optional<std::pair<std::string, std::string> > adminCred;
 
 };  // class Config
 
