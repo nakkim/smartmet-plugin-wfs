@@ -44,7 +44,7 @@ const char* bw::StoredForecastQueryHandler::P_CRS = "crs";
 bw::StoredForecastQueryHandler::StoredForecastQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<bw::StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -163,13 +163,13 @@ void bw::StoredForecastQueryHandler::query(const StoredQuery& stored_query,
 
         const std::string crs = params.get_single<std::string>(P_CRS);
         auto transformation =
-            plugin_data.get_crs_registry().create_transformation("urn:ogc:def:crs:EPSG::4326", crs);
+            plugin_impl.get_crs_registry().create_transformation("urn:ogc:def:crs:EPSG::4326", crs);
         bool show_height = false;
         std::string proj_uri = "UNKNOWN";
         std::string proj_epoch_uri = "UNKNOWN";
-        plugin_data.get_crs_registry().get_attribute(crs, "showHeight", &show_height);
-        plugin_data.get_crs_registry().get_attribute(crs, "projUri", &proj_uri);
-        plugin_data.get_crs_registry().get_attribute(crs, "projEpochUri", &proj_epoch_uri);
+        plugin_impl.get_crs_registry().get_attribute(crs, "showHeight", &show_height);
+        plugin_impl.get_crs_registry().get_attribute(crs, "projUri", &proj_uri);
+        plugin_impl.get_crs_registry().get_attribute(crs, "projEpochUri", &proj_epoch_uri);
 
         query.result = extract_forecast(query);
         const std::size_t num_rows = query.result->rows().size();
@@ -200,7 +200,7 @@ void bw::StoredForecastQueryHandler::query(const StoredQuery& stored_query,
         hash["language"] = language;
 
         hash["responseTimestamp"] =
-            Fmi::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+            Fmi::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
         hash["numMatched"] = num_groups;
         hash["numReturned"] = num_groups;
         hash["numParam"] = query.last_data_ind - query.first_data_ind + 1;
@@ -923,13 +923,13 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_forecast_handler_create(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_impl,
     boost::optional<std::string> template_file_name)
 {
   try
   {
     StoredForecastQueryHandler* qh =
-        new StoredForecastQueryHandler(reactor, config, plugin_data, template_file_name);
+        new StoredForecastQueryHandler(reactor, config, plugin_impl, template_file_name);
     boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> result(qh);
     result->init_handler();
     return result;

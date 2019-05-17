@@ -40,7 +40,7 @@ const char *P_SHOW_OBSERVING_CAPABILITY = "showObservingCapability";
 bw::StoredEnvMonitoringFacilityQueryHandler::StoredEnvMonitoringFacilityQueryHandler(
     SmartMet::Spine::Reactor *reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData &plugin_data,
+    PluginImpl &plugin_data,
     boost::optional<std::string> template_file_name)
     : bw::SupportsExtraHandlerParams(config),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -182,7 +182,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query
 
     if (not validStations.empty())
     {
-      SmartMet::Engine::Gis::CRSRegistry &crs_registry = get_plugin_data().get_crs_registry();
+      SmartMet::Engine::Gis::CRSRegistry &crs_registry = get_plugin_impl().get_crs_registry();
 
       // Stations are bounded by..
       const std::string boundedByCRS = "EPSG:4258";
@@ -381,7 +381,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query
     hash["stationsMatched"] = stationsMatched;
     hash["stationsReturned"] = stationsMatched;
     hash["responseTimestamp"] =
-        boost::posix_time::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+        boost::posix_time::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
     hash["queryId"] = query.get_query_id();
     hash["fmi_apikey"] = QueryBase::FMI_APIKEY_SUBST;
     hash["fmi_apikey_prefix"] = bw::QueryBase::FMI_APIKEY_PREFIX_SUBST;
@@ -917,7 +917,7 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_stored_env_monitoring_facility_handler_create(SmartMet::Spine::Reactor *reactor,
                                                   boost::shared_ptr<StoredQueryConfig> config,
-                                                  PluginData &plugin_data,
+                                                  PluginImpl &plugin_data,
                                                   boost::optional<std::string> template_file_name)
 {
   try

@@ -23,7 +23,7 @@ const char* P_SMOOTHING_SIZE = "smoothing_size";
 bw::StoredContourQueryHandler::StoredContourQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<bw::StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -346,7 +346,7 @@ void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
 
     std::vector<ContourQueryResultPtr> query_results(processQuery(*query_param));
 
-    SmartMet::Engine::Gis::CRSRegistry& crsRegistry = plugin_data.get_crs_registry();
+    SmartMet::Engine::Gis::CRSRegistry& crsRegistry = plugin_impl.get_crs_registry();
 
     parseQueryResults(query_results,
                       query_param->bbox,
@@ -596,10 +596,10 @@ void bw::StoredContourQueryHandler::parseQueryResults(
     }
 
     std::string proj_uri = "UNKNOWN";
-    plugin_data.get_crs_registry().get_attribute(requestedCRS, "projUri", &proj_uri);
+    plugin_impl.get_crs_registry().get_attribute(requestedCRS, "projUri", &proj_uri);
 
     boost::local_time::time_zone_ptr tzp = get_time_zone(tz_name);
-    std::string runtime_timestamp = format_local_time(plugin_data.get_time_stamp(), tzp);
+    std::string runtime_timestamp = format_local_time(plugin_impl.get_time_stamp(), tzp);
     std::string origintime_timestamp = format_local_time(origintime, tzp);
     std::string modificationtime_timestamp = format_local_time(modificationtime, tzp);
 

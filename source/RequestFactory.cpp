@@ -1,4 +1,5 @@
 #include "RequestFactory.h"
+#include "PluginImpl.h"
 #include "WfsException.h"
 #include <boost/algorithm/string.hpp>
 #include <macgyver/StringConversion.h>
@@ -10,7 +11,7 @@
 namespace bw = SmartMet::Plugin::WFS;
 namespace ba = boost::algorithm;
 
-bw::RequestFactory::RequestFactory(PluginData& plugin_data) : plugin_data(plugin_data) {}
+bw::RequestFactory::RequestFactory(PluginImpl& plugin_impl) : plugin_impl(plugin_impl) {}
 
 bw::RequestFactory::~RequestFactory() {}
 
@@ -41,7 +42,7 @@ bw::RequestFactory& bw::RequestFactory::register_request_type(const std::string&
 
     if (feature_id != "")
     {
-      plugin_data.get_capabilities().register_operation(feature_id);
+      plugin_impl.get_capabilities().register_operation(feature_id);
     }
 
     return *this;

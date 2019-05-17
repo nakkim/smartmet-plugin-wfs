@@ -56,7 +56,7 @@ const char* DATA_CRS_NAME = "urn:ogc:def:crs:EPSG::4326";
 StoredQEDownloadQueryHandler::StoredQEDownloadQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
       StoredAtomQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -775,7 +775,7 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_stored_qe_download_handler_create(SmartMet::Spine::Reactor* reactor,
                                       boost::shared_ptr<StoredQueryConfig> config,
-                                      PluginData& plugin_data,
+                                      PluginImpl& plugin_data,
                                       boost::optional<std::string> template_file_name)
 {
   try

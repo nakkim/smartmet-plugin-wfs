@@ -19,7 +19,7 @@ const char* bw::StoredFlashQueryHandler::P_CRS = "crs";
 bw::StoredFlashQueryHandler::StoredFlashQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
       StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -267,7 +267,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
       hash["language"] = language;
 
       hash["responseTimestamp"] =
-          Fmi::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+          Fmi::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
       hash["queryNum"] = query.get_query_id();
 
       hash["featureId"] = feature_id.get_id();
@@ -421,7 +421,7 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_flash_handler_create(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 {
   try

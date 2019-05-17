@@ -38,9 +38,10 @@ static void decrease(boost::optional<int>& value)
 }
 
 GetPropertyValue::GetPropertyValue(const std::string& language,
-                                   QueryResponseCache& query_cache,
-                                   const PluginData& plugin_data)
-    : bw::RequestBase(language), query_cache(query_cache), plugin_data(plugin_data)
+                                   PluginImpl& plugin_impl)
+    : bw::RequestBase(language)
+    , query_cache(plugin_impl.get_query_cache())
+    , plugin_impl(plugin_impl)
 {
 }
 
@@ -142,7 +143,7 @@ void GetPropertyValue::finalize(boost::shared_ptr<xercesc::DOMDocument> result,
     if (not is_timestamp_set)
     {
       namespace pt = boost::posix_time;
-      const std::string tm = Fmi::to_iso_extended_string(plugin_data.get_time_stamp()) + "Z";
+      const std::string tm = Fmi::to_iso_extended_string(plugin_impl.get_time_stamp()) + "Z";
       bwx::set_attr(*result_root, TIMESTAMP, tm);
     }
 
@@ -449,8 +450,7 @@ bool GetPropertyValue::copy_timestamp(const xercesc::DOMElement* source,
 boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    const PluginData& plugin_data,
-    QueryResponseCache& query_cache)
+    PluginImpl& plugin_impl)
 {
   try
   {
@@ -479,9 +479,9 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_kvp(
       throw exception;
     }
 
-    const StoredQueryMap& stored_query_map = plugin_data.get_stored_query_map();
+    const StoredQueryMap& stored_query_map = plugin_impl.get_stored_query_map();
     boost::shared_ptr<GetPropertyValue> result(
-        new GetPropertyValue(language, query_cache, plugin_data));
+       new GetPropertyValue(language, plugin_impl));
     result->spp.read_from_kvp(http_request);
     result->xpath_string = *value_reference;
 
@@ -497,7 +497,7 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_kvp(
     else
     {
       const TypeNameStoredQueryMap& typename_stored_query_map =
-          plugin_data.get_typename_stored_query_map();
+          plugin_impl.get_typename_stored_query_map();
       bw::AdHocQuery::create_from_kvp(language,
                                       result->spp,
                                       http_request,
@@ -518,18 +518,17 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_kvp(
 boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_xml(
     const std::string& language,
     const xercesc::DOMDocument& document,
-    const PluginData& plugin_data,
-    QueryResponseCache& query_cache)
+    PluginImpl& plugin_impl)
 {
   try
   {
-    const StoredQueryMap& stored_query_map = plugin_data.get_stored_query_map();
+    const StoredQueryMap& stored_query_map = plugin_impl.get_stored_query_map();
     bw::Request::GetPropertyValue::check_request_name(document, "GetPropertyValue");
     const xercesc::DOMElement* root = get_xml_root(document);
 
     const char* method_name = "SmartMet::Plugin::WFS::Request::GetPropertyValue::create_from_xml";
     boost::shared_ptr<GetPropertyValue> result(
-        new GetPropertyValue(language, query_cache, plugin_data));
+        new GetPropertyValue(language, plugin_impl));
 
     result->check_mandatory_attributes(document);
     result->spp.read_from_xml(*root);
@@ -551,7 +550,7 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_xml(
       if (name == "Query")
       {
         const TypeNameStoredQueryMap& typename_stored_query_map =
-            plugin_data.get_typename_stored_query_map();
+            plugin_impl.get_typename_stored_query_map();
         bw::AdHocQuery::create_from_xml(language,
                                         result->spp,
                                         *child,
@@ -680,7 +679,7 @@ int GetPropertyValue::get_response_expires_seconds() const
 
     // return default value if no any query present.
     return (smallest_value >= 0) ? smallest_value
-                                 : plugin_data.get_config().getDefaultExpiresSeconds();
+                                 : plugin_impl.get_config().getDefaultExpiresSeconds();
   }
   catch (...)
   {

@@ -50,7 +50,7 @@ Config::Config(const string& configfile)
     sq_config_dirs = get_mandatory_path_array("storedQueryConfigDirs", 1);
     const std::string sq_template_dir = get_mandatory_path("storedQueryTemplateDir");
     getFeatureById = get_optional_config_param<std::string>("getFeatureById", c_get_feature_by_id);
-    geoserver_conn_str = get_mandatory_config_param<std::string>("geoserverConnStr");
+    geoserver_conn_str = get_optional_config_param<std::string>("geoserverConnStr", "");
     default_locale = get_optional_config_param<std::string>("locale", guess_default_locale());
     cache_size = get_optional_config_param<int>("cacheSize", 100);
     cache_time_constant = get_optional_config_param<int>("cacheTimeConstant", 60);
@@ -115,6 +115,8 @@ Config::Config(const string& configfile)
 
     // Verify that stored queries template directory exists
     template_directory = sq_template_dir;
+
+    read_admin_cred();
   }
   catch (...)
   {
@@ -243,6 +245,22 @@ void Config::read_capabilities_config()
     }
   }
   catch (...)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+void Config::read_admin_cred()
+{
+  try {
+    const char* setting_name = "admin";
+    if (get_config().exists(setting_name)) {
+      libconfig::Setting& s1 = assert_is_group(get_config().lookup(setting_name));
+      const std::string user = get_optional_config_param<std::string>(s1, "admin", "admin");
+      const std::string password = get_mandatory_config_param<std::string>(s1, "password");
+      adminCred = std::make_pair(user, password);
+    }
+  } catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
@@ -412,7 +430,7 @@ dump</a></td>
 <td>mandatory</td>
 <td>Specifies CTPP2 template to use for generation of GetCapabilities response. The file is searched
 in directory specified in parameter @b storedQueryTemplateDir unless absolute path provided. Read in
-SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
+SmartMet::Plugin::WFS::PluginImpl::create_template_formatters</td>
 </tr>
 
 <tr>
@@ -422,7 +440,7 @@ SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
 <td>Specifies CTPP2 template to use for generation of ListStoredQueries response. The file is
 searched in directory specified in parameter @b storedQueryTemplateDir unless absolute path
 provided. Read in
-SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
+SmartMet::Plugin::WFS::PluginImpl::create_template_formatters</td>
 </tr>
 
 <tr>
@@ -432,7 +450,7 @@ SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
 <td>Specifies CTPP2 template to use for generation of DescribeStoredQueries response. The file is
 searched in directory specified in parameter @b storedQueryTemplateDir unless absolute path
 provided. Read in
-SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
+SmartMet::Plugin::WFS::PluginImpl::create_template_formatters</td>
 </tr>
 
 <tr>
@@ -442,7 +460,7 @@ SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
 <td>Specifies CTPP2 template to use for generation of DescribeFeatureType response. The file is
 searched in directory specified in parameter @b storedQueryTemplateDir unless absolute path
 provided. Read in
-SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
+SmartMet::Plugin::WFS::PluginImpl::create_template_formatters</td>
 </tr>
 
 <tr>
@@ -451,7 +469,7 @@ SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
 <td>mandatory</td>
 <td>Specifies CTPP2 template to use for generation of error report. The file is searched in
 directory specified in parameter @b storedQueryTemplateDir unless absolute path provided. Read in
-SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
+SmartMet::Plugin::WFS::PluginImpl::create_template_formatters</td>
 </tr>
 
 <tr>
@@ -460,7 +478,7 @@ SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
 <td>mandatory</td>
 <td>Specifies CTPP2 template to use for generation of debug format response. The file is searched in
 directory specified in parameter @b storedQueryTemplateDir unless absolute path provided. Read in
-SmartMet::Plugin::WFS::PluginData::create_template_formatters</td>
+SmartMet::Plugin::WFS::PluginImpl::create_template_formatters</td>
 </tr>
 
 <tr>
@@ -472,7 +490,7 @@ when schema
     resolution using locked XML grammar pool fails. Providing this parameter can be useful if XML
 output
     validation is enabled. It should not be needed for validating incoming requests. Read in
-    SmartMet::Plugin::WFS::PluginData::create_xml_parser</td>
+    SmartMet::Plugin::WFS::PluginImpl::create_xml_parser</td>
 </tr>
 
 <tr>
@@ -484,7 +502,7 @@ initialization
     of stored query handlers. Plugin is immediately ready to handle incoming requests if this
 feature
     is enabled, but stored query handlers become available when they are initialized. Read in
-    SmartMet::Plugin::WFS::PluginData::create_stored_query_map</td>
+    SmartMet::Plugin::WFS::PluginImpl::create_stored_query_map</td>
 </tr>
 
 <tr>
@@ -496,6 +514,17 @@ its effect
     to a stored query depends on an implementation of the stored query handler class. Detailed
 effect may
     explained in the handler class documentation.</td>
+</tr>
+
+<tr>
+<td>admin</td>
+<td>config group</td>
+<td>optional</td>
+<td>Specifies authentication settings (and possibly other parameters in the future) for performing
+administrative operations. Currently only such operation is WFS plugin configuration reloading.
+This group consists of parameters:
+- admin - admin user name (optional, default is 'admin')
+- password - password (mandatory)
 </tr>
 
 </table>

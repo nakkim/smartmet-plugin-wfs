@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PluginData.h"
+#include "PluginImpl.h"
 #include "StoredQueryConfig.h"
 #include "StoredQueryHandlerBase.h"
 #include <boost/optional.hpp>
@@ -12,7 +12,7 @@ namespace Plugin
 {
 namespace WFS
 {
-class PluginData;
+class PluginImpl;
 
 class StoredQueryHandlerFactoryDef
 {
@@ -20,7 +20,7 @@ class StoredQueryHandlerFactoryDef
   typedef boost::shared_ptr<StoredQueryHandlerBase> (*factory_t)(
       SmartMet::Spine::Reactor* reactor,
       boost::shared_ptr<StoredQueryConfig> config,
-      PluginData& plugin_data,
+      PluginImpl& plugin_impl,
       boost::optional<std::string> template_file_name);
 
  private:
@@ -36,7 +36,7 @@ class StoredQueryHandlerFactoryDef
       const std::string& symbol_name,
       SmartMet::Spine::Reactor* reactor,
       boost::shared_ptr<StoredQueryConfig> config,
-      PluginData& plugin_data,
+      PluginImpl& plugin_impl,
       boost::optional<std::string> template_file_name);
 
  private:

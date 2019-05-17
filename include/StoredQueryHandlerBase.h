@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PluginData.h"
+#include "PluginImpl.h"
 #include "StandardPresentationParameters.h"
 #include "StoredQuery.h"
 #include "StoredQueryConfig.h"
@@ -30,7 +30,7 @@ namespace Plugin
 {
 namespace WFS
 {
-class PluginData;
+class PluginImpl;
 class StoredQuery;
 class StoredQueryMap;
 
@@ -43,12 +43,12 @@ class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
   bool hidden;
 
  protected:
-  const PluginData& plugin_data;
+  const PluginImpl& plugin_impl;
 
  public:
   StoredQueryHandlerBase(SmartMet::Spine::Reactor* reactor,
                          boost::shared_ptr<StoredQueryConfig> config,
-                         PluginData& plugin_data,
+                         PluginImpl& plugin_impl,
                          boost::optional<std::string> template_file_name);
 
   virtual ~StoredQueryHandlerBase();
@@ -103,7 +103,7 @@ class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
   boost::shared_ptr<Fmi::TemplateFormatter> get_formatter(bool debug_format) const;
 
   inline SmartMet::Spine::Reactor* get_reactor() const { return reactor; }
-  inline const PluginData& get_plugin_data() const { return plugin_data; }
+  inline const PluginImpl& get_plugin_impl() const { return plugin_impl; }
   void format_output(CTPP::CDT& hash, std::ostream& output, bool debug_format) const;
 
   static void set_2D_coord(

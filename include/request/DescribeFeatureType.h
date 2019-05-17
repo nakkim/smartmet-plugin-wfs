@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PluginData.h"
+#include "PluginImpl.h"
 #include "RequestBase.h"
 #include <boost/shared_ptr.hpp>
 #include <smartmet/spine/HTTP.h>
@@ -24,7 +24,7 @@ class DescribeFeatureType : public RequestBase
  public:
   DescribeFeatureType(const std::string& language,
                       const std::vector<std::pair<std::string, std::string> >& qualified_names,
-                      const PluginData& plugin_data);
+                      const PluginImpl& plugin_impl);
 
   virtual ~DescribeFeatureType();
 
@@ -37,18 +37,18 @@ class DescribeFeatureType : public RequestBase
   static boost::shared_ptr<DescribeFeatureType> create_from_kvp(
       const std::string& language,
       const SmartMet::Spine::HTTP::Request& http_request,
-      const PluginData& plugin_data);
+      const PluginImpl& plugin_impl);
 
   static boost::shared_ptr<DescribeFeatureType> create_from_xml(
       const std::string& language,
       const xercesc::DOMDocument& document,
-      const PluginData& plugin_data);
+      const PluginImpl& plugin_impl);
 
   virtual int get_response_expires_seconds() const;
 
  private:
   std::vector<std::pair<std::string, std::string> > type_names;
-  const PluginData& plugin_data;
+  const PluginImpl& plugin_impl;
 };
 
 }  // namespace Request

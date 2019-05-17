@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PluginData.h"
+#include "PluginImpl.h"
 #include "QueryBase.h"
 #include "RequestBase.h"
 #include "StandardPresentationParameters.h"
@@ -24,8 +24,7 @@ class GetPropertyValue : public RequestBase
 {
  private:
   GetPropertyValue(const std::string& language,
-                   QueryResponseCache& query_cache,
-                   const PluginData& plugin_data);
+                   PluginImpl& plugin_impl);
 
  public:
   virtual ~GetPropertyValue();
@@ -44,27 +43,25 @@ class GetPropertyValue : public RequestBase
    *
    *   @param language output language
    *   @param http_request parsed http get request
-   *   @param plugin_data plugin data for spp, map etc.
+   *   @param plugin_impl plugin data for spp, map etc.
    *   @param query_cache cached stored query responses.
    */
   static boost::shared_ptr<GetPropertyValue> create_from_kvp(
       const std::string& language,
       const SmartMet::Spine::HTTP::Request& http_request,
-      const PluginData& plugin_data,
-      QueryResponseCache& query_cache);
+      PluginImpl& plugin_impl);
 
   /**
    *   @brief Create request from http GET request
    *
    *   @param language output language
    *   @param document request parsed from http-post-request
-   *   @param plugin_data plugin data for spp, map etc.
+   *   @param plugin_impl plugin data for spp, map etc.
    *   @param query_cache cached stored query responses.
    */
   static boost::shared_ptr<GetPropertyValue> create_from_xml(const std::string& language,
                                                              const xercesc::DOMDocument& document,
-                                                             const PluginData& plugin_data,
-                                                             QueryResponseCache& query_cache);
+                                                             PluginImpl& plugin_impl);
 
   /**
    *   @brief Get response expiration time
@@ -272,7 +269,7 @@ class GetPropertyValue : public RequestBase
   std::string xpath_string;
   StandardPresentationParameters spp;
   QueryResponseCache& query_cache;
-  const PluginData& plugin_data;
+  PluginImpl& plugin_impl;
   bool fast;
 };
 

@@ -17,8 +17,8 @@ namespace ba = boost::algorithm;
 bw::Request::DescribeFeatureType::DescribeFeatureType(
     const std::string& language,
     const std::vector<std::pair<std::string, std::string> >& type_names,
-    const PluginData& plugin_data)
-    : RequestBase(language), type_names(type_names), plugin_data(plugin_data)
+    const PluginImpl& plugin_impl)
+    : RequestBase(language), type_names(type_names), plugin_impl(plugin_impl)
 {
 }
 
@@ -33,14 +33,14 @@ void bw::Request::DescribeFeatureType::execute(std::ostream& output) const
 {
   try
   {
-    auto template_formatter = plugin_data.get_feature_type_formatter();
+    auto template_formatter = plugin_impl.get_feature_type_formatter();
     std::map<std::string, boost::optional<std::string> > namespaces;
-    const auto& features = plugin_data.get_capabilities().get_features();
+    const auto& features = plugin_impl.get_capabilities().get_features();
 
     if (type_names.empty())
     {
       // No type names specified: collect all types from WfsCapabilities object
-      BOOST_FOREACH (const auto& name, plugin_data.get_capabilities().get_used_features())
+      BOOST_FOREACH (const auto& name, plugin_impl.get_capabilities().get_used_features())
       {
         auto feature = features.at(name);
         const std::string& ns = feature->get_xml_namespace();
@@ -59,7 +59,7 @@ void bw::Request::DescribeFeatureType::execute(std::ostream& output) const
         const std::string& name = item.second;
         const std::string& ns = item.first;
         // FIXME: optimize loop if needed
-        const auto& used_names = plugin_data.get_capabilities().get_used_features();
+        const auto& used_names = plugin_impl.get_capabilities().get_used_features();
         for (auto it = used_names.begin(); not found and it != used_names.end(); ++it)
         {
           auto feature = features.at(*it);
@@ -88,9 +88,9 @@ void bw::Request::DescribeFeatureType::execute(std::ostream& output) const
     auto fmi_apikey = get_fmi_apikey();
     hash["fmi_apikey"] = fmi_apikey ? *fmi_apikey : "";
     auto hostname = get_hostname();
-    hash["hostname"] = hostname ? *hostname : plugin_data.get_fallback_hostname();
+    hash["hostname"] = hostname ? *hostname : plugin_impl.get_fallback_hostname();
     auto protocol = get_protocol();
-    hash["protocol"] = (protocol ? *protocol : plugin_data.get_fallback_protocol()) + "://";
+    hash["protocol"] = (protocol ? *protocol : plugin_impl.get_fallback_protocol()) + "://";
 
     int ind = 0;
     for (auto it = namespaces.begin(); it != namespaces.end(); ++it)
@@ -145,11 +145,11 @@ boost::shared_ptr<bw::Request::DescribeFeatureType>
 bw::Request::DescribeFeatureType::create_from_kvp(
     const std::string& language,
     const SmartMet::Spine::HTTP::Request& http_request,
-    const PluginData& plugin_data)
+    const PluginImpl& plugin_impl)
 {
   try
   {
-    assert((bool)plugin_data.get_feature_type_formatter());
+    assert((bool)plugin_impl.get_feature_type_formatter());
 
     check_request_name(http_request, "DescribeFeatureType");
     check_wfs_version(http_request);
@@ -185,7 +185,7 @@ bw::Request::DescribeFeatureType::create_from_kvp(
     }
 
     boost::shared_ptr<bw::Request::DescribeFeatureType> result;
-    result.reset(new bw::Request::DescribeFeatureType(language, type_names, plugin_data));
+    result.reset(new bw::Request::DescribeFeatureType(language, type_names, plugin_impl));
     return result;
   }
   catch (...)
@@ -197,11 +197,11 @@ bw::Request::DescribeFeatureType::create_from_kvp(
 boost::shared_ptr<bw::Request::DescribeFeatureType>
 bw::Request::DescribeFeatureType::create_from_xml(const std::string& language,
                                                   const xercesc::DOMDocument& document,
-                                                  const PluginData& plugin_data)
+                                                  const PluginImpl& plugin_impl)
 {
   try
   {
-    assert((bool)plugin_data.get_feature_type_formatter());
+    assert((bool)plugin_impl.get_feature_type_formatter());
 
     check_request_name(document, "DescribeFeatureType");
     boost::shared_ptr<bw::Request::DescribeFeatureType> result;
@@ -241,7 +241,7 @@ bw::Request::DescribeFeatureType::create_from_xml(const std::string& language,
       type_names.push_back(std::make_pair(Xml::to_string(x_uri), name));
     }
 
-    result.reset(new bw::Request::DescribeFeatureType(language, type_names, plugin_data));
+    result.reset(new bw::Request::DescribeFeatureType(language, type_names, plugin_impl));
     result->check_mandatory_attributes(document);
     return result;
   }
@@ -255,7 +255,7 @@ int bw::Request::DescribeFeatureType::get_response_expires_seconds() const
 {
   try
   {
-    return plugin_data.get_config().getDefaultExpiresSeconds();
+    return plugin_impl.get_config().getDefaultExpiresSeconds();
   }
   catch (...)
   {

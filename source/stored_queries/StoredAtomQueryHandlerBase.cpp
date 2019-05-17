@@ -17,7 +17,7 @@ using SmartMet::Spine::Value;
 bw::StoredAtomQueryHandlerBase::StoredAtomQueryHandlerBase(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : bw::SupportsExtraHandlerParams(config, true),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name)
@@ -56,7 +56,7 @@ void bw::StoredAtomQueryHandlerBase::query(const bw::StoredQuery& query,
     CTPP::CDT hash;
     hash["language"] = language;
     hash["responseTimestamp"] =
-        Fmi::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+        Fmi::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
 
     const RequestParameterMap& req_param_map = query.get_param_map();
     std::vector<boost::shared_ptr<RequestParameterMap> > param_sets;
@@ -175,7 +175,7 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_stored_atom_handler_create(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 {
   try

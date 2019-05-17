@@ -47,7 +47,7 @@ using boost::str;
 
 StoredObsQueryHandler::StoredObsQueryHandler(SmartMet::Spine::Reactor* reactor,
                                              boost::shared_ptr<StoredQueryConfig> config,
-                                             PluginData& plugin_data,
+                                             PluginImpl& plugin_data,
                                              boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
       StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -509,7 +509,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       }
 
       hash["responseTimestamp"] =
-          Fmi::to_iso_extended_string(get_plugin_data().get_time_stamp()) + "Z";
+          Fmi::to_iso_extended_string(get_plugin_impl().get_time_stamp()) + "Z";
       hash["numMatched"] = num_groups;
       hash["numReturned"] = num_groups;
       hash["numParam"] = param_names.size();
@@ -747,7 +747,7 @@ using namespace SmartMet::Plugin::WFS;
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_obs_handler_create(
     SmartMet::Spine::Reactor* reactor,
     boost::shared_ptr<StoredQueryConfig> config,
-    PluginData& plugin_data,
+    PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 {
   try
