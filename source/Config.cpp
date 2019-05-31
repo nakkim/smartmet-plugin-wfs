@@ -61,6 +61,8 @@ Config::Config(const string& configfile)
         get_optional_config_param<bool>("enableConfigurationPolling", false);
 
     sq_restrictions = get_optional_config_param<bool>("storedQueryRestrictions", true);
+    httpProxy = get_optional_config_param<std::string>("httpProxy", "");
+    noProxy = get_optional_config_param<std::string>("noProxy", "");
 
     std::cout << (SmartMet::Spine::log_time_str() + " [WFS] Using locale " + default_locale)
               << std::endl;
@@ -409,7 +411,37 @@ accepted.
     the response XML validates OK against XML schemas. Validate failures are reported
     but does not however prevent response to be sent to user. It is recommended
     not to enable this parameter for production use to avoid unnecessary
-    use of resources. Note that incoming XML requests are validated always</td>
+    use of resources. Note that incoming XML requests are validated always.
+    Schemas required for validation incoming XML requests must be present in
+    XML grammar dump (see @b xmlGrammarPoolDump)</td>
+</tr>
+
+<tr>
+<td>httpProxy</td>
+<td>string (URL)</td>
+<td>optional (default empty)</td>
+<td>Specifies HTTP/HTTPS proxy to be used for XML schema download. Absence of setting
+    or empty string means that proxy is not used. Ignored unless XML output validation
+    is enabled (@b validateXmlOutput). One can also use environment variables for
+    specifying proxy server (see <b>man curl</b> for more info).</td>
+</tr>
+
+<tr>
+<td>noProxy</td>
+<td>string (URL)</td>
+<td>optional (default empty)</td>
+<td>Specifies for which hosts HTTP/HTTPS proxy is not used. Ignored unless XML output validation
+    is enabled (@b validateXmlOutput). One can also use environment variables for
+    specifying proxy server (see <b>man curl</b> for more info).</td>
+</tr>
+
+<tr>
+<td>httpProxy</td>
+<td>string</td>
+<td>optional (default empty)</td>
+<td>Specifies HTTP proxy to use. Only used or XML schema download when XML output validation
+   is enabled. Schemas required for validating XML format HTTP requests must be provided in
+   XML grammar pool (request validation is always enabled)</td>
 </tr>
 
 <tr>
@@ -641,7 +673,7 @@ are supported
     @verbatim
     (?:urn:ogc:def:crs:|)EPSG:{1,2}NNNN
     @endverbatim
-    where NNNN is 4 digin EPSG code</td>
+    where NNNN is 4 digit EPSG code</td>
 </tr>
 
 <tr>
@@ -660,7 +692,7 @@ are supported
 <td>proj4</td>
 <td>string</td>
 <td>mandatory unless @b epsg is specified, ignored otherwise</td>
-<td>Specifies Proj.4 description of projection. Projection is registred using
+<td>Specifies Proj.4 description of projection. Projection is registered using
     the value of this configuration  entry</td>
 </tr>
 
@@ -668,7 +700,7 @@ are supported
 <td>epsgCode</td>
 <td>integer</td>
 <td>optional, ignored if @b epsg is provided</td>
-<td>Specifies @b epsg code when projection is registred using Proj.4 description</td>
+<td>Specifies @b epsg code when projection is registered using Proj.4 description</td>
 </tr>
 
 </table>

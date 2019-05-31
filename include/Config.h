@@ -48,6 +48,8 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   const std::string getGetFeatureById() const { return getFeatureById; }
   const std::string getXMLGrammarPoolDumpFn() const { return xml_grammar_pool_dump; }
   bool getValidateXmlOutput() const { return validate_output; }
+  std::string getProxy() const { return httpProxy; }
+  std::string getNoProxy() const { return noProxy; }
   bool getEnableDemoQueries() const { return enable_demo_queries; }
   bool getEnableTestQueries() const { return enable_test_queries; }
   bool getEnableConfigurationPolling() const { return enable_configuration_polling; }
@@ -81,6 +83,8 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   std::vector<std::string> sq_config_dirs;
   std::string geoserver_conn_str;
   std::string default_locale;
+  std::string httpProxy;
+  std::string noProxy;
   int cache_size;
   int cache_time_constant;
   int default_expires_seconds;
