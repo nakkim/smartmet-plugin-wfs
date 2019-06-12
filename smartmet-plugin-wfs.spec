@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.5.13
+Version: 19.6.12
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -23,15 +23,15 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 19.5.8
+BuildRequires: smartmet-library-spine-devel >= 19.6.4
 BuildRequires: smartmet-library-gis-devel >= 19.3.14
 BuildRequires: smartmet-library-locus-devel >= 19.3.21
 BuildRequires: smartmet-library-macgyver-devel >= 19.4.23
 BuildRequires: smartmet-engine-contour-devel >= 19.2.22
 BuildRequires: smartmet-engine-geonames-devel >= 19.3.22
-BuildRequires: smartmet-engine-gis-devel >= 18.11.22
+BuildRequires: smartmet-engine-gis-devel >= 19.5.29
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.5.9
+BuildRequires: smartmet-engine-observation-devel >= 19.5.23
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 19.3.21
 BuildRequires: postgresql95-libs
@@ -42,13 +42,13 @@ Requires: libcurl
 Requires: libpqxx
 Requires: smartmet-library-locus >= 19.3.21
 Requires: smartmet-library-macgyver >= 19.4.23
-Requires: smartmet-library-spine >= 19.5.8
+Requires: smartmet-library-spine >= 19.6.4
 Requires: smartmet-library-gis >= 19.3.14
 Requires: smartmet-engine-contour >= 19.2.22
 Requires: smartmet-engine-geonames >= 19.3.22
-Requires: smartmet-engine-gis >= 18.11.22
+Requires: smartmet-engine-gis >= 19.5.29
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.5.9
+Requires: smartmet-engine-observation >= 19.5.23
 %endif
 Requires: smartmet-engine-querydata >= 19.3.21
 Requires: smartmet-server >= 19.3.19
@@ -95,6 +95,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Wed Jun 12 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.6.12-1.fmi
+- Fixed flash queries to use the spatialite cache if possible by not using the makeQuery API
+
+* Fri Jun  7 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.6.7-1.fmi
+- Repackaged due to obsengine changes
+
 * Mon May 13 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.5.13-1.fmi
 - Make config param geoserverConnStr optional
 

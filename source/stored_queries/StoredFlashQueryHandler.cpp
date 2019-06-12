@@ -212,6 +212,11 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
         query_params.boundingBox["maxx"] = query_bbox.xMax;
         query_params.boundingBox["maxy"] = query_bbox.yMax;
 
+        std::cerr << "query bbox = " << query_bbox.xMin << "..." << query_bbox.xMax << " "
+                  << query_bbox.yMin << "..." << query_bbox.yMax << "\n";
+
+        std::cerr << "query crs = " << requested_bbox.crs << "\n";
+
         crs_registry.get_attribute(requested_bbox.crs, "swapCoord", &bb_swap_coord);
         crs_registry.get_attribute(requested_bbox.crs, "projUri", &bb_proj_uri);
 
@@ -252,8 +257,9 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
         throw exception;
       }
 
-      boost::shared_ptr<SmartMet::Spine::Table> query_result =
-          obs_engine->makeQuery(query_params, value_formatter);
+      // Fetch the values
+
+      const auto result_ptr = obs_engine->values(query_params);
 
       CTPP::CDT hash;
 
@@ -261,8 +267,6 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
       int sq_id = query.get_query_id();
 
       bw::FeatureID feature_id(get_config()->get_query_id(), params.get_map(), sq_id);
-
-      const std::size_t num_rows = query_result->rows().size();
 
       hash["language"] = language;
 
@@ -330,56 +334,81 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
 
       std::size_t used_rows = 0;
       std::size_t num_skipped = 0;
-      for (std::size_t i = 0; i < num_rows; i++)
+      std::size_t num_rows = 0;
+
+      if (result_ptr && !result_ptr->empty())
       {
         static const long ref_jd = boost::gregorian::date(1970, 1, 1).julian_day();
-        const std::string sx = query_result->get(lat_ind, i);
-        const std::string sy = query_result->get(lon_ind, i);
-        if (to_bbox_transform)
+
+        const auto& result = *result_ptr;
+        num_rows = result[1].size();
+
+        for (std::size_t i = 0; i < num_rows; i++)
         {
-          try
+          // I have no clue why the ordering is this, this changed code
+          // does the same as the original (sx = lat, sy = lon) - Mika
+
+          double lon = boost::get<double>(result[lat_ind][i].value);
+          double lat = boost::get<double>(result[lon_ind][i].value);
+
+          if (to_bbox_transform)
           {
-            NFmiPoint p1(std::stod(sx), std::stod(sy));
-            NFmiPoint p2 = to_bbox_transform->transform(p1);
-
-            double x = bb_swap_coord ? p2.Y() : p2.X();
-            double y = bb_swap_coord ? p2.X() : p2.Y();
-
-            if ((x < requested_bbox.xMin) or (x > requested_bbox.xMax) or
-                (y < requested_bbox.yMin) or (y > requested_bbox.yMax))
+            try
             {
-              if (debug_level > 3)
+              NFmiPoint p1(lon, lat);
+              NFmiPoint p2 = to_bbox_transform->transform(p1);
+
+              double x = bb_swap_coord ? p2.Y() : p2.X();
+              double y = bb_swap_coord ? p2.X() : p2.Y();
+
+              if ((x < requested_bbox.xMin) or (x > requested_bbox.xMax) or
+                  (y < requested_bbox.yMin) or (y > requested_bbox.yMax))
               {
-                std::ostringstream msg;
-                msg << SmartMet::Spine::log_time_str() << ": [WFS] [DEBUG] Event (" << p1.X() << " "
-                    << p1.Y() << ") ==> (" << p2.X() << " " << p2.Y()
-                    << ") skipped due to bounding box check\n";
-                std::cout << msg.str() << std::flush;
+                if (debug_level > 3)
+                {
+                  std::ostringstream msg;
+                  msg << SmartMet::Spine::log_time_str() << ": [WFS] [DEBUG] Event (" << p1.X()
+                      << " " << p1.Y() << ") ==> (" << p2.X() << " " << p2.Y()
+                      << ") skipped due to bounding box check\n";
+                  std::cout << msg.str() << std::flush;
+                }
+                num_skipped++;
+                continue;
               }
-              num_skipped++;
-              continue;
+            }
+            catch (...)
+            {
+              // Ignore errors while extra bounding box checks
+              //(void)err;
             }
           }
-          catch (...)
+
+          CTPP::CDT& result_row = hash["returnArray"][used_rows++];
+          set_2D_coord(transformation, Fmi::to_string(lon), Fmi::to_string(lat), result_row);
+          const pt::ptime epoch = result[lon_ind][i].time.utc_time();
+          long long jd = epoch.date().julian_day();
+          long seconds = epoch.time_of_day().total_seconds();
+          INT_64 s_epoch = 86400LL * (jd - ref_jd) + seconds;
+          result_row["stroke_time"] = s_epoch;
+          result_row["stroke_time_str"] = format_local_time(epoch, tzp);
+
+          for (int k = first_param; k <= last_param; k++)
           {
-            // Ignore errors while extra bounding box checks
-            //(void)err;
+            std::string value;
+            if (boost::get<int>(&result[k][i].value))
+              value = Fmi::to_string(boost::get<int>(result[k][i].value));
+            else if (boost::get<double>(&result[k][i].value))
+            {
+              auto tmp = boost::get<double>(result[k][i].value);
+              if (static_cast<int>(tmp) != tmp)
+                value = value_formatter->format(tmp, 1);
+              else
+                value = Fmi::to_string(tmp);
+            }
+            else
+              value = query_params.missingtext;
+            result_row["data"][k - first_param] = remove_trailing_0(value);
           }
-        }
-
-        CTPP::CDT& result_row = hash["returnArray"][used_rows++];
-        set_2D_coord(transformation, sx, sy, result_row);
-        pt::ptime epoch = pt::from_iso_string(query_result->get(stroke_time_ind, i));
-        long long jd = epoch.date().julian_day();
-        long seconds = epoch.time_of_day().total_seconds();
-        INT_64 s_epoch = 86400LL * (jd - ref_jd) + seconds;
-        result_row["stroke_time"] = s_epoch;
-        result_row["stroke_time_str"] = format_local_time(epoch, tzp);
-
-        for (int k = first_param; k <= last_param; k++)
-        {
-          const std::string value = query_result->get(k, i, query_params.missingtext);
-          result_row["data"][k - first_param] = remove_trailing_0(value);
         }
       }
 
