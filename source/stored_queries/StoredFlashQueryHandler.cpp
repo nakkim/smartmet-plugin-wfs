@@ -212,11 +212,6 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
         query_params.boundingBox["maxx"] = query_bbox.xMax;
         query_params.boundingBox["maxy"] = query_bbox.yMax;
 
-        std::cerr << "query bbox = " << query_bbox.xMin << "..." << query_bbox.xMax << " "
-                  << query_bbox.yMin << "..." << query_bbox.yMax << "\n";
-
-        std::cerr << "query crs = " << requested_bbox.crs << "\n";
-
         crs_registry.get_attribute(requested_bbox.crs, "swapCoord", &bb_swap_coord);
         crs_registry.get_attribute(requested_bbox.crs, "projUri", &bb_proj_uri);
 
