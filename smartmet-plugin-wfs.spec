@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.6.12
+Version: 19.6.14
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Fri Jun 14 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.6.14-1.fmi
+- Do not use std::ostringstream in SmartMet::Plugin::WFS::SupportsTimeZone
+
 * Wed Jun 12 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.6.12-1.fmi
 - Fixed flash queries to use the spatialite cache if possible by not using the makeQuery API
 
