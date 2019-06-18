@@ -117,6 +117,8 @@ Config::Config(const string& configfile)
     template_directory = sq_template_dir;
 
     read_admin_cred();
+
+    read_hosts_info();
   }
   catch (...)
   {
@@ -262,6 +264,25 @@ void Config::read_admin_cred()
     }
   } catch (...)
   {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+Config::Hosts::Hosts()
+  : wms("wms.fmi.fi")
+{
+}
+
+void Config::read_hosts_info()
+{
+  const char* default_wms_host = "wms.fmi.fi";
+  try {
+    const char* setting_name = "hosts";
+    if (get_config().exists(setting_name)) {
+      libconfig::Setting& s1 = assert_is_group(get_config().lookup(setting_name));
+      hosts.wms = get_optional_config_param<std::string>(s1, "wms", default_wms_host);
+    }
+  } catch (...) {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
@@ -525,6 +546,15 @@ administrative operations. Currently only such operation is WFS plugin configura
 This group consists of parameters:
 - admin - admin user name (optional, default is 'admin')
 - password - password (mandatory)
+</tr>
+
+<tr>
+<td>hosts</td>
+<td>config group</td>
+<td>optional</td>
+<td>Specifies host names to use in output documents. Currently only host for WMS downloads is supported
+This group consist of following parameters:
+- wms - name of host for WMS downloads (default wms.fmi.fi)
 </tr>
 
 </table>

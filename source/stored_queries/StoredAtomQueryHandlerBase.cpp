@@ -71,6 +71,10 @@ void bw::StoredAtomQueryHandlerBase::query(const bw::StoredQuery& query,
     hash["hostname"] = QueryBase::HOSTNAME_SUBST;
     hash["protocol"] = QueryBase::PROTOCOL_SUBST;
 
+    CTPP::CDT h_hosts;
+    h_hosts["wms"] = get_config()->get_hosts().wms;
+    hash["hosts"] = h_hosts;
+
     if ((debug_level > 1) and param_sets.empty())
     {
       SmartMet::Spine::Exception exception(BCP, "No data available!");

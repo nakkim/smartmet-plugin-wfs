@@ -14,9 +14,14 @@
 
 namespace bw = SmartMet::Plugin::WFS;
 
+namespace {
+  bw::Config::Hosts default_hosts;
+}
+
 SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(const std::string& config_file,
 							    const Config* plugin_config)
     : SmartMet::Spine::ConfigBase(config_file, "WFS stored query configuration")
+    , hosts(plugin_config ? plugin_config->get_hosts() : default_hosts)
 {
   try
   {
@@ -39,6 +44,7 @@ SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(
     const Config* plugin_config)
 
     : SmartMet::Spine::ConfigBase(config, "WFS stored query configuration")
+    , hosts(plugin_config ? plugin_config->get_hosts() : default_hosts)
 {
   try
   {

@@ -40,6 +40,14 @@ namespace WFS
 class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
 {
  public:
+  struct Hosts
+  {
+    std::string wms;
+
+    Hosts();
+  };
+
+ public:
   Config(const std::string& configfile);
 
   const std::string& defaultUrl() const { return itsDefaultUrl; }
@@ -62,11 +70,13 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
       SmartMet::Engine::Gis::CRSRegistry& theCRSRegistry);
   const CapabilitiesConf& get_capabilities_config() const { return capabilities_conf; }
   boost::optional<std::pair<std::string, std::string> > get_admin_credentials() const { return adminCred; }
+  const Hosts& get_hosts() const  { return hosts; }
 
   void read_typename_config(std::map<std::string, std::string>& typename_storedqry);
  private:
   void read_capabilities_config();
   void read_admin_cred();
+  void read_hosts_info();
 
  private:
   std::string itsDefaultUrl;
@@ -93,6 +103,11 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
    *   Currently only used for reload request
    */
   boost::optional<std::pair<std::string, std::string> > adminCred;
+
+  /**
+   *   @brief Information about hosts to which WFS responses points
+   */
+  Hosts hosts;
 
 };  // class Config
 

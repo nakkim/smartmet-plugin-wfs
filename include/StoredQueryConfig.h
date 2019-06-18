@@ -11,6 +11,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <Config.h>
 
 namespace SmartMet
 {
@@ -19,7 +20,6 @@ namespace Plugin
 namespace WFS
 {
 
-class Config;
 class StoredQueryHandlerBase;
 
 /**
@@ -186,6 +186,8 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
    */
   void set_locale(const std::string& name);
 
+  const Config::Hosts& get_hosts() const { return hosts; }
+
  private:
   void parse_config();
 
@@ -213,6 +215,7 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
   bool demo;
   bool test;
   int debug_level;
+  const Config::Hosts& hosts;
 };
 
 }  // namespace WFS
