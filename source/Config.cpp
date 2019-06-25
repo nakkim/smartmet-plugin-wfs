@@ -5,13 +5,13 @@
 // ======================================================================
 
 #include "Config.h"
+#include "WfsConvenience.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <spine/ConfigTools.h>
 #include <spine/Convenience.h>
 #include <spine/Exception.h>
-#include "WfsConvenience.h"
 #include <locale>
 #include <sstream>
 #include <stdexcept>
@@ -37,12 +37,11 @@ const char* c_get_feature_by_id = "urn:ogc:def:query:OGC-WFS::GetFeatureById";
 // ----------------------------------------------------------------------
 
 Config::Config(const string& configfile)
-    : SmartMet::Spine::ConfigBase(configfile, "WFS plugin")
-    , itsDefaultUrl(default_url)
+    : SmartMet::Spine::ConfigBase(configfile, "WFS plugin"), itsDefaultUrl(default_url)
 {
-  std::cout << (SmartMet::Spine::log_time_str()
-		+ " [WFS] Using plugin configuration file "
-		+ configfile) << std::endl;
+  std::cout << (SmartMet::Spine::log_time_str() + " [WFS] Using plugin configuration file " +
+                configfile)
+            << std::endl;
 
   try
   {
@@ -63,9 +62,8 @@ Config::Config(const string& configfile)
 
     sq_restrictions = get_optional_config_param<bool>("storedQueryRestrictions", true);
 
-    std::cout << (SmartMet::Spine::log_time_str()
-		  + " [WFS] Using locale "
-		  + default_locale) << std::endl;
+    std::cout << (SmartMet::Spine::log_time_str() + " [WFS] Using locale " + default_locale)
+              << std::endl;
 
     std::vector<std::string> xml_grammar_pool_fns;
     // Ensure that setting exists (or report an error otherwise)
@@ -228,21 +226,29 @@ void Config::read_capabilities_config()
   try
   {
     const char* setting_name = "capabilitiesConfig";
-    if (get_config().exists(setting_name)) {
+    if (get_config().exists(setting_name))
+    {
       libconfig::Setting& s1 = get_config().lookup(setting_name);
-      const std::string default_language = languages.empty() ? std::string("eng") : *languages.begin();
-      if (s1.getType() == libconfig::Setting::TypeString) {
-	const std::string fn = get_mandatory_path(setting_name);
-	libconfig::Config raw_capabilities_conf;
-	std::cout << SmartMet::Spine::log_time_str()
-		  << " [WFS][INFO] Reading capabilities information from '" << fn << '\''
-		  << std::endl;
-	raw_capabilities_conf.readFile(fn.c_str());
-	capabilities_conf.parse(default_language, raw_capabilities_conf.getRoot());
-      } else if (s1.getType() == libconfig::Setting::TypeGroup) {
-	capabilities_conf.parse(default_language, s1);
-      } else {
-	throw SmartMet::Spine::Exception::Trace(BCP, "Incorrect value of configuration entry capabilities_config");
+      const std::string default_language =
+          languages.empty() ? std::string("eng") : *languages.begin();
+      if (s1.getType() == libconfig::Setting::TypeString)
+      {
+        const std::string fn = get_mandatory_path(setting_name);
+        libconfig::Config raw_capabilities_conf;
+        std::cout << SmartMet::Spine::log_time_str()
+                  << " [WFS][INFO] Reading capabilities information from '" << fn << '\''
+                  << std::endl;
+        raw_capabilities_conf.readFile(fn.c_str());
+        capabilities_conf.parse(default_language, raw_capabilities_conf.getRoot());
+      }
+      else if (s1.getType() == libconfig::Setting::TypeGroup)
+      {
+        capabilities_conf.parse(default_language, s1);
+      }
+      else
+      {
+        throw SmartMet::Spine::Exception::Trace(
+            BCP, "Incorrect value of configuration entry capabilities_config");
       }
     }
   }
@@ -254,35 +260,45 @@ void Config::read_capabilities_config()
 
 void Config::read_admin_cred()
 {
-  try {
+  try
+  {
     const char* setting_name = "admin";
-    if (get_config().exists(setting_name)) {
+    if (get_config().exists(setting_name))
+    {
       libconfig::Setting& s1 = assert_is_group(get_config().lookup(setting_name));
       const std::string user = get_optional_config_param<std::string>(s1, "admin", "admin");
       const std::string password = get_mandatory_config_param<std::string>(s1, "password");
       adminCred = std::make_pair(user, password);
     }
-  } catch (...)
+  }
+  catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
-Config::Hosts::Hosts()
-  : wms("wms.fmi.fi")
-{
-}
-
 void Config::read_hosts_info()
 {
   const char* default_wms_host = "wms.fmi.fi";
-  try {
+  try
+  {
     const char* setting_name = "hosts";
-    if (get_config().exists(setting_name)) {
-      libconfig::Setting& s1 = assert_is_group(get_config().lookup(setting_name));
-      hosts.wms = get_optional_config_param<std::string>(s1, "wms", default_wms_host);
+    if (get_config().exists(setting_name))
+    {
+      libconfig::Setting& s1 = assert_is_list(get_config().lookup(setting_name));
+
+      for (int i = 0; i < s1.getLength(); i++)
+      {
+        auto& info = s1[i];
+        auto server = get_mandatory_config_param<std::string>(info, "server");
+        auto wms = get_optional_config_param<std::string>(info, "wms", default_wms_host);
+        auto keep_apikey = get_optional_config_param<bool>(info, "keep_apikey", true);
+        hosts.addHost(server, wms, keep_apikey);
+      }
     }
-  } catch (...) {
+  }
+  catch (...)
+  {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
@@ -552,8 +568,8 @@ This group consists of parameters:
 <td>hosts</td>
 <td>config group</td>
 <td>optional</td>
-<td>Specifies host names to use in output documents. Currently only host for WMS downloads is supported
-This group consist of following parameters:
+<td>Specifies host names to use in output documents. Currently only host for WMS downloads is
+supported This group consist of following parameters:
 - wms - name of host for WMS downloads (default wms.fmi.fi)
 </tr>
 

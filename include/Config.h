@@ -6,6 +6,8 @@
  */
 // ======================================================================
 
+#include "CapabilitiesConf.h"
+#include "Hosts.h"
 #include "WfsFeatureDef.h"
 #include <boost/filesystem.hpp>
 #include <boost/shared_ptr.hpp>
@@ -15,7 +17,6 @@
 #include <libconfig.h++>
 #include <string>
 #include <vector>
-#include "CapabilitiesConf.h"
 
 namespace SmartMet
 {
@@ -40,14 +41,6 @@ namespace WFS
 class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
 {
  public:
-  struct Hosts
-  {
-    std::string wms;
-
-    Hosts();
-  };
-
- public:
   Config(const std::string& configfile);
 
   const std::string& defaultUrl() const { return itsDefaultUrl; }
@@ -69,10 +62,14 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   std::vector<boost::shared_ptr<WfsFeatureDef> > read_features_config(
       SmartMet::Engine::Gis::CRSRegistry& theCRSRegistry);
   const CapabilitiesConf& get_capabilities_config() const { return capabilities_conf; }
-  boost::optional<std::pair<std::string, std::string> > get_admin_credentials() const { return adminCred; }
-  const Hosts& get_hosts() const  { return hosts; }
+  boost::optional<std::pair<std::string, std::string> > get_admin_credentials() const
+  {
+    return adminCred;
+  }
+  const Hosts& get_hosts() const { return hosts; }
 
   void read_typename_config(std::map<std::string, std::string>& typename_storedqry);
+
  private:
   void read_capabilities_config();
   void read_admin_cred();

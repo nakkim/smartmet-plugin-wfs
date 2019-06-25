@@ -14,20 +14,24 @@
 
 namespace bw = SmartMet::Plugin::WFS;
 
-namespace {
-  bw::Config::Hosts default_hosts;
+namespace
+{
+bw::Hosts default_hosts;
 }
 
 SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(const std::string& config_file,
-							    const Config* plugin_config)
-    : SmartMet::Spine::ConfigBase(config_file, "WFS stored query configuration")
-    , hosts(plugin_config ? plugin_config->get_hosts() : default_hosts)
+                                                            const Config* plugin_config)
+    : SmartMet::Spine::ConfigBase(config_file, "WFS stored query configuration"),
+      hosts(plugin_config ? plugin_config->get_hosts() : default_hosts)
 {
   try
   {
-    if (plugin_config) {
+    if (plugin_config)
+    {
       set_locale(plugin_config->get_default_locale());
-    } else {
+    }
+    else
+    {
       set_locale(bw::guess_default_locale());
     }
     config_last_write_time = config_write_time();
@@ -40,17 +44,19 @@ SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(const std::string& c
 }
 
 SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(
-    boost::shared_ptr<libconfig::Config> config,
-    const Config* plugin_config)
+    boost::shared_ptr<libconfig::Config> config, const Config* plugin_config)
 
-    : SmartMet::Spine::ConfigBase(config, "WFS stored query configuration")
-    , hosts(plugin_config ? plugin_config->get_hosts() : default_hosts)
+    : SmartMet::Spine::ConfigBase(config, "WFS stored query configuration"),
+      hosts(plugin_config ? plugin_config->get_hosts() : default_hosts)
 {
   try
   {
-    if (plugin_config) {
+    if (plugin_config)
+    {
       locale_name = plugin_config->get_default_locale();
-    } else {
+    }
+    else
+    {
       set_locale(bw::guess_default_locale());
     }
     config_last_write_time = config_write_time();

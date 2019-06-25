@@ -66,14 +66,25 @@ void bw::StoredAtomQueryHandlerBase::query(const bw::StoredQuery& query,
     hash["numReturned"] = param_sets.size();
     hash["queryNum"] = query.get_query_id();
 
-    hash["fmi_apikey"] = bw::QueryBase::FMI_APIKEY_SUBST;
-    hash["fmi_apikey_prefix"] = bw::QueryBase::FMI_APIKEY_PREFIX_SUBST;
     hash["hostname"] = QueryBase::HOSTNAME_SUBST;
     hash["protocol"] = QueryBase::PROTOCOL_SUBST;
 
+    const auto& hostname = get_plugin_impl().get_hostname();
+
     CTPP::CDT h_hosts;
-    h_hosts["wms"] = get_config()->get_hosts().wms;
+    h_hosts["wms"] = get_config()->get_hosts().getWMSHost(hostname);
     hash["hosts"] = h_hosts;
+
+    if (get_config()->get_hosts().getKeepApikeyFlag(hostname))
+    {
+      hash["fmi_apikey"] = bw::QueryBase::FMI_APIKEY_SUBST;
+      hash["fmi_apikey_prefix"] = bw::QueryBase::FMI_APIKEY_PREFIX_SUBST;
+    }
+    else
+    {
+      hash["fmi_apikey"] = "";
+      hash["fmi_apikey_prefix"] = "";
+    }
 
     if ((debug_level > 1) and param_sets.empty())
     {

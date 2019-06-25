@@ -71,6 +71,10 @@ class PluginImpl : public boost::noncopyable
 
   boost::shared_ptr<GeoServerDB> get_geo_server_database() const;
 
+  inline std::string get_hostname() const { return hostname; }
+  inline std::string get_protocol() const { return protocol; }
+  inline std::string get_language() const { return language; }
+
   inline std::string get_fallback_hostname() const { return fallback_hostname; }
 
   inline std::string get_fallback_protocol() const { return fallback_protocol; }
@@ -168,7 +172,7 @@ class PluginImpl : public boost::noncopyable
   void maybe_validate_output(const SmartMet::Spine::HTTP::Request& req,
                              SmartMet::Spine::HTTP::Response& response) const;
 
-  //inline boost::shared_ptr<Xml::ParserMT> get_xml_parser() const { return xml_parser; }
+  // inline boost::shared_ptr<Xml::ParserMT> get_xml_parser() const { return xml_parser; }
 
  private:
   void create_template_formatters();
@@ -208,6 +212,10 @@ class PluginImpl : public boost::noncopyable
   int debug_level;
   std::string fallback_hostname;
   std::string fallback_protocol;
+
+  std::string hostname;
+  std::string protocol;
+  std::string language;
 
   /**
    *   @brief Locked timestamp for testing only

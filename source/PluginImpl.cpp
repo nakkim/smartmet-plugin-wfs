@@ -1,23 +1,23 @@
 #include "PluginImpl.h"
-#include <boost/algorithm/string.hpp>
-#include <boost/bind.hpp>
-#include <boost/date_time/gregorian/gregorian.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/lambda/lambda.hpp>
+#include "ErrorResponseGenerator.h"
+#include "WfsConst.h"
+#include "XmlParser.h"
 #include "request/DescribeFeatureType.h"
 #include "request/DescribeStoredQueries.h"
 #include "request/GetCapabilities.h"
 #include "request/GetFeature.h"
 #include "request/GetPropertyValue.h"
 #include "request/ListStoredQueries.h"
+#include <boost/algorithm/string.hpp>
+#include <boost/bind.hpp>
+#include <boost/date_time/gregorian/gregorian.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/lambda/lambda.hpp>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TimeParser.h>
 #include <spine/Convenience.h>
 #include <spine/Exception.h>
 #include <spine/FmiApiKey.h>
-#include "ErrorResponseGenerator.h"
-#include "WfsConst.h"
-#include "XmlParser.h"
 
 using namespace SmartMet::Plugin::WFS;
 namespace ba = boost::algorithm;
@@ -35,7 +35,7 @@ struct PluginImpl::RequestResult
   RequestResult() : status(SmartMet::Spine::HTTP::not_a_status), may_validate_xml(true), output() {}
 };
 
-PluginImpl::PluginImpl(SmartMet::Spine::Reactor *theReactor, const char *theConfig)
+PluginImpl::PluginImpl(SmartMet::Spine::Reactor* theReactor, const char* theConfig)
     : itsConfig(theConfig), wfs_capabilities(new WfsCapabilities)
 {
   try
@@ -48,81 +48,68 @@ PluginImpl::PluginImpl(SmartMet::Spine::Reactor *theReactor, const char *theConf
     }
 
     query_cache.reset(new QueryResponseCache(
-        itsConfig.getCacheSize(),
-        std::chrono::seconds(itsConfig.getCacheTimeConstant())));
+        itsConfig.getCacheSize(), std::chrono::seconds(itsConfig.getCacheTimeConstant())));
 
     request_factory.reset(new RequestFactory(*this));
 
     request_factory
 
-      ->register_request_type(
-			      "GetCapabilities",
-			      "",
-			      boost::bind(&PluginImpl::parse_kvp_get_capabilities_request,
-					  this, _1, _2),
-			      boost::bind(&PluginImpl::parse_xml_get_capabilities_request,
-					  this, _1, _2, _3))
+        ->register_request_type(
+            "GetCapabilities",
+            "",
+            boost::bind(&PluginImpl::parse_kvp_get_capabilities_request, this, _1, _2),
+            boost::bind(&PluginImpl::parse_xml_get_capabilities_request, this, _1, _2, _3))
 
-      .register_request_type(
-			     "DescribeFeatureType",
-			     "supportsDescribeFeatureType",
-			     boost::bind(&PluginImpl::parse_kvp_describe_feature_type_request,
-					 this, _1, _2),
-			     boost::bind(&PluginImpl::parse_xml_describe_feature_type_request,
-					 this, _1, _2, _3))
+        .register_request_type(
+            "DescribeFeatureType",
+            "supportsDescribeFeatureType",
+            boost::bind(&PluginImpl::parse_kvp_describe_feature_type_request, this, _1, _2),
+            boost::bind(&PluginImpl::parse_xml_describe_feature_type_request, this, _1, _2, _3))
 
-      .register_request_type(
-			     "GetFeature",
-			     "supportsGetFeature",
-			     boost::bind(&PluginImpl::parse_kvp_get_feature_request,
-					 this, _1, _2),
-			     boost::bind(&PluginImpl::parse_xml_get_feature_request,
-					 this, _1, _2, _3))
+        .register_request_type(
+            "GetFeature",
+            "supportsGetFeature",
+            boost::bind(&PluginImpl::parse_kvp_get_feature_request, this, _1, _2),
+            boost::bind(&PluginImpl::parse_xml_get_feature_request, this, _1, _2, _3))
 
-      .register_request_type(
-			     "GetPropertyValue",
-			     "supportsGetPropertyValue",
-			     boost::bind(&PluginImpl::parse_kvp_get_property_value_request,
-					 this, _1, _2),
-			     boost::bind(&PluginImpl::parse_xml_get_property_value_request,
-					 this, _1, _2, _3))
+        .register_request_type(
+            "GetPropertyValue",
+            "supportsGetPropertyValue",
+            boost::bind(&PluginImpl::parse_kvp_get_property_value_request, this, _1, _2),
+            boost::bind(&PluginImpl::parse_xml_get_property_value_request, this, _1, _2, _3))
 
-      .register_request_type(
-			     "ListStoredQueries",
-			     "supportsListStoredQueries",
-			     boost::bind(&PluginImpl::parse_kvp_list_stored_queries_request,
-					 this, _1, _2),
-			     boost::bind(&PluginImpl::parse_xml_list_stored_queries_request,
-					 this, _1, _2, _3))
+        .register_request_type(
+            "ListStoredQueries",
+            "supportsListStoredQueries",
+            boost::bind(&PluginImpl::parse_kvp_list_stored_queries_request, this, _1, _2),
+            boost::bind(&PluginImpl::parse_xml_list_stored_queries_request, this, _1, _2, _3))
 
-      .register_request_type(
-			     "DescribeStoredQueries",
-			     "supportsDescribeStoredQueries",
-			     boost::bind(&PluginImpl::parse_kvp_describe_stored_queries_request,
-					 this, _1, _2),
-			     boost::bind(&PluginImpl::parse_xml_describe_stored_queries_request,
-					 this, _1, _2, _3))
+        .register_request_type(
+            "DescribeStoredQueries",
+            "supportsDescribeStoredQueries",
+            boost::bind(&PluginImpl::parse_kvp_describe_stored_queries_request, this, _1, _2),
+            boost::bind(&PluginImpl::parse_xml_describe_stored_queries_request, this, _1, _2, _3))
 
-      .register_unimplemented_request_type("LockFeature")
-      .register_unimplemented_request_type("GetFeatureWithLock")
-      .register_unimplemented_request_type("CreateStoredQuery")
-      .register_unimplemented_request_type("DropStoredQuery")
-      .register_unimplemented_request_type("Transaction");
+        .register_unimplemented_request_type("LockFeature")
+        .register_unimplemented_request_type("GetFeatureWithLock")
+        .register_unimplemented_request_type("CreateStoredQuery")
+        .register_unimplemented_request_type("DropStoredQuery")
+        .register_unimplemented_request_type("Transaction");
 
-    void *engine = theReactor->getSingleton("Geonames", nullptr);
+    void* engine = theReactor->getSingleton("Geonames", nullptr);
     if (engine == nullptr)
       throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-    itsGeonames = reinterpret_cast<SmartMet::Engine::Geonames::Engine *>(engine);
+    itsGeonames = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
 
     engine = theReactor->getSingleton("Querydata", nullptr);
     if (engine == nullptr)
       throw SmartMet::Spine::Exception(BCP, "No Querydata engine available");
-    itsQEngine = reinterpret_cast<SmartMet::Engine::Querydata::Engine *>(engine);
+    itsQEngine = reinterpret_cast<SmartMet::Engine::Querydata::Engine*>(engine);
 
     engine = theReactor->getSingleton("Gis", nullptr);
     if (engine == nullptr)
       throw SmartMet::Spine::Exception(BCP, "No Gis engine available");
-    itsGisEngine = reinterpret_cast<SmartMet::Engine::Gis::Engine *>(engine);
+    itsGisEngine = reinterpret_cast<SmartMet::Engine::Gis::Engine*>(engine);
 
     debug_level = itsConfig.get_optional_config_param<int>("debugLevel", 1);
     fallback_hostname =
@@ -134,7 +121,7 @@ PluginImpl::PluginImpl(SmartMet::Spine::Reactor *theReactor, const char *theConf
     create_xml_parser();
     init_geo_server_access();
 
-    const auto &feature_vect = itsConfig.read_features_config(itsGisEngine->getCRSRegistry());
+    const auto& feature_vect = itsConfig.read_features_config(itsGisEngine->getCRSRegistry());
     BOOST_FOREACH (auto feature, feature_vect)
     {
       wfs_capabilities->register_feature(feature);
@@ -162,7 +149,7 @@ PluginImpl::PluginImpl(SmartMet::Spine::Reactor *theReactor, const char *theConf
 
 PluginImpl::~PluginImpl() {}
 
-void PluginImpl::updateStoredQueryMap(Spine::Reactor *theReactor)
+void PluginImpl::updateStoredQueryMap(Spine::Reactor* theReactor)
 {
   try
   {
@@ -214,9 +201,12 @@ boost::posix_time::ptime PluginImpl::get_local_time_stamp() const
 
 boost::shared_ptr<GeoServerDB> PluginImpl::get_geo_server_database() const
 {
-  if (geo_server_db) {
+  if (geo_server_db)
+  {
     return geo_server_db;
-  } else {
+  }
+  else
+  {
     SmartMet::Spine::Exception exception(BCP, "GeoServer database is not available");
     exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
     throw exception;
@@ -290,8 +280,9 @@ void PluginImpl::init_geo_server_access()
     try
     {
       const std::string geoserver_conn_str = itsConfig.get_geoserver_conn_string();
-      if (geoserver_conn_str != "") {
-	geo_server_db.reset(new GeoServerDB(itsConfig.get_geoserver_conn_string(), 5));
+      if (geoserver_conn_str != "")
+      {
+        geo_server_db.reset(new GeoServerDB(itsConfig.get_geoserver_conn_string(), 5));
       }
     }
     catch (...)
@@ -324,11 +315,11 @@ void PluginImpl::create_typename_stored_query_map()
   }
 }
 
-void PluginImpl::create_stored_query_map(SmartMet::Spine::Reactor *theReactor)
+void PluginImpl::create_stored_query_map(SmartMet::Spine::Reactor* theReactor)
 {
   try
   {
-    const std::vector<std::string> &sq_config_dirs = itsConfig.getStoredQueriesConfigDirs();
+    const std::vector<std::string>& sq_config_dirs = itsConfig.getStoredQueriesConfigDirs();
 
     stored_query_map.reset(new StoredQueryMap);
 
@@ -336,7 +327,7 @@ void PluginImpl::create_stored_query_map(SmartMet::Spine::Reactor *theReactor)
 
     if (parallel)
     {
-      BOOST_FOREACH (const std::string &sq_config_dir, sq_config_dirs)
+      BOOST_FOREACH (const std::string& sq_config_dir, sq_config_dirs)
       {
         stored_query_map->set_background_init(true);
         boost::thread thread(boost::bind(&StoredQueryMap::read_config_dir,
@@ -351,7 +342,7 @@ void PluginImpl::create_stored_query_map(SmartMet::Spine::Reactor *theReactor)
     }
     else
     {
-      BOOST_FOREACH (const std::string &sq_config_dir, sq_config_dirs)
+      BOOST_FOREACH (const std::string& sq_config_dir, sq_config_dirs)
       {
         stored_query_map->read_config_dir(
             theReactor, sq_config_dir, itsConfig.get_template_directory(), *this);
@@ -377,10 +368,9 @@ RequestBaseP PluginImpl::parse_kvp_get_capabilities_request(
   }
 }
 
-RequestBaseP PluginImpl::parse_xml_get_capabilities_request(
-    const std::string& language,
-    const xercesc::DOMDocument& document,
-    const xercesc::DOMElement& root)
+RequestBaseP PluginImpl::parse_xml_get_capabilities_request(const std::string& language,
+                                                            const xercesc::DOMDocument& document,
+                                                            const xercesc::DOMElement& root)
 {
   try
   {
@@ -395,8 +385,7 @@ RequestBaseP PluginImpl::parse_xml_get_capabilities_request(
 }
 
 RequestBaseP PluginImpl::parse_kvp_describe_feature_type_request(
-    const std::string& language,
-    const SmartMet::Spine::HTTP::Request& request)
+    const std::string& language, const SmartMet::Spine::HTTP::Request& request)
 {
   try
   {
@@ -425,8 +414,7 @@ RequestBaseP PluginImpl::parse_xml_describe_feature_type_request(
 }
 
 RequestBaseP PluginImpl::parse_kvp_get_feature_request(
-    const std::string& language,
-    const SmartMet::Spine::HTTP::Request& request)
+    const std::string& language, const SmartMet::Spine::HTTP::Request& request)
 {
   try
   {
@@ -438,10 +426,9 @@ RequestBaseP PluginImpl::parse_kvp_get_feature_request(
   }
 }
 
-RequestBaseP PluginImpl::parse_xml_get_feature_request(
-    const std::string& language,
-    const xercesc::DOMDocument& document,
-    const xercesc::DOMElement& root)
+RequestBaseP PluginImpl::parse_xml_get_feature_request(const std::string& language,
+                                                       const xercesc::DOMDocument& document,
+                                                       const xercesc::DOMElement& root)
 {
   try
   {
@@ -468,8 +455,8 @@ RequestBaseP PluginImpl::parse_kvp_get_property_value_request(
 }
 
 RequestBaseP PluginImpl::parse_xml_get_property_value_request(const std::string& language,
-                                                          const xercesc::DOMDocument& document,
-                                                          const xercesc::DOMElement& root)
+                                                              const xercesc::DOMDocument& document,
+                                                              const xercesc::DOMElement& root)
 {
   try
   {
@@ -496,8 +483,8 @@ RequestBaseP PluginImpl::parse_kvp_list_stored_queries_request(
 }
 
 RequestBaseP PluginImpl::parse_xml_list_stored_queries_request(const std::string& language,
-                                                           const xercesc::DOMDocument& document,
-                                                           const xercesc::DOMElement& root)
+                                                               const xercesc::DOMDocument& document,
+                                                               const xercesc::DOMElement& root)
 {
   try
   {
@@ -523,9 +510,10 @@ RequestBaseP PluginImpl::parse_kvp_describe_stored_queries_request(
   }
 }
 
-RequestBaseP PluginImpl::parse_xml_describe_stored_queries_request(const std::string& language,
-                                                               const xercesc::DOMDocument& document,
-                                                               const xercesc::DOMElement& root)
+RequestBaseP PluginImpl::parse_xml_describe_stored_queries_request(
+    const std::string& language,
+    const xercesc::DOMDocument& document,
+    const xercesc::DOMElement& root)
 {
   try
   {
@@ -542,14 +530,13 @@ RequestBaseP PluginImpl::parse_xml_describe_stored_queries_request(const std::st
  *  @brief Perform actual WFS request and generate the response
  */
 void PluginImpl::query(const std::string& req_language,
-		       const SmartMet::Spine::HTTP::Request& req,
-		       PluginImpl::RequestResult& result)
+                       const SmartMet::Spine::HTTP::Request& req,
+                       PluginImpl::RequestResult& result)
 {
   try
   {
     const auto method = req.getMethod();
 
-    std::string hostname;
     if (const auto header_x_forwarded_host = req.getHeader("X-Forwarded-Host"))
       hostname = *header_x_forwarded_host;
     else if (const auto header_host = req.getHeader("Host"))
@@ -557,7 +544,6 @@ void PluginImpl::query(const std::string& req_language,
     else
       hostname = get_fallback_hostname();
 
-    std::string protocol;
     if (const auto header_x_forwarded_protocol = req.getProtocol())
       protocol = *header_x_forwarded_protocol;
     else
@@ -565,8 +551,7 @@ void PluginImpl::query(const std::string& req_language,
 
     const std::string fmi_apikey_prefix = "/fmi-apikey/";
 
-    const std::string language =
-        req_language == "" ? *get_config().get_languages().begin() : req_language;
+    language = req_language == "" ? *get_config().get_languages().begin() : req_language;
 
     if (method == SmartMet::Spine::HTTP::RequestMethod::GET)
     {
@@ -747,9 +732,9 @@ boost::optional<std::string> PluginImpl::get_fmi_apikey(
 }
 
 void PluginImpl::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
-				    const std::string& language,
-				    const SmartMet::Spine::HTTP::Request& theRequest,
-				    SmartMet::Spine::HTTP::Response& theResponse)
+                                    const std::string& language,
+                                    const SmartMet::Spine::HTTP::Request& theRequest,
+                                    SmartMet::Spine::HTTP::Response& theResponse)
 {
   try
   {
@@ -839,7 +824,7 @@ void PluginImpl::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
 }
 
 void PluginImpl::maybe_validate_output(const SmartMet::Spine::HTTP::Request& req,
-                                   SmartMet::Spine::HTTP::Response& response) const
+                                       SmartMet::Spine::HTTP::Response& response) const
 {
   try
   {
