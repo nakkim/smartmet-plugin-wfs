@@ -18,6 +18,9 @@ namespace WFS
 {
 namespace Xml
 {
+
+class EntityResolver;
+
 /**
  *   @brief Xerces-C based validating XML DOM parser with XML schema caching feature
  */
@@ -98,8 +101,6 @@ class ParserMT : public boost::noncopyable
   void load_schema_cache(const std::string& file_name);
 
  private:
-  class EntityResolver;
-
   const std::string grammar_pool_file_name;
   const bool stop_on_error;
   std::unique_ptr<EntityResolver> entity_resolver;
