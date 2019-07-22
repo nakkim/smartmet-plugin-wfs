@@ -793,7 +793,11 @@ void PluginImpl::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
       }
 
       if (result.may_validate_xml)
-        maybe_validate_output(theRequest, theResponse);
+	try {
+	  maybe_validate_output(theRequest, theResponse);
+	} catch (...) {
+	  SmartMet::Spine::Exception::Trace(BCP, "Response validation failed!").printError();
+	}
     }
     catch (...)
     {
