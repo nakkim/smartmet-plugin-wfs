@@ -16,7 +16,6 @@
 #include <xercesc/sax/SAXParseException.hpp>
 #include <xercesc/util/BinFileInputStream.hpp>
 #include <xercesc/util/Janitor.hpp>
-#include <xercesc/util/XMLEntityResolver.hpp>
 #include <cerrno>
 #include <fstream>
 #include <iostream>
@@ -197,6 +196,7 @@ void Parser::startElement(const xercesc::XMLElementDecl &elemDecl,
 
 ParserMT::ParserMT(const std::string &grammar_pool_file_name, bool stop_on_error)
     : grammar_pool_file_name(grammar_pool_file_name), stop_on_error(stop_on_error)
+    , entity_resolver(new EntityResolver)
 {
   try
   {
@@ -255,14 +255,17 @@ void ParserMT::load_schema_cache(const std::string &file_name)
     input.exceptions(std::ios::failbit | std::ios::badbit);
     input.open(file_name.c_str());
     boost::archive::text_iarchive ia(input);
-    std::unique_ptr<EntityResolver> tmp(new EntityResolver);
-    ia >> *tmp;
-    this->entity_resolver.swap(tmp);
+    ia >> *entity_resolver;
   }
   catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
+}
+
+void ParserMT::enable_schema_download(const std::string& httpProxy, const std::string& noProxy)
+{
+  entity_resolver->init_schema_download(httpProxy, noProxy);
 }
 
 boost::shared_ptr<xercesc::DOMDocument> str2xmldom(const std::string &src,

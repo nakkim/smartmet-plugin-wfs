@@ -14,14 +14,30 @@ namespace {
     return (str.substr(0, 7) == "http://") or (str.substr(0, 8) == "https://");
   }
 
+  size_t append_data(char *ptr, size_t size, size_t nmemb, void *userdata)
+  {
+    std::ostream *ost = reinterpret_cast<std::ostream *>(userdata);
+    ost->write(ptr, size * nmemb);
+    return size * nmemb;
+  }
+
 } // anonymous namespace
 
 EntityResolver::EntityResolver()
+  : enable_download(false)
 {
 }
 
 EntityResolver::~EntityResolver()
 {
+}
+
+void
+EntityResolver::init_schema_download(const std::string& proxy, const std::string& no_proxy)
+{
+  enable_download = true;
+  this->proxy = proxy;
+  this->no_proxy = no_proxy;
 }
 
 xercesc::InputSource *
@@ -58,7 +74,7 @@ try
 	remote_uri = base_uri.substr(0, pos + 1) + system_id;
       }
 
-    xercesc::InputSource* source = try_preloaded_schema_cache(remote_uri);
+    xercesc::InputSource* source = get_schema(remote_uri);
 
     if (not source) {
       throw SmartMet::Spine::Exception::Trace(BCP, "Failed to resolve URI '" + remote_uri + "'");
@@ -71,14 +87,11 @@ try
      throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
    }
 
-xercesc::InputSource* EntityResolver::try_preloaded_schema_cache(const std::string& remote_uri)
+xercesc::InputSource* EntityResolver::get_schema(const std::string& remote_uri)
 try
   {
-    auto it = cache.find(remote_uri);
-    if (it == cache.end()) {
-      return nullptr;
-    } else {
-      const std::string &src = it->second;
+    std::string src;
+    if (get_schema(remote_uri, src)) {
       std::size_t len = src.length();
       char *data = new char[len + 1];
       memcpy(data, src.c_str(), len + 1);
@@ -87,9 +100,97 @@ try
 					    len,
 					    x_remote_id.get(),
 					    true /* adopt buffer */);
+    } else {
+      return nullptr;
     }
   }
  catch (...)
    {
      throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
    }
+
+bool EntityResolver::get_schema(const std::string& uri, std::string& result)
+try
+{
+  std::map<std::string, std::string>::const_iterator it;
+  std::map<std::string, Download>::iterator it_d;
+  std::unique_lock<std::mutex> lock(mutex);
+  it = cache.find(uri);
+  if (it == cache.end()) {
+    if (enable_download) {
+      it_d = download_map.find(uri);
+      if (it_d == download_map.end()) {
+	// URI encountered first time: try to download
+	auto x = download_map.emplace(uri, Download());
+	assert (not x.second); // Should not happen
+	it_d = x.first;
+	it_d->second.task = std::async(std::launch::async,
+				       [this, uri] () { return download(uri); }).share();
+      }
+
+      lock.unlock();
+
+      // FIXME: support retrying failed downloads
+
+      auto task = it_d->second.task;
+      result = task.get();
+      return true;
+    } else {
+      // Not found and downloading schemas is not allowed
+      return false;
+    }
+  } else {
+    result = it->second;
+    return true;
+  }
+} catch (...) {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+}
+
+std::string EntityResolver::download(const std::string& uri) const
+{
+  CURL* curl = curl_easy_init();
+
+  if (not curl) {
+    throw SmartMet::Spine::Exception::Trace(BCP, "curl_easy_init() call failed");
+  }
+
+  std::ostringstream result;
+
+  const int verbose = 0;
+  const int autoreferer = 1;
+  const int fail_on_error = 1;
+  const int content_decoding = 1;
+  const int transfer_decoding = 1;
+  const char *accept_encoding = "gzip, deflate";
+
+  curl_easy_setopt(curl, CURLOPT_VERBOSE, &verbose);
+  curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &append_data);
+  curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
+  curl_easy_setopt(curl, CURLOPT_URL, uri.c_str());
+  curl_easy_setopt(curl, CURLOPT_AUTOREFERER, &autoreferer);
+  curl_easy_setopt(curl, CURLOPT_FAILONERROR, &fail_on_error);
+  curl_easy_setopt(curl, CURLOPT_ACCEPT_ENCODING, accept_encoding);
+  curl_easy_setopt(curl, CURLOPT_HTTP_CONTENT_DECODING, &content_decoding);
+  curl_easy_setopt(curl, CURLOPT_HTTP_TRANSFER_DECODING, &transfer_decoding);
+
+  if (proxy != "") {
+    curl_easy_setopt(curl, CURLOPT_PROXY, proxy.c_str());
+  }
+
+  if (no_proxy != "") {
+    curl_easy_setopt(curl, CURLOPT_NOPROXY, no_proxy.c_str());
+  }
+
+  CURLcode ret = curl_easy_perform(curl);
+  curl_easy_cleanup(curl);
+  if (ret == 0)
+  {
+    return result.str();
+  } else {
+    // FIXME: for some reason throwing SmartMet::Spine::Exception causes it to crash instead
+    //        of postponing exception handling. Throwing std::runtime_error works
+    //throw SmartMet::Spine::Exception::Trace(BCP, "Failed to download " + uri);
+    throw std::runtime_error("Failed to download " + uri + ": " + curl_easy_strerror(ret));
+  }
+}

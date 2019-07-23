@@ -99,6 +99,7 @@ class ParserMT : public boost::noncopyable
   Parser* get();
 
   void load_schema_cache(const std::string& file_name);
+  void enable_schema_download(const std::string& httpProxy, const std::string& no_proxy);
 
  private:
   const std::string grammar_pool_file_name;

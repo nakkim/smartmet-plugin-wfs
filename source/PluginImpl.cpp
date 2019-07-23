@@ -266,6 +266,15 @@ void PluginImpl::create_xml_parser()
     {
       xml_parser->load_schema_cache(serialized_xml_schemas);
     }
+
+    if (itsConfig.getValidateXmlOutput()) {
+      std::cout << "\t\t+ [Enabling XML schema download (";
+      if (itsConfig.getProxy() != "") { std::cout << "proxy='" << itsConfig.getProxy() << '\''; }
+      if (itsConfig.getNoProxy() != "") { std::cout << "no_proxy='" << itsConfig.getNoProxy() << '\''; }
+      std::cout << ']' << std::endl;
+
+      xml_parser->enable_schema_download(itsConfig.getProxy(), itsConfig.getNoProxy());
+    }
   }
   catch (...)
   {
