@@ -268,6 +268,13 @@ void ParserMT::enable_schema_download(const std::string& httpProxy, const std::s
   entity_resolver->init_schema_download(httpProxy, noProxy);
 }
 
+void ParserMT::dump_schema_cache(std::ostream& os)
+{
+  entity_resolver->merge_downloaded_schemas();
+  boost::archive::text_oarchive oa(os);
+  oa << *entity_resolver;
+}
+
 boost::shared_ptr<xercesc::DOMDocument> str2xmldom(const std::string &src,
                                                    const std::string &doc_id)
 {

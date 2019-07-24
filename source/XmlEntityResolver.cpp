@@ -41,6 +41,28 @@ EntityResolver::init_schema_download(const std::string& proxy, const std::string
   this->no_proxy = no_proxy;
 }
 
+bool
+EntityResolver::merge_downloaded_schemas()
+{
+  bool changed = false;
+  std::unique_lock<std::mutex> lock(mutex);
+  std::map<std::string, Download>::iterator curr, next;
+  for (curr = download_map.begin(); curr != download_map.end(); curr = next) {
+    next = curr;
+    next++;
+    try {
+      const std::string uri = curr->first;
+      const std::string content = curr->second.task.get();
+      cache[uri] = content;
+      download_map.erase(uri);
+      changed = true;
+    } catch (...) {
+      // Ignore exceptions here
+    }
+  }
+  return changed;
+}
+
 xercesc::InputSource *
 EntityResolver::resolveEntity(xercesc::XMLResourceIdentifier *resource_identifier)
 try

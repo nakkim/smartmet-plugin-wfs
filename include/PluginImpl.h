@@ -119,6 +119,8 @@ class PluginImpl : public boost::noncopyable
 
   void updateStoredQueryMap(Spine::Reactor* theReactor);
 
+  void dump_xml_schema_cache(std::ostream& os);
+
  private:
   void query(const std::string& language,
              const SmartMet::Spine::HTTP::Request& req,

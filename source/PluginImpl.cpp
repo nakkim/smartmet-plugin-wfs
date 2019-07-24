@@ -909,3 +909,8 @@ void PluginImpl::maybe_validate_output(const SmartMet::Spine::HTTP::Request& req
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
+
+void PluginImpl::dump_xml_schema_cache(std::ostream& os)
+{
+  xml_parser->dump_schema_cache(os);
+}

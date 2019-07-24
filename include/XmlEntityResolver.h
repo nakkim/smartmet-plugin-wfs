@@ -41,6 +41,8 @@ namespace SmartMet {
 
 	  void init_schema_download(const std::string& http_proxy = "", const std::string& no_proxy = "");
 
+	  bool merge_downloaded_schemas();
+
           virtual xercesc::InputSource *resolveEntity(xercesc::XMLResourceIdentifier *resource_identifier);
 
 
