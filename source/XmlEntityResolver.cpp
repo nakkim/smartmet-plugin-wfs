@@ -3,6 +3,7 @@
 #include <xercesc/framework/LocalFileInputSource.hpp>
 #include <xercesc/util/Janitor.hpp>
 #include <spine/Exception.h>
+#include <spine/Convenience.h>
 #include "XmlUtils.h"
 
 using SmartMet::Plugin::WFS::Xml::EntityResolver;
@@ -118,22 +119,39 @@ try
   it = cache.find(uri);
   if (it == cache.end()) {
     if (enable_download) {
+      bool downloading = false;
       it_d = download_map.find(uri);
       if (it_d == download_map.end()) {
 	// URI encountered first time: try to download
+	downloading = true;
 	auto x = download_map.emplace(uri, Download());
 	assert (not x.second); // Should not happen
 	it_d = x.first;
+      } else if (it_d->second.num_failed and it_d->second.num_failed < 100) {
+	unsigned inc = it_d->second.num_failed < 10 ? 10 : 600;
+	if (std::time(0) > it_d->second.last_failed + inc) {
+	  downloading = true;
+	}
+      }
+
+      if (downloading) {
 	it_d->second.task = std::async(std::launch::async,
-				       [this, uri] () { return download(uri); }).share();
+				       std::bind(&EntityResolver::download, this, uri));
       }
 
       lock.unlock();
 
-      // FIXME: support retrying failed downloads
-
       auto task = it_d->second.task;
-      result = task.get();
+      try {
+	result = task.get();
+	it_d->second.num_failed = 0;
+      } catch (...) {
+	if (downloading) {
+	  it_d->second.num_failed++;
+	  it_d->second.last_failed = std::time(0);
+	}
+	throw;
+      }
       return true;
     } else {
       // Not found and downloading schemas is not allowed
@@ -182,10 +200,15 @@ std::string EntityResolver::download(const std::string& uri) const
     curl_easy_setopt(curl, CURLOPT_NOPROXY, no_proxy.c_str());
   }
 
+  std::cout << SmartMet::Spine::log_time_str() << ": [WFS] Trying to download XML schema from "
+	    << uri << std::endl;
+
   CURLcode ret = curl_easy_perform(curl);
   curl_easy_cleanup(curl);
   if (ret == 0)
   {
+    std::cout << SmartMet::Spine::log_time_str() << ": [WFS] Downloaded XML schema from "
+	      << uri << std::endl;
     return result.str();
   } else {
     // FIXME: for some reason throwing SmartMet::Spine::Exception causes it to crash instead

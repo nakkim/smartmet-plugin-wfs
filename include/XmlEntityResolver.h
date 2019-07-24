@@ -21,6 +21,10 @@ namespace SmartMet {
 	  struct Download
 	  {
 	    std::shared_future<std::string> task;
+	    int num_failed;
+	    std::time_t last_failed;
+
+            Download() : num_failed(0), last_failed(0) {}
 	  };
 
 	  std::mutex mutex;
