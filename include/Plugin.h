@@ -76,9 +76,9 @@ class Plugin
 			  const SmartMet::Spine::HTTP::Request& theRequest,
 			  SmartMet::Spine::HTTP::Response& theResponse);
 
-  void reloadHandler(SmartMet::Spine::Reactor& theReactor,
-		     const SmartMet::Spine::HTTP::Request& theRequest,
-		     SmartMet::Spine::HTTP::Response& theResponse);
+  void adminHandler(SmartMet::Spine::Reactor& theReactor,
+		    const SmartMet::Spine::HTTP::Request& theRequest,
+		    SmartMet::Spine::HTTP::Response& theResponse);
 
   void updateLoop();
 
