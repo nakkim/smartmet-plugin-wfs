@@ -89,10 +89,11 @@ void Plugin::init()
     clearUsers();
     if (adminCred) {
       addUser(adminCred->first, adminCred->second);
-      itsReactor->addContentHandler(this,
-				    "/wfs/reload",
-				    boost::bind(&Plugin::reloadHandler, this, _1, _2, _3));
     }
+
+    itsReactor->addContentHandler(this,
+				  "/wfs/admin",
+				  boost::bind(&Plugin::adminHandler, this, _1, _2, _3));
   }
   catch (...)
   {
@@ -210,22 +211,38 @@ void Plugin::realRequestHandler(SmartMet::Spine::Reactor& theReactor,
   }
 }
 
-void Plugin::reloadHandler(SmartMet::Spine::Reactor& theReactor,
-			   const SmartMet::Spine::HTTP::Request& theRequest,
-			   SmartMet::Spine::HTTP::Response& theResponse)
+void Plugin::adminHandler(SmartMet::Spine::Reactor& theReactor,
+			  const SmartMet::Spine::HTTP::Request& theRequest,
+			  SmartMet::Spine::HTTP::Response& theResponse)
 {
-  if (authenticateRequest(theRequest, theResponse)) {
-    bool ok = reload(itsConfig);
-    theResponse.setStatus(200);
-    theResponse.setHeader("Content-type", "text/html; charset=UTF-8");
-    std::ostringstream content;
-    content << "<html><title>WFS plugin reload</title>";
-    if (ok) {
-      content << "<body>Reload successful</body></html>\n";
+  try {
+    auto impl = boost::atomic_load(&plugin_impl);
+    const auto operation = theRequest.getParameter("request");
+    auto adminCred = impl->get_config().get_admin_credentials();
+    if (operation) {
+      if (adminCred and (*operation == "reload")) {
+	if (authenticateRequest(theRequest, theResponse)) {
+	  bool ok = reload(itsConfig);
+	  theResponse.setStatus(200);
+	  theResponse.setHeader("Content-type", "text/html; charset=UTF-8");
+	  std::ostringstream content;
+	  content << "<html><title>WFS plugin reload</title>";
+	  if (ok) {
+	    content << "<body>Reload successful</body></html>\n";
+	  } else {
+	    content << "<body>Reload failed</body></html>\n";
+	  }
+	  theResponse.setContent(content.str());
+	}
+      }
+      else {
+	throw std::runtime_error(*operation + " is not supported");
+      }
     } else {
-      content << "<body>Reload failed</body></html>\n";
+      throw std::runtime_error("Mandatory parameter request missing");
     }
-    theResponse.setContent(content.str());
+  } catch (...) {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
