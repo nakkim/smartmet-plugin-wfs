@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.6.25
+Version: 19.7.30
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -95,6 +95,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Tue Jul 30 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.7.30-1.fmi
+- XML schema validation update (supports XML schema download including
+  through proxy (BRAINSTORM-1640)
+- Admin request support (BRAINSTORM-1645)
+
 * Tue Jun 25 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.6.25-1.fmi
 - Improved WMS server and APIKEY settings
 
