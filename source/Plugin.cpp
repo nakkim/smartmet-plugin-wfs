@@ -235,6 +235,14 @@ void Plugin::adminHandler(SmartMet::Spine::Reactor& theReactor,
 	  theResponse.setContent(content.str());
 	}
       }
+      else if (*operation == "xmlSchemaCache") {
+	namespace io = boost::iostreams;
+	std::ostringstream content;
+	impl->dump_xml_schema_cache(content);
+	theResponse.setStatus(200);
+	theResponse.setHeader("Content-type", "application/octet-stream");
+	theResponse.setContent(content.str());
+      }
       else {
 	throw std::runtime_error(*operation + " is not supported");
       }
