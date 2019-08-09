@@ -296,13 +296,13 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
       throw exception;
     }
 
-    QueryServer::Query query(queryParameter.gridQuery);
+    //QueryServer::Query query(queryParameter.gridQuery);
 
     boost::posix_time::ptime utctime;
     SmartMet::Engine::Contour::Options options(getContourEngineOptions(utctime, queryParameter));
 
 
-    for (auto param = query.mQueryParameterList.begin(); param != query.mQueryParameterList.end(); ++param)
+    for (auto param = queryParameter.gridQuery.mQueryParameterList.begin(); param != queryParameter.gridQuery.mQueryParameterList.end(); ++param)
     {
       if (options.isovalues.size() > 0)
       {
@@ -328,10 +328,10 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
       }
     }
 
-    query.mAttributeList.setAttribute("contour.coordinateType",std::to_string(T::CoordinateTypeValue::LATLON_COORDINATES));
+    queryParameter.gridQuery.mAttributeList.setAttribute("contour.coordinateType",std::to_string(T::CoordinateTypeValue::LATLON_COORDINATES));
     //query.mAttributeList.setAttribute("contour.coordinateType",std::to_string(T::CoordinateTypeValue::GRID_COORDINATES));
 
-    int result = itsGridEngine->executeQuery(query);
+    int result = itsGridEngine->executeQuery(queryParameter.gridQuery);
     if (result != 0)
     {
       Spine::Exception exception(BCP, "The query server returns an error message!");
@@ -350,10 +350,10 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
 
     //query.print(std::cout,0,0);
 
-    T::Attribute *attr = query.mAttributeList.getAttribute("contour.imageFile");
+    T::Attribute *attr = queryParameter.gridQuery.mAttributeList.getAttribute("contour.imageFile");
 
 
-    for (auto param = query.mQueryParameterList.begin(); param != query.mQueryParameterList.end(); ++param)
+    for (auto param = queryParameter.gridQuery.mQueryParameterList.begin(); param != queryParameter.gridQuery.mQueryParameterList.end(); ++param)
     {
       for (auto val = param->mValueList.begin(); val != param->mValueList.end(); ++val)
       {
@@ -429,7 +429,6 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
           }
           ret.push_back(cgr);
         }
-
       }
     }
 
@@ -767,9 +766,26 @@ void bw::StoredContourQueryHandler::query_gridEngine(
 
     SmartMet::Engine::Gis::CRSRegistry& crsRegistry = plugin_impl.get_crs_registry();
 
+
+    std::string analysisTimeStr;
+    std::string modificationTimeStr;
+
+    for (auto param = query_param->gridQuery.mQueryParameterList.begin(); param != query_param->gridQuery.mQueryParameterList.end(); ++param)
+    {
+      for (auto val = param->mValueList.begin(); val != param->mValueList.end(); ++val)
+      {
+        if (val->mAnalysisTime > " ")
+        {
+          analysisTimeStr = val->mAnalysisTime;
+          modificationTimeStr = val->mModificationTime;
+        }
+      }
+    }
+
+
     CTPP::CDT hash;
-    boost::posix_time::ptime origintime;
-    boost::posix_time::ptime modificationtime;
+    boost::posix_time::ptime origintime = boost::posix_time::ptime(boost::posix_time::from_iso_string(analysisTimeStr.c_str()));
+    boost::posix_time::ptime modificationtime = boost::posix_time::ptime(boost::posix_time::from_iso_string(modificationTimeStr.c_str()));
 
     parseQueryResults(query_results, query_param->bbox, language, crsRegistry, requestedCRS, origintime, modificationtime, query_param->tz_name, hash);
 

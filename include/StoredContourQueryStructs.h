@@ -33,7 +33,7 @@ struct ContourQueryParameter
   unsigned short smoothing_degree;
   unsigned short smoothing_size;
   SmartMet::Spine::TimeSeriesGenerator::LocalTimeList tlist;
-  QueryServer::Query gridQuery;
+  mutable QueryServer::Query gridQuery;
 
   ContourQueryParameter(const SmartMet::Spine::Parameter& p,
                         const SmartMet::Engine::Querydata::Q& qe,
