@@ -784,8 +784,14 @@ void bw::StoredContourQueryHandler::query_gridEngine(
 
 
     CTPP::CDT hash;
-    boost::posix_time::ptime origintime = boost::posix_time::ptime(boost::posix_time::from_iso_string(analysisTimeStr.c_str()));
-    boost::posix_time::ptime modificationtime = boost::posix_time::ptime(boost::posix_time::from_iso_string(modificationTimeStr.c_str()));
+    boost::posix_time::ptime origintime;
+    boost::posix_time::ptime modificationtime;
+
+    if (analysisTimeStr > " ")
+      origintime = boost::posix_time::ptime(boost::posix_time::from_iso_string(analysisTimeStr.c_str()));
+
+    if (modificationTimeStr > " ")
+      modificationtime = boost::posix_time::ptime(boost::posix_time::from_iso_string(modificationTimeStr.c_str()));
 
     parseQueryResults(query_results, query_param->bbox, language, crsRegistry, requestedCRS, origintime, modificationtime, query_param->tz_name, hash);
 
