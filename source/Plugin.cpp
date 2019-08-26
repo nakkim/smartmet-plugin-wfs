@@ -4,13 +4,14 @@
  */
 // ======================================================================
 
-#include <Plugin.h>
 #include "WfsConst.h"
 #include "WfsException.h"
 #include <boost/bind.hpp>
+#include <spine/Convenience.h>
 #include <spine/Exception.h>
 #include <spine/Reactor.h>
 #include <spine/SmartMet.h>
+#include <Plugin.h>
 #include <sstream>
 #include <thread>
 
@@ -86,11 +87,11 @@ void Plugin::init()
           BCP, "Failed to register WFS content handler for default language");
     }
 
-    if (adminCred) {
+    if (adminCred)
+    {
       addUser(adminCred->first, adminCred->second);
-      itsReactor->addContentHandler(this,
-				    "/wfs/reload",
-				    boost::bind(&Plugin::reloadHandler, this, _1, _2, _3));
+      itsReactor->addContentHandler(
+          this, "/wfs/reload", boost::bind(&Plugin::reloadHandler, this, _1, _2, _3));
     }
   }
   catch (...)
@@ -143,16 +144,22 @@ int Plugin::getRequiredAPIVersion() const
 
 bool Plugin::reload(const char* theConfig)
 {
-  if (itsReloading) {
+  if (itsReloading)
+  {
     return false;
-  } else {
+  }
+  else
+  {
     // FIXME: Use atomic
     itsReloading = true;
     std::cout << "Plugin reload requested" << std::endl;
-    try {
+    try
+    {
       itsConfig = theConfig;
       init();
-    } catch (...) {
+    }
+    catch (...)
+    {
       throw SmartMet::Spine::Exception(BCP, "Reload failed");
     }
     itsReloading = false;
@@ -201,6 +208,9 @@ void Plugin::realRequestHandler(SmartMet::Spine::Reactor& theReactor,
   try
   {
     auto impl = boost::atomic_load(&plugin_impl);
+    std::string data_source = Spine::optional_string(theRequest.getParameter("source"),
+                                                     plugin_impl->get_primary_data_source());
+    impl->set_data_source(data_source);
     impl->realRequestHandler(theReactor, language, theRequest, theResponse);
   }
   catch (...)
@@ -210,18 +220,22 @@ void Plugin::realRequestHandler(SmartMet::Spine::Reactor& theReactor,
 }
 
 void Plugin::reloadHandler(SmartMet::Spine::Reactor& theReactor,
-			   const SmartMet::Spine::HTTP::Request& theRequest,
-			   SmartMet::Spine::HTTP::Response& theResponse)
+                           const SmartMet::Spine::HTTP::Request& theRequest,
+                           SmartMet::Spine::HTTP::Response& theResponse)
 {
-  if (authenticateRequest(theRequest, theResponse)) {
+  if (authenticateRequest(theRequest, theResponse))
+  {
     bool ok = reload(itsConfig);
     theResponse.setStatus(200);
     theResponse.setHeader("Content-type", "text/html; charset=UTF-8");
     std::ostringstream content;
     content << "<html><title>WFS plugin reload</title>";
-    if (ok) {
+    if (ok)
+    {
       content << "<body>Reload successful</body></html>\n";
-    } else {
+    }
+    else
+    {
       content << "<body>Reload failed</body></html>\n";
     }
     theResponse.setContent(content.str());
@@ -236,14 +250,14 @@ bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request& /* theRequest */)
 
 void Plugin::updateLoop()
 {
-  auto updateCheck = [this]() -> bool
+  auto updateCheck = [this]() -> bool {
+    std::unique_lock<std::mutex> lock(itsUpdateNotifyMutex);
+    if (not itsShuttingDown)
     {
-      std::unique_lock<std::mutex> lock(itsUpdateNotifyMutex);
-      if (not itsShuttingDown) {
-	itsUpdateNotifyCond.wait_for(lock, std::chrono::seconds(1));
-      }
-      return not itsShuttingDown;
-    };
+      itsUpdateNotifyCond.wait_for(lock, std::chrono::seconds(1));
+    }
+    return not itsShuttingDown;
+  };
 
   try
   {
@@ -251,8 +265,8 @@ void Plugin::updateLoop()
     {
       try
       {
-	auto impl = boost::atomic_load(&plugin_impl);
-	impl->updateStoredQueryMap(itsReactor);
+        auto impl = boost::atomic_load(&plugin_impl);
+        impl->updateStoredQueryMap(itsReactor);
       }
       catch (...)
       {
@@ -280,12 +294,14 @@ void Plugin::stopUpdateLoop()
   itsShuttingDown = true;
   std::unique_ptr<std::thread> tmp;
   std::unique_lock<std::mutex> lock(itsUpdateNotifyMutex);
-  if (itsUpdateLoopThread) {
+  if (itsUpdateLoopThread)
+  {
     std::swap(tmp, itsUpdateLoopThread);
     itsUpdateNotifyCond.notify_all();
   }
   lock.unlock();
-  if (tmp and tmp->joinable()) {
+  if (tmp and tmp->joinable())
+  {
     tmp->join();
   }
   itsShuttingDown = false;

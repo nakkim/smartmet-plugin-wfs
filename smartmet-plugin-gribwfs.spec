@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.8.12
+Version: 19.8.26
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -95,6 +95,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Mon Aug 26 2019 Anssi Reponen <anssi.reponen@fmi.fi> - 19.8.26-1.fmi
+- Limits of contours supported also as URL-parameter in grid-version (BRAINSTORM-1656)
+- Added support for primaryForecastSource, gridengine_disabled configuration parameters
+
 * Mon Aug 12 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.8.12-1.fmi
 - Fixed handling of missing analysis times
 
