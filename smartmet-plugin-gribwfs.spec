@@ -4,7 +4,7 @@
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
 Version: 19.8.28
-Release: 1%{?dist}.fmi
+Release: 2%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-wfs
@@ -23,34 +23,34 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 19.8.7
+BuildRequires: smartmet-library-spine-devel >= 19.8.28
 BuildRequires: smartmet-library-gis-devel >= 19.3.14
-BuildRequires: smartmet-library-locus-devel >= 19.3.21
+BuildRequires: smartmet-library-locus-devel >= 19.8.28
 BuildRequires: smartmet-library-macgyver-devel >= 19.8.2
 BuildRequires: smartmet-engine-contour-devel >= 19.2.22
-BuildRequires: smartmet-engine-geonames-devel >= 19.8.9
+BuildRequires: smartmet-engine-geonames-devel >= 19.8.28
 BuildRequires: smartmet-engine-gis-devel >= 19.5.29
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.8.5
+BuildRequires: smartmet-engine-observation-devel >= 19.8.28
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 19.8.6
+BuildRequires: smartmet-engine-querydata-devel >= 19.8.28
 BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 5.2.0
 Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
-Requires: smartmet-library-locus >= 19.3.21
+Requires: smartmet-library-locus >= 19.8.28
 Requires: smartmet-library-macgyver >= 19.8.2
-Requires: smartmet-library-spine >= 19.8.7
+Requires: smartmet-library-spine >= 19.8.28
 Requires: smartmet-library-gis >= 19.3.14
 Requires: smartmet-engine-contour >= 19.2.22
-Requires: smartmet-engine-geonames >= 19.8.9
+Requires: smartmet-engine-geonames >= 19.8.28
 Requires: smartmet-engine-gis >= 19.5.29
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.8.5
+Requires: smartmet-engine-observation >= 19.8.28
 %endif
-Requires: smartmet-engine-querydata >= 19.8.6
+Requires: smartmet-engine-querydata >= 19.8.28
 Requires: smartmet-server >= 19.8.9
 Requires: xerces-c
 Requires: xqilla
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Wed Aug 28 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.8.28-2.fmi
+- Repackaged since Spine::Location ABI changed
+
 * Wed Aug 28 2019 Anssi Reponen <anssi.reponen@fmi.fi> - 19.8.28-1.fmi
 - Added data source to cache key (source URL-parameter or primaryForecastSource config-parameter)
 
