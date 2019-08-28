@@ -129,10 +129,10 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours(
 {
   try
   {
-    std::string dataSource = get_plugin_impl().get_data_source();
-    bool gridengine_disabled = get_plugin_impl().is_gridengine_disabled();
+    const std::string& data_source = get_data_source();
+    bool gridengine_disabled = is_gridengine_disabled();
 
-    if (!gridengine_disabled && dataSource == P_GRID &&
+    if (!gridengine_disabled && data_source == P_GRID &&
         queryParameter.gridQuery.mQueryParameterList.size() > 0)
     {
       return getContours_gridEngine(queryParameter);

@@ -99,6 +99,9 @@ class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
     return StoredQueryParamRegistry::get_param_names();
   }
 
+  const std::string& get_data_source() const;
+  bool is_gridengine_disabled() const;
+
  protected:
   boost::shared_ptr<Fmi::TemplateFormatter> get_formatter(bool debug_format) const;
 
