@@ -3,7 +3,7 @@
   timeStamp="<TMPL_var responseTimestamp>"
   numberMatched="<TMPL_var numMatched>"
   numberReturned="<TMPL_var numReturned>"
-<TMPL_include "include/refs_obs_multipointcoverage.template"><TMPL_if (!DEFINED(hits_only))><TMPL_if DEFINED(returnArray)>
+<TMPL_include "include/refs_obs_multipointcoverage.template"><TMPL_if (!DEFINED(hits_only))><TMPL_if DEFINED(dataRows)>
   <wfs:member>
     <omso:GridSeriesObservation gml:id="<TMPL_var featureId>">
      <TMPL_include "include/time_lightning_multipointcoverage.template">

@@ -3,16 +3,14 @@
           <gml:domainSet>
             <gmlcov:SimpleMultiPoint gml:id="mp1-<TMPL_var queryNum>" srsName="<TMPL_var srsEpochName>" srsDimension="<TMPL_var projEpochSrsDim>">
               <gmlcov:positions>
-                <TMPL_foreach returnArray as row><TMPL_var row.x> <TMPL_var row.y> <TMPL_var row.stroke_time>
-                </TMPL_foreach></gmlcov:positions>
+                <TMPL_var positionRows></gmlcov:positions>
             </gmlcov:SimpleMultiPoint>
           </gml:domainSet>
           <gml:rangeSet>
             <gml:DataBlock>
               <gml:rangeParameters/>
               <gml:doubleOrNilReasonTupleList>
-                <TMPL_foreach returnArray as row><TMPL_foreach row.data as param><TMPL_var param> </TMPL_foreach>
-                </TMPL_foreach></gml:doubleOrNilReasonTupleList>
+                <TMPL_var dataRows></gml:doubleOrNilReasonTupleList>
             </gml:DataBlock>
           </gml:rangeSet>
           <gml:coverageFunction>

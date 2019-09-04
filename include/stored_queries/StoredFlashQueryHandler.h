@@ -51,12 +51,6 @@ class StoredFlashQueryHandler : public StoredQueryHandlerBase,
   std::string missing_text;
   bool sq_restrictions;
   int time_block_size;
-
- protected:
-  static const char *P_BEGIN_TIME;
-  static const char *P_END_TIME;
-  static const char *P_PARAM;
-  static const char *P_CRS;
 };
 
 }  // namespace WFS

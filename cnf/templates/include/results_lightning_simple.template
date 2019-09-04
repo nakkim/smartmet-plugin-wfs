@@ -1,14 +1,1 @@
-	<TMPL_foreach returnArray as row><TMPL_foreach row.data as param>
-	<wfs:member>
-            <BsWfs:BsWfsElement gml:id="<TMPL_var CONCAT("BsWfsElement.",row.__index__ + 1,".",param.__index__ + 1)>">
-                <BsWfs:Location>
-                    <gml:Point gml:id="<TMPL_var CONCAT("BsWfsElementP.",row.__index__ + 1,".",param.__index__ + 1)>" srsDimension="<TMPL_var projSrsDim>" srsName="<TMPL_var srsName>">
-                        <gml:pos><TMPL_var row.x> <TMPL_var row.y> <TMPL_var row.height></gml:pos>
-                    </gml:Point>
-                </BsWfs:Location>
-                <BsWfs:Time><TMPL_var row.stroke_time_str></BsWfs:Time>
-                <BsWfs:ParameterName><TMPL_var paramList[param.__index__].name></BsWfs:ParameterName>
-                <BsWfs:ParameterValue><TMPL_var param></BsWfs:ParameterValue>
-            </BsWfs:BsWfsElement>
-	</wfs:member>
-	</TMPL_foreach></TMPL_foreach>
+<TMPL_var dataRows>

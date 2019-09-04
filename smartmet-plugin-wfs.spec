@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.7.30
+Version: 19.9.4
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -23,35 +23,35 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 19.6.4
+BuildRequires: smartmet-library-spine-devel >= 19.8.28
 BuildRequires: smartmet-library-gis-devel >= 19.3.14
-BuildRequires: smartmet-library-locus-devel >= 19.3.21
-BuildRequires: smartmet-library-macgyver-devel >= 19.4.23
+BuildRequires: smartmet-library-locus-devel >= 19.8.28
+BuildRequires: smartmet-library-macgyver-devel >= 19.8.2
 BuildRequires: smartmet-engine-contour-devel >= 19.2.22
-BuildRequires: smartmet-engine-geonames-devel >= 19.3.22
+BuildRequires: smartmet-engine-geonames-devel >= 19.8.28
 BuildRequires: smartmet-engine-gis-devel >= 19.5.29
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.5.23
+BuildRequires: smartmet-engine-observation-devel >= 19.8.28
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 19.3.21
+BuildRequires: smartmet-engine-querydata-devel >= 19.8.28
 BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 5.2.0
 Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
-Requires: smartmet-library-locus >= 19.3.21
-Requires: smartmet-library-macgyver >= 19.4.23
-Requires: smartmet-library-spine >= 19.6.4
+Requires: smartmet-library-locus >= 19.8.28
+Requires: smartmet-library-macgyver >= 19.8.2
+Requires: smartmet-library-spine >= 19.8.28
 Requires: smartmet-library-gis >= 19.3.14
 Requires: smartmet-engine-contour >= 19.2.22
-Requires: smartmet-engine-geonames >= 19.3.22
+Requires: smartmet-engine-geonames >= 19.8.28
 Requires: smartmet-engine-gis >= 19.5.29
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.5.23
+Requires: smartmet-engine-observation >= 19.8.28
 %endif
-Requires: smartmet-engine-querydata >= 19.3.21
-Requires: smartmet-server >= 19.3.19
+Requires: smartmet-engine-querydata >= 19.8.28
+Requires: smartmet-server >= 19.8.9
 Requires: xerces-c
 Requires: xqilla
 %if 0%{rhel} >= 7
@@ -95,6 +95,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Wed Sep  4 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.4-1.fmi
+- Optimized stored lightning queries for speed, generating the rows of data via the template is too slow
+
+* Wed Aug 28 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.8.28-1.fmi
+- Repackaged since Spine::Location ABI changed
+
 * Tue Jul 30 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.7.30-1.fmi
 - XML schema validation update (supports XML schema download including
   through proxy (BRAINSTORM-1640)
