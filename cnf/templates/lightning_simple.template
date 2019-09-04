@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wfs:FeatureCollection
   timeStamp="<TMPL_var responseTimestamp>"
-  numberReturned="<TMPL_var (size(paramList) * size(returnArray))>"
-  numberMatched="<TMPL_var (size(paramList) * size(returnArray))>"
+  numberReturned="<TMPL_var numberReturned>"
+  numberMatched="<TMPL_var numberMatched>"
   <TMPL_include "include/refs_for_simple.template">>
   <TMPL_include "include/results_lightning_simple.template">
 </wfs:FeatureCollection>

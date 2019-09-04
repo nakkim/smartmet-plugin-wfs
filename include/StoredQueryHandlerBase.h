@@ -39,11 +39,11 @@ class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
 {
   SmartMet::Spine::Reactor* reactor;
   boost::shared_ptr<StoredQueryConfig> config;
-  boost::optional<std::string> template_file;
   bool hidden;
 
  protected:
   const PluginImpl& plugin_impl;
+  boost::optional<std::string> template_file;  // needed by StoredFlashQueryHandler
 
  public:
   StoredQueryHandlerBase(SmartMet::Spine::Reactor* reactor,
@@ -105,6 +105,11 @@ class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
   inline SmartMet::Spine::Reactor* get_reactor() const { return reactor; }
   inline const PluginImpl& get_plugin_impl() const { return plugin_impl; }
   void format_output(CTPP::CDT& hash, std::ostream& output, bool debug_format) const;
+
+  static std::pair<std::string, std::string> get_2D_coord(
+      boost::shared_ptr<SmartMet::Engine::Gis::CRSRegistry::Transformation> transformation,
+      double X,
+      double Y);
 
   static void set_2D_coord(
       boost::shared_ptr<SmartMet::Engine::Gis::CRSRegistry::Transformation> transformation,
