@@ -7,7 +7,6 @@
 #include "StoredQueryHandlerFactoryDef.h"
 #include "SupportsBoundingBox.h"
 #include "SupportsExtraHandlerParams.h"
-#include "SupportsLocationParameters.h"
 #include "SupportsTimeParameters.h"
 #include "SupportsTimeZone.h"
 
@@ -27,7 +26,6 @@ namespace WFS
  */
 class StoredContourQueryHandler : public StoredQueryHandlerBase,
                                   protected virtual SupportsExtraHandlerParams,
-                                  protected SupportsLocationParameters,
                                   protected SupportsBoundingBox,
                                   protected SupportsTimeParameters,
                                   protected SupportsTimeZone
