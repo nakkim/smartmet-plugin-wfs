@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.9.5
+Version: 19.9.12
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -31,7 +31,7 @@ BuildRequires: smartmet-engine-contour-devel >= 19.2.22
 BuildRequires: smartmet-engine-geonames-devel >= 19.8.28
 BuildRequires: smartmet-engine-gis-devel >= 19.5.29
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.8.28
+BuildRequires: smartmet-engine-observation-devel >= 19.9.12
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 19.8.28
 BuildRequires: postgresql95-libs
@@ -48,7 +48,7 @@ Requires: smartmet-engine-contour >= 19.2.22
 Requires: smartmet-engine-geonames >= 19.8.28
 Requires: smartmet-engine-gis >= 19.5.29
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.8.28
+Requires: smartmet-engine-observation >= 19.9.12
 %endif
 Requires: smartmet-engine-querydata >= 19.8.28
 Requires: smartmet-server >= 19.8.9
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Sep 12 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.12-1.fmi
+- Repackaged due to obsengine ABI changes (virtual destructors added)
+
 * Thu Sep  5 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.5-1.fmi
 - Removed unnecessary support for location parameters in contour handlers
 
