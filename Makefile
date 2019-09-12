@@ -14,15 +14,16 @@ FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter \
 	-fno-omit-frame-pointer \
 	-fdiagnostics-color=$(GCC_DIAG_COLOR) \
 	-Wno-unknown-pragmas \
-      -Wcast-align \
-      -Wcast-qual \
-      -Wno-inline \
-      -Wno-multichar \
-      -Wno-pmf-conversions \
-      -Woverloaded-virtual  \
-      -Wpointer-arith \
-      -Wredundant-decls \
-      -Wwrite-strings
+	-Wcast-align \
+	-Wcast-qual \
+	-Wno-inline \
+	-Wno-multichar \
+	-Wno-pmf-conversions \
+	-Woverloaded-virtual  \
+	-Wpointer-arith \
+	-Wredundant-decls \
+	-Wwrite-strings \
+	-Wnon-virtual-dtor 
 
 # Compile options in detault, debug and profile modes
 
