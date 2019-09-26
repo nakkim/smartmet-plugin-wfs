@@ -331,7 +331,8 @@ bool ParameterTemplateItem::handle_redirection(
 
     /* FIXME: should we allow recursive redirection? Currently not allowed. */
 
-    return param_desc.get_value(result, req_param_map, nullptr /* extra_params */);
+    boost::tribool ok = param_desc.get_value(result, req_param_map, nullptr /* extra_params */);
+    return (ok ? true : false);
   }
   catch (...)
   {
