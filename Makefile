@@ -24,6 +24,13 @@ FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter \
       -Wredundant-decls \
       -Wwrite-strings
 
+ifeq ($(TSAN), yes)
+  FLAGS += -fsanitize=thread
+endif
+ifeq ($(ASAN), yes)
+  FLAGS += -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=undefined -fsanitize-address-use-after-scope
+endif
+
 # Compile options in detault, debug and profile modes
 
 CFLAGS_RELEASE = $(DEFINES) $(FLAGS) -DNDEBUG -O2 -g
@@ -81,7 +88,6 @@ LIBS = -L$(libdir) \
 	-lboost_date_time \
         -lboost_serialization \
 	-lboost_thread \
-	-lboost_regex \
 	-lboost_iostreams \
 	-lboost_filesystem \
         -lboost_chrono \
@@ -89,7 +95,7 @@ LIBS = -L$(libdir) \
         -lxqilla \
 	-lxerces-c \
 	-lgdal \
-	-lpqxx /usr/pgsql-9.5/lib/libpq.a \
+	-lpqxx \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \

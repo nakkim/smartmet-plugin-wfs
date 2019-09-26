@@ -19,6 +19,13 @@ FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter -Wno-unknown-pragmas \
       -Wredundant-decls \
       -Wwrite-strings
 
+ifeq ($(TSAN), yes)
+  FLAGS += -fsanitize=thread
+endif
+ifeq ($(ASAN), yes)
+  FLAGS += -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=undefined -fsanitize-address-use-after-scope
+endif
+
 # Compile options in detault, debug and profile modes
 
 CFLAGS_RELEASE = $(DEFINES) $(FLAGS) -DNDEBUG -O2 -g
@@ -69,7 +76,6 @@ LIBS = -L$(libdir) \
 	-lboost_date_time \
         -lboost_serialization \
 	-lboost_thread \
-	-lboost_regex \
 	-lboost_iostreams \
 	-lboost_filesystem \
         -lboost_chrono \
@@ -108,7 +114,6 @@ LIBS = -L$(libdir) \
 	-lpqxx \
 	-lboost_date_time \
 	-lboost_thread \
-	-lboost_regex \
 	-lboost_iostreams \
 	-lboost_filesystem \
 	-lboost_system \
@@ -139,7 +144,7 @@ test: $(TEST_TARGETS)
 	$$ok;
 
 PluginTest : obj/PluginTest.o ; @echo "Building $@"
-	@$(CC) -o $@ $(TEST_CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) $(LIBS)
+	@$(CC) -o $@ $(CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) $(LIBS)
 
 
 ifneq ($(wildcard obj/*.d),)
