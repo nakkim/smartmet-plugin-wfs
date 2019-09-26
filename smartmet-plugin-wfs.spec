@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 * Thu Sep 26 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.26-1.fmi
 - Fixed thread safety issue in hostname handling
 
+* Thu Sep 12 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.12-1.fmi
+- Repackaged due to obsengine ABI changes (virtual destructors added)
+
 * Thu Sep  5 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.5-1.fmi
 - Removed unnecessary support for location parameters in contour handlers
 
