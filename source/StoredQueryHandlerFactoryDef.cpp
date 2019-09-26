@@ -78,9 +78,9 @@ void StoredQueryHandlerFactoryDef::create_signature(unsigned char *md)
     sample << n1 << '\n' << n2 << '\n' << n3 << '\n';
     const std::string s_sample = sample.str();
     SHA_CTX ctx;
-    SHA1_Init(&ctx);
-    SHA1_Update(&ctx, s_sample.c_str(), s_sample.length());
-    SHA1_Final(md, &ctx);
+    SHA_Init(&ctx);
+    SHA_Update(&ctx, s_sample.c_str(), s_sample.length());
+    SHA_Final(md, &ctx);
   }
   catch (...)
   {
