@@ -99,6 +99,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::init_handler()
 
 void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query,
                                                         const std::string &language,
+							const boost::optional<std::string> &hostname,
                                                         std::ostream &output) const
 {
   try

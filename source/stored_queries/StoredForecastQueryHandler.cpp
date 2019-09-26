@@ -116,6 +116,7 @@ void bw::StoredForecastQueryHandler::init_handler()
 
 void bw::StoredForecastQueryHandler::query(const StoredQuery& stored_query,
                                            const std::string& language,
+					   const boost::optional<std::string> &hostname,
                                            std::ostream& output) const
 {
   try

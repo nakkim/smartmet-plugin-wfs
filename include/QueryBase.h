@@ -49,7 +49,7 @@ class QueryBase
    *  Method is expected to throw an exception in a case of an error
    *  (SmartMet::Plugin::WFS::Exception preferred but not mandatory)
    */
-  virtual void execute(std::ostream& output, const std::string& language) const = 0;
+  virtual void execute(std::ostream& output, const std::string& language, const boost::optional<std::string>& hostname) const = 0;
 
   /**
    *   @brief Cast to required query type (Query or StoredQuery) from

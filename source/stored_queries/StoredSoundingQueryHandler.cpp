@@ -79,6 +79,7 @@ void StoredSoundingQueryHandler::init_handler()
 
 void StoredSoundingQueryHandler::query(const StoredQuery& query,
                                        const std::string& language,
+				       const boost::optional<std::string>& hostname,
                                        std::ostream& output) const
 {
   const auto& params = query.get_param_map();

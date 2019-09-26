@@ -220,13 +220,13 @@ boost::shared_ptr<bw::StoredQuery> bw::StoredQuery::create_from_feature_id(
   }
 }
 
-void bw::StoredQuery::execute(std::ostream& output, const std::string& language) const
+void bw::StoredQuery::execute(std::ostream& output, const std::string& language, const boost::optional<std::string>& hostname) const
 {
   try
   {
     assert(handler != nullptr);
 
-    handler->query(*this, language, output);
+    handler->query(*this, language, hostname, output);
   }
   catch (...)
   {

@@ -122,6 +122,7 @@ pt::ptime round_time(const pt::ptime& t0, unsigned step, int offset = 0)
 
 void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
                                         const std::string& language,
+					const boost::optional<std::string> &hostname,
                                         std::ostream& output) const
 {
   try
