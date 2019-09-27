@@ -17,61 +17,17 @@
   http://inspire.ec.europa.eu/schemas/inspire_dls/1.0 http://inspire.ec.europa.eu/schemas/inspire_dls/1.0/inspire_dls.xsd
   http://inspire.ec.europa.eu/schemas/common/1.0 http://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
   http://inspire.ec.europa.eu/schemas/ef/4.0 http://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
-
   <ows:ServiceIdentification>
-    <ows:Title>Finnish Meteorological Institute's Commercial Data Download Service</ows:Title>
-    <ows:Abstract>
-      Finnish Meteorological Institute's Commercial Data Download Service provides data
-      which is not available free-of-charge.
-    </ows:Abstract>
-    <ows:Keywords>
-      <ows:Keyword>Weather</ows:Keyword>
-      <ows:Keyword>Ocean</ows:Keyword>
-      <ows:Keyword>Radar</ows:Keyword>
-      <ows:Keyword>Observation</ows:Keyword>
-      <ows:Keyword>Forecast</ows:Keyword>
-      <ows:Keyword>Model</ows:Keyword>
-      <ows:Keyword>Hirlam</ows:Keyword>
-      <ows:Keyword>Radiation</ows:Keyword>
-      <ows:Keyword>Radioactivity</ows:Keyword>
-      <ows:Keyword>Airquality</ows:Keyword>
-      <ows:Type>String</ows:Type>
-    </ows:Keywords>
     <ows:ServiceType>WFS</ows:ServiceType>
     <ows:ServiceTypeVersion>2.0.0</ows:ServiceTypeVersion>
-    <ows:Fees>
-      The use of this service and the returned data is not free-of-charge. Users must
-      register and agree to the terms of service to gain access to the data.
-    </ows:Fees>
-    <ows:AccessConstraints>
-
-
-</ows:AccessConstraints>
+ 
   </ows:ServiceIdentification>
+
   <ows:ServiceProvider>
-    <ows:ProviderName>Finnish Meteorological Institute</ows:ProviderName>
-    <ows:ProviderSite xlink:href="http://en.ilmatieteenlaitos.fi"/>
     <ows:ServiceContact>
       <ows:ContactInfo>
-        <ows:Phone>
-          <ows:Voice>+358 29 539 1000</ows:Voice>
-          <ows:Facsimile>+358 29 539 2303</ows:Facsimile>
-        </ows:Phone>
-        <ows:Address>
-          <ows:DeliveryPoint>P.O. BOX 503</ows:DeliveryPoint>
-          <ows:City>Helsinki</ows:City>
-          <ows:AdministrativeArea>Uusimaa</ows:AdministrativeArea>
-          <ows:PostalCode>00101</ows:PostalCode>
-          <ows:Country>Finland</ows:Country>
-          <ows:ElectronicMailAddress>santeri.oksman@fmi.fi</ows:ElectronicMailAddress>
-        </ows:Address>
 
-        <ows:OnlineResource xlink:href="http://en.ilmatieteenlaitos.fi/open-data"/>
-        <ows:ContactInstructions>
 
-          For technical help or error reports considering FMI Open Data Web Services, please contact support@weatherproof.fi.
-
-        </ows:ContactInstructions>
       </ows:ContactInfo>
       <ows:Role>PointOfContact</ows:Role>
     </ows:ServiceContact>
