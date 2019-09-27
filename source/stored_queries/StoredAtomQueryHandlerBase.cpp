@@ -43,6 +43,7 @@ void bw::StoredAtomQueryHandlerBase::init_handler() {}
 
 void bw::StoredAtomQueryHandlerBase::query(const bw::StoredQuery& query,
                                            const std::string& language,
+					   const boost::optional<std::string> &hostname,
                                            std::ostream& output) const
 {
   try
@@ -69,13 +70,14 @@ void bw::StoredAtomQueryHandlerBase::query(const bw::StoredQuery& query,
     hash["hostname"] = QueryBase::HOSTNAME_SUBST;
     hash["protocol"] = QueryBase::PROTOCOL_SUBST;
 
-    const auto& hostname = get_plugin_impl().get_hostname();
-
+    if(!hostname)
+      throw Spine::Exception(BCP, "Hostname unknown");
+    
     CTPP::CDT h_hosts;
-    h_hosts["wms"] = get_config()->get_hosts().getWMSHost(hostname);
+    h_hosts["wms"] = get_config()->get_hosts().getWMSHost(*hostname);
     hash["hosts"] = h_hosts;
 
-    if (get_config()->get_hosts().getKeepApikeyFlag(hostname))
+    if (get_config()->get_hosts().getKeepApikeyFlag(*hostname))
     {
       hash["fmi_apikey"] = bw::QueryBase::FMI_APIKEY_SUBST;
       hash["fmi_apikey_prefix"] = bw::QueryBase::FMI_APIKEY_PREFIX_SUBST;
@@ -155,7 +157,7 @@ std::vector<std::string> bw::StoredAtomQueryHandlerBase::get_param_callback(
 
     const auto& param = get_param(param_name);
     boost::variant<SmartMet::Spine::Value, std::vector<SmartMet::Spine::Value> > param_value;
-    bool found = param.get_value(param_value, *param_map, this);
+    boost::tribool found = param.get_value(param_value, *param_map, this);
     if (found)
     {
       const int which = param_value.which();

@@ -2,6 +2,7 @@
 
 #include "XmlError.h"
 #include "XmlErrorHandler.h"
+#include <boost/core/noncopyable.hpp>
 #include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/thread.hpp>
@@ -19,7 +20,6 @@ namespace WFS
 {
 namespace Xml
 {
-
 class EntityResolver;
 
 /**

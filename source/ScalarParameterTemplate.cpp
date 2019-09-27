@@ -78,10 +78,10 @@ bool ScalarParameterTemplate::get_value(SmartMet::Spine::Value& result,
   try
   {
     boost::variant<SmartMet::Spine::Value, std::vector<SmartMet::Spine::Value> > tmp;
-    bool ok = get_value(tmp, req_param_map, extra_params);
+    boost::tribool ok = get_value(tmp, req_param_map, extra_params);
     if (ok)
       result = boost::get<SmartMet::Spine::Value>(tmp);
-    return ok;
+    return (ok ? true : false);
   }
   catch (...)
   {

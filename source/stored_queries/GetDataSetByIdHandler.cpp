@@ -62,6 +62,7 @@ void bw::GetDataSetByIdHandler::init_handler() {}
 
 void bw::GetDataSetByIdHandler::query(const StoredQuery& query,
                                       const std::string& language,
+				      const boost::optional<std::string>& hostname,
                                       std::ostream& output) const
 {
   try

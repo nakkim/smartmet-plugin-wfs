@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.9.4
+Version: 19.9.26
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -23,47 +23,44 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 19.8.28
-BuildRequires: smartmet-library-gis-devel >= 19.3.14
-BuildRequires: smartmet-library-locus-devel >= 19.8.28
-BuildRequires: smartmet-library-macgyver-devel >= 19.8.2
-BuildRequires: smartmet-engine-contour-devel >= 19.2.22
-BuildRequires: smartmet-engine-geonames-devel >= 19.8.28
-BuildRequires: smartmet-engine-gis-devel >= 19.5.29
+BuildRequires: smartmet-library-spine-devel >= 19.9.26
+BuildRequires: smartmet-library-gis-devel >= 19.9.26
+BuildRequires: smartmet-library-locus-devel >= 19.9.26
+BuildRequires: smartmet-library-macgyver-devel >= 19.9.26
+BuildRequires: smartmet-engine-contour-devel >= 19.9.26
+BuildRequires: smartmet-engine-geonames-devel >= 19.9.26
+BuildRequires: smartmet-engine-gis-devel >= 19.9.26
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.8.28
+BuildRequires: smartmet-engine-observation-devel >= 19.9.26
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 19.8.28
-BuildRequires: postgresql95-libs
+BuildRequires: smartmet-engine-querydata-devel >= 19.9.26
+# BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 5.2.0
 Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
-Requires: smartmet-library-locus >= 19.8.28
-Requires: smartmet-library-macgyver >= 19.8.2
-Requires: smartmet-library-spine >= 19.8.28
-Requires: smartmet-library-gis >= 19.3.14
-Requires: smartmet-engine-contour >= 19.2.22
-Requires: smartmet-engine-geonames >= 19.8.28
-Requires: smartmet-engine-gis >= 19.5.29
+Requires: smartmet-library-locus >= 19.9.26
+Requires: smartmet-library-macgyver >= 19.9.26
+Requires: smartmet-library-spine >= 19.9.26
+Requires: smartmet-library-gis >= 19.9.26
+Requires: smartmet-engine-contour >= 19.9.26
+Requires: smartmet-engine-geonames >= 19.9.26
+Requires: smartmet-engine-gis >= 19.9.26
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.8.28
+Requires: smartmet-engine-observation >= 19.9.26
 %endif
-Requires: smartmet-engine-querydata >= 19.8.28
-Requires: smartmet-server >= 19.8.9
+Requires: smartmet-engine-querydata >= 19.9.26
+Requires: smartmet-server >= 19.9.26
 Requires: xerces-c
 Requires: xqilla
-%if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
 Requires: boost-filesystem
 Requires: boost-iostreams
-Requires: boost-regex
 Requires: boost-serialization
 Requires: boost-system
 Requires: boost-thread
-%endif
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-wfs < 16.11.1
 Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
@@ -95,6 +92,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Sep 26 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.26-1.fmi
+- Fixed thread safety issue in hostname handling
+
+* Thu Sep 12 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.12-1.fmi
+- Repackaged due to obsengine ABI changes (virtual destructors added)
+
+* Thu Sep  5 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.5-1.fmi
+- Removed unnecessary support for location parameters in contour handlers
+
 * Wed Sep  4 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.4-1.fmi
 - Optimized stored lightning queries for speed, generating the rows of data via the template is too slow
 

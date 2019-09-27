@@ -13,7 +13,7 @@ namespace
   get_setting(libconfig::Setting* parent, const std::string& name)
   {
     if (parent->exists(name)) {
-      return &(*parent)[name];
+      return &(*parent)[name.c_str()];
     } else {
       return nullptr;
     }

@@ -546,6 +546,7 @@ void PluginImpl::query(const std::string& req_language,
   {
     const auto method = req.getMethod();
 
+    std::string hostname;
     if (const auto header_x_forwarded_host = req.getHeader("X-Forwarded-Host"))
       hostname = *header_x_forwarded_host;
     else if (const auto header_host = req.getHeader("Host"))
@@ -553,6 +554,7 @@ void PluginImpl::query(const std::string& req_language,
     else
       hostname = get_fallback_hostname();
 
+    std::string protocol;
     if (const auto header_x_forwarded_protocol = req.getProtocol())
       protocol = *header_x_forwarded_protocol;
     else
@@ -560,7 +562,7 @@ void PluginImpl::query(const std::string& req_language,
 
     const std::string fmi_apikey_prefix = "/fmi-apikey/";
 
-    language = req_language == "" ? *get_config().get_languages().begin() : req_language;
+    std::string language = req_language == "" ? *get_config().get_languages().begin() : req_language;
 
     if (method == SmartMet::Spine::HTTP::RequestMethod::GET)
     {

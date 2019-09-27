@@ -7,7 +7,6 @@
 #include "StoredQueryHandlerFactoryDef.h"
 #include "SupportsBoundingBox.h"
 #include "SupportsExtraHandlerParams.h"
-#include "SupportsLocationParameters.h"
 #include "SupportsTimeParameters.h"
 #include "SupportsTimeZone.h"
 
@@ -27,7 +26,6 @@ namespace WFS
  */
 class StoredContourQueryHandler : public StoredQueryHandlerBase,
                                   protected virtual SupportsExtraHandlerParams,
-                                  protected SupportsLocationParameters,
                                   protected SupportsBoundingBox,
                                   protected SupportsTimeParameters,
                                   protected SupportsTimeZone
@@ -40,6 +38,7 @@ class StoredContourQueryHandler : public StoredQueryHandlerBase,
   virtual ~StoredContourQueryHandler();
   virtual void query(const StoredQuery& query,
                      const std::string& language,
+		     const boost::optional<std::string>& hostname,
                      std::ostream& output) const;
 
   virtual void init_handler();

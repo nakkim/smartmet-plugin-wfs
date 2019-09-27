@@ -34,6 +34,7 @@ bw::GetFeatureByIdHandler::~GetFeatureByIdHandler() {}
 
 void bw::GetFeatureByIdHandler::query(const StoredQuery& query,
                                       const std::string& language,
+				      const boost::optional<std::string>& hostname,
                                       std::ostream& output) const
 {
   try
@@ -42,7 +43,7 @@ void bw::GetFeatureByIdHandler::query(const StoredQuery& query,
     const std::string id = params.get_single<std::string>(P_ID);
     auto query_p = bw::StoredQuery::create_from_feature_id(
         id, get_plugin_impl().get_stored_query_map(), query);
-    query_p->execute(output, language);
+    query_p->execute(output, language, hostname);
   }
   catch (...)
   {
