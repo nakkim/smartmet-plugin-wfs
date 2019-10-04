@@ -69,30 +69,6 @@ INCLUDES = -I$(includedir) \
 	-I$(includedir)/smartmet \
 	-I$(includedir)/mysql
 
-LIBS = -L$(libdir) \
-	-lsmartmet-spine \
-	-lsmartmet-newbase \
-	-lsmartmet-macgyver \
-	-lboost_date_time \
-        -lboost_serialization \
-	-lboost_thread \
-	-lboost_iostreams \
-	-lboost_filesystem \
-        -lboost_chrono \
-	-lboost_system \
-        -lxqilla \
-	-lxerces-c \
-	-lgdal \
-	-lpqxx /usr/pgsql-9.3/lib/libpq.a \
-	-lconfig++ \
-	-lconfig \
-	-lctpp2 \
-	-lcurl \
-	-lcrypto \
-	-lbz2 -lz \
-	-lpthread \
-	-lm
-
 INCLUDES := -I$(TOP)/include $(INCLUDES)
 
 obj/%.o : %.cpp ; @echo Compiling $<
@@ -112,6 +88,7 @@ LIBS = -L$(libdir) \
 	-lsmartmet-newbase \
 	-lsmartmet-macgyver \
 	-lpqxx \
+	-lgdal \
 	-lboost_date_time \
 	-lboost_thread \
 	-lboost_iostreams \
@@ -144,7 +121,7 @@ test: $(TEST_TARGETS)
 	$$ok;
 
 PluginTest : obj/PluginTest.o ; @echo "Building $@"
-	@$(CC) -o $@ $(CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) $(LIBS)
+	$(CC) -o $@ $(CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) $(LIBS)
 
 
 ifneq ($(wildcard obj/*.d),)
