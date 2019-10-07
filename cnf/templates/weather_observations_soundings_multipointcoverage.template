@@ -95,12 +95,12 @@
             <om:result>
                 <gmlcov:MultiPointCoverage gml:id="<TMPL_var CONCAT("mpcv1-1-",group.__index__ + 1)>">
                     <gml:domainSet>
-                        <!-- The grid consists of the 4D points where the measurements were
+                        <!-- The grid consists of the 5D points where the measurements were
                             actually made during the flight of the sounding balloon.
                         -->
                         <gmlcov:SimpleMultiPoint gml:id="<TMPL_var CONCAT("mp1-1",group.__index__ + 1)>" srsName="<TMPL_var projEpochSrsName>" srsDimension="<TMPL_var projEpochSrsDim>">
                             <gmlcov:positions><TMPL_foreach group.obsReturnArray as row>
-                            <TMPL_var row.x> <TMPL_var row.y> <TMPL_var row.altitude> <TMPL_var row.epochTime> </TMPL_foreach>
+                            <TMPL_var row.x> <TMPL_var row.y> <TMPL_var row.altitude> <TMPL_var row.epochTime> <TMPL_var row.pressure> </TMPL_foreach>
                             </gmlcov:positions>
                         </gmlcov:SimpleMultiPoint>
                     </gml:domainSet>

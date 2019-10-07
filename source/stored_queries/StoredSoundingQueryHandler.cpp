@@ -79,7 +79,7 @@ void StoredSoundingQueryHandler::init_handler()
 
 void StoredSoundingQueryHandler::query(const StoredQuery& query,
                                        const std::string& language,
-				       const boost::optional<std::string>& hostname,
+                                       const boost::optional<std::string>& hostname,
                                        std::ostream& output) const
 {
   const auto& params = query.get_param_map();
@@ -177,7 +177,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
 
       hash["projSrsDim"] = 3;
       hash["projSrsName"] = projUri;
-      hash["projEpochSrsDim"] = 4;
+      hash["projEpochSrsDim"] = 5;
       hash["projEpochSrsName"] = projEpochUri;
       hash["axisLabels"] = axisLabels;
       hash["queryNum"] = query.get_query_id();
@@ -197,6 +197,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
         ValueVectorConstIt dataMeasurandIdIt = dataContainer->begin("MEASURAND_ID");
         ValueVectorConstIt dataLevelTimeIt = dataContainer->begin("LEVEL_TIME");
         ValueVectorConstIt dataAltitudeIt = dataContainer->begin("ALTITUDE");
+        ValueVectorConstIt dataPressureIt = dataContainer->begin("PRESSURE");
         ValueVectorConstIt dataLongitudeIt = dataContainer->begin("LONGITUDE");
         ValueVectorConstIt dataLatitudeIt = dataContainer->begin("LATITUDE");
         ValueVectorConstIt dataQualityIt = dataContainer->begin("DATA_QUALITY");
@@ -217,6 +218,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
                                                         ++dataMeasurandIdIt,
                                                         ++dataLevelTimeIt,
                                                         ++dataAltitudeIt,
+                                                        ++dataPressureIt,
                                                         ++dataLongitudeIt,
                                                         ++dataLatitudeIt,
                                                         ++dataValueIt,
@@ -388,6 +390,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
             row["epochTime"] = sEpoch + dataContainer->castTo<int64_t>(dataLevelTimeIt);
             row["altitude"] =
                 SmartMet::Engine::Observation::QueryResult::toString(dataAltitudeIt, 1);
+            row["pressure"] = dataContainer->castTo<double>(dataPressureIt);
             const double levelLat = stationLatitude + dataContainer->castTo<double>(dataLatitudeIt);
             const double levelLon =
                 stationLongitude + dataContainer->castTo<double>(dataLongitudeIt);
@@ -745,6 +748,7 @@ void StoredSoundingQueryHandler::makeSoundingDataQuery(const RequestParameterMap
   dataQueryParams.addField("MEASURAND_ID");
   dataQueryParams.addField("LEVEL_TIME");
   dataQueryParams.addField("ALTITUDE");
+  dataQueryParams.addField("PRESSURE");
   dataQueryParams.addField("LATITUDE");
   dataQueryParams.addField("LONGITUDE");
   dataQueryParams.addField("DATA_VALUE");
