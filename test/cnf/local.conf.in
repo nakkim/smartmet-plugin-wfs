@@ -1,0 +1,13 @@
+database:
+{
+	# Enter Your oracle database connection data below
+        service = "database_service_name";
+        username = "database_user_name";
+        password = "database_user_password";
+        nls_lang = "NLS_LANG=.UTF8";
+};
+
+geoserver:
+{
+	connectStr = "dbname=open_data_gis user=open_data_gis_user password=Ve6+HurMnX host=gemini.fmi.fi";
+};
