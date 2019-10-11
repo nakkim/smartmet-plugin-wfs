@@ -9,5 +9,5 @@ database:
 
 geoserver:
 {
-	connectStr = "dbname=open_data_gis user=open_data_gis_user password=Ve6+HurMnX host=gemini.fmi.fi";
+	connectStr = "dbname=gis user=gis_user password=gis_pw host=smartmet-test port=5444";
 };
