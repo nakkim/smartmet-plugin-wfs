@@ -6,8 +6,8 @@ XML_POST_TESTS = $(subst :,\:,$(patsubst xml/%.xml, input/%.xml.post, $(XML_TEST
 VALGRIND = valgrind \
 	--num-callers=30 \
 	--gen-suppressions=all \
-	--suppressions=../../../../data/valgrind/valgrind_libclntsh.supp \
-	--suppressions=../../../../data/valgrind/valgrind_brainstorm.supp
+	--suppressions=../cnf/valgrind/valgrind_libclntsh.supp \
+	--suppressions=../cnf/valgrind/valgrind_brainstorm.supp
 
 foo:
 	echo $(XML_TEST_SRC)
@@ -19,11 +19,11 @@ clean:
 	rm -fv $(shell find input -type f -a -name '*.xml.post')
 	rm -rf failures
 
-test:	../PluginTest input-files
+test:	../PluginTest input-files ../cnf/local.conf
 	@mkdir -p failures
 	@../PluginTest
 
-valgrind: ../PluginTest input-files
+valgrind: ../PluginTest input-files ../cnf/local.conf
 	@mkdir -p failures
 	@$(VALGRIND) ../PluginTest
 
@@ -31,6 +31,13 @@ input-files: $(XML_POST_TESTS)
 
 input/%.xml.post : xml/%.xml ; @mkdir -p $(shell dirname $@)
 	@perl ../MakeXMLPOST.pl $< $@ /wfs
+
+../cnf/local.conf:
+	@echo "***************************************************************************************************"
+	@echo "* Please copy file $(shell cd ..; pwd)/cnf/local.conf.in to"
+	@echo "* $(shell cd ..; pwd)/cnf/local.conf and edit required names in it"
+	@echo "***************************************************************************************************"
+	@false
 
 ../PluginTest:
 	$(MAKE) -C .. PluginTest
