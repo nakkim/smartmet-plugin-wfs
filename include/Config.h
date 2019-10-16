@@ -48,6 +48,7 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   const std::string getGetFeatureById() const { return getFeatureById; }
   const std::string getXMLGrammarPoolDumpFn() const { return xml_grammar_pool_dump; }
   bool getValidateXmlOutput() const { return validate_output; }
+  bool getFailOnValidateErrors() const { return fail_on_validate_errors; }
   std::string getProxy() const { return httpProxy; }
   std::string getNoProxy() const { return noProxy; }
   bool getEnableDemoQueries() const { return enable_demo_queries; }
@@ -92,6 +93,7 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   boost::filesystem::path template_directory;
   std::string xml_grammar_pool_dump;
   bool validate_output;
+  bool fail_on_validate_errors;
   bool enable_demo_queries;
   bool enable_test_queries;
   bool enable_configuration_polling;

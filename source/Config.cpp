@@ -55,6 +55,7 @@ Config::Config(const string& configfile)
     cache_time_constant = get_optional_config_param<int>("cacheTimeConstant", 60);
     default_expires_seconds = get_optional_config_param<int>("defaultExpiresSeconds", 60);
     validate_output = get_optional_config_param<bool>("validateXmlOutput", false);
+    fail_on_validate_errors = get_optional_config_param<bool>("failOnValidateErrors", false);
     enable_demo_queries = get_optional_config_param<bool>("enableDemoQueries", false);
     enable_test_queries = get_optional_config_param<bool>("enableTestQueries", false);
     enable_configuration_polling =
@@ -414,6 +415,14 @@ accepted.
     use of resources. Note that incoming XML requests are validated always.
     Schemas required for validation incoming XML requests must be present in
     XML grammar dump (see @b xmlGrammarPoolDump)</td>
+</tr>
+
+<tr>
+<td>failOnValidateErrors</td>
+<td>boolean</td>
+<td>optional (default @b false)</td>
+<td>Specifies whether to perform WFS response validation errors cause request to fail.
+    Ignored if response XML validation is not enabled.
 </tr>
 
 <tr>
