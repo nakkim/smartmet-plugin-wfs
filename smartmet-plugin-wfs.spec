@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.10.15
+Version: 19.10.21
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -31,7 +31,7 @@ BuildRequires: smartmet-engine-contour-devel >= 19.9.26
 BuildRequires: smartmet-engine-geonames-devel >= 19.9.26
 BuildRequires: smartmet-engine-gis-devel >= 19.9.26
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.9.26
+BuildRequires: smartmet-engine-observation-devel >= 19.10.10
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 19.9.26
 # BuildRequires: postgresql95-libs
@@ -48,7 +48,7 @@ Requires: smartmet-engine-contour >= 19.9.26
 Requires: smartmet-engine-geonames >= 19.9.26
 Requires: smartmet-engine-gis >= 19.9.26
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.9.26
+Requires: smartmet-engine-observation >= 19.10.10
 %endif
 Requires: smartmet-engine-querydata >= 19.9.26
 Requires: smartmet-server >= 19.9.26
@@ -92,6 +92,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Mon Oct 21 2019 Anssi Reponen <anssi.reponen@fmi.fi> - 19.10.21-1.fmi
+- Added support for PAP_PT1S_AVG parameter in sounding query (INSPIRE-899)
+- Test added for sounding data (BRAINSTORM-1694)
+
 * Tue Oct 15 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.15-1.fmi
 - Improved handling of missing observations
 
