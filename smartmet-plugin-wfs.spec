@@ -31,7 +31,7 @@ BuildRequires: smartmet-engine-contour-devel >= 19.9.26
 BuildRequires: smartmet-engine-geonames-devel >= 19.9.26
 BuildRequires: smartmet-engine-gis-devel >= 19.9.26
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.10.2
+BuildRequires: smartmet-engine-observation-devel >= 19.10.21
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 19.9.26
 # BuildRequires: postgresql95-libs
@@ -48,7 +48,7 @@ Requires: smartmet-engine-contour >= 19.9.26
 Requires: smartmet-engine-geonames >= 19.9.26
 Requires: smartmet-engine-gis >= 19.9.26
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.10.2
+Requires: smartmet-engine-observation >= 19.10.21
 %endif
 Requires: smartmet-engine-querydata >= 19.9.26
 Requires: smartmet-server >= 19.10.1
