@@ -137,7 +137,7 @@ void StoredObsQueryHandler::init_handler()
 
 void StoredObsQueryHandler::query(const StoredQuery& query,
                                   const std::string& language,
-				  const boost::optional<std::string>& hostname,
+                                  const boost::optional<std::string>& hostname,
                                   std::ostream& output) const
 {
   try
@@ -651,6 +651,8 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 
           BOOST_FOREACH (const auto& it1, site_map)
           {
+            const int row_1 = it1.second.row_index_vect.at(0);
+
             if (it1.second.group_id == group_id)
             {
               bool first = true;
@@ -663,8 +665,10 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
                 static const long ref_jd = boost::gregorian::date(1970, 1, 1).julian_day();
 
                 sv.setPrecision(5);
-                const std::string latitude = boost::apply_visitor(sv, ts_lat[row_num].value);
-                const std::string longitude = boost::apply_visitor(sv, ts_lon[row_num].value);
+                // Use first row instead of row_num for static parameter values
+                // SHOULD FIX Delfoi instead!
+                const std::string latitude = boost::apply_visitor(sv, ts_lat[row_1].value);
+                const std::string longitude = boost::apply_visitor(sv, ts_lon[row_1].value);
 
                 if (first)
                 {

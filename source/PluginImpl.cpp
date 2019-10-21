@@ -12,6 +12,7 @@
 #include <boost/bind.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/format.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TimeParser.h>
@@ -807,7 +808,29 @@ void PluginImpl::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
 	try {
 	  maybe_validate_output(theRequest, theResponse);
 	} catch (...) {
-	  SmartMet::Spine::Exception::Trace(BCP, "Response validation failed!").printError();
+	  auto err = SmartMet::Spine::Exception::Trace(BCP, "Response XML validation failed");
+	  if (get_config().getFailOnValidateErrors()) {
+	    std::ostringstream msg;
+	    const std::string content = theResponse.getContent();
+	    std::vector<std::string> lines;
+	    ba::split(lines, content, ba::is_any_of("\n"));
+	    msg << "########################################################################\n"
+		<< "# Validation of XML response has failed\n"
+		<< "########################################################################\n"
+		<< theRequest.toString() << '\n'
+		<< "########################################################################\n";
+	    for (std::size_t i = 0; i < lines.size(); i++) {
+	      msg << (boost::format("%06d: %s\n") % (i+1) % lines.at(i)).str();
+	    }
+	    msg << "########################################################################\n";
+	    msg << err.getStackTrace();
+	    msg << "########################################################################\n";
+	    std::cout << msg.str();
+	    err.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
+	    throw err;
+	  } else {
+	    SmartMet::Spine::Exception::Trace(BCP, "Response validation failed!").printError();
+	  }
 	}
     }
     catch (...)

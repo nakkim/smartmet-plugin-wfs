@@ -36,8 +36,8 @@
   </ows:ServiceIdentification>
 
   <ows:ServiceProvider>
-<TMPL_if (defined(providerName))>    <ows:ProviderName><TMPL_var XMLESCAPE(providerName)></ows:ProviderName>
-</TMPL_if><TMPL_if (defined(providerSite))>    <ows:ProviderSite xlink:href="<TMPL_var providerSite>"/>
+    <ows:ProviderName><TMPL_if (defined(providerName))><TMPL_var XMLESCAPE(providerName)></TMPL_if></ows:ProviderName>
+<TMPL_if (defined(providerSite))>    <ows:ProviderSite xlink:href="<TMPL_var providerSite>"/>
 </TMPL_if>    <ows:ServiceContact>
       <ows:ContactInfo>
 <TMPL_if (defined(phone))>        <ows:Phone>

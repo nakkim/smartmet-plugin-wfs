@@ -78,7 +78,7 @@ class StoredSoundingQueryHandler : protected virtual SupportsExtraHandlerParams,
 
   virtual void query(const StoredQuery& query,
                      const std::string& language,
-		     const boost::optional<std::string> &hostname,
+                     const boost::optional<std::string>& hostname,
                      std::ostream& output) const;
 
  private:
@@ -101,7 +101,8 @@ class StoredSoundingQueryHandler : protected virtual SupportsExtraHandlerParams,
                          QueryResultShared& soundingQueryResult) const;
 
   void validateAndPopulateMeteoParametersToMap(const RequestParameterMap& params,
-                                               MeteoParameterMap& meteoParameterMap) const;
+                                               MeteoParameterMap& meteoParameterMap,
+                                               std::string& pressureParameterName) const;
 
   void makeSoundingDataQuery(const RequestParameterMap& params,
                              const RadioSoundingMap& radioSoundingMap,

@@ -9,5 +9,10 @@ database:
 
 geoserver:
 {
-	connectStr = "dbname=open_data_gis user=open_data_gis_user password=Ve6+HurMnX host=gemini.fmi.fi";
+	connectStr = "dbname=gis user=gis_user password=gis_pw host=smartmet-test port=5444";
 };
+
+## Uncomment and use real values if proxy is required for dowloading XML schemas (no other
+## use of proxy servers yet)
+#httpProxy="http://wwwproxy.example.org:8080";
+#noProxy="127.0.0.1,127.,127.*,localhost,.example.org,192.168.*.*";

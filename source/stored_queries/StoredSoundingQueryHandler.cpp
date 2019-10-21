@@ -79,7 +79,7 @@ void StoredSoundingQueryHandler::init_handler()
 
 void StoredSoundingQueryHandler::query(const StoredQuery& query,
                                        const std::string& language,
-				       const boost::optional<std::string>& hostname,
+                                       const boost::optional<std::string>& hostname,
                                        std::ostream& output) const
 {
   const auto& params = query.get_param_map();
@@ -126,7 +126,8 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
     // Parameter names are needed in the result document.
     // map: id, (id, paramName, paramQCName, showValue, showQualityCode)
     MeteoParameterMap meteoParameterMap;
-    validateAndPopulateMeteoParametersToMap(params, meteoParameterMap);
+    std::string pressureParameterName = "";
+    validateAndPopulateMeteoParametersToMap(params, meteoParameterMap, pressureParameterName);
 
     // Time range restriction to get data.
     pt::ptime startTime = params.get_single<pt::ptime>(P_BEGIN_TIME);
@@ -197,6 +198,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
         ValueVectorConstIt dataMeasurandIdIt = dataContainer->begin("MEASURAND_ID");
         ValueVectorConstIt dataLevelTimeIt = dataContainer->begin("LEVEL_TIME");
         ValueVectorConstIt dataAltitudeIt = dataContainer->begin("ALTITUDE");
+        ValueVectorConstIt dataPressureIt = dataContainer->begin("PRESSURE");
         ValueVectorConstIt dataLongitudeIt = dataContainer->begin("LONGITUDE");
         ValueVectorConstIt dataLatitudeIt = dataContainer->begin("LATITUDE");
         ValueVectorConstIt dataQualityIt = dataContainer->begin("DATA_QUALITY");
@@ -217,6 +219,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
                                                         ++dataMeasurandIdIt,
                                                         ++dataLevelTimeIt,
                                                         ++dataAltitudeIt,
+                                                        ++dataPressureIt,
                                                         ++dataLongitudeIt,
                                                         ++dataLatitudeIt,
                                                         ++dataValueIt,
@@ -357,6 +360,11 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
 
             if (showValue)
             {
+              if (paramListCount == 0 && !pressureParameterName.empty())
+              {
+                CTPP::CDT& param = hash["groups"][groupId]["obsParamList"][paramListCount++];
+                param["name"] = pressureParameterName;
+              }
               CTPP::CDT& param = hash["groups"][groupId]["obsParamList"][paramListCount++];
               param["name"] = std::get<1>(it->second);
             }
@@ -388,6 +396,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
             row["epochTime"] = sEpoch + dataContainer->castTo<int64_t>(dataLevelTimeIt);
             row["altitude"] =
                 SmartMet::Engine::Observation::QueryResult::toString(dataAltitudeIt, 1);
+            row["pressure"] = dataContainer->castTo<double>(dataPressureIt);
             const double levelLat = stationLatitude + dataContainer->castTo<double>(dataLatitudeIt);
             const double levelLon =
                 stationLongitude + dataContainer->castTo<double>(dataLongitudeIt);
@@ -422,9 +431,15 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
               if (sBitset.any())
                 row["selectedLevel"] = 1;
             }
+
+            if (!pressureParameterName.empty())
+            {
+              CTPP::CDT& rowData = row["data"][paramcount - 1];
+              rowData["value"] = dataContainer->castTo<double>(dataPressureIt);
+            }
           }
 
-          CTPP::CDT& rowData = row["data"][paramcount - 1];
+          CTPP::CDT& rowData = row["data"][paramcount + (pressureParameterName.empty() ? -1 : 0)];
           if (showValue)
           {
             auto value = dataContainer->toString(dataValueIt, 1);
@@ -522,7 +537,9 @@ std::string StoredSoundingQueryHandler::solveCrs(const RequestParameterMap& para
 }
 
 void StoredSoundingQueryHandler::validateAndPopulateMeteoParametersToMap(
-    const RequestParameterMap& params, MeteoParameterMap& meteoParameterMap) const
+    const RequestParameterMap& params,
+    MeteoParameterMap& meteoParameterMap,
+    std::string& pressureParameterName) const
 {
   // Meteo parameters
   std::vector<ParamName> meteoParametersVector;
@@ -565,6 +582,12 @@ void StoredSoundingQueryHandler::validateAndPopulateMeteoParametersToMap(
     const uint64_t paramId = mObservation->getParameterId(name, stationtype);
     if (paramId == 0)
     {
+      std::string paramIdStr = mObservation->getParameterIdAsString(name, stationtype);
+      if (paramIdStr == "pressure")
+      {
+        pressureParameterName = name;
+        continue;
+      }
       std::ostringstream msg;
       msg << "Unknown parameter '" << name << "' in this query.";
       SmartMet::Spine::Exception exception(BCP, "Invalid parameter value");
@@ -745,6 +768,7 @@ void StoredSoundingQueryHandler::makeSoundingDataQuery(const RequestParameterMap
   dataQueryParams.addField("MEASURAND_ID");
   dataQueryParams.addField("LEVEL_TIME");
   dataQueryParams.addField("ALTITUDE");
+  dataQueryParams.addField("PRESSURE");
   dataQueryParams.addField("LATITUDE");
   dataQueryParams.addField("LONGITUDE");
   dataQueryParams.addField("DATA_VALUE");
