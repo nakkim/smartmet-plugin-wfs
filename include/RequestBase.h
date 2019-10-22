@@ -113,12 +113,6 @@ class RequestBase
   boost::optional<std::string> get_protocol() const { return protocol; }
   void substitute_all(const std::string& src, std::ostream& output) const;
 
-  void substitute_fmi_apikey(const std::string& src, std::ostream& output) const;
-
-  void substitute_hostname(const std::string& src, std::ostream& output) const;
-
-  void substitute_protocol(const std::string& src, std::ostream& output) const;
-
   void set_http_status(SmartMet::Spine::HTTP::Status status) const;
 
   inline SmartMet::Spine::HTTP::Status get_http_status() const { return status; }
