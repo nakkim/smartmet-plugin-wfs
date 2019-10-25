@@ -197,7 +197,7 @@
             <om:result>
                 <gmlcov:MultiPointCoverage gml:id="mpcv1-1-1">
                     <gml:domainSet>
-                        <!-- The grid consists of the 5D points where the measurements were
+                        <!-- The grid consists of the 4D points where the measurements were
                             actually made during the flight of the sounding balloon.
                         -->
                         <gmlcov:SimpleMultiPoint gml:id="mp1-11" srsName="http://xml.fmi.fi/gml/crs/compoundCRS.php?crs=7423&amp;time=unixtime" srsDimension="4">
@@ -2770,7 +2770,7 @@
                         <!-- The values of the observed properties at each grid point -->
                         <gml:DataBlock>
                             <gml:rangeParameters/>
-                            <gml:doubleOrNilReasonTupleList> 
+                            <gml:doubleOrNilReasonTupleList>
                               29.1 
                               28.1 
                               27.8 
@@ -5511,7 +5511,7 @@
             <om:result>
                 <gmlcov:MultiPointCoverage gml:id="mpcv1-1-2">
                     <gml:domainSet>
-                        <!-- The grid consists of the 5D points where the measurements were
+                        <!-- The grid consists of the 4D points where the measurements were
                             actually made during the flight of the sounding balloon.
                         -->
                         <gmlcov:SimpleMultiPoint gml:id="mp1-12" srsName="http://xml.fmi.fi/gml/crs/compoundCRS.php?crs=7423&amp;time=unixtime" srsDimension="4">
@@ -8356,7 +8356,7 @@
                         <!-- The values of the observed properties at each grid point -->
                         <gml:DataBlock>
                             <gml:rangeParameters/>
-                            <gml:doubleOrNilReasonTupleList> 
+                            <gml:doubleOrNilReasonTupleList>
                               22.2 
                               21.3 
                               20.6 
