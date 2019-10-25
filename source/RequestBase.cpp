@@ -122,62 +122,44 @@ void bw::RequestBase::substitute_all(const std::string& src, std::ostream& outpu
 {
   try
   {
-    std::ostringstream tmp1;
-    substitute_fmi_apikey(src, tmp1);
-    std::ostringstream tmp2;
-    substitute_hostname(tmp1.str(), tmp2);
-    substitute_protocol(tmp2.str(), output);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
+    const char *in = src.c_str();
 
-void bw::RequestBase::substitute_fmi_apikey(const std::string& src, std::ostream& output) const
-{
-  try
-  {
-    std::ostringstream tmp_out;
-    ba::replace_all_copy(std::ostreambuf_iterator<char>(tmp_out),
-                         src,
-                         std::string(bw::QueryBase::FMI_APIKEY_PREFIX_SUBST),
-                         fmi_apikey_prefix ? *fmi_apikey_prefix : std::string(""));
+    struct { const char* subst; std::string value; std::size_t l1; }
+    subst_list[] =
+      {
+	{ bw::QueryBase::FMI_APIKEY_PREFIX_SUBST, fmi_apikey_prefix ? *fmi_apikey_prefix : std::string(""), 0 },
+	{ bw::QueryBase::FMI_APIKEY_SUBST, fmi_apikey ? *fmi_apikey : std::string(""), 0 },
+	{ bw::QueryBase::HOSTNAME_SUBST, hostname ? *hostname : std::string("localhost"), 0 },
+	{ bw::QueryBase::PROTOCOL_SUBST, (protocol ? *protocol : "http") + "://", 0 }
+      };
 
-    ba::replace_all_copy(std::ostreambuf_iterator<char>(output),
-                         tmp_out.str(),
-                         std::string(bw::QueryBase::FMI_APIKEY_SUBST),
-                         fmi_apikey ? *fmi_apikey : std::string(""));
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
+    const std::size_t num_subst = sizeof(subst_list) / sizeof(*subst_list);
+    char chm[256];
 
-void bw::RequestBase::substitute_hostname(const std::string& src, std::ostream& output) const
-{
-  try
-  {
-    ba::replace_all_copy(std::ostreambuf_iterator<char>(output),
-                         src,
-                         std::string(bw::QueryBase::HOSTNAME_SUBST),
-                         hostname ? *hostname : std::string("localhost"));
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
+    std::memset(chm, 0, 256);
+    for (std::size_t i = 0; i < num_subst; i++) {
+      chm[subst_list[i].subst[0] & 255] = 1;
+      subst_list[i].l1 = strlen(subst_list[i].subst);
+    }
 
-void bw::RequestBase::substitute_protocol(const std::string& src, std::ostream& output) const
-{
-  try
-  {
-    ba::replace_all_copy(std::ostreambuf_iterator<char>(output),
-                         src,
-                         std::string(bw::QueryBase::PROTOCOL_SUBST),
-                         (protocol ? *protocol : "http") + "://");
+    while (*in) {
+      if (chm[(unsigned)(unsigned char)*in]) {
+	bool subst_done = false;
+	for (std::size_t i = 0; not subst_done and (i < num_subst); i++) {
+	  if (strncmp(in, subst_list[i].subst, subst_list[i].l1) == 0) {
+	    output << subst_list[i].value;
+	    in += subst_list[i].l1;
+	    subst_done = true;
+	  }
+	}
+
+	if (not subst_done) {
+	  output << *in++;
+	}
+      } else {
+	output << *in++;
+      }
+    }
   }
   catch (...)
   {
