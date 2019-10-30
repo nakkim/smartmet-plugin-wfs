@@ -95,15 +95,15 @@ rm -rf $RPM_BUILD_ROOT
 * Wed Oct 30 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.30-1.fmi
 - Full repackaging of GRIB server components
 
-* Tue Oct  1 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.1-1.fmi
-- Repackaged due to SmartMet library ABI changes
-
 * Mon Oct 21 2019 Anssi Reponen <anssi.reponen@fmi.fi> - 19.10.21-1.fmi
 - Added support for PAP_PT1S_AVG parameter in sounding query (INSPIRE-899)
 - Test added for sounding data (BRAINSTORM-1694)
 
 * Tue Oct 15 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.15-1.fmi
 - Improved handling of missing observations
+
+* Tue Oct  1 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.1-1.fmi
+- Repackaged due to SmartMet library ABI changes
 
 * Thu Sep 26 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.26-1.fmi
 - Fixed thread safety issue in hostname handling
