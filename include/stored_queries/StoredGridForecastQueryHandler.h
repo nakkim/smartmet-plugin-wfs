@@ -38,7 +38,7 @@ class StoredGridForecastQueryHandler: public StoredQueryHandlerBase,
     virtual     ~StoredGridForecastQueryHandler();
 
     void        init_handler();
-    void        query(const StoredQuery& query, const std::string& language, std::ostream& output) const;
+    void        query(const StoredQuery& query, const std::string& language, const boost::optional<std::string>& hostname, std::ostream& output) const;
 
   protected:
 

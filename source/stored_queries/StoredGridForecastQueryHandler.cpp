@@ -158,7 +158,7 @@ void StoredGridForecastQueryHandler::init_handler()
 
 
 
-void StoredGridForecastQueryHandler::query(const StoredQuery& stored_query, const std::string& language, std::ostream& output) const
+void StoredGridForecastQueryHandler::query(const StoredQuery& stored_query, const std::string& language, const boost::optional<std::string>& hostname, std::ostream& output) const
 {
   try
   {
