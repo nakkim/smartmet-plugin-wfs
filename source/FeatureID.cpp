@@ -3,6 +3,7 @@
 #include <boost/foreach.hpp>
 #include <boost/shared_array.hpp>
 #include <macgyver/Base64.h>
+#include <macgyver/StringConversion.h>
 #include <openssl/sha.h>
 #include <spine/Exception.h>
 #include <cstring>
@@ -77,11 +78,12 @@ boost::shared_ptr<FeatureID> FeatureID::create_from_id(const std::string& id)
 
     unsigned char md[SHA_DIGEST_LENGTH];
     SHA_CTX ctx;
-    SHA1_Init(&ctx);
-    SHA1_Update(&ctx, magic, strlen(magic));
-    SHA1_Update(&ctx, raw_id.c_str(), raw_id.length());
-    SHA1_Final(md, &ctx);
-    if (std::string(md, md + SHA_DIGEST_LENGTH) != sha)
+    SHA_Init(&ctx);
+    SHA_Update(&ctx, magic, strlen(magic));
+    SHA_Update(&ctx, raw_id.c_str(), raw_id.length());
+    SHA_Final(md, &ctx);
+    auto result_sha = std::string(md, md + SHA_DIGEST_LENGTH);
+    if (result_sha != sha)
     {
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::FeatureID::create_feature_id(): invalid feature id '" << id

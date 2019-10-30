@@ -6,7 +6,6 @@
 #include "StoredQueryHandlerFactoryDef.h"
 #include "SupportsBoundingBox.h"
 #include "SupportsExtraHandlerParams.h"
-#include "SupportsLocationParameters.h"
 #include "SupportsTimeParameters.h"
 #include "SupportsTimeZone.h"
 

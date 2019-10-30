@@ -90,6 +90,7 @@ class StoredForecastQueryHandler : public StoredQueryHandlerBase,
 
   virtual void query(const StoredQuery& query,
                      const std::string& language,
+		     const boost::optional<std::string> &hostname,
                      std::ostream& output) const;
 
  private:

@@ -599,7 +599,7 @@ bool GetPropertyValue::collect_query_responses(std::vector<std::string>& query_r
       else
       {
         std::ostringstream result_stream;
-        query_ptr->execute(result_stream, get_language());
+        query_ptr->execute(result_stream, get_language(), get_hostname());
         const std::string cache_key = query_ptr->get_cache_key();
         query_cache.insert(cache_key, result_stream.str());
 

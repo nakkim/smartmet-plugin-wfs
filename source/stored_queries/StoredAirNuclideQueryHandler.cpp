@@ -74,6 +74,7 @@ void bw::StoredAirNuclideQueryHandler::init_handler()
 
 void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
                                              const std::string& language,
+					     const boost::optional<std::string> &hostname,
                                              std::ostream& output) const
 {
   try

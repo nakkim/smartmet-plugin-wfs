@@ -6,6 +6,8 @@
  */
 // ======================================================================
 
+#include "CapabilitiesConf.h"
+#include "Hosts.h"
 #include "WfsFeatureDef.h"
 #include <boost/filesystem.hpp>
 #include <boost/shared_ptr.hpp>
@@ -15,7 +17,6 @@
 #include <libconfig.h++>
 #include <string>
 #include <vector>
-#include "CapabilitiesConf.h"
 
 namespace SmartMet
 {
@@ -47,6 +48,9 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   const std::string getGetFeatureById() const { return getFeatureById; }
   const std::string getXMLGrammarPoolDumpFn() const { return xml_grammar_pool_dump; }
   bool getValidateXmlOutput() const { return validate_output; }
+  bool getFailOnValidateErrors() const { return fail_on_validate_errors; }
+  std::string getProxy() const { return httpProxy; }
+  std::string getNoProxy() const { return noProxy; }
   bool getEnableDemoQueries() const { return enable_demo_queries; }
   bool getEnableTestQueries() const { return enable_test_queries; }
   bool getEnableConfigurationPolling() const { return enable_configuration_polling; }
@@ -61,12 +65,18 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   std::vector<boost::shared_ptr<WfsFeatureDef> > read_features_config(
       SmartMet::Engine::Gis::CRSRegistry& theCRSRegistry);
   const CapabilitiesConf& get_capabilities_config() const { return capabilities_conf; }
-  boost::optional<std::pair<std::string, std::string> > get_admin_credentials() const { return adminCred; }
+  boost::optional<std::pair<std::string, std::string> > get_admin_credentials() const
+  {
+    return adminCred;
+  }
+  const Hosts& get_hosts() const { return hosts; }
 
   void read_typename_config(std::map<std::string, std::string>& typename_storedqry);
+
  private:
   void read_capabilities_config();
   void read_admin_cred();
+  void read_hosts_info();
 
  private:
   std::string itsDefaultUrl;
@@ -74,6 +84,8 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   std::vector<std::string> sq_config_dirs;
   std::string geoserver_conn_str;
   std::string default_locale;
+  std::string httpProxy;
+  std::string noProxy;
   int cache_size;
   int cache_time_constant;
   int default_expires_seconds;
@@ -81,6 +93,7 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   boost::filesystem::path template_directory;
   std::string xml_grammar_pool_dump;
   bool validate_output;
+  bool fail_on_validate_errors;
   bool enable_demo_queries;
   bool enable_test_queries;
   bool enable_configuration_polling;
@@ -93,6 +106,11 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
    *   Currently only used for reload request
    */
   boost::optional<std::pair<std::string, std::string> > adminCred;
+
+  /**
+   *   @brief Information about hosts to which WFS responses points
+   */
+  Hosts hosts;
 
 };  // class Config
 

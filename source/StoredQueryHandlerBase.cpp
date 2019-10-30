@@ -2,6 +2,7 @@
 #include "WfsException.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
+#include <fmt/format.h>
 #include <macgyver/TypeName.h>
 #include <newbase/NFmiPoint.h>
 #include <spine/Convenience.h>
@@ -25,9 +26,9 @@ StoredQueryHandlerBase::StoredQueryHandlerBase(SmartMet::Spine::Reactor* reactor
     : SupportsExtraHandlerParams(config),
       reactor(reactor),
       config(config),
-      template_file(template_file_name),
       hidden(false),
-      plugin_impl(plugin_impl)
+      plugin_impl(plugin_impl),
+      template_file(template_file_name)
 {
   try
   {
@@ -196,6 +197,27 @@ void StoredQueryHandlerBase::format_output(CTPP::CDT& hash,
   }
 }
 
+std::pair<std::string, std::string> StoredQueryHandlerBase::get_2D_coord(
+    boost::shared_ptr<SmartMet::Engine::Gis::CRSRegistry::Transformation> transformation,
+    double X,
+    double Y)
+{
+  try
+  {
+    NFmiPoint p1(X, Y);
+    NFmiPoint p2 = transformation->transform(p1);
+    double w1 = std::max(std::fabs(p2.X()), std::fabs(p2.Y()));
+    int prec = w1 < 1000 ? 5 : std::max(0, 7 - static_cast<int>(std::floor(log10(w1))));
+    auto str_x = fmt::format("{:.{}f}", p2.X(), prec);
+    auto str_y = fmt::format("{:.{}f}", p2.Y(), prec);
+    return {str_x, str_y};
+  }
+  catch (...)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
 void StoredQueryHandlerBase::set_2D_coord(
     boost::shared_ptr<SmartMet::Engine::Gis::CRSRegistry::Transformation> transformation,
     double sx,
@@ -204,23 +226,15 @@ void StoredQueryHandlerBase::set_2D_coord(
 {
   try
   {
-    NFmiPoint p1(sx, sy);
-    NFmiPoint p2 = transformation->transform(p1);
-    double w1 = std::max(std::fabs(p2.X()), std::fabs(p2.Y()));
-    int prec = w1 < 1000 ? 5 : std::max(0, 7 - static_cast<int>(std::floor(log10(w1))));
-    {
-      char buffer[256];
-      std::snprintf(buffer, sizeof(buffer), "%.*f", prec, p2.X());
-      hash["x"] = buffer;
-      std::snprintf(buffer, sizeof(buffer), "%.*f", prec, p2.Y());
-      hash["y"] = buffer;
-    }
+    auto xy = get_2D_coord(transformation, sx, sy);
+    hash["x"] = xy.first;
+    hash["y"] = xy.second;
   }
   catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
-}
+}  // namespace WFS
 
 void StoredQueryHandlerBase::set_2D_coord(
     boost::shared_ptr<SmartMet::Engine::Gis::CRSRegistry::Transformation> transformation,

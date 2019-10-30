@@ -3,8 +3,7 @@
           <gml:domainSet>
             <gmlcov:SimpleMultiPoint gml:id="<TMPL_var resultCoverageMultiPointId>" srsName="<TMPL_var srsEpochName>" srsDimension="3">
               <gmlcov:positions>
-                <TMPL_foreach returnArray as row><TMPL_var row.x> <TMPL_var row.y> <TMPL_var row.stroke_time>
-                </TMPL_foreach></gmlcov:positions>
+                <TMPL_var positionRows></gmlcov:positions>
             </gmlcov:SimpleMultiPoint>
           </gml:domainSet>
           <gml:rangeSet>
@@ -12,7 +11,7 @@
               <gml:rangeParameters/>
               <!-- the measurement values that correspond to the grid points -->
               <gml:doubleOrNilReasonTupleList>
-                <TMPL_foreach returnArray as row><TMPL_foreach row.data as param><TMPL_var param> </TMPL_foreach>
+                <TMPL_var dataRows>
                 </TMPL_foreach></gml:doubleOrNilReasonTupleList>
             </gml:DataBlock>
           </gml:rangeSet>

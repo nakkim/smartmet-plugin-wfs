@@ -1,5 +1,6 @@
 #include "XmlParser.h"
 #include "XmlUtils.h"
+#include "XmlEntityResolver.h"
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/filesystem.hpp>
@@ -15,7 +16,6 @@
 #include <xercesc/sax/SAXParseException.hpp>
 #include <xercesc/util/BinFileInputStream.hpp>
 #include <xercesc/util/Janitor.hpp>
-#include <xercesc/util/XMLEntityResolver.hpp>
 #include <cerrno>
 #include <fstream>
 #include <iostream>
@@ -194,84 +194,9 @@ void Parser::startElement(const xercesc::XMLElementDecl &elemDecl,
   }
 }
 
-class ParserMT::EntityResolver : public xercesc::XMLEntityResolver
-{
-  std::map<std::string, std::string> cache;
-
- public:
-  EntityResolver() {}
-  virtual ~EntityResolver() {}
-  virtual xercesc::InputSource *resolveEntity(xercesc::XMLResourceIdentifier *resource_identifier)
-  {
-    try
-    {
-      const XMLCh *x_public_id = resource_identifier->getPublicId();
-      const XMLCh *x_system_id = resource_identifier->getSystemId();
-      const XMLCh *x_base_uri = resource_identifier->getBaseURI();
-
-      const std::string public_id = to_opt_string(x_public_id).first;
-      const std::string system_id = to_opt_string(x_system_id).first;
-      const std::string base_uri = to_opt_string(x_base_uri).first;
-
-      std::string remote_uri;
-
-      if (is_url(system_id))
-      {
-        remote_uri = system_id;
-      }
-      else if (system_id == "")
-      {
-        return nullptr;
-      }
-      else if ((*system_id.begin() == '/') or (*base_uri.begin() == '/'))
-      {
-        return new xercesc::LocalFileInputSource(x_base_uri, x_system_id);
-      }
-      else
-      {
-        std::size_t pos = base_uri.find_last_of("/");
-        if (pos == std::string::npos)
-          return nullptr;
-        remote_uri = base_uri.substr(0, pos + 1) + system_id;
-      }
-
-      if (cache.count(remote_uri))
-      {
-        const std::string &src = cache.at(remote_uri);
-        std::size_t len = src.length();
-        char *data = new char[len + 1];
-        memcpy(data, src.c_str(), len + 1);
-        xercesc::Janitor<XMLCh> x_remote_id(xercesc::XMLString::transcode(remote_uri.c_str()));
-
-        return new xercesc::MemBufInputSource(
-            reinterpret_cast<XMLByte *>(data), len, x_remote_id.get(), true /* adopt buffer */);
-      }
-      else
-      {
-        return nullptr;
-      }
-    }
-    catch (...)
-    {
-      throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-    }
-  }
-
-  template <class Archive>
-  void serialize(Archive &ar, const unsigned int version)
-  {
-    (void)version;
-    ar &BOOST_SERIALIZATION_NVP(cache);
-  }
-
-  bool is_url(const std::string &str)
-  {
-    return (str.substr(0, 7) == "http://") or (str.substr(0, 8) == "https://");
-  }
-};
-
 ParserMT::ParserMT(const std::string &grammar_pool_file_name, bool stop_on_error)
     : grammar_pool_file_name(grammar_pool_file_name), stop_on_error(stop_on_error)
+    , entity_resolver(new EntityResolver)
 {
   try
   {
@@ -330,14 +255,24 @@ void ParserMT::load_schema_cache(const std::string &file_name)
     input.exceptions(std::ios::failbit | std::ios::badbit);
     input.open(file_name.c_str());
     boost::archive::text_iarchive ia(input);
-    std::unique_ptr<EntityResolver> tmp(new EntityResolver);
-    ia >> *tmp;
-    this->entity_resolver.swap(tmp);
+    ia >> *entity_resolver;
   }
   catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
+}
+
+void ParserMT::enable_schema_download(const std::string& httpProxy, const std::string& noProxy)
+{
+  entity_resolver->init_schema_download(httpProxy, noProxy);
+}
+
+void ParserMT::dump_schema_cache(std::ostream& os)
+{
+  entity_resolver->merge_downloaded_schemas();
+  boost::archive::text_oarchive oa(os);
+  oa << *entity_resolver;
 }
 
 boost::shared_ptr<xercesc::DOMDocument> str2xmldom(const std::string &src,

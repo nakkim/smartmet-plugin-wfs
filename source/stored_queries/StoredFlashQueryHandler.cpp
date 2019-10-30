@@ -2,6 +2,7 @@
 #include "FeatureID.h"
 #include "StoredQueryHandlerFactoryDef.h"
 #include "WfsConst.h"
+#include <fmt/format.h>
 #include <macgyver/StringConversion.h>
 #include <smartmet/spine/Convenience.h>
 #include <smartmet/spine/Exception.h>
@@ -11,10 +12,20 @@ namespace bw = SmartMet::Plugin::WFS;
 namespace pt = boost::posix_time;
 namespace bg = boost::gregorian;
 
-const char* bw::StoredFlashQueryHandler::P_BEGIN_TIME = "beginTime";
-const char* bw::StoredFlashQueryHandler::P_END_TIME = "endTime";
-const char* bw::StoredFlashQueryHandler::P_PARAM = "meteoParameters";
-const char* bw::StoredFlashQueryHandler::P_CRS = "crs";
+namespace
+{
+const char* P_BEGIN_TIME = "beginTime";
+const char* P_END_TIME = "endTime";
+const char* P_PARAM = "meteoParameters";
+const char* P_CRS = "crs";
+
+// Known stored queries are detected directly because formatting 100,000 rows
+// of lightning data is very slow using a CTPP2 TMPL-loop.
+
+const char* P_SIMPLE_QUERY = "lightning_simple.c2t";
+const char* P_MULTIPOINTCOVERAGE_QUERY = "lightning_multipointcoverage.c2t";
+
+}  // namespace
 
 bw::StoredFlashQueryHandler::StoredFlashQueryHandler(
     SmartMet::Spine::Reactor* reactor,
@@ -111,6 +122,7 @@ pt::ptime round_time(const pt::ptime& t0, unsigned step, int offset = 0)
 
 void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
                                         const std::string& language,
+					const boost::optional<std::string> &hostname,
                                         std::ostream& output) const
 {
   try
@@ -122,6 +134,21 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
     const int debug_level = get_config()->get_debug_level();
     if (debug_level > 0)
       query.dump_query_info(std::cout);
+
+    // Determine how to generated the content rows from the template name, a C++ loop
+    // is much faster than CTPP2
+
+    bool is_simple_query = false;
+
+    if (!template_file)
+      throw SmartMet::Spine::Exception(BCP, "No template name given to stored flash query");
+    if (boost::algorithm::ends_with(*template_file, P_SIMPLE_QUERY))
+      is_simple_query = true;
+    else if (boost::algorithm::ends_with(*template_file, P_MULTIPOINTCOVERAGE_QUERY))
+      is_simple_query = false;
+    else
+      throw SmartMet::Spine::Exception(BCP, "Unknown template for stored flash query")
+          .addParameter("template", *template_file);
 
     const auto& params = query.get_param_map();
 
@@ -252,17 +279,18 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
         throw exception;
       }
 
-      boost::shared_ptr<SmartMet::Spine::Table> query_result =
-          obs_engine->makeQuery(query_params, value_formatter);
+      // Fetch the values
+
+      const auto result_ptr = obs_engine->values(query_params);
 
       CTPP::CDT hash;
 
       // Get the sequence number of query in the request
       int sq_id = query.get_query_id();
 
-      bw::FeatureID feature_id(get_config()->get_query_id(), params.get_map(), sq_id);
+      auto projSrsDim = (show_height ? 3 : 2);
 
-      const std::size_t num_rows = query_result->rows().size();
+      bw::FeatureID feature_id(get_config()->get_query_id(), params.get_map(), sq_id);
 
       hash["language"] = language;
 
@@ -278,7 +306,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
       hash["hostname"] = QueryBase::HOSTNAME_SUBST;
       hash["protocol"] = QueryBase::PROTOCOL_SUBST;
       hash["srsName"] = proj_uri;
-      hash["projSrsDim"] = (show_height ? 3 : 2);
+      hash["projSrsDim"] = projSrsDim;
       hash["srsEpochName"] = proj_epoch_uri;
       hash["projEpochSrsDim"] = (show_height ? 4 : 3);
 
@@ -330,56 +358,126 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
 
       std::size_t used_rows = 0;
       std::size_t num_skipped = 0;
-      for (std::size_t i = 0; i < num_rows; i++)
+      std::size_t num_rows = 0;
+
+      // generated multipoint mode coordinates and values
+      std::string multipoint_position_rows;  // lat lon epoch
+      std::string multipoint_data_rows;      // param1 param2 ...
+
+      // generated simple query xml
+      std::string simple_rows;  // xml block 1, xml block 2 ...
+
+      if (result_ptr && !result_ptr->empty())
       {
         static const long ref_jd = boost::gregorian::date(1970, 1, 1).julian_day();
-        const std::string sx = query_result->get(lat_ind, i);
-        const std::string sy = query_result->get(lon_ind, i);
-        if (to_bbox_transform)
+
+        const auto& result = *result_ptr;
+        num_rows = result[1].size();
+
+        for (std::size_t i = 0; i < num_rows; i++)
         {
-          try
+          // I have no clue why the ordering is this, this changed code
+          // does the same as the original (sx = lat, sy = lon) - Mika
+
+          double lon = boost::get<double>(result[lat_ind][i].value);
+          double lat = boost::get<double>(result[lon_ind][i].value);
+
+          if (to_bbox_transform)
           {
-            NFmiPoint p1(std::stod(sx), std::stod(sy));
-            NFmiPoint p2 = to_bbox_transform->transform(p1);
-
-            double x = bb_swap_coord ? p2.Y() : p2.X();
-            double y = bb_swap_coord ? p2.X() : p2.Y();
-
-            if ((x < requested_bbox.xMin) or (x > requested_bbox.xMax) or
-                (y < requested_bbox.yMin) or (y > requested_bbox.yMax))
+            try
             {
-              if (debug_level > 3)
+              NFmiPoint p1(lon, lat);
+              NFmiPoint p2 = to_bbox_transform->transform(p1);
+
+              double x = bb_swap_coord ? p2.Y() : p2.X();
+              double y = bb_swap_coord ? p2.X() : p2.Y();
+
+              if ((x < requested_bbox.xMin) or (x > requested_bbox.xMax) or
+                  (y < requested_bbox.yMin) or (y > requested_bbox.yMax))
               {
-                std::ostringstream msg;
-                msg << SmartMet::Spine::log_time_str() << ": [WFS] [DEBUG] Event (" << p1.X() << " "
-                    << p1.Y() << ") ==> (" << p2.X() << " " << p2.Y()
-                    << ") skipped due to bounding box check\n";
-                std::cout << msg.str() << std::flush;
+                if (debug_level > 3)
+                {
+                  std::ostringstream msg;
+                  msg << SmartMet::Spine::log_time_str() << ": [WFS] [DEBUG] Event (" << p1.X()
+                      << " " << p1.Y() << ") ==> (" << p2.X() << " " << p2.Y()
+                      << ") skipped due to bounding box check\n";
+                  std::cout << msg.str() << std::flush;
+                }
+                num_skipped++;
+                continue;
               }
-              num_skipped++;
-              continue;
+            }
+            catch (...)
+            {
+              // Ignore errors while extra bounding box checks
+              //(void)err;
             }
           }
-          catch (...)
+
+          auto str_xy = get_2D_coord(transformation, lon, lat);
+
+          const pt::ptime epoch = result[lon_ind][i].time.utc_time();
+          long long jd = epoch.date().julian_day();
+          long seconds = epoch.time_of_day().total_seconds();
+          INT_64 s_epoch = 86400LL * (jd - ref_jd) + seconds;
+          auto stroke_time_str = format_local_time(epoch, tzp);
+
+          ++used_rows;
+
+          if (!is_simple_query)
           {
-            // Ignore errors while extra bounding box checks
-            //(void)err;
+            multipoint_position_rows +=
+                str_xy.first + ' ' + str_xy.second + ' ' + Fmi::to_string(s_epoch) + '\n';
           }
-        }
 
-        CTPP::CDT& result_row = hash["returnArray"][used_rows++];
-        set_2D_coord(transformation, sx, sy, result_row);
-        pt::ptime epoch = pt::from_iso_string(query_result->get(stroke_time_ind, i));
-        long long jd = epoch.date().julian_day();
-        long seconds = epoch.time_of_day().total_seconds();
-        INT_64 s_epoch = 86400LL * (jd - ref_jd) + seconds;
-        result_row["stroke_time"] = s_epoch;
-        result_row["stroke_time_str"] = format_local_time(epoch, tzp);
+          for (int k = first_param; k <= last_param; k++)
+          {
+            std::string value;
+            if (boost::get<int>(&result[k][i].value))
+              value = Fmi::to_string(boost::get<int>(result[k][i].value));
+            else if (boost::get<double>(&result[k][i].value))
+            {
+              auto tmp = boost::get<double>(result[k][i].value);
+              if (static_cast<int>(tmp) != tmp)
+                value = value_formatter->format(tmp, 1);
+              else
+                value = Fmi::to_string(tmp);
+            }
+            else
+              value = query_params.missingtext;
 
-        for (int k = first_param; k <= last_param; k++)
-        {
-          const std::string value = query_result->get(k, i, query_params.missingtext);
-          result_row["data"][k - first_param] = remove_trailing_0(value);
+            if (!is_simple_query)
+            {
+              multipoint_data_rows += remove_trailing_0(value);
+              multipoint_data_rows += (k < last_param ? ' ' : '\n');
+            }
+            else
+            {
+              std::string fmt = R"(
+<wfs:member>
+ <BsWfs:BsWfsElement gml:id="BsWfsElement.{0}.{1}">
+  <BsWfs:Location>
+   <gml:Point gml:id="BsWfsElementP.{0}.{1}" srsDimension="{2}" srsName="{3}">
+    <gml:pos>{4} {5}</gml:pos>
+   </gml:Point>
+  </BsWfs:Location>
+  <BsWfs:Time>{6}</BsWfs:Time>
+  <BsWfs:ParameterName>{7}</BsWfs:ParameterName>
+  <BsWfs:ParameterValue>{8}</BsWfs:ParameterValue>
+ </BsWfs:BsWfsElement>
+</wfs:member>)";
+              simple_rows += fmt::format(fmt,
+                                         used_rows,
+                                         k - first_param + 1,
+                                         projSrsDim,
+                                         proj_uri,
+                                         str_xy.first,
+                                         str_xy.second,
+                                         stroke_time_str,
+                                         param_names.at(k - first_param),
+                                         value);
+            }
+          }
         }
       }
 
@@ -391,12 +489,26 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
         std::cout << msg.str() << std::flush;
       }
 
+      if (is_simple_query)
+        hash["dataRows"] = simple_rows;
+      else
+      {
+        if (!multipoint_data_rows.empty())
+          hash["dataRows"] = multipoint_data_rows;  // the template behaves differently when not set
+        hash["positionRows"] = multipoint_position_rows;
+      }
+
       hash["numMatched"] = used_rows == 0 ? 0 : 1;
       hash["numReturned"] = used_rows == 0 ? 0 : 1;
+
+      hash["numberMatched"] = used_rows * (last_param - first_param + 1);
+      hash["numberReturned"] = used_rows * (last_param - first_param + 1);
 
       hash["phenomenonTimeId"] = "time-interval-1";
       hash["phenomenonStartTime"] = Fmi::to_iso_extended_string(query_params.starttime) + "Z";
       hash["phenomenonEndTime"] = Fmi::to_iso_extended_string(query_params.endtime) + "Z";
+
+      // std::cout << "Hash = \n" << hash.RecursiveDump() << std::endl;
 
       format_output(hash, output, query.get_use_debug_format());
     }

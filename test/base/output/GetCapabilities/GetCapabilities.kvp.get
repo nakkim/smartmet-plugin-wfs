@@ -17,11 +17,10 @@
   http://inspire.ec.europa.eu/schemas/inspire_dls/1.0 http://inspire.ec.europa.eu/schemas/inspire_dls/1.0/inspire_dls.xsd
   http://inspire.ec.europa.eu/schemas/common/1.0 http://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
   http://inspire.ec.europa.eu/schemas/ef/4.0 http://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
-
   <ows:ServiceIdentification>
-    <ows:Title>Finnish Meteorological Institute's Commercial Data Download Service</ows:Title>
+    <ows:Title>Finnish Meteorological Institute&apos;s Commercial Data Download Service</ows:Title>
     <ows:Abstract>
-      Finnish Meteorological Institute's Commercial Data Download Service provides data
+      Finnish Meteorological Institute&apos;s Commercial Data Download Service provides data
       which is not available free-of-charge.
     </ows:Abstract>
     <ows:Keywords>
@@ -35,19 +34,12 @@
       <ows:Keyword>Radiation</ows:Keyword>
       <ows:Keyword>Radioactivity</ows:Keyword>
       <ows:Keyword>Airquality</ows:Keyword>
-      <ows:Type>String</ows:Type>
     </ows:Keywords>
     <ows:ServiceType>WFS</ows:ServiceType>
     <ows:ServiceTypeVersion>2.0.0</ows:ServiceTypeVersion>
-    <ows:Fees>
-      The use of this service and the returned data is not free-of-charge. Users must
-      register and agree to the terms of service to gain access to the data.
-    </ows:Fees>
-    <ows:AccessConstraints>
-
-
-</ows:AccessConstraints>
+ 
   </ows:ServiceIdentification>
+
   <ows:ServiceProvider>
     <ows:ProviderName>Finnish Meteorological Institute</ows:ProviderName>
     <ows:ProviderSite xlink:href="http://en.ilmatieteenlaitos.fi"/>
@@ -55,7 +47,7 @@
       <ows:ContactInfo>
         <ows:Phone>
           <ows:Voice>+358 29 539 1000</ows:Voice>
-          <ows:Facsimile>+358 29 539 2303</ows:Facsimile>
+          <ows:Facsimile>+358 29 539 1000</ows:Facsimile>
         </ows:Phone>
         <ows:Address>
           <ows:DeliveryPoint>P.O. BOX 503</ows:DeliveryPoint>
@@ -65,13 +57,10 @@
           <ows:Country>Finland</ows:Country>
           <ows:ElectronicMailAddress>santeri.oksman@fmi.fi</ows:ElectronicMailAddress>
         </ows:Address>
+      <ows:OnlineResource xlink:href="http://en.ilmatieteenlaitos.fi/open-data"/>
 
-        <ows:OnlineResource xlink:href="http://en.ilmatieteenlaitos.fi/open-data"/>
-        <ows:ContactInstructions>
+    <ows:ContactInstructions>For technical help or error reports considering FMI Open Data Web Services, please contact support@weatherproof.fi.</ows:ContactInstructions>
 
-          For technical help or error reports considering FMI Open Data Web Services, please contact support@weatherproof.fi.
-
-        </ows:ContactInstructions>
       </ows:ContactInfo>
       <ows:Role>PointOfContact</ows:Role>
     </ows:ServiceContact>
@@ -260,6 +249,26 @@
           <inspire_common:Language>eng</inspire_common:Language>
         </inspire_common:ResponseLanguage>
 
+        <inspire_dls:SpatialDataSetIdentifier>
+          <inspire_common:Code>2000001</inspire_common:Code>
+          <inspire_common:Namespace>FI</inspire_common:Namespace>
+        </inspire_dls:SpatialDataSetIdentifier>
+        <inspire_dls:SpatialDataSetIdentifier>
+          <inspire_common:Code>2000002</inspire_common:Code>
+          <inspire_common:Namespace>FI</inspire_common:Namespace>
+        </inspire_dls:SpatialDataSetIdentifier>
+        <inspire_dls:SpatialDataSetIdentifier>
+          <inspire_common:Code>2000003</inspire_common:Code>
+          <inspire_common:Namespace>FI</inspire_common:Namespace>
+        </inspire_dls:SpatialDataSetIdentifier>
+        <inspire_dls:SpatialDataSetIdentifier>
+          <inspire_common:Code>2000004</inspire_common:Code>
+          <inspire_common:Namespace>FI</inspire_common:Namespace>
+        </inspire_dls:SpatialDataSetIdentifier>
+        <inspire_dls:SpatialDataSetIdentifier>
+          <inspire_common:Code>2000005</inspire_common:Code>
+          <inspire_common:Namespace>FI</inspire_common:Namespace>
+        </inspire_dls:SpatialDataSetIdentifier>
 
       </inspire_dls:ExtendedCapabilities>
     </ows:ExtendedCapabilities>

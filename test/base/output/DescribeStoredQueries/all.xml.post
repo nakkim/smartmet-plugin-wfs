@@ -123,6 +123,26 @@
                          isPrivate="true"/>
   </StoredQueryDescription>
 
+  <StoredQueryDescription id="GetDataSetById">
+    <Title>GetDataSetById</Title>
+    <Abstract>
+    GetDataSetById returns INSPIRE data sets. Consult catalog.fmi.fi to investigate possible data sets.
+    </Abstract>
+    
+    <Parameter name="datasetid" type="xsi:string">
+      <Title>Data set ID</Title>
+      <Abstract>
+      Specifies ID of data set to return
+      </Abstract>
+    </Parameter>
+    
+    <QueryExpressionText xmlns:wfs_001="http://inspire.ec.europa.eu/schemas/omso/3.0"
+                         xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd"
+                         returnFeatureTypes="wfs_001:GridSeriesObservation wfs_001:PointTimeSeriesObservation"
+                         language="urn:ogc:def:queryLanguage:OGC-WFS::WFS_QueryExpression"
+                         isPrivate="true"/>
+  </StoredQueryDescription>
+
   <StoredQueryDescription id="ObsTest">
     <Title>FMI WFS &lt;test&gt; stored query</Title>
     <Abstract>

@@ -1,0 +1,54 @@
+#
+#   Wrong free/delete/delete[] in xercesc::XMLString::release() (xerces-c-3.0.0 only)
+#
+#==21159== Mismatched free() / delete / delete []
+#==21159==    at 0x4A05FD6: operator delete(void*) (vg_replace_malloc.c:480)
+#==21159==    by 0x35BE36027F: xercesc_3_0::XMLString::release(unsigned short**, xercesc_3_0::MemoryManager*) (in /usr/lib64/libxerces-c-3.0.so)
+#==21159==
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Free
+   fun:_ZdlPv
+   fun:_ZN11xercesc_3_09XMLString7releaseEPPtPNS_13MemoryManagerE
+}
+
+#
+#
+#
+#==21159== Syscall param write(buf) points to uninitialised byte(s)
+#==21159==    at 0x35A5E0E4ED: ??? (in /lib64/libpthread-2.12.so)
+#==21159==    by 0x1021F791: snttwrite (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==    by 0x1021D6E6: nttfpwr (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==    by 0x1021855E: nsbasic_bsd (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==    by 0x102197AA: nsbsend (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==    by 0x1020914E: nioqrc (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==    by 0x10264040: ttcdrv (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==    by 0x1020FBFC: nioqwa (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==    by 0x101FD06E: upirtrc (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==    by 0xE6B8383: upirtr (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==    by 0xE72CDF9: kpurcs (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==    by 0xE733F5A: kpugskey (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==    by 0xE72FC55: kpu8lgn (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==    by 0xE72D7EF: kpuauthxa (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==    by 0xE72CE65: kpuauth (in /usr/lib/oracle/11.2/client64/lib/libclntsh.so.11.1)
+#==21159==
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   write(buf)
+   obj:/lib64/libpthread-2.12.so
+   fun:snttwrite
+   fun:nttfpwr
+   fun:nsbasic_bsd
+   fun:nsbsend
+   fun:nioqrc
+   fun:ttcdrv
+   fun:nioqwa
+   fun:upirtrc
+   fun:upirtr
+   fun:kpurcs
+   fun:kpugskey
+   fun:kpu8lgn
+   fun:kpuauthxa
+   fun:kpuauth
+}

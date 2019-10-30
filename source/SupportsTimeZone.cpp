@@ -1,5 +1,6 @@
 #include "SupportsTimeZone.h"
 #include <boost/algorithm/string.hpp>
+#include <macgyver/StringConversion.h>
 #include <macgyver/TimeZoneFactory.h>
 #include <spine/Convenience.h>
 #include <spine/Exception.h>
@@ -87,16 +88,16 @@ std::string bw::SupportsTimeZone::format_local_time(const pt::ptime& utc_time,
 {
   try
   {
-    std::ostringstream result_str;
     lt::local_date_time t1(utc_time, tz);
-    lt::local_time_facet f("%Y-%m-%dT%H:%M:%S%F%Q");
-    f.put(std::ostreambuf_iterator<char>(result_str), result_str, ' ', t1);
-    std::string result = result_str.str();
 
-    // Replace '+00:00' at eng with 'Z' if needed
-    if (ba::ends_with(result, "+00:00"))
+    std::string result = Fmi::to_iso_extended_string(t1.local_time()) + t1.zone_abbrev(true);
+
+    // Replace '+0000' at end with 'Z' if needed and otherwise insert ':'
+    if (ba::ends_with(result, "+0000"))
     {
-      result = result.substr(0, result.length() - 6) + "Z";
+      result = result.substr(0, result.length() - 5) + "Z";
+    } else {
+      result.insert(result.length() - 2, 1, ':');
     }
 
     return result;

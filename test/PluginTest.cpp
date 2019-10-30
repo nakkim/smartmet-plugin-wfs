@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 
     try
     {
-      return SmartMet::Spine::PluginTest::test(options, prelude);
+      return SmartMet::Spine::PluginTest::test(options, prelude, false, 10);
     }
     catch (const libconfig::ParseException& err)
     {

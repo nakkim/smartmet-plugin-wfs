@@ -2,11 +2,13 @@
 
 #include "XmlError.h"
 #include "XmlErrorHandler.h"
+#include <boost/core/noncopyable.hpp>
 #include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/thread.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <list>
+#include <ostream>
 #include <stdexcept>
 #include <string>
 
@@ -18,6 +20,8 @@ namespace WFS
 {
 namespace Xml
 {
+class EntityResolver;
+
 /**
  *   @brief Xerces-C based validating XML DOM parser with XML schema caching feature
  */
@@ -96,10 +100,11 @@ class ParserMT : public boost::noncopyable
   Parser* get();
 
   void load_schema_cache(const std::string& file_name);
+  void enable_schema_download(const std::string& httpProxy, const std::string& no_proxy);
+
+  void dump_schema_cache(std::ostream& os);
 
  private:
-  class EntityResolver;
-
   const std::string grammar_pool_file_name;
   const bool stop_on_error;
   std::unique_ptr<EntityResolver> entity_resolver;

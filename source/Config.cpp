@@ -5,13 +5,13 @@
 // ======================================================================
 
 #include "Config.h"
+#include "WfsConvenience.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <spine/ConfigTools.h>
 #include <spine/Convenience.h>
 #include <spine/Exception.h>
-#include "WfsConvenience.h"
 #include <locale>
 #include <sstream>
 #include <stdexcept>
@@ -37,12 +37,11 @@ const char* c_get_feature_by_id = "urn:ogc:def:query:OGC-WFS::GetFeatureById";
 // ----------------------------------------------------------------------
 
 Config::Config(const string& configfile)
-    : SmartMet::Spine::ConfigBase(configfile, "WFS plugin")
-    , itsDefaultUrl(default_url)
+    : SmartMet::Spine::ConfigBase(configfile, "WFS plugin"), itsDefaultUrl(default_url)
 {
-  std::cout << (SmartMet::Spine::log_time_str()
-		+ " [WFS] Using plugin configuration file "
-		+ configfile) << std::endl;
+  std::cout << (SmartMet::Spine::log_time_str() + " [WFS] Using plugin configuration file " +
+                configfile)
+            << std::endl;
 
   try
   {
@@ -50,22 +49,24 @@ Config::Config(const string& configfile)
     sq_config_dirs = get_mandatory_path_array("storedQueryConfigDirs", 1);
     const std::string sq_template_dir = get_mandatory_path("storedQueryTemplateDir");
     getFeatureById = get_optional_config_param<std::string>("getFeatureById", c_get_feature_by_id);
-    geoserver_conn_str = get_mandatory_config_param<std::string>("geoserverConnStr");
+    geoserver_conn_str = get_optional_config_param<std::string>("geoserverConnStr", "");
     default_locale = get_optional_config_param<std::string>("locale", guess_default_locale());
     cache_size = get_optional_config_param<int>("cacheSize", 100);
     cache_time_constant = get_optional_config_param<int>("cacheTimeConstant", 60);
     default_expires_seconds = get_optional_config_param<int>("defaultExpiresSeconds", 60);
     validate_output = get_optional_config_param<bool>("validateXmlOutput", false);
+    fail_on_validate_errors = get_optional_config_param<bool>("failOnValidateErrors", false);
     enable_demo_queries = get_optional_config_param<bool>("enableDemoQueries", false);
     enable_test_queries = get_optional_config_param<bool>("enableTestQueries", false);
     enable_configuration_polling =
         get_optional_config_param<bool>("enableConfigurationPolling", false);
 
     sq_restrictions = get_optional_config_param<bool>("storedQueryRestrictions", true);
+    httpProxy = get_optional_config_param<std::string>("httpProxy", "");
+    noProxy = get_optional_config_param<std::string>("noProxy", "");
 
-    std::cout << (SmartMet::Spine::log_time_str()
-		  + " [WFS] Using locale "
-		  + default_locale) << std::endl;
+    std::cout << (SmartMet::Spine::log_time_str() + " [WFS] Using locale " + default_locale)
+              << std::endl;
 
     std::vector<std::string> xml_grammar_pool_fns;
     // Ensure that setting exists (or report an error otherwise)
@@ -117,6 +118,8 @@ Config::Config(const string& configfile)
     template_directory = sq_template_dir;
 
     read_admin_cred();
+
+    read_hosts_info();
   }
   catch (...)
   {
@@ -226,21 +229,29 @@ void Config::read_capabilities_config()
   try
   {
     const char* setting_name = "capabilitiesConfig";
-    if (get_config().exists(setting_name)) {
+    if (get_config().exists(setting_name))
+    {
       libconfig::Setting& s1 = get_config().lookup(setting_name);
-      const std::string default_language = languages.empty() ? std::string("eng") : *languages.begin();
-      if (s1.getType() == libconfig::Setting::TypeString) {
-	const std::string fn = get_mandatory_path(setting_name);
-	libconfig::Config raw_capabilities_conf;
-	std::cout << SmartMet::Spine::log_time_str()
-		  << " [WFS][INFO] Reading capabilities information from '" << fn << '\''
-		  << std::endl;
-	raw_capabilities_conf.readFile(fn.c_str());
-	capabilities_conf.parse(default_language, raw_capabilities_conf.getRoot());
-      } else if (s1.getType() == libconfig::Setting::TypeGroup) {
-	capabilities_conf.parse(default_language, s1);
-      } else {
-	throw SmartMet::Spine::Exception::Trace(BCP, "Incorrect value of configuration entry capabilities_config");
+      const std::string default_language =
+          languages.empty() ? std::string("eng") : *languages.begin();
+      if (s1.getType() == libconfig::Setting::TypeString)
+      {
+        const std::string fn = get_mandatory_path(setting_name);
+        libconfig::Config raw_capabilities_conf;
+        std::cout << SmartMet::Spine::log_time_str()
+                  << " [WFS][INFO] Reading capabilities information from '" << fn << '\''
+                  << std::endl;
+        raw_capabilities_conf.readFile(fn.c_str());
+        capabilities_conf.parse(default_language, raw_capabilities_conf.getRoot());
+      }
+      else if (s1.getType() == libconfig::Setting::TypeGroup)
+      {
+        capabilities_conf.parse(default_language, s1);
+      }
+      else
+      {
+        throw SmartMet::Spine::Exception::Trace(
+            BCP, "Incorrect value of configuration entry capabilities_config");
       }
     }
   }
@@ -252,15 +263,44 @@ void Config::read_capabilities_config()
 
 void Config::read_admin_cred()
 {
-  try {
+  try
+  {
     const char* setting_name = "admin";
-    if (get_config().exists(setting_name)) {
+    if (get_config().exists(setting_name))
+    {
       libconfig::Setting& s1 = assert_is_group(get_config().lookup(setting_name));
       const std::string user = get_optional_config_param<std::string>(s1, "admin", "admin");
       const std::string password = get_mandatory_config_param<std::string>(s1, "password");
       adminCred = std::make_pair(user, password);
     }
-  } catch (...)
+  }
+  catch (...)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+void Config::read_hosts_info()
+{
+  const char* default_wms_host = "wms.fmi.fi";
+  try
+  {
+    const char* setting_name = "hosts";
+    if (get_config().exists(setting_name))
+    {
+      libconfig::Setting& s1 = assert_is_list(get_config().lookup(setting_name));
+
+      for (int i = 0; i < s1.getLength(); i++)
+      {
+        auto& info = s1[i];
+        auto server = get_mandatory_config_param<std::string>(info, "server");
+        auto wms = get_optional_config_param<std::string>(info, "wms", default_wms_host);
+        auto keep_apikey = get_optional_config_param<bool>(info, "keep_apikey", true);
+        hosts.addHost(server, wms, keep_apikey);
+      }
+    }
+  }
+  catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
@@ -372,7 +412,45 @@ accepted.
     the response XML validates OK against XML schemas. Validate failures are reported
     but does not however prevent response to be sent to user. It is recommended
     not to enable this parameter for production use to avoid unnecessary
-    use of resources. Note that incoming XML requests are validated always</td>
+    use of resources. Note that incoming XML requests are validated always.
+    Schemas required for validation incoming XML requests must be present in
+    XML grammar dump (see @b xmlGrammarPoolDump)</td>
+</tr>
+
+<tr>
+<td>failOnValidateErrors</td>
+<td>boolean</td>
+<td>optional (default @b false)</td>
+<td>Specifies whether to perform WFS response validation errors cause request to fail.
+    Ignored if response XML validation is not enabled.
+</tr>
+
+<tr>
+<td>httpProxy</td>
+<td>string (URL)</td>
+<td>optional (default empty)</td>
+<td>Specifies HTTP/HTTPS proxy to be used for XML schema download. Absence of setting
+    or empty string means that proxy is not used. Ignored unless XML output validation
+    is enabled (@b validateXmlOutput). One can also use environment variables for
+    specifying proxy server (see <b>man curl</b> for more info).</td>
+</tr>
+
+<tr>
+<td>noProxy</td>
+<td>string (URL)</td>
+<td>optional (default empty)</td>
+<td>Specifies for which hosts HTTP/HTTPS proxy is not used. Ignored unless XML output validation
+    is enabled (@b validateXmlOutput). One can also use environment variables for
+    specifying proxy server (see <b>man curl</b> for more info).</td>
+</tr>
+
+<tr>
+<td>httpProxy</td>
+<td>string</td>
+<td>optional (default empty)</td>
+<td>Specifies HTTP proxy to use. Only used or XML schema download when XML output validation
+   is enabled. Schemas required for validating XML format HTTP requests must be provided in
+   XML grammar pool (request validation is always enabled)</td>
 </tr>
 
 <tr>
@@ -527,6 +605,15 @@ This group consists of parameters:
 - password - password (mandatory)
 </tr>
 
+<tr>
+<td>hosts</td>
+<td>config group</td>
+<td>optional</td>
+<td>Specifies host names to use in output documents. Currently only host for WMS downloads is
+supported This group consist of following parameters:
+- wms - name of host for WMS downloads (default wms.fmi.fi)
+</tr>
+
 </table>
 
  */
@@ -595,7 +682,7 @@ are supported
     @verbatim
     (?:urn:ogc:def:crs:|)EPSG:{1,2}NNNN
     @endverbatim
-    where NNNN is 4 digin EPSG code</td>
+    where NNNN is 4 digit EPSG code</td>
 </tr>
 
 <tr>
@@ -614,7 +701,7 @@ are supported
 <td>proj4</td>
 <td>string</td>
 <td>mandatory unless @b epsg is specified, ignored otherwise</td>
-<td>Specifies Proj.4 description of projection. Projection is registred using
+<td>Specifies Proj.4 description of projection. Projection is registered using
     the value of this configuration  entry</td>
 </tr>
 
@@ -622,7 +709,7 @@ are supported
 <td>epsgCode</td>
 <td>integer</td>
 <td>optional, ignored if @b epsg is provided</td>
-<td>Specifies @b epsg code when projection is registred using Proj.4 description</td>
+<td>Specifies @b epsg code when projection is registered using Proj.4 description</td>
 </tr>
 
 </table>

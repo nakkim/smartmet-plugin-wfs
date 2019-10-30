@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Config.h"
 #include "MultiLanguageString.h"
 #include "StoredQueryParamDef.h"
 #include <boost/optional.hpp>
@@ -18,8 +19,6 @@ namespace Plugin
 {
 namespace WFS
 {
-
-class Config;
 class StoredQueryHandlerBase;
 
 /**
@@ -186,6 +185,8 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
    */
   void set_locale(const std::string& name);
 
+  const Hosts& get_hosts() const { return hosts; }
+
  private:
   void parse_config();
 
@@ -213,6 +214,7 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
   bool demo;
   bool test;
   int debug_level;
+  const Hosts& hosts;
 };
 
 }  // namespace WFS

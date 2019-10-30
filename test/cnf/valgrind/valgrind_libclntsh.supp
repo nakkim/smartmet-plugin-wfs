@@ -1,0 +1,437 @@
+#============================================================================
+#
+# Valgrind suppression file for the Oracle 11.2 client library libclntsh
+# (and a few other libraries commonly used in CORAL and COOL)
+# Each section was auto-generated using "valgrind --gen-suppressions=all"
+#
+# Origin of this suspension file:
+#     http://coral.cvs.cern.ch/cgi-bin/coral.cgi/coral/Tests/cmt/Attic/valgrind_libclntsh.supp
+# (Really removed there, but we can still use it)
+#
+#============================================================================
+# *** SYSTEM LIBRARIES ***
+#============================================================================
+#
+# Memory leak (bytes are still reachable in loss record)
+# [NB This leak can be ignored: we do not unload dynamically loaded plugins]
+{
+   <dl_dlopen>
+   Memcheck:Leak
+   ...
+   fun:_dlerror_run
+   fun:dlopen@@GLIBC*
+   ...
+}
+#============================================================================
+# *** ORACLE CLIENT ***
+#============================================================================
+#
+# Syscall param write(buf) points to uninitialised byte(s)
+{
+   <oracle112010_kpuvers_nioqrc_param>
+   Memcheck:Param
+   write(buf)
+   ...
+   fun:nioqrc
+   fun:ttcdrv
+   fun:nioqwa
+   fun:upirtrc
+   fun:upirtr
+   fun:upiver
+   fun:kpuvers
+   ...
+}
+#----------------------------------------------------------------------------
+#
+# Use of uninitialised value of size 4 or 8
+{
+   <oracle112010_ztcsh_ztced_val4>
+   Memcheck:Value4
+   fun:ztced_einit
+   fun:ztcedgks
+   fun:ztcedi
+   fun:ztcebi
+   fun:ztcei
+   fun:ztceenc
+   fun:ztcrbm
+   fun:ztcrbh
+   fun:ztcrbp
+   fun:ztcr2seed
+   fun:ztcrseed3
+   fun:ztcsh
+}
+{
+   <oracle112010_ztcsh_ztced_val8>
+   Memcheck:Value8
+   fun:ztced_einit
+   fun:ztcedgks
+   fun:ztcedi
+   fun:ztcebi
+   fun:ztcei
+   fun:ztceenc
+   fun:ztcrbm
+   fun:ztcrbh
+   fun:ztcrbp
+   fun:ztcr2seed
+   fun:ztcrseed3
+   fun:ztcsh
+}
+#----------------------------------------------------------------------------
+#
+# Use of uninitialised value of size 4 or 8
+{
+   <oracle112010_ztcsh_ztcebn_val4>
+   Memcheck:Value4
+   ...
+   fun:ztcebn
+   fun:ztcen
+   fun:ztceenc
+   fun:ztcrbm
+   fun:ztcrbh
+   fun:ztcrbp
+   fun:ztcr2seed
+   fun:ztcrseed3
+   fun:ztcsh
+   ...
+}
+{
+   <oracle112010_ztcsh_ztcebn_val8>
+   Memcheck:Value8
+   ...
+   fun:ztcebn
+   fun:ztcen
+   fun:ztceenc
+   fun:ztcrbm
+   fun:ztcrbh
+   fun:ztcrbp
+   fun:ztcr2seed
+   fun:ztcrseed3
+   fun:ztcsh
+   ...
+}
+#----------------------------------------------------------------------------
+#
+# Use of uninitialised value of size 4 or 8
+{
+   <oracle112010_ztcrseed3_ztcedecb_val4>
+   Memcheck:Value4
+   fun:ztcedecb
+   fun:ztcedencbk
+   fun:ztceb_encblk
+   fun:ztceb_padding
+   fun:ztcebf
+   fun:ztcef
+   fun:ztceenc
+   fun:ztcrbm
+   fun:ztcrbh
+   fun:ztcrbp
+   fun:ztcr2seed
+   fun:ztcrseed3
+}
+{
+   <oracle112010_ztcrseed3_ztcedecb_val8>
+   Memcheck:Value8
+   fun:ztcedecb
+   fun:ztcedencbk
+   fun:ztceb_encblk
+   fun:ztceb_padding
+   fun:ztcebf
+   fun:ztcef
+   fun:ztceenc
+   fun:ztcrbm
+   fun:ztcrbh
+   fun:ztcrbp
+   fun:ztcr2seed
+   fun:ztcrseed3
+}
+#----------------------------------------------------------------------------
+#
+# Conditional jump or move depends on uninitialised value(s)
+{
+   <oracle112010_OCIAttrSet_X931RandomGenerateBytes_cond>
+   Memcheck:Cond
+   ...
+   fun:A_X931RandomGenerateBytes
+   fun:ztcr2rnd
+   fun:ztcsh
+   fun:kpusattr
+   fun:OCIAttrSet
+   ...
+}
+#----------------------------------------------------------------------------
+#
+# Conditional jump or move depends on uninitialised value(s)
+{
+   <oracle112010_OCISessionBegin_kpu8lgn_cond>
+   Memcheck:Cond
+   ...
+   fun:kpu8lgn
+   fun:kpuauthxa
+   fun:kpuauth
+   fun:OCISessionBegin
+   ...
+}
+#
+# Use of uninitialised value of size 4 or 8
+{
+   <oracle112010_OCISessionBegin_kpu8lgn_val4>
+   Memcheck:Value4
+   ...
+   fun:kpu8lgn
+   fun:kpuauthxa
+   fun:kpuauth
+   fun:OCISessionBegin
+   ...
+}
+{
+   <oracle112010_OCISessionBegin_kpu8lgn_val8>
+   Memcheck:Value8
+   ...
+   fun:kpu8lgn
+   fun:kpuauthxa
+   fun:kpuauth
+   fun:OCISessionBegin
+   ...
+}
+#----------------------------------------------------------------------------
+#
+# Conditional jump or move depends on uninitialised value(s)
+#{
+#   <oracle112010_OCIEnvCreate_kpuenvcr_cond>
+#   Memcheck:Cond
+#   ...
+#   fun:kpuenvcr
+#   fun:OCIEnvCreate
+#   ...
+#}
+#----------------------------------------------------------------------------
+#
+# Use of uninitialised value of size 4 or 8
+{
+   <oracle112010_OCIEnvCreate_val4>
+   Memcheck:Value4
+   fun:__strncasecmp_l_sse42
+   fun:sskgm_get_lps
+   fun:sskgminit
+   fun:skgminit
+   fun:kpuiniPG
+   fun:kpuinit0
+   fun:kpuenvcr
+   fun:OCIEnvCreate
+   ...
+}
+{
+   <oracle112010_OCIEnvCreate_val8>
+   Memcheck:Value8
+   fun:__strncasecmp_l_sse42
+   fun:sskgm_get_lps
+   fun:sskgminit
+   fun:skgminit
+   fun:kpuiniPG
+   fun:kpuinit0
+   fun:kpuenvcr
+   fun:OCIEnvCreate
+   ...
+}
+#----------------------------------------------------------------------------
+#
+# Memory leak (bytes are _definitely lost_)
+# [FROM test_Integration_ObjectConsistency oracle test_threads]
+# *** CAN THIS BE IGNORED OR NOT? KEEP THIS DISABLED!
+#{
+#   <oracle112010_OCIEnvCreate_slzsetevar_leak>
+#   Memcheck:Leak
+#   fun:malloc
+#   fun:slzsetevar
+#   fun:lfvSetOHome
+#   fun:slpmloclfv
+#   fun:slpmloc
+#   fun:lpmloadpkg
+#   fun:lfvLoadPkg
+#   fun:lfvSetShlMode
+#   fun:lfvini1
+#   fun:lfvini2
+#   fun:lxlinit
+#   fun:nleminz
+#   fun:nlstdggo
+#   fun:nlstdgg
+#   fun:nigini2
+#   fun:kpeDbgGetNPDGlobal
+#   fun:kpeDbgTLSInit
+#   fun:kpummTLSGET1
+#   fun:kpeDbgProcessInit
+#   fun:kpummpin
+#   fun:kpuenvcr
+#   fun:OCIEnvCreate
+#   #fun:***USE_THIS_TO_DISABLE_THIS_VALGRIND_SUPPRESSION***
+#   ...
+#}
+#----------------------------------------------------------------------------
+#
+# Memory leak (bytes are _possibly lost_ in loss record)
+# [FROM test_Integration_ObjectConsistency oracle test_threads]
+# [NB: OCIHandleFree was definitely called here...]
+# *** CAN THIS BE IGNORED OR NOT? KEEP THIS DISABLED!
+#{
+#   <oracle112010_OCIEnvCreate_lpminit_malloc_leak>
+#   Memcheck:Leak
+#   fun:malloc
+#   fun:sltsmxi
+#   fun:lmmhpinit
+#   fun:lmmcis
+#   fun:lpmpali
+#   fun:lpminitm
+#   fun:lpminit
+#   fun:lfvLoadPkg
+#   fun:lfvSetShlMode
+#   fun:lfvini1
+#   fun:lfvini2
+#   fun:lxlinit
+#   fun:nleminz
+#   fun:nlstdggo
+#   fun:nlstdgg
+#   fun:nigini2
+#   fun:kpeDbgGetNPDGlobal
+#   fun:kpeDbgTLSInit
+#   fun:kpummTLSGET1
+#   fun:kpeDbgProcessInit
+#   fun:kpummpin
+#   fun:kpuenvcr
+#   fun:OCIEnvCreate
+#   #fun:***USE_THIS_TO_DISABLE_THIS_VALGRIND_SUPPRESSION***
+#   ...
+#}
+#----------------------------------------------------------------------------
+#
+# Memory leak (bytes are _possibly lost_ in loss record)
+# [FROM test_Integration_ObjectConsistency oracle test_threads]
+# [NB: OCIHandleFree was definitely called here...]
+# *** CAN THIS BE IGNORED OR NOT? KEEP THIS DISABLED!
+#{
+#   <oracle112010_OCIEnvCreate_lpminit_calloc_leak>
+#   Memcheck:Leak
+#   fun:calloc
+#   fun:slwmmgetmem
+#   fun:lmmstvrt
+#   fun:lmmstchnk
+#   fun:lmmstsml
+#   fun:lmmstmalloc
+#   fun:lmmmalloc
+#   fun:lmmcis
+#   fun:lpmpali
+#   fun:lpminitm
+#   fun:lpminit
+#   fun:lfvLoadPkg
+#   fun:lfvSetShlMode
+#   fun:lfvini1
+#   fun:lfvini2
+#   fun:lxlinit
+#   fun:nleminz
+#   fun:nlstdggo
+#   fun:nlstdgg
+#   fun:nigini2
+#   fun:kpeDbgGetNPDGlobal
+#   fun:kpeDbgTLSInit
+#   fun:kpummTLSGET1
+#   ###fun:kpeDbgProcessInit  ### TOO MANY CALLERS
+#   ###fun:kpummpin           ### TOO MANY CALLERS
+#   ###fun:kpuenvcr           ### TOO MANY CALLERS
+#   ###fun:OCIEnvCreate       ### TOO MANY CALLERS
+#   #fun:***USE_THIS_TO_DISABLE_THIS_VALGRIND_SUPPRESSION***
+#   ...
+#}
+#----------------------------------------------------------------------------
+#
+# Memory leak (bytes are _possibly lost_ in loss record)
+# [FROM test_Integration_ObjectConsistency oracle test_threads]
+# [NB: OCIHandleFree was definitely called here...]
+# *** CAN THIS BE IGNORED OR NOT? KEEP THIS DISABLED!
+#{
+#   <oracle112010_OCIEnvCreate_kpummpin_leak>
+#   Memcheck:Leak
+#   fun:*alloc
+#   ...
+#   fun:kpummpin
+#   fun:kpuenvcr
+#   fun:OCIEnvCreate
+#   #fun:***USE_THIS_TO_DISABLE_THIS_VALGRIND_SUPPRESSION***
+#   ...
+#}
+#----------------------------------------------------------------------------
+#
+# Memory leak (bytes are _possibly lost_ in loss record)
+# [FROM test_Integration_ObjectConsistency oracle test_threads]
+# [NB: OCIHandleFree was definitely called here...]
+# *** CAN THIS BE IGNORED OR NOT? KEEP THIS DISABLED!
+#{
+#   <oracle112010_OCIEnvCreate_kpuinit0_leak>
+#   Memcheck:Leak
+#   fun:*alloc
+#   ...
+#   fun:kpuinit0
+#   fun:kpuenvcr
+#   fun:OCIEnvCreate
+#   #fun:***USE_THIS_TO_DISABLE_THIS_VALGRIND_SUPPRESSION***
+#   ...
+#}
+#----------------------------------------------------------------------------
+#
+# Memory leak (bytes are still reachable in loss record)
+# [FROM test_Integration_ObjectConsistency oracle test_threads]
+# [NB: OCIHandleFree was definitely called here...]
+# *** CAN THIS BE IGNORED OR NOT? KEEP THIS DISABLED!
+#{
+#   <oracle112010_OCIEnvCreate_nrigbi_leak>
+#   Memcheck:Leak
+#   fun:malloc
+#   fun:nlnvmal
+#   fun:nlnvgst
+#   ...
+#   fun:nlnvpbi
+#   fun:nlnvpds
+#   fun:nlnvcrb
+#   fun:nrigbni
+#   fun:nrigbi
+#   fun:nigini2
+#   fun:kpeDbgGetNPDGlobal
+#   fun:kpeDbgTLSInit
+#   fun:kpummTLSGET1
+#   fun:kpeDbgProcessInit
+#   fun:kpummpin
+#   fun:kpuenvcr
+#   fun:OCIEnvCreate
+#   #fun:***USE_THIS_TO_DISABLE_THIS_VALGRIND_SUPPRESSION***
+#   ...
+#}
+#----------------------------------------------------------------------------
+#
+# Memory leak (bytes are still reachable in loss record)
+# [FROM test_Integration_ObjectConsistency oracle test_threads]
+# [NB: OCIHandleFree was definitely called here...]
+# *** CAN THIS BE IGNORED OR NOT? KEEP THIS DISABLED!
+#{
+#   <oracle112010_OCIEnvCreate_slpmapd_leak>
+#   Memcheck:Leak
+#   fun:malloc
+#   fun:slpmadp
+#   ...
+#   fun:lfvLoadPkg
+#   fun:lfvSetShlMode
+#   fun:lfvini1
+#   fun:lfvini2
+#   fun:lxlinit
+#   fun:nleminz
+#   fun:nlstdggo
+#   fun:nlstdgg
+#   fun:nigini2
+#   fun:kpeDbgGetNPDGlobal
+#   fun:kpeDbgTLSInit
+#   fun:kpummTLSGET1
+#   fun:kpeDbgProcessInit
+#   fun:kpummpin
+#   fun:kpuenvcr
+#   fun:OCIEnvCreate
+#   #fun:***USE_THIS_TO_DISABLE_THIS_VALGRIND_SUPPRESSION***
+#   ...
+#}
+#============================================================================

@@ -78,7 +78,7 @@ class StoredQuery : public QueryBase
   virtual std::string get_cache_key() const;
 
   bool get_use_debug_format() const { return debug_format; }
-  virtual void execute(std::ostream& output, const std::string& language) const;
+  virtual void execute(std::ostream& output, const std::string& language, const boost::optional<std::string>& hostname) const;
 
   const SmartMet::Spine::Value& get_param(const std::string& name) const;
 

@@ -23,7 +23,7 @@
                     <gml:rangeSet>           
                         <gml:File>
                             <gml:rangeParameters/>
-                            <gml:fileReference><TMPL_var protocol>wms.fmi.fi<TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/geoserver/wms?<TMPL_var HTMLESCAPE(dataset.URL)>&amp;width=<TMPL_call "width">&amp;height=<TMPL_call "height"></gml:fileReference>     
+                            <gml:fileReference><TMPL_var protocol><TMPL_var hosts.wms><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/geoserver/wms?<TMPL_var HTMLESCAPE(dataset.URL)>&amp;width=<TMPL_call "width">&amp;height=<TMPL_call "height"></gml:fileReference>     
                             <gml:fileStructure/>
                             <gml:mimeType>image/geotiff</gml:mimeType>
                         </gml:File>

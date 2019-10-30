@@ -86,6 +86,7 @@ void bw::StoredEnvMonitoringNetworkQueryHandler::init_handler()
 
 void bw::StoredEnvMonitoringNetworkQueryHandler::query(const StoredQuery& query,
                                                        const std::string& language,
+						       const boost::optional<std::string> &hostname,
                                                        std::ostream& output) const
 {
   try

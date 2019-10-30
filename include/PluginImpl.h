@@ -74,7 +74,7 @@ class PluginImpl : public boost::noncopyable
     return *type_name_stored_query_map;
   }
 
-  inline boost::shared_ptr<GeoServerDB> get_geo_server_database() const { return geo_server_db; }
+  boost::shared_ptr<GeoServerDB> get_geo_server_database() const;
 
   inline std::string get_fallback_hostname() const { return fallback_hostname; }
 
@@ -119,6 +119,8 @@ class PluginImpl : public boost::noncopyable
   }
 
   void updateStoredQueryMap(Spine::Reactor* theReactor);
+
+  void dump_xml_schema_cache(std::ostream& os);
 
  private:
   void query(const std::string& language,
@@ -216,6 +218,7 @@ class PluginImpl : public boost::noncopyable
   std::string data_source{""};
   std::string primary_data_source{""};
   bool gridengine_disabled{false};
+
 
   /**
    *   @brief Locked timestamp for testing only

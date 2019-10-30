@@ -14,15 +14,23 @@ FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter \
 	-fno-omit-frame-pointer \
 	-fdiagnostics-color=$(GCC_DIAG_COLOR) \
 	-Wno-unknown-pragmas \
-      -Wcast-align \
-      -Wcast-qual \
-      -Wno-inline \
-      -Wno-multichar \
-      -Wno-pmf-conversions \
-      -Woverloaded-virtual  \
-      -Wpointer-arith \
-      -Wredundant-decls \
-      -Wwrite-strings
+	-Wcast-align \
+	-Wcast-qual \
+	-Wno-inline \
+	-Wno-multichar \
+	-Wno-pmf-conversions \
+	-Woverloaded-virtual  \
+	-Wpointer-arith \
+	-Wredundant-decls \
+	-Wwrite-strings \
+	-Wnon-virtual-dtor 
+
+ifeq ($(TSAN), yes)
+  FLAGS += -fsanitize=thread
+endif
+ifeq ($(ASAN), yes)
+  FLAGS += -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=undefined -fsanitize-address-use-after-scope
+endif
 
 # Compile options in detault, debug and profile modes
 
@@ -81,7 +89,6 @@ LIBS = -L$(libdir) \
 	-lboost_date_time \
         -lboost_serialization \
 	-lboost_thread \
-	-lboost_regex \
 	-lboost_iostreams \
 	-lboost_filesystem \
         -lboost_chrono \
@@ -89,7 +96,7 @@ LIBS = -L$(libdir) \
         -lxqilla \
 	-lxerces-c \
 	-lgdal \
-	-lpqxx /usr/pgsql-9.5/lib/libpq.a \
+	-lpqxx \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \

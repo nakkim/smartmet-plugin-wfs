@@ -12,6 +12,7 @@
 #include <boost/bind.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/format.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TimeParser.h>
@@ -202,6 +203,20 @@ boost::posix_time::ptime PluginImpl::get_local_time_stamp() const
   }
 }
 
+boost::shared_ptr<GeoServerDB> PluginImpl::get_geo_server_database() const
+{
+  if (geo_server_db)
+  {
+    return geo_server_db;
+  }
+  else
+  {
+    SmartMet::Spine::Exception exception(BCP, "GeoServer database is not available");
+    exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
+    throw exception;
+  }
+}
+
 void PluginImpl::create_template_formatters()
 {
   try
@@ -255,6 +270,22 @@ void PluginImpl::create_xml_parser()
     {
       xml_parser->load_schema_cache(serialized_xml_schemas);
     }
+
+    if (itsConfig.getValidateXmlOutput())
+    {
+      std::cout << "\t\t+ [Enabling XML schema download (";
+      if (itsConfig.getProxy() != "")
+      {
+        std::cout << "proxy='" << itsConfig.getProxy() << '\'';
+      }
+      if (itsConfig.getNoProxy() != "")
+      {
+        std::cout << "no_proxy='" << itsConfig.getNoProxy() << '\'';
+      }
+      std::cout << ']' << std::endl;
+
+      xml_parser->enable_schema_download(itsConfig.getProxy(), itsConfig.getNoProxy());
+    }
   }
   catch (...)
   {
@@ -268,7 +299,11 @@ void PluginImpl::init_geo_server_access()
   {
     try
     {
-      geo_server_db.reset(new GeoServerDB(itsConfig.get_geoserver_conn_string(), 5));
+      const std::string geoserver_conn_str = itsConfig.get_geoserver_conn_string();
+      if (geoserver_conn_str != "")
+      {
+        geo_server_db.reset(new GeoServerDB(itsConfig.get_geoserver_conn_string(), 5));
+      }
     }
     catch (...)
     {
@@ -538,7 +573,7 @@ void PluginImpl::query(const std::string& req_language,
 
     const std::string fmi_apikey_prefix = "/fmi-apikey/";
 
-    const std::string language =
+    std::string language =
         req_language == "" ? *get_config().get_languages().begin() : req_language;
 
     if (method == SmartMet::Spine::HTTP::RequestMethod::GET)
@@ -781,7 +816,40 @@ void PluginImpl::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
       }
 
       if (result.may_validate_xml)
-        maybe_validate_output(theRequest, theResponse);
+        try
+        {
+          maybe_validate_output(theRequest, theResponse);
+        }
+        catch (...)
+        {
+          auto err = SmartMet::Spine::Exception::Trace(BCP, "Response XML validation failed");
+          if (get_config().getFailOnValidateErrors())
+          {
+            std::ostringstream msg;
+            const std::string content = theResponse.getContent();
+            std::vector<std::string> lines;
+            ba::split(lines, content, ba::is_any_of("\n"));
+            msg << "########################################################################\n"
+                << "# Validation of XML response has failed\n"
+                << "########################################################################\n"
+                << theRequest.toString() << '\n'
+                << "########################################################################\n";
+            for (std::size_t i = 0; i < lines.size(); i++)
+            {
+              msg << (boost::format("%06d: %s\n") % (i + 1) % lines.at(i)).str();
+            }
+            msg << "########################################################################\n";
+            msg << err.getStackTrace();
+            msg << "########################################################################\n";
+            std::cout << msg.str();
+            err.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
+            throw err;
+          }
+          else
+          {
+            SmartMet::Spine::Exception::Trace(BCP, "Response validation failed!").printError();
+          }
+        }
     }
     catch (...)
     {
@@ -883,4 +951,9 @@ void PluginImpl::maybe_validate_output(const SmartMet::Spine::HTTP::Request& req
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
+}
+
+void PluginImpl::dump_xml_schema_cache(std::ostream& os)
+{
+  xml_parser->dump_schema_cache(os);
 }

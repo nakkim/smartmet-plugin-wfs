@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.10.1
+Version: 19.10.30
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -23,18 +23,18 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 19.9.27
+BuildRequires: smartmet-library-spine-devel >= 19.10.29
 BuildRequires: smartmet-library-gis-devel >= 19.9.26
 BuildRequires: smartmet-library-locus-devel >= 19.9.26
 BuildRequires: smartmet-library-macgyver-devel >= 19.9.26
 BuildRequires: smartmet-engine-contour-devel >= 19.9.26
-BuildRequires: smartmet-engine-geonames-devel >= 19.9.26
+BuildRequires: smartmet-engine-geonames-devel >= 19.10.25
 BuildRequires: smartmet-engine-gis-devel >= 19.9.26
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.9.26
+BuildRequires: smartmet-engine-observation-devel >= 19.10.29
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 19.9.26
-BuildRequires: postgresql95-libs
+# BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 5.2.0
 Requires: libconfig
@@ -42,28 +42,25 @@ Requires: libcurl
 Requires: libpqxx
 Requires: smartmet-library-locus >= 19.9.26
 Requires: smartmet-library-macgyver >= 19.9.26
-Requires: smartmet-library-spine >= 19.9.26
+Requires: smartmet-library-spine >= 19.10.29
 Requires: smartmet-library-gis >= 19.9.26
 Requires: smartmet-engine-contour >= 19.9.26
-Requires: smartmet-engine-geonames >= 19.9.26
+Requires: smartmet-engine-geonames >= 19.10.25
 Requires: smartmet-engine-gis >= 19.9.26
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.9.26
+Requires: smartmet-engine-observation >= 19.10.29
 %endif
 Requires: smartmet-engine-querydata >= 19.9.26
-Requires: smartmet-server >= 19.9.26
+Requires: smartmet-server >= 19.10.1
 Requires: xerces-c
 Requires: xqilla
-%if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
 Requires: boost-filesystem
 Requires: boost-iostreams
-Requires: boost-regex
 Requires: boost-serialization
 Requires: boost-system
 Requires: boost-thread
-%endif
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-wfs < 16.11.1
 Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
@@ -95,14 +92,36 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Wed Oct 30 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.30-1.fmi
+- Full repackaging of GRIB server components
+
 * Tue Oct  1 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.1-1.fmi
 - Repackaged due to SmartMet library ABI changes
+
+* Mon Oct 21 2019 Anssi Reponen <anssi.reponen@fmi.fi> - 19.10.21-1.fmi
+- Added support for PAP_PT1S_AVG parameter in sounding query (INSPIRE-899)
+- Test added for sounding data (BRAINSTORM-1694)
+
+* Tue Oct 15 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.15-1.fmi
+- Improved handling of missing observations
+
+* Thu Sep 26 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.26-1.fmi
+- Fixed thread safety issue in hostname handling
 
 * Fri Sep 20 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.20-1.fmi
 - Repackaged everything with -fno-omit-frame-pointer
 
 * Thu Sep 19 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.19-1.fmi
 - New release version
+
+* Thu Sep 12 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.12-1.fmi
+- Repackaged due to obsengine ABI changes (virtual destructors added)
+
+* Thu Sep  5 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.5-1.fmi
+- Removed unnecessary support for location parameters in contour handlers
+
+* Wed Sep  4 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.4-1.fmi
+- Optimized stored lightning queries for speed, generating the rows of data via the template is too slow
 
 * Wed Aug 28 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.8.28-2.fmi
 - Repackaged since Spine::Location ABI changed
@@ -120,8 +139,31 @@ rm -rf $RPM_BUILD_ROOT
 * Fri Aug  9 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.8.9-1.fmi
 - Added analysis time to contour queries
 
+* Tue Jul 30 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.7.30-1.fmi
+- XML schema validation update (supports XML schema download including
+  through proxy (BRAINSTORM-1640)
+- Admin request support (BRAINSTORM-1645)
+
+* Tue Jun 25 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.6.25-1.fmi
+- Improved WMS server and APIKEY settings
+
+* Tue Jun 18 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.6.18-1.fmi
+- Add WMS server address to plugin configuration
+
+* Fri Jun 14 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.6.14-1.fmi
+- Do not use std::ostringstream in SmartMet::Plugin::WFS::SupportsTimeZone
+
+* Wed Jun 12 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.6.12-1.fmi
+- Fixed flash queries to use the spatialite cache if possible by not using the makeQuery API
+
+* Fri Jun  7 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.6.7-1.fmi
+- Repackaged due to obsengine changes
+
 * Tue May 14 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.5.15-1.fmi
 - Repackaged due to engine changes
+
+* Mon May 13 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.5.13-1.fmi
+- Make config param geoserverConnStr optional
 
 * Mon May  6 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.5.6-1.fmi
 - Plugin reload support (BRAINSTORM-1030)

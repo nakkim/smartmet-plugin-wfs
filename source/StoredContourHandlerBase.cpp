@@ -33,7 +33,6 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
     boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
-      bw::SupportsLocationParameters(config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
       bw::SupportsBoundingBox(config, plugin_data.get_crs_registry(), false),
       bw::SupportsTimeParameters(config),
       bw::SupportsTimeZone(config),
@@ -483,6 +482,7 @@ void bw::StoredContourQueryHandler::parsePolygon(OGRPolygon* polygon,
 
 void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
                                           const std::string& language,
+					  const boost::optional<std::string>& hostname,
                                           std::ostream& output) const
 {
   try
