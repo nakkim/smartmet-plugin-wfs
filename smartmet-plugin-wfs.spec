@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.10.21
+Version: 19.10.31
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -23,17 +23,17 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 19.10.8
+BuildRequires: smartmet-library-spine-devel >= 19.10.31
 BuildRequires: smartmet-library-gis-devel >= 19.9.26
 BuildRequires: smartmet-library-locus-devel >= 19.9.26
 BuildRequires: smartmet-library-macgyver-devel >= 19.9.26
-BuildRequires: smartmet-engine-contour-devel >= 19.9.26
-BuildRequires: smartmet-engine-geonames-devel >= 19.9.26
-BuildRequires: smartmet-engine-gis-devel >= 19.9.26
+BuildRequires: smartmet-engine-contour-devel >= 19.10.31
+BuildRequires: smartmet-engine-geonames-devel >= 19.10.25
+BuildRequires: smartmet-engine-gis-devel >= 19.10.31
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.10.21
+BuildRequires: smartmet-engine-observation-devel >= 19.10.31
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 19.9.26
+BuildRequires: smartmet-engine-querydata-devel >= 19.10.31
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 5.2.0
@@ -42,15 +42,15 @@ Requires: libcurl
 Requires: libpqxx
 Requires: smartmet-library-locus >= 19.9.26
 Requires: smartmet-library-macgyver >= 19.9.26
-Requires: smartmet-library-spine >= 19.10.8
+Requires: smartmet-library-spine >= 19.10.31
 Requires: smartmet-library-gis >= 19.9.26
-Requires: smartmet-engine-contour >= 19.9.26
-Requires: smartmet-engine-geonames >= 19.9.26
-Requires: smartmet-engine-gis >= 19.9.26
+Requires: smartmet-engine-contour >= 19.10.31
+Requires: smartmet-engine-geonames >= 19.10.25
+Requires: smartmet-engine-gis >= 19.10.31
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.10.21
+Requires: smartmet-engine-observation >= 19.10.31
 %endif
-Requires: smartmet-engine-querydata >= 19.9.26
+Requires: smartmet-engine-querydata >= 19.10.31
 Requires: smartmet-server >= 19.10.1
 Requires: xerces-c
 Requires: xqilla
@@ -92,6 +92,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Oct 31 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.31-1.fmi
+- Rebuilt due to newbase API/ABI changes
+
 * Mon Oct 21 2019 Anssi Reponen <anssi.reponen@fmi.fi> - 19.10.21-1.fmi
 - Added support for PAP_PT1S_AVG parameter in sounding query (INSPIRE-899)
 - Test added for sounding data (BRAINSTORM-1694)
