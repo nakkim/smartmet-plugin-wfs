@@ -21,13 +21,17 @@ clean:
 
 test:	../PluginTest input-files ../cnf/local.conf
 	@mkdir -p failures
+	@rm -f $(shell find failures -name '*.xml')
 	@../PluginTest
 
 valgrind: ../PluginTest input-files ../cnf/local.conf
 	@mkdir -p failures
+	@rm $(shell find failures -name '*.xml')
 	@$(VALGRIND) ../PluginTest
 
-input-files: $(XML_POST_TESTS)
+input-files:
+	rm $(shell find input -name '*.xml.post')
+	$(MAKE) $(XML_POST_TESTS)
 
 input/%.xml.post : xml/%.xml ; @mkdir -p $(shell dirname $@)
 	@perl ../MakeXMLPOST.pl $< $@ /wfs
