@@ -37,7 +37,8 @@ struct PluginImpl::RequestResult
 };
 
 PluginImpl::PluginImpl(SmartMet::Spine::Reactor* theReactor, const char* theConfig)
-    : itsConfig(theConfig), wfs_capabilities(new WfsCapabilities)
+    : itsConfig(theConfig)
+    , wfs_capabilities(new WfsCapabilities)
 {
   try
   {
@@ -148,13 +149,15 @@ PluginImpl::PluginImpl(SmartMet::Spine::Reactor* theReactor, const char* theConf
   }
 }
 
-PluginImpl::~PluginImpl() {}
+PluginImpl::~PluginImpl()
+{
+}
 
-void PluginImpl::updateStoredQueryMap(Spine::Reactor* theReactor)
+void PluginImpl::updateStoredQueryMap()
 {
   try
   {
-    stored_query_map->update_handlers(theReactor, *this);
+    //stored_query_map->update_handlers();
   }
   catch (...)
   {
@@ -331,33 +334,17 @@ void PluginImpl::create_stored_query_map(SmartMet::Spine::Reactor* theReactor)
   {
     const std::vector<std::string>& sq_config_dirs = itsConfig.getStoredQueriesConfigDirs();
 
-    stored_query_map.reset(new StoredQueryMap);
+    stored_query_map.reset(new StoredQueryMap(theReactor, *this));
 
     int parallel = itsConfig.get_optional_config_param<int>("parallelInit", 0);
+    stored_query_map->set_background_init(parallel);
 
-    if (parallel)
+    for (const auto& sq_config_dir : sq_config_dirs)
     {
-      BOOST_FOREACH (const std::string& sq_config_dir, sq_config_dirs)
-      {
-        stored_query_map->set_background_init(true);
-        boost::thread thread(boost::bind(&StoredQueryMap::read_config_dir,
-                                         boost::ref(stored_query_map),
-                                         theReactor,
-                                         sq_config_dir,
-                                         boost::ref(itsConfig.get_template_directory()),
-                                         boost::ref(*this)));
+      stored_query_map->add_config_dir(sq_config_dir, itsConfig.get_template_directory());
+    }
 
-        thread.detach();
-      }
-    }
-    else
-    {
-      BOOST_FOREACH (const std::string& sq_config_dir, sq_config_dirs)
-      {
-        stored_query_map->read_config_dir(
-            theReactor, sq_config_dir, itsConfig.get_template_directory(), *this);
-      }
-    }
+    stored_query_map->wait_for_init();
   }
   catch (...)
   {
@@ -938,4 +925,9 @@ void PluginImpl::maybe_validate_output(const SmartMet::Spine::HTTP::Request& req
 void PluginImpl::dump_xml_schema_cache(std::ostream& os)
 {
   xml_parser->dump_schema_cache(os);
+}
+
+bool PluginImpl::is_reload_required(bool reset)
+{
+  return stored_query_map->is_reload_required(reset);
 }

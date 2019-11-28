@@ -8,6 +8,7 @@
 #include "WfsConst.h"
 #include "WfsException.h"
 #include <boost/bind.hpp>
+#include <spine/Convenience.h>
 #include <spine/Exception.h>
 #include <spine/Reactor.h>
 #include <spine/SmartMet.h>
@@ -65,10 +66,8 @@ void Plugin::init()
         }
       }
 
-      stopUpdateLoop();
-
+      ensureUpdateLoopStarted();
       boost::atomic_store(&plugin_impl, new_impl);
-      startUpdateLoop();
     }
     catch (...)
     {
@@ -275,10 +274,19 @@ void Plugin::updateLoop()
   {
     while (updateCheck())
     {
+      boost::shared_ptr<PluginImpl> impl;
+
       try
       {
-	auto impl = boost::atomic_load(&plugin_impl);
-	impl->updateStoredQueryMap(itsReactor);
+	impl = boost::atomic_load(&plugin_impl);
+	if (impl
+	    and plugin_impl->get_config().getEnableConfigurationPolling()
+	    and impl->is_reload_required(true))
+	{
+	  bool ok = reload(itsConfig);
+	  std::cout << SmartMet::Spine::log_time_str() << ": [WFS] [INFO] Plugin reload "
+		    << (ok ? "succeeded" : "failed") << std::endl;
+	}
       }
       catch (...)
       {
@@ -293,12 +301,16 @@ void Plugin::updateLoop()
   }
 }
 
-void Plugin::startUpdateLoop()
+void Plugin::ensureUpdateLoopStarted()
 {
-  itsShuttingDown = false;
-  // Begin the update loop if enabled
-  if (plugin_impl->get_config().getEnableConfigurationPolling())
-    itsUpdateLoopThread.reset(new std::thread(std::bind(&Plugin::updateLoop, this)));
+  if (not itsShuttingDown) {
+    itsShuttingDown = false;
+    // Begin the update loop if enabled
+    std::unique_lock<std::mutex> lock(itsUpdateNotifyMutex);
+    if (not itsUpdateLoopThread) {
+      itsUpdateLoopThread.reset(new std::thread(std::bind(&Plugin::updateLoop, this)));
+    }
+  }
 }
 
 void Plugin::stopUpdateLoop()
