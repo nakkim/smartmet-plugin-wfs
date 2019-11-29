@@ -506,21 +506,38 @@ void bw::StoredQueryMap::handle_query_modify(const std::string& config_file_name
       duplicate.erase(config_file_name);
       handle_query_ignore(*sqh_config, false);
     } else {
-      auto prev_handler = get_handler_by_name_nothrow(sqh_config->get_query_id());
-      if (prev_handler) {
-	duplicate.erase(config_file_name);
-	if (config_file_name == prev_handler->get_config()->get_file_name()) {
-	  std::ostringstream msg;
-	  msg << SmartMet::Spine::log_time_str() << ": [WFS] [INFO] Replacing stored query: id='"
-	      << id << "' config='" << config_file_name << "'\n";
-	  std::cout << msg.str() << std::flush;
-	}
-
-	add_handler(sqh_config, template_dir);
-      } else {
-	if (get_handler_by_file_name(config_file_name)) {
+      const auto id = sqh_config->get_query_id();
+      auto ph1 = get_handler_by_file_name(config_file_name);
+      auto ph2 = get_handler_by_name_nothrow(id);
+      if (ph1) {
+	const auto id2 = ph1->get_config()->get_query_id();
+	if (ph2 and (ph1 != ph2)) {
 	  request_reload("");
 	} else {
+	  std::ostringstream msg;
+	  msg << SmartMet::Spine::log_time_str() << ": [WFS] [INFO] Adding stored query: id='"
+	      << id << "' config='" << config_file_name << "'\n";
+	  std::cout << msg.str() << std::flush;
+	  enqueue_query_add(sqh_config, template_dir, false);
+	  if (ph2 != ph1) {
+	    msg.str("");
+	    msg << SmartMet::Spine::log_time_str() << ": [WFS] [INFO] Removing stored query: id='" << id2 << "'\n";
+	    std::cout << msg.str() << std::flush;
+	    boost::unique_lock<boost::shared_mutex> lock(mutex);
+	    handler_map.erase(id2);
+	  }
+	}
+      } else {
+	// May happen if previous configuration had demo or test setting enabled.
+	if (ph2) {
+	  // Should add: storedquery_id already present
+	  request_reload("");
+	} else {
+	  // Should add: storedquery_id not in use
+	  std::ostringstream msg;
+	  msg << SmartMet::Spine::log_time_str() << ": [WFS] [INFO] Adding stored query: id='"
+	      << id << "' config='" << config_file_name << "'\n";
+	  std::cout << msg.str() << std::flush;
 	  enqueue_query_add(sqh_config, template_dir, false);
 	}
       }
