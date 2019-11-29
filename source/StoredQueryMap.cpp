@@ -25,18 +25,18 @@ namespace
 bw::StoredQueryMap::StoredQueryMap(SmartMet::Spine::Reactor* theReactor, PluginImpl& plugin_impl)
   : background_init(false)
   , reload_required(false)
+  , loading_started(false)
   , theReactor(theReactor)
   , plugin_impl(plugin_impl)
-  , directory_monitor()
-  , directory_monitor_thread(std::bind(&bw::StoredQueryMap::
-				       directory_monitor_thread_proc, this))
 {
 }
 
 bw::StoredQueryMap::~StoredQueryMap()
 {
-  directory_monitor.stop();
-  directory_monitor_thread.join();
+  if (directory_monitor_thread.joinable()) {
+    directory_monitor.stop();
+    directory_monitor_thread.join();
+  }
 }
 
 void bw::StoredQueryMap::set_background_init(bool value)
@@ -60,16 +60,24 @@ void bw::StoredQueryMap::add_config_dir(const boost::filesystem::path& config_di
     .watch(config_dir,
 	   boost::bind(&bw::StoredQueryMap::on_config_change, this, ::_1, ::_2, ::_3, ::_4),
 	   boost::bind(&bw::StoredQueryMap::on_config_error, this, ::_1, ::_2, ::_3, ::_4),
-	   1, Fmi::DirectoryMonitor::CREATE | Fmi::DirectoryMonitor::DELETE | Fmi::DirectoryMonitor::MODIFY);
+	   5, Fmi::DirectoryMonitor::CREATE | Fmi::DirectoryMonitor::DELETE | Fmi::DirectoryMonitor::MODIFY);
+  if (config_dirs.empty()) {
+    std::thread tmp(std::bind(&bw::StoredQueryMap::directory_monitor_thread_proc, this));
+    directory_monitor_thread.swap(tmp);
+  }
   config_dirs[ci.watcher] = ci;
 }
 
 void bw::StoredQueryMap::wait_for_init()
 {
   do {
+    std::time_t start = std::time(nullptr);
     std::unique_lock<std::mutex> lock(mutex2);
     while (not directory_monitor.ready()) {
       cond.wait_for(lock, std::chrono::milliseconds(100));
+      if (not loading_started and (std::time(nullptr) - start > 180)) {
+	throw SmartMet::Spine::Exception::Trace(BCP, "Timed out while waiting for stored query configuration loading to start");
+      }
     }
   } while (false);
 
@@ -83,15 +91,15 @@ void bw::StoredQueryMap::wait_for_init()
 
 bool bw::StoredQueryMap::is_reload_required(bool reset)
 {
-  std::unique_lock<std::mutex> lock(mutex2);
-  bool response = reload_required;
   if (reset) {
-    if (reload_required) {
-      std::cout << SmartMet::Spine::log_time_str() << ": [WFS] Clearing reload required flag" << std::endl;
+    bool response = reload_required.exchange(false);
+    if (response) {
+      std::cout << SmartMet::Spine::log_time_str() << ": [WFS] Cleared reload required flag" << std::endl;
     }
-    reload_required = false;
+    return response;
+  } else {
+    return reload_required;
   }
-  return response;
 }
 
 void bw::StoredQueryMap::add_handler(boost::shared_ptr<StoredQueryHandlerBase> handler)
@@ -249,6 +257,8 @@ void bw::StoredQueryMap::on_config_change(Fmi::DirectoryMonitor::Watcher watcher
   try {
     assert(config_dirs.count(watcher) > 0);
 
+    loading_started = true;
+
     int have_errors = 0;
     const bool initial_update = config_dirs.at(watcher).num_updates == 0;
     const auto template_dir = config_dirs.at(watcher).template_dir;
@@ -280,7 +290,7 @@ void bw::StoredQueryMap::on_config_change(Fmi::DirectoryMonitor::Watcher watcher
 	      break;
 
 	    case Fmi::DirectoryMonitor::CREATE:
-	      handle_query_add(name, template_dir, initial_update);
+	      handle_query_add(name, template_dir, initial_update, false);
 	      break;
 
 	    case Fmi::DirectoryMonitor::MODIFY:
@@ -301,6 +311,18 @@ void bw::StoredQueryMap::on_config_change(Fmi::DirectoryMonitor::Watcher watcher
 	have_errors++;
 	auto err = SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
 	std::cout << err.getStackTrace() << std::endl;
+      }
+    }
+
+    if (not initial_update) {
+      auto tmp = duplicate;
+      for (const auto& fn : tmp) {
+	try {
+	  handle_query_add(fn, template_dir, initial_update, true);
+	} catch (...) {
+	  auto err = SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+	  std::cout << err.getStackTrace() << std::endl;
+	}
       }
     }
 
@@ -388,10 +410,14 @@ void bw::StoredQueryMap::handle_query_remove(const std::string& config_file_name
 {
   try {
     auto config = get_query_config_by_file_name(config_file_name);
+    duplicate.erase(config_file_name);
     if (config) {
-      // Removed configuration file may contain duplicate storedquery_id.
-      // Therefore require plugin reloading to handle it (could be improved in future)
-      request_reload();
+      std::ostringstream msg;
+      msg << SmartMet::Spine::log_time_str() << ": [WFS] [INFO] Removing storedquery_id='"
+	  << config->get_query_id() << "' (File '" << config_file_name << "' deleted)\n";
+      std::cout << msg.str() << std::flush;
+      boost::unique_lock<boost::shared_mutex> lock(mutex);
+      handler_map.erase(Fmi::ascii_tolower_copy(config->get_query_id()));
     }
   } catch (...) {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
@@ -434,7 +460,8 @@ bw::StoredQueryMap::get_ignore_reason(const StoredQueryConfig& config) const
 
 void bw::StoredQueryMap::handle_query_add(const std::string& config_file_name,
 					  const boost::filesystem::path& template_dir,
-					  bool initial_update)
+					  bool initial_update,
+					  bool silent_duplicate)
 {
   try {
     const int debug_level = plugin_impl.get_debug_level();
@@ -443,20 +470,18 @@ void bw::StoredQueryMap::handle_query_add(const std::string& config_file_name,
 
     auto prev_handler = get_handler_by_name_nothrow(sqh_config->get_query_id());
     if (prev_handler) {
-      if (initial_update) {
+      if (not silent_duplicate) {
 	notify_duplicate(*sqh_config, *prev_handler->get_config());
-      } else {
-	// Later update causes storedquery_id conflict. It could possibly be fixed by some other
-	// later update of the same batch. Require WFS plugin reload to handle it in safer way
-	request_reload();
       }
+      duplicate.insert(config_file_name);
     } else {
+      duplicate.erase(config_file_name);
       if (should_be_ignored(*sqh_config)) {
 	handle_query_ignore(*sqh_config, initial_update);
       } else {
 	if (verbose) {
 	  std::ostringstream msg;
-	  msg << SmartMet::Spine::log_time_str() << ": [WFS] [INFO] Adding stored query: id='"
+	  msg << SmartMet::Spine::log_time_str() << ": [WFS] Adding stored query: id='"
 	      << sqh_config->get_query_id() << "' config='" << config_file_name << "'\n";
 	  std::cout << msg.str() << std::flush;
 	}
@@ -478,10 +503,12 @@ void bw::StoredQueryMap::handle_query_modify(const std::string& config_file_name
     const std::string id = sqh_config->get_query_id();
 
     if (should_be_ignored(*sqh_config)) {
+      duplicate.erase(config_file_name);
       handle_query_ignore(*sqh_config, false);
     } else {
       auto prev_handler = get_handler_by_name_nothrow(sqh_config->get_query_id());
       if (prev_handler) {
+	duplicate.erase(config_file_name);
 	if (config_file_name == prev_handler->get_config()->get_file_name()) {
 	  std::ostringstream msg;
 	  msg << SmartMet::Spine::log_time_str() << ": [WFS] [INFO] Replacing stored query: id='"
@@ -492,7 +519,7 @@ void bw::StoredQueryMap::handle_query_modify(const std::string& config_file_name
 	add_handler(sqh_config, template_dir);
       } else {
 	if (get_handler_by_file_name(config_file_name)) {
-	  request_reload();
+	  request_reload("");
 	} else {
 	  enqueue_query_add(sqh_config, template_dir, false);
 	}
@@ -527,7 +554,7 @@ void bw::StoredQueryMap::handle_query_ignore(const StoredQueryConfig& sqh_config
 	handler_map.erase(Fmi::ascii_tolower_copy(id));
       } else {
 	// ID changed since last update: request reload
-	request_reload();
+	request_reload("");
       }
     } else {
       if ((not initial_update or (debug_level > 0)) and reason) {
@@ -543,12 +570,14 @@ void bw::StoredQueryMap::handle_query_ignore(const StoredQueryConfig& sqh_config
   }
 }
 
-void bw::StoredQueryMap::request_reload()
+void bw::StoredQueryMap::request_reload(const std::string& reason)
 {
   std::ostringstream msg;
   msg << SmartMet::Spine::log_time_str() << ": [WFS] [INFO] Requiring WFS reload due to config change";
+  if (reason != "") {
+    msg << " (" << reason << ')';
+  }
   std::cout << msg.str() << std::endl;
-  boost::unique_lock<boost::shared_mutex> lock(mutex);
   reload_required = true;
 }
 

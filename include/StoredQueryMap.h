@@ -4,8 +4,11 @@
 #include "StoredQuery.h"
 #include "StoredQueryHandlerBase.h"
 #include <condition_variable>
+#include <atomic>
+#include <map>
 #include <memory>
 #include <mutex>
+#include <set>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/filesystem.hpp>
 #include <spine/Reactor.h>
@@ -81,14 +84,15 @@ class StoredQueryMap final
 
   void handle_query_add(const std::string& config_file_name,
 			const boost::filesystem::path& template_dir,
-			bool initial_update);
+			bool initial_update,
+			bool silent_duplicate);
 
   void handle_query_modify(const std::string& config_file_name,
 			   const boost::filesystem::path& template_dir);
 
   void handle_query_ignore(const StoredQueryConfig& config, bool initial_update);
 
-  void request_reload();
+  void request_reload(const std::string& reason);
 
   void enqueue_query_add(boost::shared_ptr<StoredQueryConfig> sqh_config,
 			 const boost::filesystem::path& template_dir,
@@ -100,7 +104,8 @@ class StoredQueryMap final
 
  private:
   bool background_init;
-  bool reload_required;
+  std::atomic<bool> reload_required;
+  std::atomic<bool> loading_started;
   mutable boost::shared_mutex mutex;
   mutable std::mutex mutex2;
   std::condition_variable cond;
@@ -108,6 +113,7 @@ class StoredQueryMap final
   PluginImpl& plugin_impl;
   std::unique_ptr<Fmi::TaskGroup> init_tasks;
   std::map<std::string, boost::shared_ptr<StoredQueryHandlerBase> > handler_map;
+  std::set<std::string> duplicate;
 
   struct ConfigDirInfo {
     boost::filesystem::path config_dir;
