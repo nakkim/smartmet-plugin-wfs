@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.11.22
+Version: 19.12.4
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -30,10 +30,10 @@ BuildRequires: smartmet-library-macgyver-devel >= 19.9.26
 BuildRequires: smartmet-engine-contour-devel >= 19.11.20
 BuildRequires: smartmet-engine-geonames-devel >= 19.11.14
 BuildRequires: smartmet-engine-gis-devel >= 19.11.20
-BuildRequires: smartmet-library-grid-content-devel >= 19.11.22
-BuildRequires: smartmet-library-grid-files-devel >= 19.11.20
+BuildRequires: smartmet-library-grid-content-devel >= 19.12.4
+BuildRequires: smartmet-library-grid-files-devel >= 19.12.4
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.11.20
+BuildRequires: smartmet-engine-observation-devel >= 19.11.26
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 19.11.20
 # BuildRequires: postgresql95-libs
@@ -49,10 +49,10 @@ Requires: smartmet-library-gis >= 19.9.26
 Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.11.14
 Requires: smartmet-engine-gis >= 19.11.20
-Requires: smartmet-library-grid-content >= 19.11.22
-Requires: smartmet-library-grid-files >= 19.11.20
+Requires: smartmet-library-grid-content >= 19.12.4
+Requires: smartmet-library-grid-files >= 19.12.4
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.11.20
+Requires: smartmet-engine-observation >= 19.11.26
 %endif
 Requires: smartmet-engine-querydata >= 19.11.20
 Requires: smartmet-server >= 19.10.1
@@ -96,6 +96,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Wed Dec  4 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.12.4-1.fmi
+- Repackaged due to base library changes
+
 * Fri Nov 22 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.11.22-1.fmi
 - Repackaged due to API changes in grid-content library
 
