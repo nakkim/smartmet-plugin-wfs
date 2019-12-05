@@ -643,9 +643,18 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
 
     Engine::Grid::ParameterDetails_vec parameters;
 
-    std::string key = producer + ";" + name;
+    std::string pName = name;
+    std::string interpolationMethod = "";
+    auto pos = pName.find(".raw");
+    if (pos != std::string::npos)
+    {
+      attributeList.addAttribute("areaInterpolationMethod",std::to_string(T::AreaInterpolationMethod::Linear));
+      pName.erase(pos,4);
+    }
 
-    itsGridEngine->getParameterDetails(producer, name, parameters);
+    std::string key = producer + ";" + pName;
+
+    itsGridEngine->getParameterDetails(producer, pName, parameters);
 
     std::string prod;
     std::string geomId;

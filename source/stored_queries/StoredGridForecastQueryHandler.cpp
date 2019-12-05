@@ -867,6 +867,14 @@ Table_sptr StoredGridForecastQueryHandler::extract_forecast(Query& wfsQuery) con
           p += sprintf(p,",");
 
         std::string paramName = param->name();
+        std::string interpolationMethod = "";
+        auto pos = paramName.find(".raw");
+        if (pos != std::string::npos)
+        {
+          interpolationMethod = std::to_string(T::AreaInterpolationMethod::Linear);
+          paramName.erase(pos,4);
+        }
+
         std::string name = paramName;
 
         for (auto it = wfsQuery.models.begin(); it != wfsQuery.models.end(); ++it)
@@ -881,7 +889,7 @@ Table_sptr StoredGridForecastQueryHandler::extract_forecast(Query& wfsQuery) con
 
           size_t len = parameters.size();
           if (len > 0  &&  strcasecmp(parameters[0].mProducerName.c_str(),key.c_str()) != 0)
-            name = paramName + ":" + parameters[0].mProducerName + ":" + parameters[0].mGeometryId + ":" + parameters[0].mLevelId[0] + ":" + parameters[0].mLevel[0] + ":" + parameters[0].mForecastType[0] + ":" + parameters[0].mForecastNumber[0];
+            name = paramName + ":" + parameters[0].mProducerName + ":" + parameters[0].mGeometryId + ":" + parameters[0].mLevelId + ":" + parameters[0].mLevel + ":" + parameters[0].mForecastType + ":" + parameters[0].mForecastNumber + "::" + interpolationMethod;
           else
             name = paramName;
         }
