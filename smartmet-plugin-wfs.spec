@@ -23,34 +23,34 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 19.10.31
-BuildRequires: smartmet-library-gis-devel >= 19.9.26
-BuildRequires: smartmet-library-locus-devel >= 19.9.26
-BuildRequires: smartmet-library-macgyver-devel >= 19.9.26
-BuildRequires: smartmet-engine-contour-devel >= 19.10.31
-BuildRequires: smartmet-engine-geonames-devel >= 19.10.25
-BuildRequires: smartmet-engine-gis-devel >= 19.10.31
+BuildRequires: smartmet-library-spine-devel >= 19.12.4
+BuildRequires: smartmet-library-gis-devel >= 19.12.4
+BuildRequires: smartmet-library-locus-devel >= 19.12.4
+BuildRequires: smartmet-library-macgyver-devel >= 19.12.4
+BuildRequires: smartmet-engine-contour-devel >= 19.11.20
+BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
+BuildRequires: smartmet-engine-gis-devel >= 19.11.20
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.10.31
+BuildRequires: smartmet-engine-observation-devel >= 19.12.19
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 19.10.31
+BuildRequires: smartmet-engine-querydata-devel >= 19.11.20
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 5.2.0
 Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
-Requires: smartmet-library-locus >= 19.9.26
-Requires: smartmet-library-macgyver >= 19.9.26
-Requires: smartmet-library-spine >= 19.10.31
-Requires: smartmet-library-gis >= 19.9.26
-Requires: smartmet-engine-contour >= 19.10.31
-Requires: smartmet-engine-geonames >= 19.10.25
-Requires: smartmet-engine-gis >= 19.10.31
+Requires: smartmet-library-locus >= 19.12.4
+Requires: smartmet-library-macgyver >= 19.12.4
+Requires: smartmet-library-spine >= 19.12.4
+Requires: smartmet-library-gis >= 19.12.4
+Requires: smartmet-engine-contour >= 19.11.20
+Requires: smartmet-engine-geonames >= 19.12.5
+Requires: smartmet-engine-gis >= 19.11.20
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.10.31
+Requires: smartmet-engine-observation >= 19.12.19
 %endif
-Requires: smartmet-engine-querydata >= 19.10.31
+Requires: smartmet-engine-querydata >= 19.11.20
 Requires: smartmet-server >= 19.10.1
 Requires: xerces-c
 Requires: xqilla
