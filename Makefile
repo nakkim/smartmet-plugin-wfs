@@ -80,7 +80,8 @@ objdir = obj
 INCLUDES = -I$(includedir) \
 	-I$(includedir)/smartmet \
 	-I$(includedir)/oracle/11.2/client64 \
-	-I$(includedir)/mysql
+	-I$(includedir)/mysql \
+	-I$(PREFIX)/gdal30/include
 
 LIBS = -L$(libdir) \
 	-lsmartmet-spine \
@@ -95,7 +96,7 @@ LIBS = -L$(libdir) \
 	-lboost_system \
         -lxqilla \
 	-lxerces-c \
-	-lgdal \
+	-L$(PREFIX)/gdal30/lib -lgdal \
 	-lpqxx \
 	-lconfig++ \
 	-lconfig \

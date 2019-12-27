@@ -4,7 +4,7 @@
 #include "stored_queries/StoredAtomQueryHandlerBase.h"
 #include <boost/geometry/geometry.hpp>
 #include <boost/shared_ptr.hpp>
-#include <gdal/ogr_geometry.h>
+#include <ogr_geometry.h>
 
 namespace SmartMet
 {
