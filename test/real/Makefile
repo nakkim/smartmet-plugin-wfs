@@ -26,11 +26,11 @@ test:	../PluginTest input-files ../cnf/local.conf
 
 valgrind: ../PluginTest input-files ../cnf/local.conf
 	@mkdir -p failures
-	@rm $(shell find failures -name '*.xml')
+	@rm -f $(shell find failures -name '*.xml')
 	@$(VALGRIND) ../PluginTest
 
 input-files:
-	rm $(shell find input -name '*.xml.post')
+	rm -f $(shell find input -name '*.xml.post')
 	$(MAKE) $(XML_POST_TESTS)
 
 input/%.xml.post : xml/%.xml ; @mkdir -p $(shell dirname $@)
