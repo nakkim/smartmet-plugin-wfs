@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.12.11
+Version: 20.1.16
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -30,8 +30,8 @@ BuildRequires: smartmet-library-macgyver-devel >= 19.9.26
 BuildRequires: smartmet-engine-contour-devel >= 19.11.20
 BuildRequires: smartmet-engine-geonames-devel >= 19.11.14
 BuildRequires: smartmet-engine-gis-devel >= 19.11.20
-BuildRequires: smartmet-library-grid-content-devel >= 19.12.11
-BuildRequires: smartmet-library-grid-files-devel >= 19.12.11
+BuildRequires: smartmet-library-grid-content-devel >= 20.1.16
+BuildRequires: smartmet-library-grid-files-devel >= 20.1.16
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 19.11.26
 %endif
@@ -49,8 +49,8 @@ Requires: smartmet-library-gis >= 19.9.26
 Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.11.14
 Requires: smartmet-engine-gis >= 19.11.20
-Requires: smartmet-library-grid-content >= 19.12.11
-Requires: smartmet-library-grid-files >= 19.12.11
+Requires: smartmet-library-grid-content >= 20.1.16
+Requires: smartmet-library-grid-files >= 20.1.16
 %if %{with observation}
 Requires: smartmet-engine-observation >= 19.11.26
 %endif
@@ -96,6 +96,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Jan 16 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.1.16-1.fmi
+- Repackaged due to base library API changes
+
 * Wed Dec 11 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.12.11-1.fmi
 - Fixed handling of "{name}.raw" parameters
 
