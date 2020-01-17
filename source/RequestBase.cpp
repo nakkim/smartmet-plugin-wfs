@@ -1,4 +1,5 @@
 #include "RequestBase.h"
+#include "PluginImpl.h"
 #include "QueryBase.h"
 #include "WfsConst.h"
 #include "WfsException.h"
@@ -241,25 +242,38 @@ void bw::RequestBase::check_mandatory_attributes(const xercesc::DOMDocument& doc
   }
 }
 
-void bw::RequestBase::check_output_format_attribute(const std::string& value)
+void bw::RequestBase::check_output_format_attribute(const std::string& value, const PluginImpl& plugin_impl)
 {
   try
   {
     namespace ba = boost::algorithm;
 
+    std::string fmt;
+    const auto& fmts = plugin_impl.get_config().get_capabilities_config().get_supported_formats();
+
     std::vector<std::string> w;
     ba::split(w, value, ba::is_any_of(";"));
-    if ((w.size() != 2) or
-        (Fmi::ascii_tolower_copy(ba::trim_copy(w[0])) != "application/gml+xml") or
-        (Fmi::ascii_tolower_copy(ba::trim_copy(w[1])) != "version=3.2"))
-    {
-      std::ostringstream msg;
-      msg << "Unsupported output format '" << value
-          << "' ('application/gml+xml; version=3.2' expected)";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
-      exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+    if (w.size() == 2) {
+      fmt = ba::trim_copy(w[0]) + "; " + ba::trim_copy(w[1]);
+      if (fmts.count(fmt)) {
+	return;
+      }
     }
+
+    // Something wrong with format
+    std::ostringstream msg;
+    std::string dlm = " ";
+    msg << "Unsupported output format '" << fmt
+	<< "' (One of";
+    for (const auto& item : fmts) {
+      msg << dlm << '\'' << item << '\'';
+      dlm = ", ";
+    }
+    msg << " expected)";
+    std::cout << msg;
+    SmartMet::Spine::Exception exception(BCP, msg.str());
+    exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
+    throw exception;
   }
   catch (...)
   {

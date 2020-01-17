@@ -1,11 +1,14 @@
 #include "CapabilitiesConf.h"
 #include <set>
+#include <spine/ConfigBase.h>
 #include <spine/Convenience.h>
 #include <spine/Exception.h>
 #include <boost/algorithm/string.hpp>
 
 using SmartMet::Spine::Exception;
 using SmartMet::Plugin::WFS::CapabilitiesConf;
+
+namespace ba = boost::algorithm;
 
 namespace
 {
@@ -104,12 +107,13 @@ CapabilitiesConf::~CapabilitiesConf()
 
 void CapabilitiesConf::parse(const std::string& default_language, libconfig::Setting& setting)
 {
+  using namespace SmartMet::Spine;
   try
   {
     std::vector<std::string> unknown;
     checkSettings("", &setting, {"title", "abstract", "keywords", "fees", "providerName",
 	  "providerSite", "phone", "address", "accessConstraints", "onlineResource",
-	  "contactInstructions"}, unknown);
+	  "contactInstructions", "outputFormats"}, unknown);
     title = get_ml_string(&setting, "title", default_language);
     abstract = get_ml_string(&setting, "abstract", default_language);
     keywords = get_ml_string_array(&setting, "keywords", default_language);
@@ -149,6 +153,50 @@ void CapabilitiesConf::parse(const std::string& default_language, libconfig::Set
 		<< boost::algorithm::join(unknown, std::string(", "))
 		<< std::endl;
     }
+
+    auto* s_formats = get_setting(&setting, "outputFormats");
+    if (s_formats) {
+      std::set<std::string> fmts;
+      switch (s_formats->getType()) {
+      case libconfig::Setting::TypeString:
+	fmts.insert(ba::to_lower_copy(std::string(s_formats->c_str())));
+	break;
+      case libconfig::Setting::TypeArray:
+	std::cout << "length=" << s_formats->getLength() << std::endl;
+	for (auto i = 0; i < s_formats->getLength(); i++) {
+	  const std::string str = (*s_formats)[i];
+	  fmts.insert(ba::to_lower_copy(str));
+	}
+	if (fmts.empty()) {
+	  throw Exception::Trace(BCP, "Empty array not accepted as value of outputFormats");
+	}
+	break;
+      default:
+	do {
+	  std::ostringstream item;
+	  ConfigBase::dump_setting(item, *s_formats, 10);
+	  throw Exception::Trace(BCP, "Incorrect value of configuration entry outputFormats")
+	    .addDetail(item.str());
+	} while (false);
+	break;
+      }
+
+      for (const auto& item : fmts) {
+	std::vector<std::string> w;
+	ba::split(w, item, ba::is_any_of("; "), ba::token_compress_on);
+	if (w.size() == 2) {
+	  const std::string fmt = ba::trim_copy(w[0]) + "; " + ba::trim_copy(w[1]);
+	  supportedFormats.insert(fmt);
+	} else {
+	  throw Exception::Trace(BCP, "Incorrect output format '" + item + "'");
+	}
+      }
+    } else {
+      supportedFormats.insert("text/xml; subtype=gml/3.2");
+      supportedFormats.insert("text/xml; version=3.2");
+      supportedFormats.insert("application/gml+xml; subtype=gml/3.2");
+      supportedFormats.insert("application/gml+xml; version=3.2");
+    }
   }
   catch (...)
   {
@@ -180,4 +228,9 @@ void CapabilitiesConf::apply(CTPP::CDT& hash, const std::string& language) const
   put(hash, "accessConstraints", accessConstraints, language);
   put(hash, "onlineResource", onlineResource, language);
   put(hash, "contactInstructions", contactInstructions, language);
+
+  CTPP::CDT& oFmt = hash["supportedFormats"];
+  for (auto item : supportedFormats) {
+    oFmt[oFmt.Size()] = item;
+  }
 }

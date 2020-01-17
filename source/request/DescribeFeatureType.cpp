@@ -157,7 +157,7 @@ bw::Request::DescribeFeatureType::create_from_kvp(
     auto format = http_request.getParameter("outputformat");
     if (format)
     {
-      check_output_format_attribute(*format);
+      check_output_format_attribute(*format, plugin_impl);
     }
 
     std::vector<std::string> type_params;

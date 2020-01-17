@@ -142,7 +142,7 @@ class RequestBase
    */
   static const xercesc::DOMElement* get_xml_root(const xercesc::DOMDocument& document);
 
-  static void check_output_format_attribute(const std::string& value);
+  static void check_output_format_attribute(const std::string& value, const PluginImpl& plugin_impl);
 
   /**
    *   @brief Check WFS version (KVP only)
