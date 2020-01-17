@@ -18,7 +18,7 @@ bw::Request::DescribeFeatureType::DescribeFeatureType(
     const std::string& language,
     const std::vector<std::pair<std::string, std::string> >& type_names,
     const PluginImpl& plugin_impl)
-    : RequestBase(language), type_names(type_names), plugin_impl(plugin_impl)
+  : RequestBase(language, plugin_impl), type_names(type_names)
 {
 }
 

@@ -18,7 +18,6 @@ namespace Request
  */
 class DescribeStoredQueries : public RequestBase
 {
-  const PluginImpl& plugin_impl;
   std::vector<std::string> ids;
   bool show_hidden;
 

@@ -32,9 +32,8 @@ using boost::str;
 bw::Request::GetFeature::GetFeature(const std::string& language,
                                     PluginImpl& plugin_impl)
 
-				    : RequestBase(language)
-				    , plugin_impl(plugin_impl)
-				    , query_cache(plugin_impl.get_query_cache())
+  : RequestBase(language, plugin_impl)
+  , query_cache(plugin_impl.get_query_cache())
 {
 }
 

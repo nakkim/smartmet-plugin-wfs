@@ -11,6 +11,9 @@ namespace Plugin
 {
 namespace WFS
 {
+
+class PluginImpl;
+
 /**
  *   @brief Abstract base class for WFS requests
  *
@@ -33,7 +36,7 @@ class RequestBase
   };
 
  public:
-  RequestBase(const std::string& language);
+  RequestBase(const std::string& language, const PluginImpl& plugin_impl);
 
   virtual ~RequestBase();
 
@@ -147,6 +150,9 @@ class RequestBase
    *   Require it to be 2.0.0 if provided.
    */
   static void check_wfs_version(const SmartMet::Spine::HTTP::Request& request);
+
+ protected:
+  const PluginImpl& plugin_impl;
 
  private:
   const std::string language;

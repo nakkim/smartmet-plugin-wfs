@@ -14,8 +14,11 @@ namespace bwx = SmartMet::Plugin::WFS::Xml;
 
 namespace ba = boost::algorithm;
 
-bw::RequestBase::RequestBase(const std::string& language)
-    : language(language), soap_request(false), status(SmartMet::Spine::HTTP::not_a_status)
+bw::RequestBase::RequestBase(const std::string& language, const PluginImpl& plugin_impl)
+  : plugin_impl(plugin_impl)
+  , language(language)
+  , soap_request(false)
+  , status(SmartMet::Spine::HTTP::not_a_status)
 {
 }
 

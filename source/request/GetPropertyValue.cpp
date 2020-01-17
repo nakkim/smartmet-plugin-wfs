@@ -39,9 +39,8 @@ static void decrease(boost::optional<int>& value)
 
 GetPropertyValue::GetPropertyValue(const std::string& language,
                                    PluginImpl& plugin_impl)
-    : bw::RequestBase(language)
-    , query_cache(plugin_impl.get_query_cache())
-    , plugin_impl(plugin_impl)
+  : bw::RequestBase(language, plugin_impl)
+  , query_cache(plugin_impl.get_query_cache())
 {
 }
 

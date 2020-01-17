@@ -7,7 +7,7 @@ namespace bw = SmartMet::Plugin::WFS;
 
 bw::Request::ListStoredQueries::ListStoredQueries(const std::string& language,
                                                   const PluginImpl& plugin_impl)
-    : RequestBase(language), plugin_impl(plugin_impl)
+    : RequestBase(language, plugin_impl)
 {
 }
 
