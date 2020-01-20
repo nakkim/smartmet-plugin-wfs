@@ -2,6 +2,8 @@ TOP = $(shell pwd)/../../
 
 XML_TEST_SRC = $(shell find xml -name '*.xml')
 XML_POST_TESTS = $(subst :,\:,$(patsubst xml/%.xml, input/%.xml.post, $(XML_TEST_SRC)))
+KVP_TEST_SRC = $(shell find kvp -name '*.kvp')
+KVP_GET_TESTS = $(subst :,\:,$(patsubst kvp/%.kvp, input/%.kvp.get, $(KVP_TEST_SRC)))
 
 VALGRIND = valgrind \
 	--num-callers=30 \
@@ -19,22 +21,26 @@ clean:
 	rm -fv $(shell find input -type f -a -name '*.xml.post')
 	rm -rf failures
 
-test:	../PluginTest input-files ../cnf/local.conf
+test:	../PluginTest s-input-files ../cnf/local.conf
 	@mkdir -p failures
 	@rm -f $(shell find failures -name '*.xml')
 	@../PluginTest
 
-valgrind: ../PluginTest input-files ../cnf/local.conf
+valgrind: ../PluginTest s_input-files ../cnf/local.conf
 	@mkdir -p failures
 	@rm -f $(shell find failures -name '*.xml')
 	@$(VALGRIND) ../PluginTest
 
-input-files:
-	rm -f $(shell find input -name '*.xml.post')
+s-input-files:
+	rm -f $(shell find input -name '*.xml.post' -o -name '*.kvp.get')
 	$(MAKE) $(XML_POST_TESTS)
+	$(MAKE) $(KVP_GET_TESTS)
 
 input/%.xml.post : xml/%.xml ; @mkdir -p $(shell dirname $@)
 	@perl ../MakeXMLPOST.pl $< $@ /wfs
+
+input/%.kvp.get : kvp/%.kvp ; @mkdir -p $(shell dirname $@)
+	@perl ../MakeKVPGET.pl $< $@ /wfs
 
 ../cnf/local.conf:
 	@echo "***************************************************************************************************"
