@@ -565,6 +565,12 @@ boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_
     bw::Request::GetFeature::check_request_name(http_request, "GetFeature");
     check_wfs_version(http_request);
 
+    auto format = http_request.getParameter("outputformat");
+    if (format)
+    {
+      check_output_format_attribute(*format, plugin_impl);
+    }
+
     const StoredQueryMap& stored_query_map = plugin_impl.get_stored_query_map();
 
     boost::shared_ptr<bw::Request::GetFeature> result(
@@ -622,6 +628,7 @@ boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_
   {
     bw::Request::GetFeature::check_request_name(document, "GetFeature");
     const xercesc::DOMElement* root = get_xml_root(document);
+    check_output_format_attribute(root, plugin_impl);
 
     const StoredQueryMap& stored_query_map = plugin_impl.get_stored_query_map();
 
