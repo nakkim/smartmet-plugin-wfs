@@ -99,6 +99,11 @@ namespace
 
 CapabilitiesConf::CapabilitiesConf()
 {
+  // Default supported foprmats
+  supportedFormats.insert("text/xml; subtype=gml/3.2");
+  supportedFormats.insert("text/xml; version=3.2");
+  supportedFormats.insert("application/gml+xml; subtype=gml/3.2");
+  supportedFormats.insert("application/gml+xml; version=3.2");
 }
 
 CapabilitiesConf::~CapabilitiesConf()
@@ -156,6 +161,7 @@ void CapabilitiesConf::parse(const std::string& default_language, libconfig::Set
 
     auto* s_formats = get_setting(&setting, "outputFormats");
     if (s_formats) {
+      supportedFormats.clear();
       std::set<std::string> fmts;
       switch (s_formats->getType()) {
       case libconfig::Setting::TypeString:
@@ -191,11 +197,6 @@ void CapabilitiesConf::parse(const std::string& default_language, libconfig::Set
 	  throw Exception::Trace(BCP, "Incorrect output format '" + item + "'");
 	}
       }
-    } else {
-      supportedFormats.insert("text/xml; subtype=gml/3.2");
-      supportedFormats.insert("text/xml; version=3.2");
-      supportedFormats.insert("application/gml+xml; subtype=gml/3.2");
-      supportedFormats.insert("application/gml+xml; version=3.2");
     }
   }
   catch (...)
