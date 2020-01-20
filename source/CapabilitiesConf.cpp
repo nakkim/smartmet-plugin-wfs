@@ -188,20 +188,30 @@ void CapabilitiesConf::parse(const std::string& default_language, libconfig::Set
       }
 
       for (const auto& item : fmts) {
-	std::vector<std::string> w;
-	ba::split(w, item, ba::is_any_of("; "), ba::token_compress_on);
-	if (w.size() == 2) {
-	  const std::string fmt = ba::trim_copy(w[0]) + "; " + ba::trim_copy(w[1]);
-	  supportedFormats.insert(fmt);
-	} else {
-	  throw Exception::Trace(BCP, "Incorrect output format '" + item + "'");
-	}
+	const std::string str = conv_output_format_str(item);
+	supportedFormats.insert(str);
       }
     }
   }
   catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+void CapabilitiesConf::add_output_format(const std::string& text)
+{
+  supportedFormats.insert(conv_output_format_str(text));
+}
+
+std::string CapabilitiesConf::conv_output_format_str(const std::string& src)
+{
+  std::vector<std::string> w;
+  ba::split(w, src, ba::is_any_of(";"));
+  if (w.size() == 2) {
+    return ba::trim_copy(w[0]) + "; " + ba::trim_copy(w[1]);
+  } else {
+    return src;
   }
 }
 

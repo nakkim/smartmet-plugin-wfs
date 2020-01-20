@@ -144,6 +144,12 @@ class RequestBase
 
   static void check_output_format_attribute(const std::string& value, const PluginImpl& plugin_impl);
 
+  static void check_output_format_attribute(const xercesc::DOMElement* root,
+					    const PluginImpl& plugin_impl);
+
+  static void report_incorrect_output_format(const std::string& value,
+					     const PluginImpl& plugin_impl) __attribute__((noreturn));
+
   /**
    *   @brief Check WFS version (KVP only)
    *

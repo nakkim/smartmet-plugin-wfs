@@ -43,6 +43,10 @@ namespace WFS
 
     const std::set<std::string>& get_supported_formats() const { return supportedFormats; }
 
+    void add_output_format(const std::string& text);
+
+    static std::string conv_output_format_str(const std::string& src);
+
  private:
   SmartMet::Plugin::WFS::MultiLanguageStringP title;
   SmartMet::Plugin::WFS::MultiLanguageStringP abstract;
