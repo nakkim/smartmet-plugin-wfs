@@ -7,10 +7,11 @@ TOP = $(shell pwd)
 
 -include $(HOME)/.smartmet.mk
 GCC_DIAG_COLOR ?= always
+CXX_STD ?= c++11
 
 DEFINES = -DUNIX -D_REENTRANT
 
-FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter \
+FLAGS = -std=$(CXX_STD) -fPIC -Wall -W -Wno-unused-parameter \
 	-fno-omit-frame-pointer \
 	-fdiagnostics-color=$(GCC_DIAG_COLOR) \
 	-Wno-unknown-pragmas \
