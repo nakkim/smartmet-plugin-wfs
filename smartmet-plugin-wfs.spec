@@ -23,10 +23,10 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 19.12.4
+BuildRequires: smartmet-library-spine-devel >= 20.1.15
 BuildRequires: smartmet-library-gis-devel >= 19.12.4
 BuildRequires: smartmet-library-locus-devel >= 19.12.4
-BuildRequires: smartmet-library-macgyver-devel >= 19.12.4
+BuildRequires: smartmet-library-macgyver-devel >= 20.1.9
 BuildRequires: smartmet-engine-contour-devel >= 19.11.20
 BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
 BuildRequires: smartmet-engine-gis-devel >= 19.11.20
@@ -41,8 +41,8 @@ Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
 Requires: smartmet-library-locus >= 19.12.4
-Requires: smartmet-library-macgyver >= 19.12.4
-Requires: smartmet-library-spine >= 19.12.4
+Requires: smartmet-library-macgyver >= 20.1.9
+Requires: smartmet-library-spine >= 20.1.15
 Requires: smartmet-library-gis >= 19.12.4
 Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.12.5
@@ -51,7 +51,7 @@ Requires: smartmet-engine-gis >= 19.11.20
 Requires: smartmet-engine-observation >= 19.12.19
 %endif
 Requires: smartmet-engine-querydata >= 19.11.20
-Requires: smartmet-server >= 19.10.1
+Requires: smartmet-server >= 20.1.15
 Requires: xerces-c
 Requires: xqilla
 Requires: boost-chrono
@@ -92,7 +92,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
-* Tue Jan 29 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.1.21-1.fmi
+* Tue Jan 21 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.1.21-1.fmi
 - Update support of outputFormat parameter
 
 * Fri Nov 29 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.11.29-1.fmi
