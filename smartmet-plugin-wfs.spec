@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.1.21
+Version: 20.1.23
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -92,6 +92,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Jan 23 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.1.23-1.fmi
+- Add support of request fallback encoding when not UTF-8
+
 * Tue Jan 21 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.1.21-1.fmi
 - Update support of outputFormat parameter
 
