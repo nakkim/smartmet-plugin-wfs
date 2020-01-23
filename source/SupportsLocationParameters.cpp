@@ -130,8 +130,7 @@ void bw::SupportsLocationParameters::get_location_options(
       if (Fmi::is_utf8(name)) {
 	utfname = name;
       } else {
-	// FIXME: guess encoding from language or take from configuration
-	std::string encoding = "ISO-8859-1";
+	std::string encoding = get_config().guess_fallback_encoding(language_requested);
 	utfname = boost::locale::conv::to_utf<char>(name, encoding);
       }
       SmartMet::Spine::LocationList ptrs = geo_engine->nameSearch(opts, utfname);

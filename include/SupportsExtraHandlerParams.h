@@ -46,9 +46,12 @@ class SupportsExtraHandlerParams : virtual protected StoredQueryParamRegistry
    */
   void dump_named_params(const RequestParameterMap& req_param_map, CTPP::CDT& hash) const;
 
+  const StoredQueryConfig& get_config() const { return *config; }
+
  private:
   const std::string path;
   std::map<std::string, boost::shared_ptr<ParameterTemplateBase> > handler_params;
+  boost::shared_ptr<StoredQueryConfig> config;
 };
 
 }  // namespace WFS

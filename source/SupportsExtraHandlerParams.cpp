@@ -15,7 +15,9 @@ using SmartMet::Spine::Value;
 
 bw::SupportsExtraHandlerParams::SupportsExtraHandlerParams(
     boost::shared_ptr<StoredQueryConfig> config, bool mandatory, const char* path)
-    : path(path), handler_params()
+    : path(path)
+    , handler_params()
+    , config(config)
 {
   try
   {

@@ -102,6 +102,11 @@ Config::Config(const string& configfile)
       Fmi::ascii_tolower(language);
     }
 
+    auto* s_fallback_encoding = find_setting(get_root(), "fallbackEncoding", false);
+    if (s_fallback_encoding) {
+      fallback_encoding = MultiLanguageString::create(languages.at(0), *s_fallback_encoding);
+    }
+
     BOOST_FOREACH (std::string& sq_config_dir, sq_config_dirs)
     {
       fs::path sqcd(sq_config_dir);
@@ -303,6 +308,15 @@ void Config::read_hosts_info()
   catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+std::string Config::guess_fallback_encoding(const std::string& language) const
+{
+  if (fallback_encoding) {
+    return fallback_encoding->get(language);
+  } else {
+    return "ISO-8859-1";
   }
 }
 

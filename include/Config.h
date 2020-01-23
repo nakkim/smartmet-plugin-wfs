@@ -8,6 +8,7 @@
 
 #include "CapabilitiesConf.h"
 #include "Hosts.h"
+#include "MultiLanguageString.h"
 #include "WfsFeatureDef.h"
 #include <boost/filesystem.hpp>
 #include <boost/shared_ptr.hpp>
@@ -73,6 +74,8 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
 
   void read_typename_config(std::map<std::string, std::string>& typename_storedqry);
 
+  std::string guess_fallback_encoding(const std::string& language) const;
+
  private:
   void read_capabilities_config();
   void read_admin_cred();
@@ -98,6 +101,7 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   bool enable_test_queries;
   bool enable_configuration_polling;
   bool sq_restrictions;
+  MultiLanguageStringP fallback_encoding;
   CapabilitiesConf capabilities_conf;
 
   /**
