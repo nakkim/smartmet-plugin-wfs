@@ -172,8 +172,8 @@ An example:
 name : "omso:PointTimeSeriesObservation";
 
 xmlType : "PointTimeSeriesObservation";
-xmlNamespace : "http://inspire.ec.europa.eu/schemas/omso/2.0";
-xmlNamespaceLoc : "http://inspire.ec.europa.eu/schemas/omso/2.0/SpecialisedObservations.xsd";
+xmlNamespace : "http://inspire.ec.europa.eu/schemas/omso/3.0";
+xmlNamespaceLoc : "http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd";
 
 title:
 {

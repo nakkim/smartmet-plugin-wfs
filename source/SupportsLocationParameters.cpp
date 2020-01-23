@@ -1,6 +1,8 @@
 #include "SupportsLocationParameters.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
+#include <boost/locale.hpp>
+#include <macgyver/CharsetTools.h>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
 #include <spine/Exception.h>
@@ -124,7 +126,14 @@ void bw::SupportsLocationParameters::get_location_options(
     param.get<std::string>(P_PLACES, std::back_inserter(names));
     BOOST_FOREACH (const std::string name, names)
     {
-      SmartMet::Spine::LocationList ptrs = geo_engine->nameSearch(opts, name);
+      std::string utfname;
+      if (Fmi::is_utf8(name)) {
+	utfname = name;
+      } else {
+	std::string encoding = get_config().guess_fallback_encoding(language_requested);
+	utfname = boost::locale::conv::to_utf<char>(name, encoding);
+      }
+      SmartMet::Spine::LocationList ptrs = geo_engine->nameSearch(opts, utfname);
       if (ptrs.empty())
       {
         throw SmartMet::Spine::Exception(

@@ -187,6 +187,8 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
 
   const Hosts& get_hosts() const { return hosts; }
 
+  std::string guess_fallback_encoding(const std::string& language) const;
+
  private:
   void parse_config();
 
@@ -215,6 +217,7 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
   bool test;
   int debug_level;
   const Hosts& hosts;
+  const Config* plugin_config;
 };
 
 }  // namespace WFS

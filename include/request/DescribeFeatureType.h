@@ -48,7 +48,6 @@ class DescribeFeatureType : public RequestBase
 
  private:
   std::vector<std::pair<std::string, std::string> > type_names;
-  const PluginImpl& plugin_impl;
 };
 
 }  // namespace Request

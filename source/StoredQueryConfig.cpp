@@ -21,8 +21,9 @@ bw::Hosts default_hosts;
 
 SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(const std::string& config_file,
                                                             const Config* plugin_config)
-    : SmartMet::Spine::ConfigBase(config_file, "WFS stored query configuration"),
-      hosts(plugin_config ? plugin_config->get_hosts() : default_hosts)
+    : SmartMet::Spine::ConfigBase(config_file, "WFS stored query configuration")
+    , hosts(plugin_config ? plugin_config->get_hosts() : default_hosts)
+    , plugin_config(plugin_config)
 {
   try
   {
@@ -506,6 +507,12 @@ void SmartMet::Plugin::WFS::StoredQueryConfig::set_locale(const std::string& nam
 std::shared_ptr<const std::locale> SmartMet::Plugin::WFS::StoredQueryConfig::get_locale() const
 {
   return locale;
+}
+
+std::string
+SmartMet::Plugin::WFS::StoredQueryConfig::guess_fallback_encoding(const std::string& language) const
+{
+  return plugin_config ? plugin_config->guess_fallback_encoding(language) : std::string("ISO-8859-1");
 }
 
 /**

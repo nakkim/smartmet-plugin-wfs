@@ -82,11 +82,8 @@
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="outputFormat">
-        <ows:AllowedValues>
-          <ows:Value>text/xml; subtype=gml/3.2</ows:Value>
-          <ows:Value>text/xml; version=3.2</ows:Value>
-          <ows:Value>application/gml+xml; subtype=gml/3.2</ows:Value>
-          <ows:Value>application/gml+xml; version=3.2</ows:Value>
+        <ows:AllowedValues><TMPL_foreach supportedFormats as fmt>
+          <ows:Value><TMPL_var fmt></ows:Value></TMPL_foreach>
         </ows:AllowedValues>
       </ows:Parameter>
     </ows:Operation>
@@ -122,11 +119,8 @@
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="outputFormat">
-        <ows:AllowedValues>
-          <ows:Value>text/xml; subtype=gml/3.2</ows:Value>
-          <ows:Value>text/xml; version=3.2</ows:Value>
-          <ows:Value>application/gml+xml; subtype=gml/3.2</ows:Value>
-          <ows:Value>application/gml+xml; version=3.2</ows:Value>
+        <ows:AllowedValues><TMPL_foreach supportedFormats as fmt>
+          <ows:Value><TMPL_var fmt></ows:Value></TMPL_foreach>
         </ows:AllowedValues>
       </ows:Parameter>
     </ows:Operation></TMPL_if>

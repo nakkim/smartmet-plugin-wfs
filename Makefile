@@ -7,10 +7,11 @@ TOP = $(shell pwd)
 
 -include $(HOME)/.smartmet.mk
 GCC_DIAG_COLOR ?= always
+CXX_STD ?= c++11
 
 DEFINES = -DUNIX -D_REENTRANT
 
-FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter \
+FLAGS = -std=$(CXX_STD) -fPIC -Wall -W -Wno-unused-parameter \
 	-fno-omit-frame-pointer \
 	-fdiagnostics-color=$(GCC_DIAG_COLOR) \
 	-Wno-unknown-pragmas \
@@ -249,8 +250,8 @@ file-list:	cnf/XMLGrammarPool.dump
 	echo cnf/XMLGrammarPool.dump >>files.list.new
 	echo cnf/XMLSchemas.cache >>files.list.new
 	find test/base -name '*.conf' >>files.list.new
-	find test/base/input -name '*.get' >>files.list.new
 	find test/base/output -name '*.get' -o -name '*.kvp.post' -o -name '*.xml.post' >>files.list.new
+	find test/base/kvp -name '*.kvp' >>files.list.new
 	find test/base/xml -name '*.xml' >>files.list.new
 	find test -name '*.pl' >>files.list.new
 	find test -name '*.cpp' >>files.list.new

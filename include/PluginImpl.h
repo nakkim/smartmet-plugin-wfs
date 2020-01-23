@@ -15,6 +15,7 @@
 #include <engines/gis/CRSRegistry.h>
 #include <engines/gis/Engine.h>
 #include <engines/querydata/Engine.h>
+#include <macgyver/DirectoryMonitor.h>
 #include <macgyver/TemplateFactory.h>
 #include <macgyver/TimedCache.h>
 
@@ -118,9 +119,11 @@ class PluginImpl : public boost::noncopyable
     return itsTemplateFactory.get(filename);
   }
 
-  void updateStoredQueryMap(Spine::Reactor* theReactor);
+  void updateStoredQueryMap();
 
   void dump_xml_schema_cache(std::ostream& os);
+
+  bool is_reload_required(bool reset = false);
 
  private:
   void query(const std::string& language,
@@ -218,7 +221,6 @@ class PluginImpl : public boost::noncopyable
   std::string data_source{""};
   std::string primary_data_source{""};
   bool gridengine_disabled{false};
-
 
   /**
    *   @brief Locked timestamp for testing only

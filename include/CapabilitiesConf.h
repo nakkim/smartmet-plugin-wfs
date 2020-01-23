@@ -1,5 +1,6 @@
 #pragma once
 
+#include <set>
 #include "MultiLanguageString.h"
 #include "MultiLanguageStringArray.h"
 #include <spine/ConfigBase.h>
@@ -40,6 +41,12 @@ namespace WFS
 
     void apply(CTPP::CDT& hash, const std::string& language) const;
 
+    const std::set<std::string>& get_supported_formats() const { return supportedFormats; }
+
+    void add_output_format(const std::string& text);
+
+    static std::string conv_output_format_str(const std::string& src);
+
  private:
   SmartMet::Plugin::WFS::MultiLanguageStringP title;
   SmartMet::Plugin::WFS::MultiLanguageStringP abstract;
@@ -52,6 +59,7 @@ namespace WFS
   SmartMet::Plugin::WFS::MultiLanguageStringP accessConstraints;
   SmartMet::Plugin::WFS::MultiLanguageStringP onlineResource;
   SmartMet::Plugin::WFS::MultiLanguageStringP contactInstructions;
+  std::set<std::string> supportedFormats;
 };
 
 } // namespace WFS

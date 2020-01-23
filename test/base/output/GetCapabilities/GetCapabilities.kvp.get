@@ -88,10 +88,10 @@
       </ows:DCP>
       <ows:Parameter name="outputFormat">
         <ows:AllowedValues>
-          <ows:Value>text/xml; subtype=gml/3.2</ows:Value>
-          <ows:Value>text/xml; version=3.2</ows:Value>
           <ows:Value>application/gml+xml; subtype=gml/3.2</ows:Value>
           <ows:Value>application/gml+xml; version=3.2</ows:Value>
+          <ows:Value>text/xml; subtype=gml/3.2</ows:Value>
+          <ows:Value>text/xml; version=3.2</ows:Value>
         </ows:AllowedValues>
       </ows:Parameter>
     </ows:Operation>
@@ -128,10 +128,10 @@
       </ows:DCP>
       <ows:Parameter name="outputFormat">
         <ows:AllowedValues>
-          <ows:Value>text/xml; subtype=gml/3.2</ows:Value>
-          <ows:Value>text/xml; version=3.2</ows:Value>
           <ows:Value>application/gml+xml; subtype=gml/3.2</ows:Value>
           <ows:Value>application/gml+xml; version=3.2</ows:Value>
+          <ows:Value>text/xml; subtype=gml/3.2</ows:Value>
+          <ows:Value>text/xml; version=3.2</ows:Value>
         </ows:AllowedValues>
       </ows:Parameter>
     </ows:Operation>

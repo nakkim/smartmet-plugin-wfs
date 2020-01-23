@@ -269,7 +269,6 @@ class GetPropertyValue : public RequestBase
   std::string xpath_string;
   StandardPresentationParameters spp;
   QueryResponseCache& query_cache;
-  PluginImpl& plugin_impl;
   bool fast;
 };
 

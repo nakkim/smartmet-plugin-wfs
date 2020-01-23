@@ -39,9 +39,8 @@ static void decrease(boost::optional<int>& value)
 
 GetPropertyValue::GetPropertyValue(const std::string& language,
                                    PluginImpl& plugin_impl)
-    : bw::RequestBase(language)
-    , query_cache(plugin_impl.get_query_cache())
-    , plugin_impl(plugin_impl)
+  : bw::RequestBase(language, plugin_impl)
+  , query_cache(plugin_impl.get_query_cache())
 {
 }
 
@@ -479,6 +478,12 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_kvp(
       throw exception;
     }
 
+    auto format = http_request.getParameter("outputformat");
+    if (format)
+    {
+      check_output_format_attribute(*format, plugin_impl);
+    }
+
     const StoredQueryMap& stored_query_map = plugin_impl.get_stored_query_map();
     boost::shared_ptr<GetPropertyValue> result(
        new GetPropertyValue(language, plugin_impl));
@@ -525,6 +530,7 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_xml(
     const StoredQueryMap& stored_query_map = plugin_impl.get_stored_query_map();
     bw::Request::GetPropertyValue::check_request_name(document, "GetPropertyValue");
     const xercesc::DOMElement* root = get_xml_root(document);
+    check_output_format_attribute(root, plugin_impl);
 
     const char* method_name = "SmartMet::Plugin::WFS::Request::GetPropertyValue::create_from_xml";
     boost::shared_ptr<GetPropertyValue> result(

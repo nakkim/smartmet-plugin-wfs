@@ -1,0 +1,1 @@
+service=WFS&version=2.0.0&request=GetFeature&storedquery_id=fmi::observations::weather::simple&starttime=2019-06-06T120000Z&endtime=2019-06-06T121500Z&parameters=t2m&place=Hyvink‰‰

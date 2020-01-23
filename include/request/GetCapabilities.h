@@ -38,7 +38,6 @@ class GetCapabilities : public RequestBase
   virtual int get_response_expires_seconds() const;
 
  private:
-  const PluginImpl& plugin_impl;
   std::set<std::string> languages;
   boost::optional<std::string> requested_language;
 };

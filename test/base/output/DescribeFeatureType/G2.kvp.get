@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<xsd:schema
+  targetNamespace="http://inspire.ec.europa.eu/schemas/omso/3.0"
+  xmlns:wfsns001="http://inspire.ec.europa.eu/schemas/omso/3.0"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified"
+  attributeFormDefault="unqualified">
+  <xsd:include schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd"/>
+  </xsd:schema>

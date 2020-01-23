@@ -67,7 +67,6 @@ class GetFeature : public RequestBase
   void assert_use_default_format() const;
 
  private:
-  PluginImpl& plugin_impl;
   std::vector<boost::shared_ptr<QueryBase> > queries;
   StandardPresentationParameters spp;
   QueryResponseCache& query_cache;
