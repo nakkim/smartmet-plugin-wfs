@@ -66,6 +66,8 @@ INCLUDES = -I$(includedir) \
 	-Iinclude
 
 LIBS = -L$(libdir) \
+	-lsmartmet-engine-gis \
+	-lsmartmet-gis \
 	-lsmartmet-spine \
 	-lsmartmet-newbase \
 	-lsmartmet-macgyver \
@@ -86,6 +88,7 @@ LIBS = -L$(libdir) \
 	-lctpp2 \
 	-lcurl \
 	-lcrypto \
+	-lfmt \
 	-lbz2 -lz \
 	-lpthread \
 	-lm \
@@ -131,7 +134,8 @@ check-valgrind:	../libwfs.a $(TESTSUITE_TARGETS)
 $(TESTSUITE_TARGETS) : ../libwfs.a
 
 %.test : obj/%.o ; @echo "Building $@"
-	$(CXX) -o $@ $(TESTSUITE_CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) -L.. -lwfs $(LIBS)
+	ln -sf /usr/share/smartmet/engines/gis.so libsmartmet-engine-gis.so
+	$(CXX) -o $@ $(TESTSUITE_CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(shell pwd) -L . ../libwfs.a $(LIBS)
 
 CFLAGS += -I include
 
