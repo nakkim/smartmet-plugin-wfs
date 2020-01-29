@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.1.23
+Version: 20.1.29
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -16,6 +16,7 @@ BuildRequires: make
 BuildRequires: boost-devel
 BuildRequires: ctpp2-devel
 BuildRequires: fmt-devel >= 5.2.0
+BuildRequires: jsoncpp-devel
 BuildRequires: libconfig-devel
 BuildRequires: libcurl-devel
 BuildRequires: xerces-c-devel
@@ -40,6 +41,7 @@ Requires: fmt >= 5.2.0
 Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
+Requires: jsoncpp
 Requires: smartmet-library-locus >= 19.12.4
 Requires: smartmet-library-macgyver >= 20.1.9
 Requires: smartmet-library-spine >= 20.1.15
@@ -92,6 +94,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Wed Jan 29 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.1.29-1.fmi
+- Add admin request constructorMap
+
 * Thu Jan 23 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.1.23-1.fmi
 - Add support of request fallback encoding when not UTF-8
 
