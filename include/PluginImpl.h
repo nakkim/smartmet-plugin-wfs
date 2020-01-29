@@ -118,6 +118,8 @@ class PluginImpl : public boost::noncopyable
 
   void dump_xml_schema_cache(std::ostream& os);
 
+  void dump_constructor_map(std::ostream& os);
+
   bool is_reload_required(bool reset = false);
 
  private:

@@ -51,6 +51,8 @@ class StoredQueryMap final
 
   bool is_reload_required(bool reset = false);
 
+  std::map<std::string, std::set<std::string> > get_constructor_map() const;
+
  private:
   void add_handler(boost::shared_ptr<StoredQueryHandlerBase> handler);
 

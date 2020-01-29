@@ -642,3 +642,16 @@ void bw::StoredQueryMap::directory_monitor_thread_proc()
 	    << ": [WFS] SmartMet::Plugin::WFS::StoredQueryMap::directory_monitor_proc ended"
 	    << std::endl;
 }
+
+std::map<std::string, std::set<std::string> > bw::StoredQueryMap::get_constructor_map() const
+{
+  std::map<std::string, std::set<std::string> > result;
+  boost::shared_lock<boost::shared_mutex> lock(mutex);
+  for (const auto& map_item : handler_map) {
+    auto sq_conf = map_item.second->get_config();
+    if (sq_conf->have_template_fn()) {
+      result[sq_conf->get_constructor_name()].insert(sq_conf->get_template_fn());
+    }
+  }
+  return result;
+}

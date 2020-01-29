@@ -8,6 +8,7 @@
 #include "WfsConst.h"
 #include "WfsException.h"
 #include <boost/bind.hpp>
+#include <json/json.h>
 #include <spine/Convenience.h>
 #include <spine/Exception.h>
 #include <spine/Reactor.h>
@@ -240,6 +241,13 @@ void Plugin::adminHandler(SmartMet::Spine::Reactor& theReactor,
 	impl->dump_xml_schema_cache(content);
 	theResponse.setStatus(200);
 	theResponse.setHeader("Content-type", "application/octet-stream");
+	theResponse.setContent(content.str());
+      }
+      else if (*operation == "constructorMap") {
+	std::ostringstream content;
+	impl->dump_constructor_map(content);
+	theResponse.setStatus(200);
+	theResponse.setHeader("Content-type", "application/json");
 	theResponse.setContent(content.str());
       }
       else {

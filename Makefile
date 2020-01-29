@@ -81,7 +81,8 @@ objdir = obj
 INCLUDES = -I$(includedir) \
 	-I$(includedir)/smartmet \
 	-I$(includedir)/oracle/11.2/client64 \
-	-I$(includedir)/mysql
+	-I$(includedir)/mysql \
+	-I$(includedir)/jsoncpp
 
 LIBS = -L$(libdir) \
 	-lsmartmet-spine \
@@ -102,6 +103,7 @@ LIBS = -L$(libdir) \
 	-lconfig \
 	-lctpp2 \
 	-lcurl \
+	-ljsoncpp \
 	-lcrypto \
 	-lbz2 -lz \
 	-lpthread \
