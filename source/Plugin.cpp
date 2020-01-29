@@ -220,7 +220,20 @@ void Plugin::adminHandler(SmartMet::Spine::Reactor& theReactor,
     const auto operation = theRequest.getParameter("request");
     auto adminCred = impl->get_config().get_admin_credentials();
     if (operation) {
-      if (adminCred and (*operation == "reload")) {
+      if (*operation == "help") {
+	theResponse.setStatus(200);
+	theResponse.setHeader("Content-type", "text/plain");
+	theResponse.setContent
+	  ("WFS Plugin admin request:\n\n"
+	   "Supported requests:\n"
+	   "   help            - this message\n"
+	   "   reload          - reload WFS plugin (requires authentication)\n"
+	   "   xmlSchemaCache  - dump XML schema cache\n"
+	   "   constructorMap  - dump corespondence between stored query constructor_name and\n"
+	   "                     template_fn parameters (JSON format)\n"
+	   );
+      }
+      else if (adminCred and (*operation == "reload")) {
 	if (authenticateRequest(theRequest, theResponse)) {
 	  bool ok = reload(itsConfig);
 	  theResponse.setStatus(200);
