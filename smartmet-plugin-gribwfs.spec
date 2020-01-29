@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.1.23
+Version: 20.1.29
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -30,9 +30,9 @@ BuildRequires: smartmet-library-macgyver-devel >= 20.1.9
 BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
 BuildRequires: smartmet-engine-contour-devel >= 19.11.20
 BuildRequires: smartmet-engine-gis-devel >= 19.11.20
-BuildRequires: smartmet-engine-grid-devel >= 20.1.21
-BuildRequires: smartmet-library-grid-content-devel >= 20.1.21
-BuildRequires: smartmet-library-grid-files-devel >= 20.1.16
+BuildRequires: smartmet-engine-grid-devel >= 20.1.29
+BuildRequires: smartmet-library-grid-content-devel >= 20.1.29
+BuildRequires: smartmet-library-grid-files-devel >= 20.1.29
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 19.12.19
 %endif
@@ -50,9 +50,9 @@ Requires: smartmet-library-gis >= 19.12.4
 Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.12.5
 Requires: smartmet-engine-gis >= 19.11.20
-Requires: smartmet-engine-grid >= 20.1.21
-Requires: smartmet-library-grid-content >= 20.1.21
-Requires: smartmet-library-grid-files >= 20.1.16
+Requires: smartmet-engine-grid >= 20.1.29
+Requires: smartmet-library-grid-content >= 20.1.29
+Requires: smartmet-library-grid-files >= 20.1.29
 %if %{with observation}
 Requires: smartmet-engine-observation >= 19.12.19
 %endif
@@ -98,6 +98,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Wed Jan 29 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.1.29-1.fmi
+- Repackaged due to base library API changes
+
 * Thu Jan 23 2020 Andri Pavenis <andris.pavenis@fmi.fi> -20.1.23-1fmi
 - New version [Merge from master branch]
 - Add support of request fallback encoding when not UTF-8 (20.1.23-1.fmi)
