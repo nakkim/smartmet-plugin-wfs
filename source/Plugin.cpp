@@ -249,7 +249,6 @@ void Plugin::adminHandler(SmartMet::Spine::Reactor& theReactor,
 	}
       }
       else if (*operation == "xmlSchemaCache") {
-	namespace io = boost::iostreams;
 	std::ostringstream content;
 	impl->dump_xml_schema_cache(content);
 	theResponse.setStatus(200);
