@@ -930,16 +930,7 @@ void PluginImpl::dump_xml_schema_cache(std::ostream& os)
 
 void PluginImpl::dump_constructor_map(std::ostream& os)
 {
-  const auto tmp = get_stored_query_map().get_constructor_map();
-  Json::Value value;
-  for (const auto& map_item : tmp) {
-    Json::Value& x1 = value[value.size()];
-    x1["constructor_name"] = map_item.first;
-    Json::Value& x2 = x1["templates"];
-    for (const auto& tn : map_item.second) {
-      x2[x2.size()] = tn;
-    }
-  }
+  const auto value = get_stored_query_map().get_constructor_map();
   os << value;
 }
 

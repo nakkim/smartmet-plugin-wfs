@@ -11,6 +11,7 @@
 #include "XmlParser.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/shared_ptr.hpp>
+#include <json/json.h>
 #include <engines/geonames/Engine.h>
 #include <engines/gis/CRSRegistry.h>
 #include <engines/gis/Engine.h>
