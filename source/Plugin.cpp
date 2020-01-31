@@ -229,8 +229,8 @@ void Plugin::adminHandler(SmartMet::Spine::Reactor& theReactor,
 	   "   help            - this message\n"
 	   "   reload          - reload WFS plugin (requires authentication)\n"
 	   "   xmlSchemaCache  - dump XML schema cache\n"
-	   "   constructorMap  - dump corespondence between stored query constructor_name and\n"
-	   "                     template_fn parameters (JSON format)\n"
+	   "   constructors    - dump corespondence between stored query constructor_names,\n"
+	   "                     template_fn and return types (JSON format)\n"
 	   );
       }
       else if (adminCred and (*operation == "reload")) {
@@ -255,7 +255,7 @@ void Plugin::adminHandler(SmartMet::Spine::Reactor& theReactor,
 	theResponse.setHeader("Content-type", "application/octet-stream");
 	theResponse.setContent(content.str());
       }
-      else if (*operation == "constructorMap") {
+      else if (*operation == "constructors") {
 	std::ostringstream content;
 	impl->dump_constructor_map(content);
 	theResponse.setStatus(200);
