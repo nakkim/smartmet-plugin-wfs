@@ -63,6 +63,7 @@ objdir = obj
 INCLUDES = -I$(includedir) \
 	-I$(includedir)/smartmet \
 	-I$(includedir)/mysql \
+	-I$(includedir)/jsoncpp \
 	-Iinclude
 
 LIBS = -L$(libdir) \
@@ -86,6 +87,7 @@ LIBS = -L$(libdir) \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \
+	-ljsoncpp \
 	-lcurl \
 	-lcrypto \
 	-lfmt \
