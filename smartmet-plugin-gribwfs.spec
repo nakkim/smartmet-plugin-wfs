@@ -101,7 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 * Wed Jan 29 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.1.29-1.fmi
 - Repackaged due to base library API changes
 
-* Thu Jan 23 2020 Andri Pavenis <andris.pavenis@fmi.fi> -20.1.23-1fmi
+* Thu Jan 23 2020 Andri Pavenis <andris.pavenis@fmi.fi> -20.1.23-1.fmi
 - New version [Merge from master branch]
 - Add support of request fallback encoding when not UTF-8 (20.1.23-1.fmi)
 - Update support of outputFormat parameter (20.1.21-1.fmi)
