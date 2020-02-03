@@ -133,11 +133,14 @@ check-valgrind:	../libwfs.a $(TESTSUITE_TARGETS)
 ../libwfs.a:
 	$(MAKE) -C .. libwfs.a
 
-$(TESTSUITE_TARGETS) : ../libwfs.a
+$(TESTSUITE_TARGETS) : ../libwfs.a gis_engine_link
 
 %.test : obj/%.o ; @echo "Building $@"
-	ln -sf /usr/share/smartmet/engines/gis.so libsmartmet-engine-gis.so
 	$(CXX) -o $@ $(TESTSUITE_CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(shell pwd) -L . ../libwfs.a $(LIBS)
+
+gis_engine_link:
+	rm -f libsmartmet-engine-gis.so
+	ln -sf /usr/share/smartmet/engines/gis.so libsmartmet-engine-gis.so
 
 CFLAGS += -I include
 
