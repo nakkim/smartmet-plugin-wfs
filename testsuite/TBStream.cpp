@@ -227,6 +227,31 @@ BOOST_AUTO_TEST_CASE(test_writing_and_reading_ptime_values)
   BOOST_REQUIRE_EQUAL(t2, in.get_ptime());
 }
 
+BOOST_AUTO_TEST_CASE(test_writing_and_reading_ptime_special_values)
+{
+  namespace bg = boost::gregorian;
+  namespace pt = boost::posix_time;
+
+  BOOST_TEST_MESSAGE("+[Test writting and reading boost::posix_time::ptime values]");
+
+  const pt::ptime t1 = pt::not_a_date_time;
+  const pt::ptime t2 = pt::pos_infin;
+  const pt::ptime t3 = pt::neg_infin;
+
+  OBStream out;
+  out.put_ptime(t1);
+  out.put_ptime(t2);
+  out.put_ptime(t3);
+
+  const std::string s01 = out.raw_data();
+  const uint8_t *u01 = reinterpret_cast<const uint8_t *>(s01.data());
+
+  IBStream in(u01, s01.length());
+  BOOST_REQUIRE_EQUAL(t1, in.get_ptime());
+  BOOST_REQUIRE_EQUAL(t2, in.get_ptime());
+  BOOST_REQUIRE_EQUAL(t3, in.get_ptime());
+}
+
 BOOST_AUTO_TEST_CASE(test_writing_and_reading_much_data)
 {
   OBStream out;
