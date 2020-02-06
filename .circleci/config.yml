@@ -42,8 +42,11 @@ jobs:
       - attach_workspace:
           at: /dist
       - run:
+          name: Install build dependencies
+          command: ci-build deps
+      - run:
           name: Unit tests
-          command: make check
+          command: make check-installed
       - store_artifacts:
           path: /dist
           destination: dist/
