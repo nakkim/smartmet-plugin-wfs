@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.1.29
+Version: 20.2.6
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -24,17 +24,17 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.1.15
-BuildRequires: smartmet-library-gis-devel >= 19.12.4
+BuildRequires: smartmet-library-spine-devel >= 20.2.5
+BuildRequires: smartmet-library-gis-devel >= 20.2.5
 BuildRequires: smartmet-library-locus-devel >= 19.12.4
-BuildRequires: smartmet-library-macgyver-devel >= 20.1.9
+BuildRequires: smartmet-library-macgyver-devel >= 20.2.5
 BuildRequires: smartmet-engine-contour-devel >= 19.11.20
 BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
-BuildRequires: smartmet-engine-gis-devel >= 19.11.20
+BuildRequires: smartmet-engine-gis-devel >= 20.1.23
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 19.12.19
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 19.11.20
+BuildRequires: smartmet-engine-querydata-devel >= 20.1.30
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 5.2.0
@@ -43,16 +43,16 @@ Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 19.12.4
-Requires: smartmet-library-macgyver >= 20.1.9
-Requires: smartmet-library-spine >= 20.1.15
-Requires: smartmet-library-gis >= 19.12.4
+Requires: smartmet-library-macgyver >= 20.2.5
+Requires: smartmet-library-spine >= 20.2.5
+Requires: smartmet-library-gis >= 20.2.5
 Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.12.5
-Requires: smartmet-engine-gis >= 19.11.20
+Requires: smartmet-engine-gis >= 20.1.23
 %if %{with observation}
 Requires: smartmet-engine-observation >= 19.12.19
 %endif
-Requires: smartmet-engine-querydata >= 19.11.20
+Requires: smartmet-engine-querydata >= 20.1.30
 Requires: smartmet-server >= 20.1.15
 Requires: xerces-c
 Requires: xqilla
@@ -94,6 +94,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Feb  6 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.6-1.fmi
+- WMO numbers have been deprecated, removed them from responses
+- Minor fix to request base output handling
+- Added support special boost posix_time values
+- Renamed admin request "constructorMap" to "constructors"
+
 * Wed Jan 29 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.1.29-1.fmi
 - Add admin request constructorMap
 
