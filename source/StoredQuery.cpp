@@ -519,15 +519,20 @@ void bw::StoredQuery::extract_xml_parameters(const xercesc::DOMElement& query_ro
                                "SmartMet::Plugin::WFS::StoredQuery::extract_xml_parameters",
                                param_name);
 
-        const auto values = param_extractor.extract_param(*element, param_desc.xml_type);
+	try {
+	  const auto values = param_extractor.extract_param(*element, param_desc.xml_type);
 
-        BOOST_FOREACH (const auto& value, values)
-        {
-          value.check_limits(param_desc.lower_limit, param_desc.upper_limit);
-          query.params->insert_value(param_name, value);
-        }
+	  BOOST_FOREACH (const auto& value, values)
+	    {
+	      value.check_limits(param_desc.lower_limit, param_desc.upper_limit);
+	      query.params->insert_value(param_name, value);
+	    }
 
-        param_name_set.insert(param_name);
+	  param_name_set.insert(param_name);
+	} catch (SmartMet::Spine::Exception& e) {
+	  e.addDetail("Query parameter name '" + param_name + "'");
+	  throw;
+	}
       }
     }
 
