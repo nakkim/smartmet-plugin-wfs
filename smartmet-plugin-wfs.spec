@@ -4,7 +4,7 @@
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
 Version: 20.2.7
-Release: 1%{?dist}.fmi
+Release: 2%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-wfs
@@ -24,7 +24,7 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.2.5
+BuildRequires: smartmet-library-spine-devel >= 20.2.7
 BuildRequires: smartmet-library-gis-devel >= 20.2.5
 BuildRequires: smartmet-library-locus-devel >= 19.12.4
 BuildRequires: smartmet-library-macgyver-devel >= 20.2.5
@@ -32,7 +32,7 @@ BuildRequires: smartmet-engine-contour-devel >= 19.11.20
 BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
 BuildRequires: smartmet-engine-gis-devel >= 20.1.23
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.12.19
+BuildRequires: smartmet-engine-observation-devel >= 20.2.7
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 20.1.30
 # BuildRequires: postgresql95-libs
@@ -44,13 +44,13 @@ Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 19.12.4
 Requires: smartmet-library-macgyver >= 20.2.5
-Requires: smartmet-library-spine >= 20.2.5
+Requires: smartmet-library-spine >= 20.2.7
 Requires: smartmet-library-gis >= 20.2.5
 Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.12.5
 Requires: smartmet-engine-gis >= 20.1.23
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.12.19
+Requires: smartmet-engine-observation >= 20.2.7
 %endif
 Requires: smartmet-engine-querydata >= 20.1.30
 Requires: smartmet-server >= 20.1.15
@@ -94,6 +94,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Fri Feb  7 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.7-2.fmi
+- Spine::Station API changed due to default construction of POD members
+
 * Fri Feb  7 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.7-1.fmi
 - Add support of boolean type for XML format requests
 

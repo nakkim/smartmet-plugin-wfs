@@ -75,7 +75,7 @@ void bw::StoredMastQueryHandler::init_handler()
 
 void bw::StoredMastQueryHandler::query(const StoredQuery& query,
                                        const std::string& language,
-				       const boost::optional<std::string> &hostname,
+                                       const boost::optional<std::string>& hostname,
                                        std::ostream& output) const
 {
   try
@@ -551,9 +551,9 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
             feature_id.add_param(P_NUM_OF_STATIONS, "1");
 
             hash["groups"][groupId]["station"]["fmisid"] = fmisidStr;
-            if (not station_geoid.empty())
+            if (not station_geoid.empty() && station_geoid != "0")
               hash["groups"][groupId]["station"]["geoid"] = station_geoid;
-            if (not station_wmo.empty())
+            if (not station_wmo.empty() && station_wmo != "0")
               hash["groups"][groupId]["station"]["wmo"] = station_wmo;
             if (not station_name.empty())
               hash["groups"][groupId]["station"]["name"] = station_name;

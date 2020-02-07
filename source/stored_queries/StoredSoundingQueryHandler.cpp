@@ -292,10 +292,10 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
                 CTPP::CDT& station = group["station"];
                 station["fmisid"] = currentStationId;
                 std::string geoid = std::to_string(static_cast<long long int>(sit->geoid));
-                if (not geoid.empty())
+                if (not geoid.empty() && sit->geoid > 0)
                   station["geoid"] = geoid;
                 std::string wmo = std::to_string(static_cast<long long int>(sit->wmo));
-                if (not wmo.empty())
+                if (not wmo.empty() && sit->wmo > 0)
                   station["wmo"] = wmo;
                 if (not sit->station_formal_name.empty())
                   station["name"] = sit->station_formal_name;

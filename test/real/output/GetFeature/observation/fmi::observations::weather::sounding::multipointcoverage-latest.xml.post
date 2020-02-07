@@ -58,7 +58,8 @@
                                         <target:Location gml:id="foi-ssf-ssf-loc-1-fmisid-101104">
                                             <gml:identifier codeSpace="http://xml.fmi.fi/namespace/stationcode/fmisid">101104</gml:identifier>
                                             <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/name">Jokioinen Ilmala</gml:name>
-                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/geoid">-16000162</gml:name>
+                                            
+                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/wmo">2963</gml:name>
                                             <target:representativePoint xlink:href="#point-101104"/>
                                             <target:region codeSpace="http://xml.fmi.fi/namespace/location/region">Jokioinen</target:region>
                                         </target:Location>
@@ -5381,7 +5382,8 @@
                                         <target:Location gml:id="foi-ssf-ssf-loc-2-fmisid-101932">
                                             <gml:identifier codeSpace="http://xml.fmi.fi/namespace/stationcode/fmisid">101932</gml:identifier>
                                             <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/name">Sodankylä Tähtelä</gml:name>
-                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/geoid">-16000014</gml:name>
+                                            
+                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/wmo">2836</gml:name>
                                             <target:representativePoint xlink:href="#point-101932"/>
                                             <target:region codeSpace="http://xml.fmi.fi/namespace/location/region">Sodankylä</target:region>
                                         </target:Location>
