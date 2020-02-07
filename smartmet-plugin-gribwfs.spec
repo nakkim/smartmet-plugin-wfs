@@ -111,6 +111,7 @@ rm -rf $RPM_BUILD_ROOT
 
 * Wed Jan 29 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.1.29-1.fmi
 - Repackaged due to base library API changes
+- Add admin request constructorMap
 
 * Thu Jan 23 2020 Andri Pavenis <andris.pavenis@fmi.fi> -20.1.23-1.fmi
 - New version [Merge from master branch]
@@ -122,11 +123,6 @@ rm -rf $RPM_BUILD_ROOT
 
 * Tue Jan 21 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.1.21-1.fmi
 - Repackaged due to grid-content and grid-engine API changes
-
-* Wed Jan 29 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.1.29-1.fmi
-- Add admin request constructorMap
-
-* Thu Jan 23 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.1.23-1.fmi
 
 * Thu Jan 16 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.1.16-1.fmi
 - Repackaged due to base library API changes
