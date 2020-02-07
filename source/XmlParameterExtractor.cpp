@@ -51,6 +51,7 @@ ParameterExtractor::ParameterExtractor()
     add_type("positiveInteger",
              boost::bind(&extract_integer, ::_1, 1, std::numeric_limits<int64_t>::max()));
 
+    add_type("boolean", &extract_boolean);
     add_type("float", &extract_double);
     add_type("double", &extract_double);
     add_type("dateTime", &extract_date_time);
@@ -143,6 +144,20 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_string(
   }
   catch (...)
   {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_boolean(
+    const xercesc::DOMElement& elem)
+{
+  try {
+    std::vector<SmartMet::Spine::Value> result;
+    const std::string content = extract_text(elem);
+    bool tmp = SmartMet::Spine::string2bool(content);
+    result.push_back(SmartMet::Spine::Value(tmp));
+    return result;
+  } catch (...) {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
