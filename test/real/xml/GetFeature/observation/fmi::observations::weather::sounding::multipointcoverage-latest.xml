@@ -10,5 +10,6 @@
      <wfs:Parameter name="starttime">2019-06-06T000000Z</wfs:Parameter>
      <wfs:Parameter name="endtime">2019-06-06T121500Z</wfs:Parameter>
      <wfs:Parameter name="parameters">TAP_PT1S_avg</wfs:Parameter>
+     <wfs:Parameter name="latest">true</wfs:Parameter>
    </wfs:StoredQuery>
 </wfs:GetFeature>

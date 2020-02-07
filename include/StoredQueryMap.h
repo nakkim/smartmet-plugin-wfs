@@ -11,6 +11,7 @@
 #include <set>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/filesystem.hpp>
+#include <json/json.h>
 #include <spine/Reactor.h>
 #include <macgyver/DirectoryMonitor.h>
 #include <macgyver/TaskGroup.h>
@@ -50,6 +51,8 @@ class StoredQueryMap final
   virtual std::vector<std::string> get_return_type_names() const;
 
   bool is_reload_required(bool reset = false);
+
+  Json::Value get_constructor_map() const;
 
  private:
   void add_handler(boost::shared_ptr<StoredQueryHandlerBase> handler);

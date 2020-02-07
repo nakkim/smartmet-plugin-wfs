@@ -7,7 +7,6 @@
 		        <gml:identifier codeSpace="http://xml.fmi.fi/namespace/stationcode/fmisid"><TMPL_var obsStation.fmisid></gml:identifier>
 			<TMPL_if DEFINED(obsStation.name)><gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/name"><TMPL_var obsStation.name></gml:name></TMPL_if>
 			<TMPL_if DEFINED(obsStation.geoid)><gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/geoid"><TMPL_var obsStation.geoid></gml:name></TMPL_if>
-			<TMPL_if DEFINED(obsStation.wmo)><gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/wmo"><TMPL_var obsStation.wmo></gml:name></TMPL_if>
 			<target:representativePoint xlink:href="#point-fmisid-<TMPL_var obsStation.fmisid>-<TMPL_var group.groupId>-<TMPL_var obsParam.name>"/>
 			<TMPL_if DEFINED(obsStation.country)><target:country codeSpace="http://xml.fmi.fi/namespace/location/country"><TMPL_var obsStation.country></target:country></TMPL_if>
 			<TMPL_if DEFINED(obsStation.timezone)><target:timezone><TMPL_var obsStation.timezone></target:timezone></TMPL_if>

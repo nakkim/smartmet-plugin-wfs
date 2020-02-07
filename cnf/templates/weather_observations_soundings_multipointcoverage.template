@@ -59,7 +59,6 @@
                                             <gml:identifier codeSpace="http://xml.fmi.fi/namespace/stationcode/fmisid"><TMPL_var group.station.fmisid></gml:identifier>
                                             <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/name"><TMPL_var group.station.name></gml:name>
                                             <TMPL_if group.station.geoid><gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/geoid"><TMPL_var group.station.geoid></gml:name></TMPL_if>
-                                            <TMPL_if group.station.wmo><gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/wmo"><TMPL_var group.station.wmo></gml:name></TMPL_if>
                                             <target:representativePoint xlink:href="#point-<TMPL_var group.station.fmisid>"/>
                                             <TMPL_if group.station.region><target:region codeSpace="http://xml.fmi.fi/namespace/location/region"><TMPL_var group.station.region></target:region></TMPL_if>
                                         </target:Location>

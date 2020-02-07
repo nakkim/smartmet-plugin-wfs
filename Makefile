@@ -80,7 +80,8 @@ objdir = obj
 INCLUDES = -I$(includedir) \
 	-I$(includedir)/smartmet \
 	-I$(includedir)/oracle/11.2/client64 \
-	-I$(includedir)/mysql
+	-I$(includedir)/mysql \
+	-I$(includedir)/jsoncpp
 
 LIBS = -L$(libdir) \
 	-lsmartmet-spine \
@@ -101,6 +102,7 @@ LIBS = -L$(libdir) \
 	-lconfig \
 	-lctpp2 \
 	-lcurl \
+	-ljsoncpp \
 	-lcrypto \
 	-lbz2 -lz \
 	-lpthread \
@@ -258,7 +260,7 @@ file-list:	cnf/XMLGrammarPool.dump
 	echo ./test/PluginTest.cpp >>files.list.new
 	find server_tests -name '*.xml' -o -name '*.exp' -o -name '*.pl' >>files.list.new
 	find server_tests -name '*.kvp' -o -name '*.xslt' >>files.list.new
-	find tools/xml_samples -name '*.xml' >>files.list.new
+	find tools/xml/xml_samples -name '*.xml' >>files.list.new
 	cat files.list.new | sed -e 's:^\./::' | sort | uniq >files.list
 	rm -f files.list.new
 

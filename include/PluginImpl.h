@@ -11,6 +11,7 @@
 #include "XmlParser.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/shared_ptr.hpp>
+#include <json/json.h>
 #include <engines/geonames/Engine.h>
 #include <engines/gis/CRSRegistry.h>
 #include <engines/gis/Engine.h>
@@ -122,6 +123,8 @@ class PluginImpl : public boost::noncopyable
   void updateStoredQueryMap();
 
   void dump_xml_schema_cache(std::ostream& os);
+
+  void dump_constructor_map(std::ostream& os);
 
   bool is_reload_required(bool reset = false);
 

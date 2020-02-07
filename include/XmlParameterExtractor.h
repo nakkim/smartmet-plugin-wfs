@@ -46,6 +46,8 @@ class ParameterExtractor
 
   static std::vector<SmartMet::Spine::Value> extract_string(const xercesc::DOMElement& elem);
 
+  static std::vector<SmartMet::Spine::Value> extract_boolean(const xercesc::DOMElement& elem);
+
   static std::vector<SmartMet::Spine::Value> extract_integer(const xercesc::DOMElement& elem,
                                                              int64_t lower_limit,
                                                              int64_t upper_limit);

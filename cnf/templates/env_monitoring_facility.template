@@ -19,8 +19,7 @@
       <gml:identifier codeSpace="<TMPL_var authorityDomain>/namespace/stationcode/fmisid"><TMPL_var station.fmisid></gml:identifier><TMPL_if DEFINED(station.name)>
       <gml:name codeSpace="<TMPL_var authorityDomain>/namespace/locationcode/name"><TMPL_var station.name></gml:name></TMPL_if><TMPL_if DEFINED(station.lpnn)>
       <gml:name codeSpace="<TMPL_var authorityDomain>/namespace/locationcode/lpnn"><TMPL_var station.lpnn></gml:name></TMPL_if><TMPL_if DEFINED(station.geoid)>
-      <gml:name codeSpace="<TMPL_var authorityDomain>/namespace/locationcode/geoid"><TMPL_var station.geoid></gml:name></TMPL_if><TMPL_if DEFINED(station.wmo)>
-      <gml:name codeSpace="<TMPL_var authorityDomain>/namespace/locationcode/wmo"><TMPL_var station.wmo></gml:name></TMPL_if><TMPL_if DEFINED(station.livi)>
+      <gml:name codeSpace="<TMPL_var authorityDomain>/namespace/locationcode/geoid"><TMPL_var station.geoid></gml:name></TMPL_if><TMPL_if DEFINED(station.livi)>
       <gml:name codeSpace="<TMPL_var authorityDomain>/namespace/locationcode/livi"><TMPL_var station.livi></gml:name></TMPL_if><TMPL_if DEFINED(station.icao)>
       <gml:name codeSpace="<TMPL_var authorityDomain>/namespace/locationcode/icao"><TMPL_var station.icao></gml:name></TMPL_if><TMPL_if DEFINED(station.awsmetar)>
       <gml:name codeSpace="<TMPL_var authorityDomain>/namespace/locationcode/awsmetar"><TMPL_var station.awsmetar></gml:name></TMPL_if><TMPL_if DEFINED(station.syke)>
