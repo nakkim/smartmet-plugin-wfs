@@ -245,7 +245,7 @@ file-list:	cnf/XMLGrammarPool.dump
 	find . -name 'Makefile' -o -name '*.spec' >>files.list.new
 	find source -name '*.h' -o -name '*.cpp' >>files.list.new
 	find include -name '*.h' >>files.list.new
-	find tools/xml -name '*.h' -o -name '*.cpp' >>files.list.new
+	find tools -name '*.h' -o -name '*.cpp' >>files.list.new
 	find testsuite -name '*.h' -o -name '*.cpp' >>files.list.new
 	find examples -name '*.h' -o -name '*.cpp' >>files.list.new
 	find cnf -name '*.conf' -o -name '*.template' >>files.list.new
