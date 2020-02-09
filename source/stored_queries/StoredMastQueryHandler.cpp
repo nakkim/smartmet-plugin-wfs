@@ -553,7 +553,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
             hash["groups"][groupId]["station"]["fmisid"] = fmisidStr;
             if (not station_geoid.empty() && station_geoid != "0")
               hash["groups"][groupId]["station"]["geoid"] = station_geoid;
-            if (not station_wmo.empty() && station_wmo != "0")
+            if (not station_wmo.empty() && station_wmo != "0" && station_wmo != "NaN")
               hash["groups"][groupId]["station"]["wmo"] = station_wmo;
             if (not station_name.empty())
               hash["groups"][groupId]["station"]["name"] = station_name;

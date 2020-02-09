@@ -3,8 +3,8 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.2.7
-Release: 2%{?dist}.fmi
+Version: 20.2.9
+Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-wfs
@@ -32,7 +32,7 @@ BuildRequires: smartmet-engine-contour-devel >= 19.11.20
 BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
 BuildRequires: smartmet-engine-gis-devel >= 20.1.23
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.2.7
+BuildRequires: smartmet-engine-observation-devel >= 20.2.9
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 20.1.30
 # BuildRequires: postgresql95-libs
@@ -50,7 +50,7 @@ Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.12.5
 Requires: smartmet-engine-gis >= 20.1.23
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.2.7
+Requires: smartmet-engine-observation >= 20.2.9
 %endif
 Requires: smartmet-engine-querydata >= 20.1.30
 Requires: smartmet-server >= 20.1.15
@@ -94,6 +94,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Sun Feb  9 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.9-1.fmi
+- Fixed handling of missing wmo numbers
+
 * Fri Feb  7 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.7-2.fmi
 - Spine::Station API changed due to default construction of POD members
 
