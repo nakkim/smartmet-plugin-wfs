@@ -39,43 +39,43 @@ namespace
     }
   }
 
-  SmartMet::Plugin::WFS::MultiLanguageStringP
+  SmartMet::Spine::MultiLanguageStringP
   get_ml_string(libconfig::Setting* parent,
 		const std::string& name,
 		const std::string& default_language)
   {
     try {
-      SmartMet::Plugin::WFS::MultiLanguageStringP result;
+      SmartMet::Spine::MultiLanguageStringP result;
       libconfig::Setting* setting = get_setting(parent, name);
       if (setting) {
-	result = SmartMet::Plugin::WFS::MultiLanguageString::create(default_language, *setting);
+	result = SmartMet::Spine::MultiLanguageString::create(default_language, *setting);
       }
       return result;
     } catch (...) {
-      throw SmartMet::Spine::Exception(BCP, "Failed to parse SmartMet::Plugin::WFS::MultiLanguageString")
+      throw SmartMet::Spine::Exception(BCP, "Failed to parse SmartMet::Spine::MultiLanguageString")
 	.addParameter("name", name);
     }
   }
 
-  SmartMet::Plugin::WFS::MultiLanguageStringArray::Ptr
+  SmartMet::Spine::MultiLanguageStringArray::Ptr
   get_ml_string_array(libconfig::Setting* parent,
 		      const std::string& name,
 		      const std::string& default_language)
   {
     try {
-      SmartMet::Plugin::WFS::MultiLanguageStringArray::Ptr result;
+      SmartMet::Spine::MultiLanguageStringArray::Ptr result;
       libconfig::Setting* setting = get_setting(parent, name);
       if (setting) {
-	result = SmartMet::Plugin::WFS::MultiLanguageStringArray::create(default_language, *setting);
+	result = SmartMet::Spine::MultiLanguageStringArray::create(default_language, *setting);
       }
       return result;
     } catch (...) {
-      throw SmartMet::Spine::Exception(BCP, "Failed to parse SmartMet::Plugin::WFS::MultiLanguageStringArray")
+      throw SmartMet::Spine::Exception(BCP, "Failed to parse SmartMet::Spine::MultiLanguageStringArray")
 	.addParameter("name", name);
     }
   }
 
-  void put(CTPP::CDT& dest, const std::string& name, SmartMet::Plugin::WFS::MultiLanguageStringP value,
+  void put(CTPP::CDT& dest, const std::string& name, SmartMet::Spine::MultiLanguageStringP value,
 	   const std::string& language)
   {
     if (value) {
@@ -83,7 +83,7 @@ namespace
     }
   }
 
-  void put(CTPP::CDT& dest, const std::string& name, SmartMet::Plugin::WFS::MultiLanguageStringArray::Ptr value,
+  void put(CTPP::CDT& dest, const std::string& name, SmartMet::Spine::MultiLanguageStringArray::Ptr value,
 	   const std::string& language)
   {
     if (value) {

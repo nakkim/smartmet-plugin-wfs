@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Config.h"
-#include "MultiLanguageString.h"
 #include "StoredQueryParamDef.h"
 #include <boost/optional.hpp>
 #include <ctpp2/CDT.hpp>
 #include <spine/ConfigBase.h>
+#include <spine/MultiLanguageString.h>
 #include <libconfig.h++>
 #include <map>
 #include <ostream>
@@ -78,8 +78,8 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
   struct ParamDesc
   {
     std::string name;
-    MultiLanguageStringP title;
-    MultiLanguageStringP abstract;
+    SmartMet::Spine::MultiLanguageStringP title;
+    SmartMet::Spine::MultiLanguageStringP abstract;
     int min_occurs;
     int max_occurs;
     std::string xml_type;
@@ -207,8 +207,8 @@ class StoredQueryConfig : public SmartMet::Spine::ConfigBase
 
   boost::optional<std::string> template_fn;
   std::string default_language;
-  MultiLanguageStringP title;
-  MultiLanguageStringP abstract;
+  SmartMet::Spine::MultiLanguageStringP title;
+  SmartMet::Spine::MultiLanguageStringP abstract;
   std::vector<std::string> return_type_names;
   std::map<std::string, ParamDesc> param_map;
   std::vector<std::string> param_names;

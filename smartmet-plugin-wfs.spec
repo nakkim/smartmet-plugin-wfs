@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.2.9
+Version: 20.2.11
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -24,7 +24,7 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.2.7
+BuildRequires: smartmet-library-spine-devel >= 20.2.11
 BuildRequires: smartmet-library-gis-devel >= 20.2.5
 BuildRequires: smartmet-library-locus-devel >= 19.12.4
 BuildRequires: smartmet-library-macgyver-devel >= 20.2.5
@@ -44,7 +44,7 @@ Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 19.12.4
 Requires: smartmet-library-macgyver >= 20.2.5
-Requires: smartmet-library-spine >= 20.2.7
+Requires: smartmet-library-spine >= 20.2.11
 Requires: smartmet-library-gis >= 20.2.5
 Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.12.5
@@ -94,6 +94,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Tue Feb 11 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.2.11-1.fmi
+- Use classes MultiLanguageString and MultiLanguageStringArray from smartmet-library-spine instead of local copies
+
 * Sun Feb  9 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.9-1.fmi
 - Fixed handling of missing wmo numbers
 

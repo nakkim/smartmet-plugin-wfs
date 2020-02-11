@@ -8,13 +8,13 @@
 
 #include "CapabilitiesConf.h"
 #include "Hosts.h"
-#include "MultiLanguageString.h"
 #include "WfsFeatureDef.h"
 #include <boost/filesystem.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/utility.hpp>
 #include <engines/gis/CRSRegistry.h>
 #include <spine/ConfigBase.h>
+#include <spine/MultiLanguageString.h>
 #include <libconfig.h++>
 #include <string>
 #include <vector>
@@ -101,7 +101,7 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   bool enable_test_queries;
   bool enable_configuration_polling;
   bool sq_restrictions;
-  MultiLanguageStringP fallback_encoding;
+  SmartMet::Spine::MultiLanguageStringP fallback_encoding;
   CapabilitiesConf capabilities_conf;
 
   /**
