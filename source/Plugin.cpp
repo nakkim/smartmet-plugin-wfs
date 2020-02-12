@@ -91,9 +91,9 @@ void Plugin::init()
       addUser(adminCred->first, adminCred->second);
     }
 
-    itsReactor->addContentHandler(this,
-				  "/wfs/admin",
-				  boost::bind(&Plugin::adminHandler, this, _1, _2, _3));
+    itsReactor->addPrivateContentHandler(this,
+					 "/wfs/admin",
+					 boost::bind(&Plugin::adminHandler, this, _1, _2, _3));
   }
   catch (...)
   {
