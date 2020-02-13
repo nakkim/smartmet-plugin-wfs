@@ -235,7 +235,7 @@ RPMBUILD=$(shell test "$$CIRCLE_BUILD_NUM" && echo RPM_BUILD_NCPUS=2 rpmbuild ||
 
 rpm: clean file-list $(SPEC).spec
 	rm -f $(SPEC).tar.gz # Clean a possible leftover from previous attempt
-	tar -czvf $(SPEC).tar.gz \
+	tar -czvf $(SPEC).tar.gz --exclude test --exclude-vcs \
 		--transform "s,^,plugins/$(SPEC)/," $(shell cat files.list)
 	$(RPMBUILD) -ta $(SPEC).tar.gz
 	rm -f $(SPEC).tar.gz
