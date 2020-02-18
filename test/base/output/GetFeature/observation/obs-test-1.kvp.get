@@ -5,12 +5,12 @@ Global data object:
    groups = [
               {
                 'crs' : "EPSG::4326",
-                'featureId' : "WFS-FPUcUGPb..c0JS89M56fsLJvP2KJTowp0_FzqZefSFpYsufTuqaduW1_9CrYjGx8udakWhTjunTRmybM7LuyVNO3La_.hVsXDGozs23Tz05OdZjFgwct2Lo15fPffyyX9_bLy78tPTDi2ZYmZsw9MvPpEzNm_Hh2Za1M2m_GkruvTM4a23D4iaefTDux5aVq6EBpbcPiLw349HOdExvbcvTLvoYeWHbl6ZeXOsboy2tbbp589O7PUy.OlY27DubW7rtn5qfTD00793OcJrceuHZp6eZO7Nvia3Pph6ad.6p54Za0N_DLuyYemFuc.m_llyceuXl5v6clZ0_FzqZefRodNO3LT6ZeE_ITQ6aduW1v3ZaxqtSGAA--",
+                'featureId' : "WFS-fdAD2wn.4NVNf7IZqgUGNP2bGOeJTowp0_FzqZefSFpYsufTuqaduW1_9CrYjGx8udakWhTjunTRmybM7LuyVNO3La_.hVsXDGozs23Tz05OdZjFgwct2Lo15fPffyyX9_bLy78tPTDi2ZYmZsw9MvPpEzNm_Hh2Za1M2m_GkruvTM4a23D4iaefTDux5aVq6EBpbcPiLw349HOdExvbcvTLvoYeWHbl6ZeXOsboy2tbbp589O7PUy.OlY27DubW7rtn5qfTD00793OcJrceuHZp6eZO7Nvia3Pph6ad.6p54Za0N_DLuyYemFuc.m_llyceuXl5v6clZ0_FzqZefRodNO3LT6ZeE_ITQ6aduW1v3ZaxqtSGAA--",
                 'groupId' : "1-1",
                 'groupNum' : 1,
                 'obsParamList' : [
                                    {
-                                     'featureId' : "WFS-FPUcUGPb..c0JS89M56fsLJvP2KJTowp0_FzqZefSFpYsufTuqaduW1_9CrYjGx8udakWhTjunTRmybM7LuyVNO3La_.hVsXDGozs23Tz05OdZjFgwct2Lo15fPffyyX9_bLy78tPTDi2ZYmZsw9MvPpEzNm_Hh2Za1M2m_GkruvTM4a23D4iaefTDux5aVq6EBpbcPiLw349HOdExvbcvTLvoYeWHbl6ZeXOsboy2tbbp589O7PUy.OlY27DubW7rtn5qfTD00793OcJrceuHZp6eZO7Nvia3Pph6ad.6p54Za0N_DLuyYemFuc.m_llyceuXl5v6clZ0_FzqZefRodNO3LT6ZeE_ITQ6aduW1v3ZaxqtSGAA--",
+                                     'featureId' : "WFS-fdAD2wn.4NVNf7IZqgUGNP2bGOeJTowp0_FzqZefSFpYsufTuqaduW1_9CrYjGx8udakWhTjunTRmybM7LuyVNO3La_.hVsXDGozs23Tz05OdZjFgwct2Lo15fPffyyX9_bLy78tPTDi2ZYmZsw9MvPpEzNm_Hh2Za1M2m_GkruvTM4a23D4iaefTDux5aVq6EBpbcPiLw349HOdExvbcvTLvoYeWHbl6ZeXOsboy2tbbp589O7PUy.OlY27DubW7rtn5qfTD00793OcJrceuHZp6eZO7Nvia3Pph6ad.6p54Za0N_DLuyYemFuc.m_llyceuXl5v6clZ0_FzqZefRodNO3LT6ZeE_ITQ6aduW1v3ZaxqtSGAA--",
                                      'name' : "t2m"
                                    }
                                  ],

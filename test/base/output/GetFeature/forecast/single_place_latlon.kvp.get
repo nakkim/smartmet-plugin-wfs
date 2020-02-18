@@ -5,7 +5,7 @@ Global data object:
    groups = [
               {
                 'dataOriginTime' : "2008-08-05T06:31:00Z",
-                'featureId' : "WFS-5rDn_ihNb1fHFTTj4o_6R2LFal.JTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZm0YMmDo15fPffyyX9_bLy78tPTDi2ZYmlsy9suyp54ZamZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNbbp589O7PUy.OlY27DuZW3fky7K6tGnlsw7b.Xry37.HDDf4ad3TDW9ww7L_PXh3ZNO7D204WVww8sO2tbpl28MvLD068src59N_LLk49cvLzf05K2I2_llx4efSpl59Gh007ctrfuy1jVakMA",
+                'featureId' : "WFS-946835zd31HLrBWW_yiXdMgQD_yJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZm0YMmDo15fPffyyX9_bLy78tPTDi2ZYmlsy9suyp54ZamZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNbbp589O7PUy.OlY27DuZW3fky7K6tGnlsw7b.Xry37.HDDf4ad3TDW9ww7L_PXh3ZNO7D204WVww8sO2tbpl28MvLD068src59N_LLk49cvLzf05K2I2_llx4efSpl59Gh007ctrfuy1jVakMA",
                 'groupId' : "1-1",
                 'metadata' : {
                                'boundingBox' : {
@@ -29,7 +29,7 @@ Global data object:
                              },
                 'paramList' : [
                                 {
-                                  'featureId' : "WFS-5rDn_ihNb1fHFTTj4o_6R2LFal.JTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZm0YMmDo15fPffyyX9_bLy78tPTDi2ZYmlsy9suyp54ZamZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNbbp589O7PUy.OlY27DuZW3fky7K6tGnlsw7b.Xry37.HDDf4ad3TDW9ww7L_PXh3ZNO7D204WVww8sO2tbpl28MvLD068src59N_LLk49cvLzf05K2I2_llx4efSpl59Gh007ctrfuy1jVakMA",
+                                  'featureId' : "WFS-946835zd31HLrBWW_yiXdMgQD_yJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZm0YMmDo15fPffyyX9_bLy78tPTDi2ZYmlsy9suyp54ZamZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNbbp589O7PUy.OlY27DuZW3fky7K6tGnlsw7b.Xry37.HDDf4ad3TDW9ww7L_PXh3ZNO7D204WVww8sO2tbpl28MvLD068src59N_LLk49cvLzf05K2I2_llx4efSpl59Gh007ctrfuy1jVakMA",
                                   'name' : "temperature"
                                 }
                               ],

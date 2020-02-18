@@ -5,7 +5,7 @@ Global data object:
    groups = [
               {
                 'dataOriginTime' : "2008-08-05T06:31:00Z",
-                'featureId' : "WFS-rQTE9IJgOJ0IyYU55c_LwTMLg3qJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJ2CaqE4M2ndknZcPLLz6VsOzTkkMzPl36cnOsxs1cMmTV0a8vnvv5ZL._tl5d.WnphxbMsTS2Ze2XZU88MtTM2b8eHZlrUzab8aSu69MzhrbcPiJp59MO7HlpWroQGtt08.endnqZfHSsbdh3MrbvyZdldWjTy2Ydt_L15b9_Dhhv8NO7phre4Ydl_nrw7smndh7acLK4YeWHbWtUy7eGXlh6deWWtDhyy8.fXllrWr6d2Snwy5ck2nW1X07skTTyy4.mnfureocsuPTw09MPTTv3MdDc59N_LLk49cvLzf05K2I2_llx4efSpl59Gh007ctrfuy1jVakMA-",
+                'featureId' : "WFS-uzDQsTeda3KXQ5.cD0Zge_cZHXeJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJ2CaqE4M2ndknZcPLLz6VsOzTkkMzPl36cnOsxs1cMmTV0a8vnvv5ZL._tl5d.WnphxbMsTS2Ze2XZU88MtTM2b8eHZlrUzab8aSu69MzhrbcPiJp59MO7HlpWroQGtt08.endnqZfHSsbdh3MrbvyZdldWjTy2Ydt_L15b9_Dhhv8NO7phre4Ydl_nrw7smndh7acLK4YeWHbWtUy7eGXlh6deWWtDhyy8.fXllrWr6d2Snwy5ck2nW1X07skTTyy4.mnfureocsuPTw09MPTTv3MdDc59N_LLk49cvLzf05K2I2_llx4efSpl59Gh007ctrfuy1jVakMA-",
                 'groupId' : "1-1",
                 'metadata' : {
                                'boundingBox' : {
@@ -29,23 +29,23 @@ Global data object:
                              },
                 'paramList' : [
                                 {
-                                  'featureId' : "WFS-GPdjipryZ0UQ01BCIUezyZidvG2JTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJ2CaqE4M2ndknZcPLLz6VsOzTkkMzPl36cnOsxs1cMmTV0a8vnvv5ZL._tl5d.WnphxbMsTS2Ze2XZU88MtTM2b8eHZlrUzab8aSu69MzhrbcPiJp59MO7HlpWroQGtt08.endnqZfHSsbdh3MrbvyZdldWjTy2Ydt_L15b9_Dhhv8NO7phre4Ydl_nrw7smndh7acLK4YeWHbWtUy7eGXlh6deWVuc.m_llyceuXl5v6clbEbfyy48PPpUy8.jQ6aduW1v3ZaxqtSGA",
+                                  'featureId' : "WFS-KlTml396kSeuLmNmmhgD_F881VeJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJ2CaqE4M2ndknZcPLLz6VsOzTkkMzPl36cnOsxs1cMmTV0a8vnvv5ZL._tl5d.WnphxbMsTS2Ze2XZU88MtTM2b8eHZlrUzab8aSu69MzhrbcPiJp59MO7HlpWroQGtt08.endnqZfHSsbdh3MrbvyZdldWjTy2Ydt_L15b9_Dhhv8NO7phre4Ydl_nrw7smndh7acLK4YeWHbWtUy7eGXlh6deWVuc.m_llyceuXl5v6clbEbfyy48PPpUy8.jQ6aduW1v3ZaxqtSGA",
                                   'name' : "Temperature"
                                 },
                                 {
-                                  'featureId' : "WFS-HU9EtGd0GmPCwZQEQfoW10NQJhiJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJ2CaqE4M2ndknZcPLLz6VsOzTkkMzPl36cnOsxs1cMmTV0a8vnvv5ZL._tl5d.WnphxbMsTS2Ze2XZU88MtTM2b8eHZlrUzab8aSu69MzhrbcPiJp59MO7HlpWroQGtt08.endnqZfHSsbdh3MrbvyZdldWjTy2Ydt_L15b9_Dhhv8NO7phre4Ydl_nrw7smndh7acLK4YeWHbWhw5ZefPryytzn038suTj1y8vN_TkrYjb.WXHh59KmXn0aHTTty2t.7LWNVqQw",
+                                  'featureId' : "WFS-oxXn4vaM6bAykz5Iqx9c5.yDB22JTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJ2CaqE4M2ndknZcPLLz6VsOzTkkMzPl36cnOsxs1cMmTV0a8vnvv5ZL._tl5d.WnphxbMsTS2Ze2XZU88MtTM2b8eHZlrUzab8aSu69MzhrbcPiJp59MO7HlpWroQGtt08.endnqZfHSsbdh3MrbvyZdldWjTy2Ydt_L15b9_Dhhv8NO7phre4Ydl_nrw7smndh7acLK4YeWHbWhw5ZefPryytzn038suTj1y8vN_TkrYjb.WXHh59KmXn0aHTTty2t.7LWNVqQw",
                                   'name' : "pressure"
                                 },
                                 {
-                                  'featureId' : "WFS-LxjxbkMRuWEJwzpmoHKVL6zLuz.JTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJ2CaqE4M2ndknZcPLLz6VsOzTkkMzPl36cnOsxs1cMmTV0a8vnvv5ZL._tl5d.WnphxbMsTS2Ze2XZU88MtTM2b8eHZlrUzab8aSu69MzhrbcPiJp59MO7HlpWroQGtt08.endnqZfHSsbdh3MrbvyZdldWjTy2Ydt_L15b9_Dhhv8NO7phre4Ydl_nrw7smndh7acLK4YeWHbWtX07slPhly5JtNuc.m_llyceuXl5v6clbEbfyy48PPpUy8.jQ6aduW1v3ZaxqtSGA",
+                                  'featureId' : "WFS-zcB82ExNfZ5p.jDD_A4248oMTwiJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJ2CaqE4M2ndknZcPLLz6VsOzTkkMzPl36cnOsxs1cMmTV0a8vnvv5ZL._tl5d.WnphxbMsTS2Ze2XZU88MtTM2b8eHZlrUzab8aSu69MzhrbcPiJp59MO7HlpWroQGtt08.endnqZfHSsbdh3MrbvyZdldWjTy2Ydt_L15b9_Dhhv8NO7phre4Ydl_nrw7smndh7acLK4YeWHbWtX07slPhly5JtNuc.m_llyceuXl5v6clbEbfyy48PPpUy8.jQ6aduW1v3ZaxqtSGA",
                                   'name' : "WindSpeedMS"
                                 },
                                 {
-                                  'featureId' : "WFS-tYuxZ46lvq4fPJNfCVjRSqmSjxeJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJ2CaqE4M2ndknZcPLLz6VsOzTkkMzPl36cnOsxs1cMmTV0a8vnvv5ZL._tl5d.WnphxbMsTS2Ze2XZU88MtTM2b8eHZlrUzab8aSu69MzhrbcPiJp59MO7HlpWroQGtt08.endnqZfHSsbdh3MrbvyZdldWjTy2Ydt_L15b9_Dhhv8NO7phre4Ydl_nrw7smndh7acLK4YeWHbW1X07skTTyy4.mnfubnPpv5ZcnHrl5eb.nJWxG38suPDz6VMvPo0Omnbltb92WsarUhgA-",
+                                  'featureId' : "WFS-ro5oFTyCQsVQkUVmt6zRyP9t67uJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJ2CaqE4M2ndknZcPLLz6VsOzTkkMzPl36cnOsxs1cMmTV0a8vnvv5ZL._tl5d.WnphxbMsTS2Ze2XZU88MtTM2b8eHZlrUzab8aSu69MzhrbcPiJp59MO7HlpWroQGtt08.endnqZfHSsbdh3MrbvyZdldWjTy2Ydt_L15b9_Dhhv8NO7phre4Ydl_nrw7smndh7acLK4YeWHbW1X07skTTyy4.mnfubnPpv5ZcnHrl5eb.nJWxG38suPDz6VMvPo0Omnbltb92WsarUhgA-",
                                   'name' : "WindDirection"
                                 },
                                 {
-                                  'featureId' : "WFS-JyDoVlfPEKpzErejSzDZCNGVaPyJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJ2CaqE4M2ndknZcPLLz6VsOzTkkMzPl36cnOsxs1cMmTV0a8vnvv5ZL._tl5d.WnphxbMsTS2Ze2XZU88MtTM2b8eHZlrUzab8aSu69MzhrbcPiJp59MO7HlpWroQGtt08.endnqZfHSsbdh3MrbvyZdldWjTy2Ydt_L15b9_Dhhv8NO7phre4Ydl_nrw7smndh7acLK4YeWHbW9Q5Zcenhp6YemnfuY6G5z6b.WXJx65eXm_pyVsRt_LLjw8.lTLz6NDpp25bW_dlrGq1IY",
+                                  'featureId' : "WFS-BuTWnti4WwQMHEqC4QX9s7riYEKJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJ2CaqE4M2ndknZcPLLz6VsOzTkkMzPl36cnOsxs1cMmTV0a8vnvv5ZL._tl5d.WnphxbMsTS2Ze2XZU88MtTM2b8eHZlrUzab8aSu69MzhrbcPiJp59MO7HlpWroQGtt08.endnqZfHSsbdh3MrbvyZdldWjTy2Ydt_L15b9_Dhhv8NO7phre4Ydl_nrw7smndh7acLK4YeWHbW9Q5Zcenhp6YemnfuY6G5z6b.WXJx65eXm_pyVsRt_LLjw8.lTLz6NDpp25bW_dlrGq1IY",
                                   'name' : "Precipitation1h"
                                 }
                               ],
