@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wfs:GetFeature
+         service="WFS"
+         version="2.0.0"
+         xmlns:wfs="http://www.opengis.net/wfs/2.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd">
+   <wfs:StoredQuery id="RadarHClassTest2">
+     <wfs:Parameter name="begin">20130221T104000Z</wfs:Parameter>
+     <wfs:Parameter name="end">20130221T110000Z</wfs:Parameter>
+     <wfs:Parameter name="height">999</wfs:Parameter>
+     <wfs:Parameter name="width">999</wfs:Parameter>
+     <wfs:Parameter name="layers">Kuopio</wfs:Parameter>
+     <wfs:Parameter name="boundingBox">20 60 30 70 EPSG::4326</wfs:Parameter>
+   </wfs:StoredQuery>
+</wfs:GetFeature>
