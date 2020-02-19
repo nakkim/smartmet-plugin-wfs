@@ -26,7 +26,7 @@
 						http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
 						http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0 http://xml.fmi.fi/schema/om/atmosphericfeatures/1.0/atmosphericfeatures.xsd">
     <wfs:member>
-        <omso:TrajectoryObservation gml:id="WFS-JG0A9QqpHXX1wC_njWXt88d9Q4GJTowuIWbbpdOt.Lnl5dsPTTv3c3Trvlw9NGXk6dc9_Xdk07s7p1t67Omnhv07umPf2y8sOfLC0sWXPp3VNO3LXQyYMXK1g2WsG1RiydMGDpgwtMbHy51qRaFOO6dN2jJmzsu7JU07ctdDJgxcrWDZawbVGLJ0wYOmDC0zs23Tz05OdZjFgxYsGjo15fPffyyX9_bLy78tPTDi2ZY2Zsw9MvPpE1tuHxE08.mHdjy0rV0IDe25emXfQw8sO3L0y8udbFSDQv0KjGnfw9s7W26efPTuz1MvjpWNOwzm1u67Z.an0w9NO_dznCaXDri2acenp5nCa3Hrh2aenmTuzb4mxz39d2TTuz1PPDLOI1ufTD00791Tzwy1oU59WdEkzo7c59N_LLk49cvLzf05K8Qs23S6db8XPLy7Yemnfu5unXfLh6aMvJ0657.u7Jp3Z3Trb12dNPDfp3dMe_tl5Yc.UA--">
+        <omso:TrajectoryObservation gml:id="WFS-8zfacygdRnQ614IfkVNE83n9syGJTowuIWbbpdOt.Lnl5dsPTTv3c3Trvlw9NGXk6dc9_Xdk07s7p1t67Omnhv07umPf2y8sOfLC0sWXPp3VNO3LXQyYMXK1g2WsG1RiydMGDpgwtMbHy51qRaFOO6dN2jJmzsu7JU07ctdDJgxcrWDZawbVGLJ0wYOmDC0zs23Tz05OdZjFgxYsGjo15fPffyyX9_bLy78tPTDi2ZY2Zsw9MvPpE1tuHxE08.mHdjy0rV0IDe25emXfQw8sO3L0y8udbFSDQv0KjGnfw9s7W26efPTuz1MvjpWNOwzm1u67Z.an0w9NO_dznCaXDri2acenp5nCa3Hrh2aenmTuzb4mxz39d2TTuz1PPDLOI1ufTD00791Tzwy1oU59WdEkzo7c59N_LLk49cvLzf05K8Qs23S6db8XPLy7Yemnfu5unXfLh6aMvJ0657.u7Jp3Z3Trb12dNPDfp3dMe_tl5Yc.UA--">
             <om:phenomenonTime>
                 <gml:TimePeriod gml:id="time1-1">
                     <gml:beginPosition>2019-06-06T11:30:06Z</gml:beginPosition>
@@ -58,7 +58,8 @@
                                         <target:Location gml:id="foi-ssf-ssf-loc-1-fmisid-101104">
                                             <gml:identifier codeSpace="http://xml.fmi.fi/namespace/stationcode/fmisid">101104</gml:identifier>
                                             <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/name">Jokioinen Ilmala</gml:name>
-                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/geoid">-16000162</gml:name>
+                                            
+                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/wmo">2963</gml:name>
                                             <target:representativePoint xlink:href="#point-101104"/>
                                             <target:region codeSpace="http://xml.fmi.fi/namespace/location/region">Jokioinen</target:region>
                                         </target:Location>
@@ -5349,7 +5350,7 @@
             </om:result>
         </omso:TrajectoryObservation>
     </wfs:member><wfs:member>
-        <omso:TrajectoryObservation gml:id="WFS-k9O1EhVmSAezEi2hrY6w9AhaiVGJTowuIWbbpdOt.Lnl5dsPTTv3c3Trvlw9NGXk6dc9_Xdk07s7p1t67Omnhv07umPf2y8sOfLC0sWXPp3VNO3LXQyYMXK1g2WsG1RgwdMGDpgwtMbHy51qRaFOO6dN2jJmzsu7JU07ctdDJgxcrWDZawbVGDB0wYOmDC0zs23Tz05OdZjFgxYsGjo15fPffyyX9_bLy78tPTDi2ZY2Zsw9MvPpE1tuHxE08.mHdjy0rV0IDe25emXfQw8sO3L0y8udbFSDQv0KjGnfw9s7W26efPTuz1MvjpWNOwzm1u67Z.an0w9NO_dznCaXDri2acenp5nCa3Hrh2aenmTuzb4mxz39d2TTuz1PPDLOI1ufTD00791Tzwy1oU59WdEkzo7c59N_LLk49cvLzf05K8Qs23S6db8XPLy7Yemnfu5unXfLh6aMvJ0657.u7Jp3Z3Trb12dNPDfp3dMe_tl5Yc.UA--">
+        <omso:TrajectoryObservation gml:id="WFS-cVF6.cDR5ix5KAbIZcy8b13LEROJTowuIWbbpdOt.Lnl5dsPTTv3c3Trvlw9NGXk6dc9_Xdk07s7p1t67Omnhv07umPf2y8sOfLC0sWXPp3VNO3LXQyYMXK1g2WsG1RgwdMGDpgwtMbHy51qRaFOO6dN2jJmzsu7JU07ctdDJgxcrWDZawbVGDB0wYOmDC0zs23Tz05OdZjFgxYsGjo15fPffyyX9_bLy78tPTDi2ZY2Zsw9MvPpE1tuHxE08.mHdjy0rV0IDe25emXfQw8sO3L0y8udbFSDQv0KjGnfw9s7W26efPTuz1MvjpWNOwzm1u67Z.an0w9NO_dznCaXDri2acenp5nCa3Hrh2aenmTuzb4mxz39d2TTuz1PPDLOI1ufTD00791Tzwy1oU59WdEkzo7c59N_LLk49cvLzf05K8Qs23S6db8XPLy7Yemnfu5unXfLh6aMvJ0657.u7Jp3Z3Trb12dNPDfp3dMe_tl5Yc.UA--">
             <om:phenomenonTime>
                 <gml:TimePeriod gml:id="time1-2">
                     <gml:beginPosition>2019-06-05T23:30:05Z</gml:beginPosition>
@@ -5381,7 +5382,8 @@
                                         <target:Location gml:id="foi-ssf-ssf-loc-2-fmisid-101104">
                                             <gml:identifier codeSpace="http://xml.fmi.fi/namespace/stationcode/fmisid">101104</gml:identifier>
                                             <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/name">Jokioinen Ilmala</gml:name>
-                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/geoid">-16000162</gml:name>
+                                            
+                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/wmo">2963</gml:name>
                                             <target:representativePoint xlink:href="#point-101104"/>
                                             <target:region codeSpace="http://xml.fmi.fi/namespace/location/region">Jokioinen</target:region>
                                         </target:Location>
@@ -10522,7 +10524,7 @@
             </om:result>
         </omso:TrajectoryObservation>
     </wfs:member><wfs:member>
-        <omso:TrajectoryObservation gml:id="WFS-w.zxtEcAnQUExbxfw59EwKx0.MqJTowuIWbbpdOt.Lnl5dsPTTv3c3Trvlw9NGXk6dc9_Xdk07s7p1t67Omnhv07umPf2y8sOfLC0sWXPp3VNO3LXQyYMXK1g2WsG1RgwdMGDpgwtMbHy51qRaFOO6dN2jJmzsu7JU07ctdDJgxcrWDZawbVGDB0wYOmDC0zs23Tz05OdZjFgxcs2To15fPffyyX9_bLy78tPTDi2ZY2Zsw9MvPpE1tuHxE08.mHdjy0rV0IDe25emXfQw8sO3L0y8udbFSDQv0KjGnfw9s7W26efPTuz1MvjpWNOwzm1u67Z.an0w9NO_dznCaXDri2acenp5nCa3Hrh2aenmTuzb4mxz39d2TTuz1PPDLOI1ufTD00791Tzwy1oU59WdEkzo7c59N_LLk49cvLzf05K8Qs23S6db8XPLy7Yemnfu5unXfLh6aMvJ0657.u7Jp3Z3Trb12dNPDfp3dMe_tl5Yc.UA--">
+        <omso:TrajectoryObservation gml:id="WFS-vi82osi1jrx6rBuAhbX0qmlF9liJTowuIWbbpdOt.Lnl5dsPTTv3c3Trvlw9NGXk6dc9_Xdk07s7p1t67Omnhv07umPf2y8sOfLC0sWXPp3VNO3LXQyYMXK1g2WsG1RgwdMGDpgwtMbHy51qRaFOO6dN2jJmzsu7JU07ctdDJgxcrWDZawbVGDB0wYOmDC0zs23Tz05OdZjFgxcs2To15fPffyyX9_bLy78tPTDi2ZY2Zsw9MvPpE1tuHxE08.mHdjy0rV0IDe25emXfQw8sO3L0y8udbFSDQv0KjGnfw9s7W26efPTuz1MvjpWNOwzm1u67Z.an0w9NO_dznCaXDri2acenp5nCa3Hrh2aenmTuzb4mxz39d2TTuz1PPDLOI1ufTD00791Tzwy1oU59WdEkzo7c59N_LLk49cvLzf05K8Qs23S6db8XPLy7Yemnfu5unXfLh6aMvJ0657.u7Jp3Z3Trb12dNPDfp3dMe_tl5Yc.UA--">
             <om:phenomenonTime>
                 <gml:TimePeriod gml:id="time1-3">
                     <gml:beginPosition>2019-06-05T23:30:06Z</gml:beginPosition>
@@ -10554,7 +10556,8 @@
                                         <target:Location gml:id="foi-ssf-ssf-loc-3-fmisid-101932">
                                             <gml:identifier codeSpace="http://xml.fmi.fi/namespace/stationcode/fmisid">101932</gml:identifier>
                                             <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/name">Sodankylä Tähtelä</gml:name>
-                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/geoid">-16000014</gml:name>
+                                            
+                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/wmo">2836</gml:name>
                                             <target:representativePoint xlink:href="#point-101932"/>
                                             <target:region codeSpace="http://xml.fmi.fi/namespace/location/region">Sodankylä</target:region>
                                         </target:Location>
@@ -17422,7 +17425,7 @@
             </om:result>
         </omso:TrajectoryObservation>
     </wfs:member><wfs:member>
-        <omso:TrajectoryObservation gml:id="WFS-sZKZTS5CfxiiiG0oe3Bl5U_ZHMCJTowuIWbbpdOt.Lnl5dsPTTv3c3Trvlw9NGXk6dc9_Xdk07s7p1t67Omnhv07umPf2y8sOfLC0sWXPp3VNO3LXQyYMXK1g2WsG1Rg2dMGDpgwtMbHy51qRaFOO6dN2jJmzsu7JU07ctdDJgxcrWDZawbVGDZ0wYOmDC0zs23Tz05OdZjFgxYsGjo15fPffyyX9_bLy78tPTDi2ZY2Zsw9MvPpE1tuHxE08.mHdjy0rV0IDe25emXfQw8sO3L0y8udbFSDQv0KjGnfw9s7W26efPTuz1MvjpWNOwzm1u67Z.an0w9NO_dznCaXDri2acenp5nCa3Hrh2aenmTuzb4mxz39d2TTuz1PPDLOI1ufTD00791Tzwy1oU59WdEkzo7c59N_LLk49cvLzf05K8Qs23S6db8XPLy7Yemnfu5unXfLh6aMvJ0657.u7Jp3Z3Trb12dNPDfp3dMe_tl5Yc.UA--">
+        <omso:TrajectoryObservation gml:id="WFS-cKozUhb.zLaqVg4MTC2SXuzt6tKJTowuIWbbpdOt.Lnl5dsPTTv3c3Trvlw9NGXk6dc9_Xdk07s7p1t67Omnhv07umPf2y8sOfLC0sWXPp3VNO3LXQyYMXK1g2WsG1Rg2dMGDpgwtMbHy51qRaFOO6dN2jJmzsu7JU07ctdDJgxcrWDZawbVGDZ0wYOmDC0zs23Tz05OdZjFgxYsGjo15fPffyyX9_bLy78tPTDi2ZY2Zsw9MvPpE1tuHxE08.mHdjy0rV0IDe25emXfQw8sO3L0y8udbFSDQv0KjGnfw9s7W26efPTuz1MvjpWNOwzm1u67Z.an0w9NO_dznCaXDri2acenp5nCa3Hrh2aenmTuzb4mxz39d2TTuz1PPDLOI1ufTD00791Tzwy1oU59WdEkzo7c59N_LLk49cvLzf05K8Qs23S6db8XPLy7Yemnfu5unXfLh6aMvJ0657.u7Jp3Z3Trb12dNPDfp3dMe_tl5Yc.UA--">
             <om:phenomenonTime>
                 <gml:TimePeriod gml:id="time1-4">
                     <gml:beginPosition>2019-06-06T05:30:05Z</gml:beginPosition>
@@ -17454,7 +17457,8 @@
                                         <target:Location gml:id="foi-ssf-ssf-loc-4-fmisid-101104">
                                             <gml:identifier codeSpace="http://xml.fmi.fi/namespace/stationcode/fmisid">101104</gml:identifier>
                                             <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/name">Jokioinen Ilmala</gml:name>
-                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/geoid">-16000162</gml:name>
+                                            
+                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/wmo">2963</gml:name>
                                             <target:representativePoint xlink:href="#point-101104"/>
                                             <target:region codeSpace="http://xml.fmi.fi/namespace/location/region">Jokioinen</target:region>
                                         </target:Location>
@@ -22531,7 +22535,7 @@
             </om:result>
         </omso:TrajectoryObservation>
     </wfs:member><wfs:member>
-        <omso:TrajectoryObservation gml:id="WFS-i0_w6id3yZPRa8ibVe_TjLC93iKJTowuIWbbpdOt.Lnl5dsPTTv3c3Trvlw9NGXk6dc9_Xdk07s7p1t67Omnhv07umPf2y8sOfLC0sWXPp3VNO3LXQyYMXK1g2WsG1RiydMGDpgwtMbHy51qRaFOO6dN2jJmzsu7JU07ctdDJgxcrWDZawbVGLJ0wYOmDC0zs23Tz05OdZjFgxcs2To15fPffyyX9_bLy78tPTDi2ZY2Zsw9MvPpE1tuHxE08.mHdjy0rV0IDe25emXfQw8sO3L0y8udbFSDQv0KjGnfw9s7W26efPTuz1MvjpWNOwzm1u67Z.an0w9NO_dznCaXDri2acenp5nCa3Hrh2aenmTuzb4mxz39d2TTuz1PPDLOI1ufTD00791Tzwy1oU59WdEkzo7c59N_LLk49cvLzf05K8Qs23S6db8XPLy7Yemnfu5unXfLh6aMvJ0657.u7Jp3Z3Trb12dNPDfp3dMe_tl5Yc.UA--">
+        <omso:TrajectoryObservation gml:id="WFS-s_rqKcE6K5XXrpL_nYzAYNubRCqJTowuIWbbpdOt.Lnl5dsPTTv3c3Trvlw9NGXk6dc9_Xdk07s7p1t67Omnhv07umPf2y8sOfLC0sWXPp3VNO3LXQyYMXK1g2WsG1RiydMGDpgwtMbHy51qRaFOO6dN2jJmzsu7JU07ctdDJgxcrWDZawbVGLJ0wYOmDC0zs23Tz05OdZjFgxcs2To15fPffyyX9_bLy78tPTDi2ZY2Zsw9MvPpE1tuHxE08.mHdjy0rV0IDe25emXfQw8sO3L0y8udbFSDQv0KjGnfw9s7W26efPTuz1MvjpWNOwzm1u67Z.an0w9NO_dznCaXDri2acenp5nCa3Hrh2aenmTuzb4mxz39d2TTuz1PPDLOI1ufTD00791Tzwy1oU59WdEkzo7c59N_LLk49cvLzf05K8Qs23S6db8XPLy7Yemnfu5unXfLh6aMvJ0657.u7Jp3Z3Trb12dNPDfp3dMe_tl5Yc.UA--">
             <om:phenomenonTime>
                 <gml:TimePeriod gml:id="time1-5">
                     <gml:beginPosition>2019-06-06T11:30:05Z</gml:beginPosition>
@@ -22563,7 +22567,8 @@
                                         <target:Location gml:id="foi-ssf-ssf-loc-5-fmisid-101932">
                                             <gml:identifier codeSpace="http://xml.fmi.fi/namespace/stationcode/fmisid">101932</gml:identifier>
                                             <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/name">Sodankylä Tähtelä</gml:name>
-                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/geoid">-16000014</gml:name>
+                                            
+                                            <gml:name codeSpace="http://xml.fmi.fi/namespace/locationcode/wmo">2836</gml:name>
                                             <target:representativePoint xlink:href="#point-101932"/>
                                             <target:region codeSpace="http://xml.fmi.fi/namespace/location/region">Sodankylä</target:region>
                                         </target:Location>

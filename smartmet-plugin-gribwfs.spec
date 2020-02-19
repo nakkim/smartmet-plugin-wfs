@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.2.7
+Version: 20.2.19
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -24,18 +24,18 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.2.5
-BuildRequires: smartmet-library-gis-devel >= 20.2.5
+BuildRequires: smartmet-library-spine-devel >= 20.2.13
+BuildRequires: smartmet-library-gis-devel >= 20.2.18
 BuildRequires: smartmet-library-locus-devel >= 19.12.4
 BuildRequires: smartmet-library-macgyver-devel >= 20.2.5
 BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
 BuildRequires: smartmet-engine-contour-devel >= 19.11.20
-BuildRequires: smartmet-engine-gis-devel >= 20.1.23
-BuildRequires: smartmet-engine-grid-devel >= 20.1.29
-BuildRequires: smartmet-library-grid-content-devel >= 20.1.29
-BuildRequires: smartmet-library-grid-files-devel >= 20.1.29
+BuildRequires: smartmet-engine-gis-devel >= 20.2.18
+BuildRequires: smartmet-engine-grid-devel >= 20.2.19
+BuildRequires: smartmet-library-grid-content-devel >= 20.2.19
+BuildRequires: smartmet-library-grid-files-devel >= 20.2.19
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.12.19
+BuildRequires: smartmet-engine-observation-devel >= 20.2.10
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 20.1.30
 # BuildRequires: postgresql95-libs
@@ -47,19 +47,19 @@ Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 19.12.4
 Requires: smartmet-library-macgyver >= 20.2.5
-Requires: smartmet-library-spine >= 20.2.5
-Requires: smartmet-library-gis >= 20.2.5
+Requires: smartmet-library-spine >= 20.2.13
+Requires: smartmet-library-gis >= 20.2.18
 Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.12.5
-Requires: smartmet-engine-gis >= 20.1.23
-Requires: smartmet-engine-grid >= 20.1.29
-Requires: smartmet-library-grid-content >= 20.1.29
-Requires: smartmet-library-grid-files >= 20.1.29
+Requires: smartmet-engine-gis >= 20.2.18
+Requires: smartmet-engine-grid >= 20.2.19
+Requires: smartmet-library-grid-content >= 20.2.19
+Requires: smartmet-library-grid-files >= 20.2.19
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.12.19
+Requires: smartmet-engine-observation >= 20.2.10
 %endif
 Requires: smartmet-engine-querydata >= 20.1.30
-Requires: smartmet-server >= 20.1.15
+Requires: smartmet-server >= 20.2.13
 Requires: xerces-c
 Requires: xqilla
 Requires: boost-chrono
@@ -100,6 +100,21 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Wed Feb 19 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.2.19-1.fmi
+- Use SHA1 instead of SHA for generating feature ID
+
+* Thu Feb 13 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.13-1.fmi
+- Register admin requests as private so that the frontend will not know about them
+
+* Tue Feb 11 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.2.11-1.fmi
+- Use classes MultiLanguageString and MultiLanguageStringArray from smartmet-library-spine instead of local copies
+
+* Sun Feb  9 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.9-1.fmi
+- Fixed handling of missing wmo numbers
+
+* Fri Feb  7 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.7-2.fmi
+- Spine::Station API changed due to default construction of POD members
+
 * Fri Feb  7 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.7-1.fmi
 - Add support of boolean type for XML format requests
 

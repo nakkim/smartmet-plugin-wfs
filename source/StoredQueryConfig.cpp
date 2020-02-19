@@ -147,10 +147,10 @@ void SmartMet::Plugin::WFS::StoredQueryConfig::parse_config()
       constructor_name = get_mandatory_config_param<std::string>("constructor_name");
       default_language = get_optional_config_param<std::string>("defaultLanguage", "eng");
       auto& s_title = get_mandatory_config_param<libconfig::Setting&>("title");
-      title = bw::MultiLanguageString::create(default_language, s_title);
+      title = SmartMet::Spine::MultiLanguageString::create(default_language, s_title);
 
       auto& s_abstract = get_mandatory_config_param<libconfig::Setting&>("abstract");
-      abstract = bw::MultiLanguageString::create(default_language, s_abstract);
+      abstract = SmartMet::Spine::MultiLanguageString::create(default_language, s_abstract);
 
       return_type_names = get_mandatory_config_array<std::string>("returnTypeNames", 0);
 
@@ -183,9 +183,9 @@ void SmartMet::Plugin::WFS::StoredQueryConfig::parse_config()
           item.name = get_mandatory_config_param<std::string>(c_item, "name");
           item.xml_type = get_mandatory_config_param<std::string>(c_item, "xmlType");
           auto& s1 = get_mandatory_config_param<libconfig::Setting&>(c_item, "title");
-          item.title = bw::MultiLanguageString::create(default_language, s1);
+          item.title = SmartMet::Spine::MultiLanguageString::create(default_language, s1);
           auto& s2 = get_mandatory_config_param<libconfig::Setting&>(c_item, "abstract");
-          item.abstract = bw::MultiLanguageString::create(default_language, s2);
+          item.abstract = SmartMet::Spine::MultiLanguageString::create(default_language, s2);
           item.min_occurs = get_optional_config_param<int>(c_item, "minOccurs", 0);
           item.max_occurs = get_optional_config_param<int>(c_item, "maxOccurs", 1);
 

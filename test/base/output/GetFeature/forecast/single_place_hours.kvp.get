@@ -5,7 +5,7 @@ Global data object:
    groups = [
               {
                 'dataOriginTime' : "2008-08-05T06:31:00Z",
-                'featureId' : "WFS-9d5RFgzspw2Of5hOooZjTv4E3oKJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZq4ZMmrK0b.vLnOlOxO9PI6NeXz338sl_f2y8u_LT0w4tmWJpbMvbLsqeeGWpmbN.PDsy1qZtN.NJXdemZw1tuHxE08.mHdjy0rV0IDW26efPTuz1MvjpWNuw7mVt35MuyurRp5bMO2_l68t._hww3.Gnd0w1vcMOy_z14d2TTuw9tOFlcMPLDtrW6ZdvDLyw9OvLK3OfTfyy5OPXLy839OStiNv5ZceHn0qZefRodNO3La37stY1WpDA-",
+                'featureId' : "WFS-h2q2eWn_8C1HMxPrKYwLA1l78UqJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZq4ZMmrK0b.vLnOlOxO9PI6NeXz338sl_f2y8u_LT0w4tmWJpbMvbLsqeeGWpmbN.PDsy1qZtN.NJXdemZw1tuHxE08.mHdjy0rV0IDW26efPTuz1MvjpWNuw7mVt35MuyurRp5bMO2_l68t._hww3.Gnd0w1vcMOy_z14d2TTuw9tOFlcMPLDtrW6ZdvDLyw9OvLK3OfTfyy5OPXLy839OStiNv5ZceHn0qZefRodNO3La37stY1WpDA-",
                 'groupId' : "1-1",
                 'metadata' : {
                                'boundingBox' : {
@@ -29,7 +29,7 @@ Global data object:
                              },
                 'paramList' : [
                                 {
-                                  'featureId' : "WFS-9d5RFgzspw2Of5hOooZjTv4E3oKJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZq4ZMmrK0b.vLnOlOxO9PI6NeXz338sl_f2y8u_LT0w4tmWJpbMvbLsqeeGWpmbN.PDsy1qZtN.NJXdemZw1tuHxE08.mHdjy0rV0IDW26efPTuz1MvjpWNuw7mVt35MuyurRp5bMO2_l68t._hww3.Gnd0w1vcMOy_z14d2TTuw9tOFlcMPLDtrW6ZdvDLyw9OvLK3OfTfyy5OPXLy839OStiNv5ZceHn0qZefRodNO3La37stY1WpDA-",
+                                  'featureId' : "WFS-h2q2eWn_8C1HMxPrKYwLA1l78UqJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZq4ZMmrK0b.vLnOlOxO9PI6NeXz338sl_f2y8u_LT0w4tmWJpbMvbLsqeeGWpmbN.PDsy1qZtN.NJXdemZw1tuHxE08.mHdjy0rV0IDW26efPTuz1MvjpWNuw7mVt35MuyurRp5bMO2_l68t._hww3.Gnd0w1vcMOy_z14d2TTuw9tOFlcMPLDtrW6ZdvDLyw9OvLK3OfTfyy5OPXLy839OStiNv5ZceHn0qZefRodNO3La37stY1WpDA-",
                                   'name' : "temperature"
                                 }
                               ],

@@ -78,18 +78,10 @@ boost::shared_ptr<FeatureID> FeatureID::create_from_id(const std::string& id)
 
     unsigned char md[SHA_DIGEST_LENGTH];
     SHA_CTX ctx;
-
-#ifdef SHA_Init
-    SHA_Init(&ctx);
-    SHA_Update(&ctx, magic, strlen(magic));
-    SHA_Update(&ctx, raw_id.c_str(), raw_id.length());
-    SHA_Final(md, &ctx);
-#else
     SHA1_Init(&ctx);
     SHA1_Update(&ctx, magic, strlen(magic));
     SHA1_Update(&ctx, raw_id.c_str(), raw_id.length());
     SHA1_Final(md, &ctx);
-#endif
 
     auto result_sha = std::string(md, md + SHA_DIGEST_LENGTH);
     if (result_sha != sha)

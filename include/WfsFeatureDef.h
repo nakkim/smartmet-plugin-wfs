@@ -1,10 +1,10 @@
 #pragma once
 
-#include "MultiLanguageString.h"
 #include <boost/optional.hpp>
 #include <boost/shared_ptr.hpp>
 #include <engines/gis/CRSRegistry.h>
 #include <spine/ConfigBase.h>
+#include <spine/MultiLanguageString.h>
 #include <array>
 
 namespace SmartMet
@@ -46,8 +46,8 @@ class WfsFeatureDef
   std::string xml_type;
   std::string xml_namespace;
   boost::optional<std::string> xml_namespace_loc;
-  MultiLanguageStringP title;
-  MultiLanguageStringP abstract;
+  SmartMet::Spine::MultiLanguageStringP title;
+  SmartMet::Spine::MultiLanguageStringP abstract;
   std::string default_crs_url;
   std::vector<std::string> other_crs_urls;
   std::array<double, 4> bbox;

@@ -5,7 +5,7 @@ Global data object:
    groups = [
               {
                 'dataOriginTime' : "2008-08-05T06:31:00Z",
-                'featureId' : "WFS-nxe4a3NKKMgBhfP9xQW3p6j6X5eJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZq4ZMmro15fPffyyX9_bLy78tPTDi2ZYmlsy9suyp54ZamZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNbbp589O7PUy.Oldn_Q_33_R_wX_R_wP_R_wf_R_wX_R_wP_R_wX_Q_2X_R_wf_Q_2v_R_wTK278mXZXVo08tmHbfy9eW_fw4Yb_DTu6Ya3uGHZf568O7Jp3Ye2nCyuGHlh21rVMu3hl5YenXllrS57t_fJl4dNDc59N_LLk49cvLzf05K2I2_llx4efSpl59Gh007ctPpl4TNDpp25bW_dlrGq1IYA",
+                'featureId' : "WFS-pL50LSJxandzXK8e0ZLCSTEBYy.JTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZq4ZMmro15fPffyyX9_bLy78tPTDi2ZYmlsy9suyp54ZamZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNbbp589O7PUy.Oldn_Q_33_R_wX_R_wP_R_wf_R_wX_R_wP_R_wX_Q_2X_R_wf_Q_2v_R_wTK278mXZXVo08tmHbfy9eW_fw4Yb_DTu6Ya3uGHZf568O7Jp3Ye2nCyuGHlh21rVMu3hl5YenXllrS57t_fJl4dNDc59N_LLk49cvLzf05K2I2_llx4efSpl59Gh007ctPpl4TNDpp25bW_dlrGq1IYA",
                 'groupId' : "1-1",
                 'metadata' : {
                                'boundingBox' : {
@@ -29,11 +29,11 @@ Global data object:
                              },
                 'paramList' : [
                                 {
-                                  'featureId' : "WFS-LkT3huk7Y_tExNxv3g_GmG94DgGJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZq4ZMmro15fPffyyX9_bLy78tPTDi2ZYmlsy9suyp54ZamZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNbbp589O7PUy.Oldn_Q_33_R_wX_R_wP_R_wf_R_wX_R_wP_R_wX_Q_2X_R_wf_Q_2v_R_wTK278mXZXVo08tmHbfy9eW_fw4Yb_DTu6Ya3uGHZf568O7Jp3Ye2nCyuGHlh21rVMu3hl5YenXllbnPpv5ZcnHrl5eb.nJWxG38suPDz6VMvPo0Omnblp9MvCZodNO3La37stY1WpDA-",
+                                  'featureId' : "WFS-8IFfu4Wf_gPiDbWR4qu8EKx4GbqJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZq4ZMmro15fPffyyX9_bLy78tPTDi2ZYmlsy9suyp54ZamZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNbbp589O7PUy.Oldn_Q_33_R_wX_R_wP_R_wf_R_wX_R_wP_R_wX_Q_2X_R_wf_Q_2v_R_wTK278mXZXVo08tmHbfy9eW_fw4Yb_DTu6Ya3uGHZf568O7Jp3Ye2nCyuGHlh21rVMu3hl5YenXllbnPpv5ZcnHrl5eb.nJWxG38suPDz6VMvPo0Omnblp9MvCZodNO3La37stY1WpDA-",
                                   'name' : "Temperature"
                                 },
                                 {
-                                  'featureId' : "WFS-oSpLeBGsclm2daSvylzVTHZ6X2qJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZq4ZMmro15fPffyyX9_bLy78tPTDi2ZYmlsy9suyp54ZamZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNbbp589O7PUy.Oldn_Q_33_R_wX_R_wP_R_wf_R_wX_R_wP_R_wX_Q_2X_R_wf_Q_2v_R_wTK278mXZXVo08tmHbfy9eW_fw4Yb_DTu6Ya3uGHZf568O7Jp3Ye2nCyuGHlh21pc92_vky8Omhuc.m_llyceuXl5v6clbEbfyy48PPpUy8.jQ6aduWn0y8Jmh007ctrfuy1jVakM",
+                                  'featureId' : "WFS-Hq6ypafFIQUU5zpnekGEiYOsLtyJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZjZq4ZMmro15fPffyyX9_bLy78tPTDi2ZYmlsy9suyp54ZamZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNbbp589O7PUy.Oldn_Q_33_R_wX_R_wP_R_wf_R_wX_R_wP_R_wX_Q_2X_R_wf_Q_2v_R_wTK278mXZXVo08tmHbfy9eW_fw4Yb_DTu6Ya3uGHZf568O7Jp3Ye2nCyuGHlh21pc92_vky8Omhuc.m_llyceuXl5v6clbEbfyy48PPpUy8.jQ6aduWn0y8Jmh007ctrfuy1jVakM",
                                   'name' : "snowdepth"
                                 }
                               ],

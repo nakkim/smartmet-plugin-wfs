@@ -104,7 +104,7 @@ Config::Config(const string& configfile)
 
     auto* s_fallback_encoding = find_setting(get_root(), "fallbackEncoding", false);
     if (s_fallback_encoding) {
-      fallback_encoding = MultiLanguageString::create(languages.at(0), *s_fallback_encoding);
+      fallback_encoding = SmartMet::Spine::MultiLanguageString::create(languages.at(0), *s_fallback_encoding);
     }
 
     BOOST_FOREACH (std::string& sq_config_dir, sq_config_dirs)

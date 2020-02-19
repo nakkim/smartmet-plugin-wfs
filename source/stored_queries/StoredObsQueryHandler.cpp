@@ -601,7 +601,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           if (not region.empty())
             group["obsStationList"][ind]["region"] = region;
 
-          if (not wmo.empty())
+          if (not wmo.empty() && wmo != "0" && wmo != "NaN")
             group["obsStationList"][ind]["wmo"] = wmo;
 
           (geoid.empty() or geoid == "-1")
