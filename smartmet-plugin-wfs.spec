@@ -25,12 +25,12 @@ BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-spine-devel >= 20.2.13
-BuildRequires: smartmet-library-gis-devel >= 20.2.5
+BuildRequires: smartmet-library-gis-devel >= 20.2.18
 BuildRequires: smartmet-library-locus-devel >= 19.12.4
 BuildRequires: smartmet-library-macgyver-devel >= 20.2.5
 BuildRequires: smartmet-engine-contour-devel >= 19.11.20
 BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
-BuildRequires: smartmet-engine-gis-devel >= 20.1.23
+BuildRequires: smartmet-engine-gis-devel >= 20.2.18
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 20.2.10
 %endif
@@ -45,15 +45,15 @@ Requires: jsoncpp
 Requires: smartmet-library-locus >= 19.12.4
 Requires: smartmet-library-macgyver >= 20.2.5
 Requires: smartmet-library-spine >= 20.2.13
-Requires: smartmet-library-gis >= 20.2.5
+Requires: smartmet-library-gis >= 20.2.18
 Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.12.5
-Requires: smartmet-engine-gis >= 20.1.23
+Requires: smartmet-engine-gis >= 20.2.18
 %if %{with observation}
 Requires: smartmet-engine-observation >= 20.2.10
 %endif
 Requires: smartmet-engine-querydata >= 20.1.30
-Requires: smartmet-server >= 20.1.15
+Requires: smartmet-server >= 20.2.13
 Requires: xerces-c
 Requires: xqilla
 Requires: boost-chrono
