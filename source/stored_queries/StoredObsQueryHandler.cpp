@@ -267,7 +267,8 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       BOOST_FOREACH (std::string name, param_names)
       {
         // Is the parameter configured in Observation
-        if (not obs_engine->isParameter(name, query_params.stationtype))
+        if (not (obs_engine->isParameter(name, query_params.stationtype)
+		 or obs_engine->isSpecialParameter(name)))
         {
           SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
@@ -290,7 +291,8 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       // int last_qc_param = 0;
       BOOST_FOREACH (std::string name, qc_info_param_names)
       {
-        if (not obs_engine->isParameter(name, query_params.stationtype))
+        if (not obs_engine->isParameter(name, query_params.stationtype)
+	    and not obs_engine->isSpecialParameter(name))
         {
           SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
