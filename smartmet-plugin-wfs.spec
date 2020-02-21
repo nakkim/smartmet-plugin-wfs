@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.2.19
+Version: 20.2.21
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -32,7 +32,7 @@ BuildRequires: smartmet-engine-contour-devel >= 19.11.20
 BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
 BuildRequires: smartmet-engine-gis-devel >= 20.2.18
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.2.10
+BuildRequires: smartmet-engine-observation-devel >= 20.2.20
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 20.1.30
 # BuildRequires: postgresql95-libs
@@ -50,7 +50,7 @@ Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.12.5
 Requires: smartmet-engine-gis >= 20.2.18
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.2.10
+Requires: smartmet-engine-observation >= 20.2.20
 %endif
 Requires: smartmet-engine-querydata >= 20.1.30
 Requires: smartmet-server >= 20.2.13
@@ -94,6 +94,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Fri Feb 21 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.2.21-1.fmi
+- Support special parameters fom smartmet-engine-observation
+
 * Wed Feb 19 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.2.19-1.fmi
 - Use SHA1 instead of SHA for generating feature ID
 
