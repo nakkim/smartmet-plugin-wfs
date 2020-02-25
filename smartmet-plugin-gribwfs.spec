@@ -31,11 +31,11 @@ BuildRequires: smartmet-library-macgyver-devel >= 20.2.5
 BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
 BuildRequires: smartmet-engine-contour-devel >= 19.11.20
 BuildRequires: smartmet-engine-gis-devel >= 20.2.18
-BuildRequires: smartmet-engine-grid-devel >= 20.2.19
-BuildRequires: smartmet-library-grid-content-devel >= 20.2.19
-BuildRequires: smartmet-library-grid-files-devel >= 20.2.19
+BuildRequires: smartmet-engine-grid-devel >= 20.2.25
+BuildRequires: smartmet-library-grid-content-devel >= 20.2.25
+BuildRequires: smartmet-library-grid-files-devel >= 20.2.25
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.2.10
+BuildRequires: smartmet-engine-observation-devel >= 20.2.20
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 20.1.30
 # BuildRequires: postgresql95-libs
@@ -52,11 +52,11 @@ Requires: smartmet-library-gis >= 20.2.18
 Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.12.5
 Requires: smartmet-engine-gis >= 20.2.18
-Requires: smartmet-engine-grid >= 20.2.19
-Requires: smartmet-library-grid-content >= 20.2.19
-Requires: smartmet-library-grid-files >= 20.2.19
+Requires: smartmet-engine-grid >= 20.2.25
+Requires: smartmet-library-grid-content >= 20.2.25
+Requires: smartmet-library-grid-files >= 20.2.25
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.2.10
+Requires: smartmet-engine-observation >= 20.2.20
 %endif
 Requires: smartmet-engine-querydata >= 20.1.30
 Requires: smartmet-server >= 20.2.13
