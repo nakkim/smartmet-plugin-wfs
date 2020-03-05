@@ -30,27 +30,6 @@
 
 namespace SmartMet
 {
-inline bool special(const SmartMet::Spine::Parameter& theParam)
-{
-  try
-  {
-    switch (theParam.type())
-    {
-      case SmartMet::Spine::Parameter::Type::Data:
-      case SmartMet::Spine::Parameter::Type::Landscaped:
-        return false;
-      case SmartMet::Spine::Parameter::Type::DataDerived:
-      case SmartMet::Spine::Parameter::Type::DataIndependent:
-        return true;
-    }
-    // ** NOT REACHED **
-    return true;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 /**
  *   @brief Add SmartMet::Spine::Parameter to the vector and return index of freshly appended vector

@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.2.25
+Version: 20.3.5
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -24,16 +24,16 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.2.13
+BuildRequires: smartmet-library-spine-devel >= 20.3.5
 BuildRequires: smartmet-library-gis-devel >= 20.2.18
 BuildRequires: smartmet-library-locus-devel >= 19.12.4
-BuildRequires: smartmet-library-macgyver-devel >= 20.2.5
+BuildRequires: smartmet-library-macgyver-devel >= 20.3.5
 BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
 BuildRequires: smartmet-engine-contour-devel >= 19.11.20
-BuildRequires: smartmet-engine-gis-devel >= 20.2.18
-BuildRequires: smartmet-engine-grid-devel >= 20.2.25
-BuildRequires: smartmet-library-grid-content-devel >= 20.2.25
-BuildRequires: smartmet-library-grid-files-devel >= 20.2.25
+BuildRequires: smartmet-engine-gis-devel >= 20.2.25
+BuildRequires: smartmet-engine-grid-devel >= 20.3.5
+BuildRequires: smartmet-library-grid-content-devel >= 20.3.5
+BuildRequires: smartmet-library-grid-files-devel >= 20.3.5
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 20.2.20
 %endif
@@ -46,15 +46,15 @@ Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 19.12.4
-Requires: smartmet-library-macgyver >= 20.2.5
-Requires: smartmet-library-spine >= 20.2.13
+Requires: smartmet-library-macgyver >= 20.3.5
+Requires: smartmet-library-spine >= 20.3.5
 Requires: smartmet-library-gis >= 20.2.18
 Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.12.5
-Requires: smartmet-engine-gis >= 20.2.18
-Requires: smartmet-engine-grid >= 20.2.25
-Requires: smartmet-library-grid-content >= 20.2.25
-Requires: smartmet-library-grid-files >= 20.2.25
+Requires: smartmet-engine-gis >= 20.2.25
+Requires: smartmet-engine-grid >= 20.3.5
+Requires: smartmet-library-grid-content >= 20.3.5
+Requires: smartmet-library-grid-files >= 20.3.5
 %if %{with observation}
 Requires: smartmet-engine-observation >= 20.2.20
 %endif
@@ -100,6 +100,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Mar  5 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.3.5-1.fmi
+- Use ParameterTools from smartmet-library-spine (part 1)
+
 * Tue Feb 25 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.25-1.fmi
 - Repackaged due to base library API changes
 

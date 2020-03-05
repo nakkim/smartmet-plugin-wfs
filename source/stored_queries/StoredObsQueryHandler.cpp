@@ -9,6 +9,7 @@
 #include <macgyver/StringConversion.h>
 #include <smartmet/spine/Convenience.h>
 #include <smartmet/spine/Exception.h>
+#include <smartmet/spine/ParameterTools.h>
 #include <smartmet/spine/TimeSeries.h>
 #include <smartmet/spine/TimeSeriesOutput.h>
 #include <smartmet/spine/Value.h>
@@ -268,7 +269,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       {
         // Is the parameter configured in Observation
         if (not (obs_engine->isParameter(name, query_params.stationtype)
-		 or obs_engine->isSpecialParameter(name)))
+		 or SmartMet::Spine::is_special_parameter(name)))
         {
           SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
@@ -276,13 +277,13 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           throw exception;
         }
 
-        SmartMet::Spine::Parameter param = obs_engine->makeParameter(name);
+        SmartMet::Spine::Parameter param = SmartMet::Spine::makeParameter(name);
         query_params.parameters.push_back(param);
         int ind = query_params.parameters.size() - 1;
         if (first_param == 0)
           first_param = ind;
         last_param = ind;
-        if (!special(param))
+        if (!SmartMet::Spine::special(param))
           have_meteo_param = true;
       }
 
@@ -292,7 +293,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       BOOST_FOREACH (std::string name, qc_info_param_names)
       {
         if (not obs_engine->isParameter(name, query_params.stationtype)
-	    and not obs_engine->isSpecialParameter(name))
+	    and not is_special_parameter(name))
         {
           SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
@@ -300,7 +301,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           throw exception;
         }
 
-        SmartMet::Spine::Parameter param = obs_engine->makeParameter(name);
+        SmartMet::Spine::Parameter param = SmartMet::Spine::makeParameter(name);
         query_params.parameters.push_back(param);
         int ind = query_params.parameters.size() - 1;
         if (first_qc_param == 0)
