@@ -1,8 +1,9 @@
 #pragma once
 
-#include "MultiLanguageString.h"
-#include "MultiLanguageStringArray.h"
+#include <set>
 #include <spine/ConfigBase.h>
+#include <spine/MultiLanguageString.h>
+#include <spine/MultiLanguageStringArray.h>
 #include <libconfig.h++>
 #include <ctpp2/CDT.hpp>
 
@@ -17,18 +18,18 @@ namespace WFS
   {
     struct Phone
     {
-      SmartMet::Plugin::WFS::MultiLanguageStringP voice;
-      SmartMet::Plugin::WFS::MultiLanguageStringP fax;
+      SmartMet::Spine::MultiLanguageStringP voice;
+      SmartMet::Spine::MultiLanguageStringP fax;
     };
 
     struct Address
     {
-      SmartMet::Plugin::WFS::MultiLanguageStringP deliveryPoint;
-      SmartMet::Plugin::WFS::MultiLanguageStringP city;
-      SmartMet::Plugin::WFS::MultiLanguageStringP area;
-      SmartMet::Plugin::WFS::MultiLanguageStringP postalCode;
-      SmartMet::Plugin::WFS::MultiLanguageStringP country;
-      SmartMet::Plugin::WFS::MultiLanguageStringP email;
+      SmartMet::Spine::MultiLanguageStringP deliveryPoint;
+      SmartMet::Spine::MultiLanguageStringP city;
+      SmartMet::Spine::MultiLanguageStringP area;
+      SmartMet::Spine::MultiLanguageStringP postalCode;
+      SmartMet::Spine::MultiLanguageStringP country;
+      SmartMet::Spine::MultiLanguageStringP email;
     };
 
   public:
@@ -40,18 +41,25 @@ namespace WFS
 
     void apply(CTPP::CDT& hash, const std::string& language) const;
 
+    const std::set<std::string>& get_supported_formats() const { return supportedFormats; }
+
+    void add_output_format(const std::string& text);
+
+    static std::string conv_output_format_str(const std::string& src);
+
  private:
-  SmartMet::Plugin::WFS::MultiLanguageStringP title;
-  SmartMet::Plugin::WFS::MultiLanguageStringP abstract;
-  SmartMet::Plugin::WFS::MultiLanguageStringArray::Ptr keywords;
-  SmartMet::Plugin::WFS::MultiLanguageStringP fees;
-  SmartMet::Plugin::WFS::MultiLanguageStringP providerName;
-  SmartMet::Plugin::WFS::MultiLanguageStringP providerSite;
+  SmartMet::Spine::MultiLanguageStringP title;
+  SmartMet::Spine::MultiLanguageStringP abstract;
+  SmartMet::Spine::MultiLanguageStringArray::Ptr keywords;
+  SmartMet::Spine::MultiLanguageStringP fees;
+  SmartMet::Spine::MultiLanguageStringP providerName;
+  SmartMet::Spine::MultiLanguageStringP providerSite;
   std::shared_ptr<Address> address;
   std::shared_ptr<Phone> phone;
-  SmartMet::Plugin::WFS::MultiLanguageStringP accessConstraints;
-  SmartMet::Plugin::WFS::MultiLanguageStringP onlineResource;
-  SmartMet::Plugin::WFS::MultiLanguageStringP contactInstructions;
+  SmartMet::Spine::MultiLanguageStringP accessConstraints;
+  SmartMet::Spine::MultiLanguageStringP onlineResource;
+  SmartMet::Spine::MultiLanguageStringP contactInstructions;
+  std::set<std::string> supportedFormats;
 };
 
 } // namespace WFS

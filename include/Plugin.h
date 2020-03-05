@@ -82,7 +82,7 @@ class Plugin
 
   void updateLoop();
 
-  void startUpdateLoop();
+  void ensureUpdateLoopStarted();
   void stopUpdateLoop();
 
  private:

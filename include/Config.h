@@ -14,6 +14,7 @@
 #include <boost/utility.hpp>
 #include <engines/gis/CRSRegistry.h>
 #include <spine/ConfigBase.h>
+#include <spine/MultiLanguageString.h>
 #include <libconfig.h++>
 #include <string>
 #include <vector>
@@ -73,6 +74,8 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
 
   void read_typename_config(std::map<std::string, std::string>& typename_storedqry);
 
+  std::string guess_fallback_encoding(const std::string& language) const;
+
  private:
   void read_capabilities_config();
   void read_admin_cred();
@@ -98,6 +101,7 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   bool enable_test_queries;
   bool enable_configuration_polling;
   bool sq_restrictions;
+  SmartMet::Spine::MultiLanguageStringP fallback_encoding;
   CapabilitiesConf capabilities_conf;
 
   /**

@@ -18,7 +18,7 @@ bw::Request::DescribeFeatureType::DescribeFeatureType(
     const std::string& language,
     const std::vector<std::pair<std::string, std::string> >& type_names,
     const PluginImpl& plugin_impl)
-    : RequestBase(language), type_names(type_names), plugin_impl(plugin_impl)
+  : RequestBase(language, plugin_impl), type_names(type_names)
 {
 }
 
@@ -157,7 +157,7 @@ bw::Request::DescribeFeatureType::create_from_kvp(
     auto format = http_request.getParameter("outputformat");
     if (format)
     {
-      check_output_format_attribute(*format);
+      check_output_format_attribute(*format, plugin_impl);
     }
 
     std::vector<std::string> type_params;
@@ -207,6 +207,9 @@ bw::Request::DescribeFeatureType::create_from_xml(const std::string& language,
     boost::shared_ptr<bw::Request::DescribeFeatureType> result;
     const xercesc::DOMElement* root = bw::RequestBase::get_xml_root(document);
     std::vector<std::pair<std::string, std::string> > type_names;
+
+    check_output_format_attribute(root, plugin_impl);
+
     std::vector<xercesc::DOMElement*> elems =
         bwx::get_child_elements(*root, WFS_NAMESPACE_URI, "TypeName");
     BOOST_FOREACH (const xercesc::DOMElement* elem, elems)

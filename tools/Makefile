@@ -1,41 +1,34 @@
-CXX = g++
+PREFIX ?= /usr
 
-CXXFLAGS = -O2 -Wall -Wextra -Werror -g -std=c++11
-LIBS = -lboost_serialization -lboost_filesystem -lboost_system -lxerces-c -lcurl -lcrypto
+processor := $(shell uname -p)
 
-TARGETS = XMLGrammarPoolDump XMLGrammarPool.dump XSDCacheAdd
+ifeq ($(processor), x86_64)
+  libdir = $(PREFIX)/lib64
+else
+  libdir = $(PREFIX)/lib
+endif
 
-XML_REQUEST_SAMPLES = $(wildcard xml_samples/request/*.xml)
-XML_RESPONSE_SAMPLES = $(patsubst xml_samples/request/%.xml,xml_samples/response/%.xml,$(XML_REQUEST_SAMPLES))
-XML_SAMPLES = $(XML_REQUEST_SAMPLES) $(XML_RESPONSE_SAMPLES)
+includedir = $(PREFIX)/include
 
-all:	$(TARGETS)
+-include $(HOME)/.smartmet.mk
+GCC_DIAG_COLOR ?= always
+CXX_STD ?= c++11
+
+TARGETS = decode_feature_id
+
+CFLAGS := -DUNIX -std=$(CXX_STD) -I ../include -I $(includedir)/smartmet \
+	-O2 -Wall -Wextra -Wno-unused-parameter
+DECODE_FEATURE_ID_LIBS := -L $(libdir)/smartmet -lsmartmet-spine -lsmartmet-macgyver \
+	-lboost_date_time -lcrypto
+
+all: $(TARGETS)
 
 clean:
 	rm -f $(TARGETS)
-	rm -rf xml_schemas
-	rm -vf XMLGrammarPoolDump.*.log
-	rm -rf xml_samples/response
 
-s-update-responses:
-	( cd xml_samples && ./PerformQueries.sh )
-
-XMLGrammarPoolDump: 	XMLGrammarPoolDump.cpp
-	$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS)
-
-XSDCacheAdd: XSDCacheAdd.cpp
-	$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS)
-
-XMLGrammarPool.dump:	s-update-responses XMLGrammarPoolDump
-	rm -rf xml_schemas
-	rm -f XMLGrammarPool.dump
-	done=false; \
-	for x in $(shell seq 1 5) ; do \
-		if ! $$done ; then \
-			./XMLGrammarPoolDump -o $@ \
-				$$(case $$x in 1) echo -s XMLSchemas.cache ;; *) echo -i XMLGrammarPool.dump ;; esac) \
-				-w xml_schemas $(XML_SAMPLES) | tee XMLGrammarPoolDump.$$x.log; \
-			grep -q -e '##\ \ *Resolving' XMLGrammarPoolDump.$$x.log || done=true; \
-		fi; \
-	done; \
-	$$done;
+decode_feature_id: decode_feature_id.cpp \
+		../include/FeatureID.h ../source/FeatureID.cpp \
+		../include/BStream.h ../source/BStream.cpp
+	g++ $(CFLAGS) -o $@ \
+		decode_feature_id.cpp ../source/FeatureID.cpp ../source/BStream.cpp \
+		$(DECODE_FEATURE_ID_LIBS)

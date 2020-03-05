@@ -13,7 +13,7 @@ namespace bwx = SmartMet::Plugin::WFS::Xml;
 using SmartMet::Plugin::WFS::Request::GetCapabilities;
 
 GetCapabilities::GetCapabilities(const std::string& language, const PluginImpl& plugin_impl)
-    : RequestBase(language), plugin_impl(plugin_impl)
+  : RequestBase(language, plugin_impl)
 {
   try
   {

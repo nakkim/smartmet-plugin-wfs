@@ -1,11 +1,14 @@
 #include "CapabilitiesConf.h"
 #include <set>
+#include <spine/ConfigBase.h>
 #include <spine/Convenience.h>
 #include <spine/Exception.h>
 #include <boost/algorithm/string.hpp>
 
 using SmartMet::Spine::Exception;
 using SmartMet::Plugin::WFS::CapabilitiesConf;
+
+namespace ba = boost::algorithm;
 
 namespace
 {
@@ -36,43 +39,43 @@ namespace
     }
   }
 
-  SmartMet::Plugin::WFS::MultiLanguageStringP
+  SmartMet::Spine::MultiLanguageStringP
   get_ml_string(libconfig::Setting* parent,
 		const std::string& name,
 		const std::string& default_language)
   {
     try {
-      SmartMet::Plugin::WFS::MultiLanguageStringP result;
+      SmartMet::Spine::MultiLanguageStringP result;
       libconfig::Setting* setting = get_setting(parent, name);
       if (setting) {
-	result = SmartMet::Plugin::WFS::MultiLanguageString::create(default_language, *setting);
+	result = SmartMet::Spine::MultiLanguageString::create(default_language, *setting);
       }
       return result;
     } catch (...) {
-      throw SmartMet::Spine::Exception(BCP, "Failed to parse SmartMet::Plugin::WFS::MultiLanguageString")
+      throw SmartMet::Spine::Exception(BCP, "Failed to parse SmartMet::Spine::MultiLanguageString")
 	.addParameter("name", name);
     }
   }
 
-  SmartMet::Plugin::WFS::MultiLanguageStringArray::Ptr
+  SmartMet::Spine::MultiLanguageStringArray::Ptr
   get_ml_string_array(libconfig::Setting* parent,
 		      const std::string& name,
 		      const std::string& default_language)
   {
     try {
-      SmartMet::Plugin::WFS::MultiLanguageStringArray::Ptr result;
+      SmartMet::Spine::MultiLanguageStringArray::Ptr result;
       libconfig::Setting* setting = get_setting(parent, name);
       if (setting) {
-	result = SmartMet::Plugin::WFS::MultiLanguageStringArray::create(default_language, *setting);
+	result = SmartMet::Spine::MultiLanguageStringArray::create(default_language, *setting);
       }
       return result;
     } catch (...) {
-      throw SmartMet::Spine::Exception(BCP, "Failed to parse SmartMet::Plugin::WFS::MultiLanguageStringArray")
+      throw SmartMet::Spine::Exception(BCP, "Failed to parse SmartMet::Spine::MultiLanguageStringArray")
 	.addParameter("name", name);
     }
   }
 
-  void put(CTPP::CDT& dest, const std::string& name, SmartMet::Plugin::WFS::MultiLanguageStringP value,
+  void put(CTPP::CDT& dest, const std::string& name, SmartMet::Spine::MultiLanguageStringP value,
 	   const std::string& language)
   {
     if (value) {
@@ -80,7 +83,7 @@ namespace
     }
   }
 
-  void put(CTPP::CDT& dest, const std::string& name, SmartMet::Plugin::WFS::MultiLanguageStringArray::Ptr value,
+  void put(CTPP::CDT& dest, const std::string& name, SmartMet::Spine::MultiLanguageStringArray::Ptr value,
 	   const std::string& language)
   {
     if (value) {
@@ -96,6 +99,11 @@ namespace
 
 CapabilitiesConf::CapabilitiesConf()
 {
+  // Default supported foprmats
+  supportedFormats.insert("text/xml; subtype=gml/3.2");
+  supportedFormats.insert("text/xml; version=3.2");
+  supportedFormats.insert("application/gml+xml; subtype=gml/3.2");
+  supportedFormats.insert("application/gml+xml; version=3.2");
 }
 
 CapabilitiesConf::~CapabilitiesConf()
@@ -104,12 +112,13 @@ CapabilitiesConf::~CapabilitiesConf()
 
 void CapabilitiesConf::parse(const std::string& default_language, libconfig::Setting& setting)
 {
+  using namespace SmartMet::Spine;
   try
   {
     std::vector<std::string> unknown;
     checkSettings("", &setting, {"title", "abstract", "keywords", "fees", "providerName",
 	  "providerSite", "phone", "address", "accessConstraints", "onlineResource",
-	  "contactInstructions"}, unknown);
+	  "contactInstructions", "outputFormats"}, unknown);
     title = get_ml_string(&setting, "title", default_language);
     abstract = get_ml_string(&setting, "abstract", default_language);
     keywords = get_ml_string_array(&setting, "keywords", default_language);
@@ -149,10 +158,60 @@ void CapabilitiesConf::parse(const std::string& default_language, libconfig::Set
 		<< boost::algorithm::join(unknown, std::string(", "))
 		<< std::endl;
     }
+
+    auto* s_formats = get_setting(&setting, "outputFormats");
+    if (s_formats) {
+      supportedFormats.clear();
+      std::set<std::string> fmts;
+      switch (s_formats->getType()) {
+      case libconfig::Setting::TypeString:
+	fmts.insert(ba::to_lower_copy(std::string(s_formats->c_str())));
+	break;
+      case libconfig::Setting::TypeArray:
+	std::cout << "length=" << s_formats->getLength() << std::endl;
+	for (auto i = 0; i < s_formats->getLength(); i++) {
+	  const std::string str = (*s_formats)[i];
+	  fmts.insert(ba::to_lower_copy(str));
+	}
+	if (fmts.empty()) {
+	  throw Exception::Trace(BCP, "Empty array not accepted as value of outputFormats");
+	}
+	break;
+      default:
+	do {
+	  std::ostringstream item;
+	  ConfigBase::dump_setting(item, *s_formats, 10);
+	  throw Exception::Trace(BCP, "Incorrect value of configuration entry outputFormats")
+	    .addDetail(item.str());
+	} while (false);
+	break;
+      }
+
+      for (const auto& item : fmts) {
+	const std::string str = conv_output_format_str(item);
+	supportedFormats.insert(str);
+      }
+    }
   }
   catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+void CapabilitiesConf::add_output_format(const std::string& text)
+{
+  supportedFormats.insert(conv_output_format_str(text));
+}
+
+std::string CapabilitiesConf::conv_output_format_str(const std::string& src)
+{
+  std::vector<std::string> w;
+  ba::split(w, src, ba::is_any_of(";"));
+  if (w.size() == 2) {
+    return ba::trim_copy(w[0]) + "; " + ba::trim_copy(w[1]);
+  } else {
+    return src;
   }
 }
 
@@ -180,4 +239,9 @@ void CapabilitiesConf::apply(CTPP::CDT& hash, const std::string& language) const
   put(hash, "accessConstraints", accessConstraints, language);
   put(hash, "onlineResource", onlineResource, language);
   put(hash, "contactInstructions", contactInstructions, language);
+
+  CTPP::CDT& oFmt = hash["supportedFormats"];
+  for (auto item : supportedFormats) {
+    oFmt[oFmt.Size()] = item;
+  }
 }

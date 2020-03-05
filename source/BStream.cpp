@@ -12,6 +12,7 @@ namespace bw = SmartMet::Plugin::WFS;
 
 using bw::IBStream;
 using bw::OBStream;
+namespace pt = boost::posix_time;
 
 namespace SmartMet
 {
@@ -227,15 +228,31 @@ void OBStream::put_ptime(const boost::posix_time::ptime& tm)
   {
     const auto d = tm.date();
     const long sec = tm.time_of_day().total_seconds();
-    // FIXME: support non time values
-    put_bit(1);  // For support of non-time values in the future
-    put_int(d.year());
-    put_unsigned(d.month());
-    put_unsigned(d.day());
-    put_bit(sec != 0);
-    if (sec)
-    {
-      put_unsigned(sec);
+    if (tm.is_special()) {
+      put_bit(0);
+      if (tm.is_not_a_date_time()) {
+	put_bit(0);
+      } else {
+	put_bit(1);
+	if (tm.is_neg_infinity()) {
+	  put_bit(0);
+	} else if (tm.is_pos_infinity()) {
+	  put_bit(1);
+	} else {
+	  throw SmartMet::Spine::Exception::Trace(BCP, "Not supported special time value '"
+						  + pt::to_simple_string(tm));
+	}
+      }
+    } else {
+      put_bit(1);  // For support of non-time values in the future
+      put_int(d.year());
+      put_unsigned(d.month());
+      put_unsigned(d.day());
+      put_bit(sec != 0);
+      if (sec)
+	{
+	  put_unsigned(sec);
+	}
     }
   }
   catch (...)
@@ -524,6 +541,15 @@ boost::posix_time::ptime IBStream::get_ptime()
     }
     else
     {
+      if (get_bit()) {
+	if (get_bit()) {
+	  return pt::pos_infin;
+	} else {
+	  return pt::neg_infin;
+	}
+      } else {
+	return pt::not_a_date_time;
+      }
       throw SmartMet::Spine::Exception(BCP, "Special time values are not yet supported");
     }
   }

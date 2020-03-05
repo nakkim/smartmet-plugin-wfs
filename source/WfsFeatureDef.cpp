@@ -32,10 +32,10 @@ bw::WfsFeatureDef::WfsFeatureDef(SmartMet::Engine::Gis::CRSRegistry& crs_registr
     }
 
     auto& s1 = config->get_mandatory_config_param<libconfig::Setting&>(setting, "title");
-    title = bw::MultiLanguageString::create(default_language, s1);
+    title = SmartMet::Spine::MultiLanguageString::create(default_language, s1);
 
     auto& s2 = config->get_mandatory_config_param<libconfig::Setting&>(setting, "abstract");
-    abstract = bw::MultiLanguageString::create(default_language, s2);
+    abstract = SmartMet::Spine::MultiLanguageString::create(default_language, s2);
 
     auto crs = config->get_mandatory_config_param<std::string>(setting, "defaultCRS");
     default_crs_url = resolve_crs_url(crs, crs_registry);

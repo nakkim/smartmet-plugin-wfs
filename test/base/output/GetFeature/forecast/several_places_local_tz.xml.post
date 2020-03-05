@@ -5,7 +5,7 @@ Global data object:
    groups = [
               {
                 'dataOriginTime' : "2008-08-05T06:31:00Z",
-                'featureId' : "WFS-Jfrc8N.2JRaaomXhen48Fbfz4gmJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZzJsxaNHDGs5k2bNmLlzWY2auGTJq6NeXz338sl_f2y8u_LT0w4tmWJpbMvbLsqeeGWpmbN.PDsy1qZtN.NJXdemZw1tuHxE08.mHdjy0rV0IDW26efPTuz1MvjpWNuw7mVt35MuyurRp5bMO2_l68t._hww3.Gnd0w1vcMOy_z14d2TTuw9tOFlcMPLDtrWqZdvDLyw9OvLLWlz3b..TLw6aG5z6b.WXJx65eXm_pyVsRt_LLjw8.lTLz6NDpp25afTLwmaHTTty2t.7LWVs348OwA-",
+                'featureId' : "WFS-EDe.PUfgp0WlLQPBfygZwFwD.PyJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZzJsxaNHDGs5k2bNmLlzWY2auGTJq6NeXz338sl_f2y8u_LT0w4tmWJpbMvbLsqeeGWpmbN.PDsy1qZtN.NJXdemZw1tuHxE08.mHdjy0rV0IDW26efPTuz1MvjpWNuw7mVt35MuyurRp5bMO2_l68t._hww3.Gnd0w1vcMOy_z14d2TTuw9tOFlcMPLDtrWqZdvDLyw9OvLLWlz3b..TLw6aG5z6b.WXJx65eXm_pyVsRt_LLjw8.lTLz6NDpp25afTLwmaHTTty2t.7LWVs348OwA-",
                 'groupId' : "1-1",
                 'metadata' : {
                                'boundingBox' : {
@@ -29,11 +29,11 @@ Global data object:
                              },
                 'paramList' : [
                                 {
-                                  'featureId' : "WFS-3dJpcUwze.d5tdo4PGBz6k5qbJqJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZzJsxaNHDGs5k2bNmLlzWY2auGTJq6NeXz338sl_f2y8u_LT0w4tmWJpbMvbLsqeeGWpmbN.PDsy1qZtN.NJXdemZw1tuHxE08.mHdjy0rV0IDW26efPTuz1MvjpWNuw7mVt35MuyurRp5bMO2_l68t._hww3.Gnd0w1vcMOy_z14d2TTuw9tOFlcMPLDtrWqZdvDLyw9OvLK3OfTfyy5OPXLy839OStiNv5ZceHn0qZefRodNO3LT6ZeEzQ6aduW1v3Zaytm_Hh2AA-",
+                                  'featureId' : "WFS-GQCBB8almRJqlTEVEO.D2.k7pZuJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZzJsxaNHDGs5k2bNmLlzWY2auGTJq6NeXz338sl_f2y8u_LT0w4tmWJpbMvbLsqeeGWpmbN.PDsy1qZtN.NJXdemZw1tuHxE08.mHdjy0rV0IDW26efPTuz1MvjpWNuw7mVt35MuyurRp5bMO2_l68t._hww3.Gnd0w1vcMOy_z14d2TTuw9tOFlcMPLDtrWqZdvDLyw9OvLK3OfTfyy5OPXLy839OStiNv5ZceHn0qZefRodNO3LT6ZeEzQ6aduW1v3Zaytm_Hh2AA-",
                                   'name' : "Temperature"
                                 },
                                 {
-                                  'featureId' : "WFS-gN1f4Tq.bceU7yvNWoEiC9FjA.mJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZzJsxaNHDGs5k2bNmLlzWY2auGTJq6NeXz338sl_f2y8u_LT0w4tmWJpbMvbLsqeeGWpmbN.PDsy1qZtN.NJXdemZw1tuHxE08.mHdjy0rV0IDW26efPTuz1MvjpWNuw7mVt35MuyurRp5bMO2_l68t._hww3.Gnd0w1vcMOy_z14d2TTuw9tOFlcMPLDtrS57t_fJl4dNDc59N_LLk49cvLzf05K2I2_llx4efSpl59Gh007ctPpl4TNDpp25bW_dlrK2b8eHYA",
+                                  'featureId' : "WFS-pBAxgqP7.76WQHNv2n4sHqSNyoSJTowrEbfyy48PPpUy8.kLSxZc.ndU07ctrj6FQlYJqoTGx8udakWhTjunTRmybM7LuyVNO3La4.hUJxwZtO7JOy4eWXn0rYdmnJIZmfLv05OdZzJsxaNHDGs5k2bNmLlzWY2auGTJq6NeXz338sl_f2y8u_LT0w4tmWJpbMvbLsqeeGWpmbN.PDsy1qZtN.NJXdemZw1tuHxE08.mHdjy0rV0IDW26efPTuz1MvjpWNuw7mVt35MuyurRp5bMO2_l68t._hww3.Gnd0w1vcMOy_z14d2TTuw9tOFlcMPLDtrS57t_fJl4dNDc59N_LLk49cvLzf05K2I2_llx4efSpl59Gh007ctPpl4TNDpp25bW_dlrK2b8eHYA",
                                   'name' : "snowdepth"
                                 }
                               ],

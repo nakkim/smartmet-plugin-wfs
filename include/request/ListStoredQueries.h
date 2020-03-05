@@ -17,8 +17,6 @@ namespace Request
  */
 class ListStoredQueries : public RequestBase
 {
-  const PluginImpl& plugin_impl;
-
  private:
   ListStoredQueries(const std::string& language, const PluginImpl& plugin_impl);
 

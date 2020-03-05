@@ -6,6 +6,7 @@
 #include <macgyver/StringConversion.h>
 #include <smartmet/spine/Convenience.h>
 #include <smartmet/spine/Exception.h>
+#include <smartmet/spine/ParameterTools.h>
 #include <smartmet/spine/Value.h>
 
 namespace bw = SmartMet::Plugin::WFS;
@@ -195,7 +196,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
       int first_param = 0, last_param = 0;
       BOOST_FOREACH (std::string name, param_names)
       {
-        SmartMet::Spine::Parameter param = obs_engine->makeParameter(name);
+        SmartMet::Spine::Parameter param = SmartMet::Spine::makeParameter(name);
         query_params.parameters.push_back(param);
         int ind = query_params.parameters.size() - 1;
         if (first_param == 0)

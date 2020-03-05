@@ -1,4 +1,5 @@
 #include "RequestBase.h"
+#include "PluginImpl.h"
 #include "QueryBase.h"
 #include "WfsConst.h"
 #include "WfsException.h"
@@ -14,8 +15,11 @@ namespace bwx = SmartMet::Plugin::WFS::Xml;
 
 namespace ba = boost::algorithm;
 
-bw::RequestBase::RequestBase(const std::string& language)
-    : language(language), soap_request(false), status(SmartMet::Spine::HTTP::not_a_status)
+bw::RequestBase::RequestBase(const std::string& language, const PluginImpl& plugin_impl)
+  : plugin_impl(plugin_impl)
+  , language(language)
+  , soap_request(false)
+  , status(SmartMet::Spine::HTTP::not_a_status)
 {
 }
 
@@ -238,30 +242,64 @@ void bw::RequestBase::check_mandatory_attributes(const xercesc::DOMDocument& doc
   }
 }
 
-void bw::RequestBase::check_output_format_attribute(const std::string& value)
+void bw::RequestBase::check_output_format_attribute(const std::string& value, const PluginImpl& plugin_impl)
 {
   try
   {
     namespace ba = boost::algorithm;
 
-    std::vector<std::string> w;
-    ba::split(w, value, ba::is_any_of(";"));
-    if ((w.size() != 2) or
-        (Fmi::ascii_tolower_copy(ba::trim_copy(w[0])) != "application/gml+xml") or
-        (Fmi::ascii_tolower_copy(ba::trim_copy(w[1])) != "version=3.2"))
-    {
-      std::ostringstream msg;
-      msg << "Unsupported output format '" << value
-          << "' ('application/gml+xml; version=3.2' expected)";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
-      exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+    const auto& fmts = plugin_impl.get_config().get_capabilities_config().get_supported_formats();
+    std::string fmt = CapabilitiesConf::conv_output_format_str(value);
+    if (fmts.count(fmt) == 0) {
+      // Something wrong with format
+      report_incorrect_output_format(fmt, plugin_impl);
     }
   }
   catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
+}
+
+void bw::RequestBase::check_output_format_attribute(const xercesc::DOMElement* root,
+						    const PluginImpl& plugin_impl)
+{
+  try
+  {
+    namespace ba = boost::algorithm;
+    const auto& fmts = plugin_impl.get_config().get_capabilities_config().get_supported_formats();
+    const auto attrInfo = bwx::get_attr(*root, WFS_NAMESPACE_URI, "outputFormat");
+    if (attrInfo.second) {
+      const std::string fmt = CapabilitiesConf::conv_output_format_str(attrInfo.first);
+      if (fmts.count(fmt) == 0) {
+	// Something wrong with format
+	report_incorrect_output_format(fmt, plugin_impl);
+      }
+    }
+  }
+  catch (...)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+void bw::RequestBase::report_incorrect_output_format(const std::string& value,
+						     const PluginImpl& plugin_impl)
+{
+  const auto& fmts = plugin_impl.get_config().get_capabilities_config().get_supported_formats();
+  std::ostringstream msg;
+  std::string dlm = " ";
+  msg << "Unsupported output format '" << value
+      << "' (One of";
+  for (const auto& item : fmts) {
+    msg << dlm << '\'' << item << '\'';
+    dlm = ", ";
+  }
+  msg << " expected)";
+  std::cout << msg.str();
+  SmartMet::Spine::Exception exception(BCP, msg.str());
+  exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
+  throw exception;
 }
 
 const xercesc::DOMElement* bw::RequestBase::get_xml_root(const xercesc::DOMDocument& document)

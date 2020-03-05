@@ -1,4 +1,0 @@
-GET /wfs?request=GetFeature&storedquery_id=ForecastTest&place=Helsinki&latlons=68.0,25.0&place=Stockholm&begin=2008-08-05T12:00:00Z&end=2008-08-05T18:00:00Z&timestep=60&parameter=temperature HTTP/1.1
-Host: brainstormgw.fmi.fi
-fmi-apikey: foobar
-

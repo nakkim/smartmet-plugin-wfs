@@ -1,4 +1,0 @@
-GET /wfs?service=WFS&version=2.0.0&fmi-apikey=foobar&request=ListStoredQueries HTTP/1.1
-Host: brainstormgw.fmi.fi
-fmi-apikey: foobar
-

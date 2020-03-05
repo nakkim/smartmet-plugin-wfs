@@ -8,6 +8,8 @@
 #include "WfsConst.h"
 #include "WfsException.h"
 #include <boost/bind.hpp>
+#include <json/json.h>
+#include <spine/Convenience.h>
 #include <spine/Exception.h>
 #include <spine/Reactor.h>
 #include <spine/SmartMet.h>
@@ -65,10 +67,8 @@ void Plugin::init()
         }
       }
 
-      stopUpdateLoop();
-
+      ensureUpdateLoopStarted();
       boost::atomic_store(&plugin_impl, new_impl);
-      startUpdateLoop();
     }
     catch (...)
     {
@@ -91,9 +91,9 @@ void Plugin::init()
       addUser(adminCred->first, adminCred->second);
     }
 
-    itsReactor->addContentHandler(this,
-				  "/wfs/admin",
-				  boost::bind(&Plugin::adminHandler, this, _1, _2, _3));
+    itsReactor->addPrivateContentHandler(this,
+					 "/wfs/admin",
+					 boost::bind(&Plugin::adminHandler, this, _1, _2, _3));
   }
   catch (...)
   {
@@ -220,7 +220,20 @@ void Plugin::adminHandler(SmartMet::Spine::Reactor& theReactor,
     const auto operation = theRequest.getParameter("request");
     auto adminCred = impl->get_config().get_admin_credentials();
     if (operation) {
-      if (adminCred and (*operation == "reload")) {
+      if (*operation == "help") {
+	theResponse.setStatus(200);
+	theResponse.setHeader("Content-type", "text/plain");
+	theResponse.setContent
+	  ("WFS Plugin admin request:\n\n"
+	   "Supported requests:\n"
+	   "   help            - this message\n"
+	   "   reload          - reload WFS plugin (requires authentication)\n"
+	   "   xmlSchemaCache  - dump XML schema cache\n"
+	   "   constructors    - dump corespondence between stored query constructor_names,\n"
+	   "                     template_fn and return types (JSON format)\n"
+	   );
+      }
+      else if (adminCred and (*operation == "reload")) {
 	if (authenticateRequest(theRequest, theResponse)) {
 	  bool ok = reload(itsConfig);
 	  theResponse.setStatus(200);
@@ -236,11 +249,17 @@ void Plugin::adminHandler(SmartMet::Spine::Reactor& theReactor,
 	}
       }
       else if (*operation == "xmlSchemaCache") {
-	namespace io = boost::iostreams;
 	std::ostringstream content;
 	impl->dump_xml_schema_cache(content);
 	theResponse.setStatus(200);
 	theResponse.setHeader("Content-type", "application/octet-stream");
+	theResponse.setContent(content.str());
+      }
+      else if (*operation == "constructors") {
+	std::ostringstream content;
+	impl->dump_constructor_map(content);
+	theResponse.setStatus(200);
+	theResponse.setHeader("Content-type", "application/json");
 	theResponse.setContent(content.str());
       }
       else {
@@ -275,10 +294,19 @@ void Plugin::updateLoop()
   {
     while (updateCheck())
     {
+      boost::shared_ptr<PluginImpl> impl;
+
       try
       {
-	auto impl = boost::atomic_load(&plugin_impl);
-	impl->updateStoredQueryMap(itsReactor);
+	impl = boost::atomic_load(&plugin_impl);
+	if (impl
+	    and plugin_impl->get_config().getEnableConfigurationPolling()
+	    and impl->is_reload_required(true))
+	{
+	  bool ok = reload(itsConfig);
+	  std::cout << SmartMet::Spine::log_time_str() << ": [WFS] [INFO] Plugin reload "
+		    << (ok ? "succeeded" : "failed") << std::endl;
+	}
       }
       catch (...)
       {
@@ -293,12 +321,16 @@ void Plugin::updateLoop()
   }
 }
 
-void Plugin::startUpdateLoop()
+void Plugin::ensureUpdateLoopStarted()
 {
-  itsShuttingDown = false;
-  // Begin the update loop if enabled
-  if (plugin_impl->get_config().getEnableConfigurationPolling())
-    itsUpdateLoopThread.reset(new std::thread(std::bind(&Plugin::updateLoop, this)));
+  if (not itsShuttingDown) {
+    itsShuttingDown = false;
+    // Begin the update loop if enabled
+    std::unique_lock<std::mutex> lock(itsUpdateNotifyMutex);
+    if (not itsUpdateLoopThread) {
+      itsUpdateLoopThread.reset(new std::thread(std::bind(&Plugin::updateLoop, this)));
+    }
+  }
 }
 
 void Plugin::stopUpdateLoop()

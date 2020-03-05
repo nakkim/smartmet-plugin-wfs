@@ -7,7 +7,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd">
    <wfs:StoredQuery id="fmi::observations::weather::sounding::multipointcoverage">
-     <wfs:Parameter name="starttime">2019-06-06T120000Z</wfs:Parameter>
+     <wfs:Parameter name="starttime">2019-06-06T000000Z</wfs:Parameter>
      <wfs:Parameter name="endtime">2019-06-06T121500Z</wfs:Parameter>
      <wfs:Parameter name="parameters">TAP_PT1S_avg</wfs:Parameter>
    </wfs:StoredQuery>

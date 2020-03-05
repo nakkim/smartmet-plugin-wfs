@@ -11,10 +11,12 @@
 #include "XmlParser.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/shared_ptr.hpp>
+#include <json/json.h>
 #include <engines/geonames/Engine.h>
 #include <engines/gis/CRSRegistry.h>
 #include <engines/gis/Engine.h>
 #include <engines/querydata/Engine.h>
+#include <macgyver/DirectoryMonitor.h>
 #include <macgyver/TemplateFactory.h>
 #include <macgyver/TimedCache.h>
 
@@ -113,9 +115,13 @@ class PluginImpl : public boost::noncopyable
     return itsTemplateFactory.get(filename);
   }
 
-  void updateStoredQueryMap(Spine::Reactor* theReactor);
+  void updateStoredQueryMap();
 
   void dump_xml_schema_cache(std::ostream& os);
+
+  void dump_constructor_map(std::ostream& os);
+
+  bool is_reload_required(bool reset = false);
 
  private:
   void query(const std::string& language,
@@ -210,7 +216,6 @@ class PluginImpl : public boost::noncopyable
   int debug_level;
   std::string fallback_hostname;
   std::string fallback_protocol;
-
 
   /**
    *   @brief Locked timestamp for testing only

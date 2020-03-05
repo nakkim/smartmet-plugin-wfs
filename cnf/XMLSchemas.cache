@@ -1,4 +1,4 @@
-22 serialization::archive 10 0 0 0 0 205 0 0 0 78 http://inspire.ec.europa.eu/draft-schemas/omop/2.0rc3/ObservableProperties.xsd 20639 <?xml version="1.0" encoding="UTF-8"?>
+22 serialization::archive 16 0 0 0 0 208 0 0 0 78 http://inspire.ec.europa.eu/draft-schemas/omop/2.0rc3/ObservableProperties.xsd 20639 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:omop="http://inspire.ec.europa.eu/schemas/omop/2.0rc3" xmlns:sc="http://www.interactive-instruments.de/ShapeChange/AppInfo" targetNamespace="http://inspire.ec.europa.eu/schemas/omop/2.0rc3" elementFormDefault="qualified" version="2.0rc3">
 	<annotation>
 		<documentation>-- Definition --
@@ -13599,6 +13599,1017 @@ The association has additional properties as defined in the association class An
 		<attributeGroup ref="gml:OwnershipAttributeGroup"/>
 	</complexType>
 </schema>
+ 80 http://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd 46368 <?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:base="http://inspire.ec.europa.eu/schemas/base/3.3" xmlns:base2="http://inspire.ec.europa.eu/schemas/base2/2.0" xmlns:ef="http://inspire.ec.europa.eu/schemas/ef/4.0" xmlns:gml="http://www.opengis.net/gml/3.2" elementFormDefault="qualified" xmlns:om="http://www.opengis.net/om/2.0" targetNamespace="http://inspire.ec.europa.eu/schemas/ef/4.0" version="4.0">
+  <import namespace="http://inspire.ec.europa.eu/schemas/base/3.3" schemaLocation="http://inspire.ec.europa.eu/schemas/base/3.3/BaseTypes.xsd"/>
+  <import namespace="http://inspire.ec.europa.eu/schemas/base2/2.0" schemaLocation="http://inspire.ec.europa.eu/schemas/base2/2.0/BaseTypes2.xsd"/>
+  <import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+  <import namespace="http://www.opengis.net/om/2.0" schemaLocation="http://schemas.opengis.net/om/2.0/observation.xsd"/>
+  <!--XML Schema document created by ShapeChange-->
+  <element abstract="true" name="AbstractMonitoringFeature" substitutionGroup="ef:AbstractMonitoringObject" type="ef:AbstractMonitoringFeatureType">
+    <annotation>
+      <documentation>-- Name --
+abstract monitoring feature
+
+-- Definition --
+An abstract base class for environmental monitoring features in the real world (EnvironmentalMonitoringNetwork, EnvironmentalMonitoringFacility).
+
+-- Description --</documentation>
+    </annotation>
+  </element>
+  <complexType abstract="true" name="AbstractMonitoringFeatureType">
+    <complexContent>
+      <extension base="ef:AbstractMonitoringObjectType">
+        <sequence>
+          <element maxOccurs="unbounded" minOccurs="0" name="reportedTo" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Information on the involvement of the AbstractMonitoringFeature in reporting.</documentation>
+            </annotation>
+            <complexType>
+              <sequence>
+                <element ref="ef:ReportToLegalAct"/>
+              </sequence>
+              <attribute name="nilReason" type="gml:NilReasonType"/>
+            </complexType>
+          </element>
+          <element name="hasObservation" type="om:OM_ObservationPropertyType" nillable="true" minOccurs="0" maxOccurs="unbounded">
+			<annotation>
+			  <documentation>-- Definition --
+Observation of emissions, of the state of environmental media and of other ecosystem parameters (biodiversity, ecological conditions of vegetation, etc.) by or on behalf of public authorities at this AbstractMonitoringFeature.</documentation>
+			</annotation>
+		  </element>
+		  <element maxOccurs="unbounded" minOccurs="0" name="involvedIn" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+EnvironmentalMonitoringActivity(s) in which the AbstractMonitoringFeature is involved.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:uses</reversePropertyName>
+              </appinfo>
+            </annotation>
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="ef:EnvironmentalMonitoringActivity"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="AbstractMonitoringFeaturePropertyType">
+    <sequence minOccurs="0">
+      <element ref="ef:AbstractMonitoringFeature"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element abstract="true" name="AbstractMonitoringObject" substitutionGroup="gml:AbstractFeature" type="ef:AbstractMonitoringObjectType">
+    <annotation>
+      <documentation>-- Name --
+abstract monitoring object
+
+-- Definition --
+An abstract base class for environmental monitoring objects.</documentation>
+    </annotation>
+  </element>
+  <complexType abstract="true" name="AbstractMonitoringObjectType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element name="inspireId" type="base:IdentifierPropertyType">
+            <annotation>
+              <documentation>-- Definition --
+External object identifier.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="name" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Plain text denotation of the AbstractMonitoringObject.</documentation>
+            </annotation>
+            <complexType>
+              <simpleContent>
+                <extension base="string">
+                  <attribute name="nilReason" type="gml:NilReasonType"/>
+                </extension>
+              </simpleContent>
+            </complexType>
+          </element>
+          <element minOccurs="0" name="additionalDescription" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Plain text description of additional information not fitting in other attributes.</documentation>
+            </annotation>
+            <complexType>
+              <simpleContent>
+                <extension base="string">
+                  <attribute name="nilReason" type="gml:NilReasonType"/>
+                </extension>
+              </simpleContent>
+            </complexType>
+          </element>
+          <element maxOccurs="unbounded" name="mediaMonitored" type="gml:ReferenceType">
+            <annotation>
+              <documentation>-- Definition --
+Monitored environmental medium.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="legalBackground" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+The legal context, in which the management and regulation of the AbstractMonitoringObject is defined.</documentation>
+            </annotation>
+            <complexType>
+              <complexContent>
+                <extension base="gml:AbstractMemberType">
+                  <sequence minOccurs="0">
+                    <element ref="base2:LegislationCitation"/>
+                  </sequence>
+                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
+                </extension>
+              </complexContent>
+            </complexType>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="responsibleParty" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Responsible party for the AbstractMonitoringObject.</documentation>
+            </annotation>
+            <complexType>
+              <sequence>
+                <element ref="base2:RelatedParty"/>
+              </sequence>
+              <attribute name="nilReason" type="gml:NilReasonType"/>
+            </complexType>
+          </element>
+          <element minOccurs="0" name="geometry" type="gml:GeometryPropertyType">
+            <annotation>
+              <documentation>-- Definition --
+Geometry associated to the AbstractMonitoringObject.
+For mobile facilities the geometry represents the area the facility is expected to measure in.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="onlineResource" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+A link to an external document providing further information on the AbstractMonitoringObject.</documentation>
+            </annotation>
+            <complexType>
+              <simpleContent>
+                <extension base="anyURI">
+                  <attribute name="nilReason" type="gml:NilReasonType"/>
+                </extension>
+              </simpleContent>
+            </complexType>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="purpose" nillable="true" type="gml:ReferenceType">
+            <annotation>
+              <documentation>-- Definition --
+Reason for which the AbstractMonitoringObject has been generated.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="observingCapability">
+            <annotation>
+              <documentation>-- Definition --
+A link pointing to the explicit capability of an AbstractMonitoringObject. This provides a clean link between the observed property, the procedure used as well as the location of the measurement</documentation>
+            </annotation>
+            <complexType>
+              <complexContent>
+                <extension base="gml:AbstractMemberType">
+                  <sequence minOccurs="0">
+                    <element ref="ef:ObservingCapability"/>
+                  </sequence>
+                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
+                </extension>
+              </complexContent>
+            </complexType>
+          </element>
+          <element minOccurs="0" name="broader" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+A link pointing to a broader AbstractMonitoringObject (a higher level in a hierarchical structure).
+The association has additional
+properties as defined in the
+association class Hierarchy.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:narrower</reversePropertyName>
+              </appinfo>
+            </annotation>
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="ef:Hierarchy"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="narrower" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+A link pointing to narrower AbstractMonitoringObject(s) (a lower level in a hierarchical structure).
+The association has additional
+properties as defined in the
+association class Hierarchy.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:broader</reversePropertyName>
+              </appinfo>
+            </annotation>
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="ef:Hierarchy"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="supersedes" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+In a genealogy, the AbstractMonitoringObject(s) that has(have) been deactivated/replaced by another one.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:supersededBy</reversePropertyName>
+              </appinfo>
+            </annotation>
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="ef:AbstractMonitoringObject"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="supersededBy" type="ef:AbstractMonitoringObjectPropertyType">
+            <annotation>
+              <documentation>-- Definition --
+In a genealogy, the newly active AbstractMonitoringObject(s) that replaces(replace) the superseded one.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:supersedes</reversePropertyName>
+              </appinfo>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="AbstractMonitoringObjectPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ef:AbstractMonitoringObject"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="AnyDomainLink" substitutionGroup="gml:AbstractGML" type="ef:AnyDomainLinkType">
+    <annotation>
+      <documentation>-- Name --
+any domain link
+
+-- Definition --
+Any domain relevant link to an EnvironmentalMonitoringFacility that is not hierarchical or associated with a notion of genealogy.</documentation>
+    </annotation>
+  </element>
+  <complexType name="AnyDomainLinkType">
+    <complexContent>
+      <extension base="gml:AbstractGMLType">
+        <sequence>
+          <element name="comment" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Additional information on the domain link.</documentation>
+            </annotation>
+            <complexType>
+              <simpleContent>
+                <extension base="string">
+                  <attribute name="nilReason" type="gml:NilReasonType"/>
+                </extension>
+              </simpleContent>
+            </complexType>
+          </element>
+          <element name="relatedTo" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Any Thematic Link to an Environmental Monitoring Facility.
+The association has additional properties as defined in the association class AnyDomainLink.</documentation>
+            </annotation>
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="ef:EnvironmentalMonitoringFacility"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="AnyDomainLinkPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ef:AnyDomainLink"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="EnvironmentalMonitoringActivity" substitutionGroup="gml:AbstractFeature" type="ef:EnvironmentalMonitoringActivityType">
+    <annotation>
+      <documentation>-- Name --
+environmental monitoring activity
+
+-- Definition --
+Specific set of AbstractMonitoringFeatures used for a given domain in a coherent and concise timeframe, area and purpose. Usually the information collected is treated as one time step in a long term monitoring programme. It is a concrete realisation of a given EnvironmentalMonitoringProgramme.
+
+-- Description --
+For example a vessel could be equipped with a collection of EnvironmentalMonitoringFacilities for a given campaign (= EnvironmentalMonitoringActivity) fulfilling an EnvironmentalMonitoringProgramme requirements. Then, after a given period this exact same vessel could be equipped with another set of EnvironmentalMonitoringFacilities for another campaign fulfilling another EnvironmentalMonitoringProgramme requirements.</documentation>
+    </annotation>
+  </element>
+  <complexType name="EnvironmentalMonitoringActivityType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element name="activityTime" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Lifespan of the EnvironmentalMonitoringActivity.</documentation>
+            </annotation>
+            <complexType>
+              <complexContent>
+                <extension base="gml:AbstractMemberType">
+                  <sequence minOccurs="0">
+                    <element ref="gml:AbstractTimeObject"/>
+                  </sequence>
+                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
+                </extension>
+              </complexContent>
+            </complexType>
+          </element>
+          <element name="activityConditions" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Textual description of the EnvironmentalMonitoringActivity.</documentation>
+            </annotation>
+            <complexType>
+              <simpleContent>
+                <extension base="string">
+                  <attribute name="nilReason" type="gml:NilReasonType"/>
+                </extension>
+              </simpleContent>
+            </complexType>
+          </element>
+          <element minOccurs="0" name="boundingBox" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Bounding box in which the EnvironmentalMonitoringActivity takes place. 
+
+-- Description --
+EXAMPLE: If a research vessel has several monitoring activities (EnvironmentalMonitoringActivity) one wants to know where he cruised for each of those (EnvironmentaMonitoringActivity).</documentation>
+            </annotation>
+          </element>
+          <element name="responsibleParty" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Responsible party for the EnvironmentalMonitoringActivity.</documentation>
+            </annotation>
+            <complexType>
+              <sequence>
+                <element ref="base2:RelatedParty"/>
+              </sequence>
+              <attribute name="nilReason" type="gml:NilReasonType"/>
+            </complexType>
+          </element>
+          <element name="inspireId" type="base:IdentifierPropertyType">
+            <annotation>
+              <documentation>-- Definition --
+External object identifier.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="onlineResource" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+A link to an external document providing further information on the EnvironmentalMonitoringActivity.</documentation>
+            </annotation>
+            <complexType>
+              <simpleContent>
+                <extension base="anyURI">
+                  <attribute name="nilReason" type="gml:NilReasonType"/>
+                </extension>
+              </simpleContent>
+            </complexType>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="setUpFor" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+EnvironmentalMonitoringProgramme(s) for which the EnvironmentalMonitoringActivity is set up.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:triggers</reversePropertyName>
+              </appinfo>
+            </annotation>
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="ef:EnvironmentalMonitoringProgramme"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="uses" type="ef:AbstractMonitoringFeaturePropertyType">
+            <annotation>
+              <documentation>-- Definition --
+Specific set of AbstractMonitoringFeature(s) involved in an EnvironmentalMonitoringActivity.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:involvedIn</reversePropertyName>
+              </appinfo>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="EnvironmentalMonitoringActivityPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ef:EnvironmentalMonitoringActivity"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="EnvironmentalMonitoringFacility" substitutionGroup="ef:AbstractMonitoringFeature" type="ef:EnvironmentalMonitoringFacilityType">
+    <annotation>
+      <documentation>-- Name --
+environmental monitoring facility
+
+-- Definition --
+A georeferenced object directly collecting or processing data about objects whose properties (e.g. physical, chemical, biological or other aspects of environmental conditions) are repeatedly observed or measured. An environmental monitoring facility can also host other environmental monitoring facilities.
+
+-- Description --
+NOTE 1: An EnvironmentalMonitoringFacility is not a facility in the common INSPIRE sense realised by the Generic Conceptual Model class ActivtiyComplex.
+
+NOTE 2: Laboratories are not EnvironmentalMonitoringFacilities from an INSPIRE perspective as the exact location of the laboratory does not add further information to the measurement. 
+The methodology used in the laboratory should be provided with observational data.</documentation>
+    </annotation>
+  </element>
+  <complexType name="EnvironmentalMonitoringFacilityType">
+    <complexContent>
+      <extension base="ef:AbstractMonitoringFeatureType">
+        <sequence>
+          <element minOccurs="0" name="representativePoint" nillable="true" type="gml:PointPropertyType">
+            <annotation>
+              <documentation>-- Definition --
+Representative location for the EnvironmentalMonitoringFacility.
+
+-- Description --</documentation>
+            </annotation>
+          </element>
+          <element name="measurementRegime" nillable="true" type="gml:ReferenceType">
+            <annotation>
+              <documentation>-- Definition --
+Regime of the measurement</documentation>
+            </annotation>
+          </element>
+          <element name="mobile" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Indicate whether the EnvironmentalMonitoringFacility is mobile (repositionable) during the acquisition of the observation.</documentation>
+            </annotation>
+            <complexType>
+              <simpleContent>
+                <extension base="boolean">
+                  <attribute name="nilReason" type="gml:NilReasonType"/>
+                </extension>
+              </simpleContent>
+            </complexType>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="resultAcquisitionSource" nillable="true" type="gml:ReferenceType">
+            <annotation>
+              <documentation>-- Definition --
+Source of result acquisition</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="specialisedEMFType" nillable="true" type="gml:ReferenceType">
+            <annotation>
+              <documentation>-- Definition --
+Categorisation of EnvironmentalMonitoringFacilities generally used by domain and in national settings.
+
+-- Description --
+EXAMPLE: platform, site, station, sensor, ...</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" name="operationalActivityPeriod" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Lifespan of the physical object (facility).</documentation>
+            </annotation>
+            <complexType>
+              <complexContent>
+                <extension base="gml:AbstractMemberType">
+                  <sequence minOccurs="0">
+                    <element ref="ef:OperationalActivityPeriod"/>
+                  </sequence>
+                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
+                </extension>
+              </complexContent>
+            </complexType>
+          </element>
+		  <element maxOccurs="unbounded" minOccurs="0" name="relatedTo" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Any Thematic Link to an Environmental Monitoring Facility.
+The association has additional properties as defined in the association class AnyDomainLink.</documentation>
+            </annotation>
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="ef:AnyDomainLink"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="belongsTo" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+A link pointing to the EnvironmentalMonitoringNetwork(s) this EnvironmentalMonitoringFacility pertains to.
+The association has additional properties as defined in the association class NetworkFacility.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:contains</reversePropertyName>
+              </appinfo>
+            </annotation>
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="ef:NetworkFacility"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="EnvironmentalMonitoringFacilityPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ef:EnvironmentalMonitoringFacility"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="EnvironmentalMonitoringNetwork" substitutionGroup="ef:AbstractMonitoringFeature" type="ef:EnvironmentalMonitoringNetworkType">
+    <annotation>
+      <documentation>-- Name --
+environmental monitoring network
+
+-- Definition --
+Administrative or organisational grouping of EnvironmentalMonitoringFacilities managed the same way for a specific purpose, targeting a specific area. Each network respects common rules aiming at ensuring coherence of the observations, especially for purposes of EnvironmentalMonitoringFacilities, mandatory parameters selection, measurement methods and measurement regime.</documentation>
+    </annotation>
+  </element>
+  <complexType name="EnvironmentalMonitoringNetworkType">
+    <complexContent>
+      <extension base="ef:AbstractMonitoringFeatureType">
+        <sequence>
+          <element name="organisationLevel" nillable="true" type="gml:ReferenceType">
+            <annotation>
+              <documentation>-- Definition --
+Level of legal organisation the EnvironmentalMonitoringNetwork is affiliated with.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="contains" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+A link pointing to the EnvironmentalMonitoringFacility(s) included in this EnvironmentalMonitoringNetwork.
+The association has additional properties as defined in the association class NetworkFacility.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:belongsTo</reversePropertyName>
+              </appinfo>
+            </annotation>
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="ef:NetworkFacility"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="EnvironmentalMonitoringNetworkPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ef:EnvironmentalMonitoringNetwork"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="EnvironmentalMonitoringProgramme" substitutionGroup="ef:AbstractMonitoringObject" type="ef:EnvironmentalMonitoringProgrammeType">
+    <annotation>
+      <documentation>-- Name --
+environmental monitoring programme
+
+-- Definition --
+Framework based on policy relevant documents defining the target of a collection of observations and/or the deployment of AbstractMonitoringFeatures on the field. 
+Usually an Environmental Monitoring Programme has a long term perspective over at least a few years.</documentation>
+    </annotation>
+  </element>
+  <complexType name="EnvironmentalMonitoringProgrammeType">
+    <complexContent>
+      <extension base="ef:AbstractMonitoringObjectType">
+        <sequence>
+          <element maxOccurs="unbounded" minOccurs="0" name="triggers" type="ef:EnvironmentalMonitoringActivityPropertyType">
+            <annotation>
+              <documentation>-- Definition --
+EnvironmentalMonitoringActivity(s) triggered by the EnvironmentalMonitoringProgramme.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:setUpFor</reversePropertyName>
+              </appinfo>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="EnvironmentalMonitoringProgrammePropertyType">
+    <sequence minOccurs="0">
+      <element ref="ef:EnvironmentalMonitoringProgramme"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="Hierarchy" substitutionGroup="gml:AbstractGML" type="ef:HierarchyType">
+    <annotation>
+      <documentation>--Name --
+hierarchy
+
+-- Definition --
+Hierachical link between AbstractMonitoringObjects.</documentation>
+    </annotation>
+  </element>
+  <complexType name="HierarchyType">
+    <complexContent>
+      <extension base="gml:AbstractGMLType">
+        <sequence>
+          <element name="linkingTime" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Time period of the link.</documentation>
+            </annotation>
+            <complexType>
+              <complexContent>
+                <extension base="gml:AbstractMemberType">
+                  <sequence minOccurs="0">
+                    <element ref="gml:AbstractTimeObject"/>
+                  </sequence>
+                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
+                </extension>
+              </complexContent>
+            </complexType>
+          </element>
+          <element name="broader" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+A link pointing to a broader AbstractMonitoringObject (a higher level in a hierarchical structure).
+The association has additional
+properties as defined in the
+association class Hierarchy.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:narrower</reversePropertyName>
+              </appinfo>
+            </annotation>
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="ef:AbstractMonitoringObject"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+          <element name="narrower" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+A link pointing to narrower AbstractMonitoringObject(s) (a lower level in a hierarchical structure).
+The association has additional
+properties as defined in the
+association class Hierarchy.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:broader</reversePropertyName>
+              </appinfo>
+            </annotation>
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="ef:AbstractMonitoringObject"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="HierarchyPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ef:Hierarchy"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="NetworkFacility" substitutionGroup="gml:AbstractGML" type="ef:NetworkFacilityType">
+    <annotation>
+      <documentation>-- Name --
+network facility
+
+-- Definition --
+Link between EnvironmentalMonitoringNetwork and EnvironmentalMonitoringFacility.</documentation>
+    </annotation>
+  </element>
+  <complexType name="NetworkFacilityType">
+    <complexContent>
+      <extension base="gml:AbstractGMLType">
+        <sequence>
+          <element name="linkingTime" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Time period of the link.</documentation>
+            </annotation>
+            <complexType>
+              <complexContent>
+                <extension base="gml:AbstractMemberType">
+                  <sequence minOccurs="0">
+                    <element ref="gml:AbstractTimeObject"/>
+                  </sequence>
+                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
+                </extension>
+              </complexContent>
+            </complexType>
+          </element>
+          <element name="belongsTo" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+A link pointing to the EnvironmentalMonitoringNetwork(s) this EnvironmentalMonitoringFacility pertains to.
+The association has additional properties as defined in the association class NetworkFacility.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:contains</reversePropertyName>
+              </appinfo>
+            </annotation>
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="ef:EnvironmentalMonitoringNetwork"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+          <element name="contains" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+A link pointing to the EnvironmentalMonitoringFacility(s) included in this EnvironmentalMonitoringNetwork.
+The association has additional properties as defined in the association class NetworkFacility.</documentation>
+              <appinfo>
+                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">ef:belongsTo</reversePropertyName>
+              </appinfo>
+            </annotation>
+            <complexType>
+              <sequence minOccurs="0">
+                <element ref="ef:EnvironmentalMonitoringFacility"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+              <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+            </complexType>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="NetworkFacilityPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ef:NetworkFacility"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="ObservingCapability" substitutionGroup="gml:AbstractFeature" type="ef:ObservingCapabilityType">
+    <annotation>
+      <documentation>-- Name --
+observing capability
+
+-- Definition --
+Explicit capability of an AbstractMonitoringObject.</documentation>
+    </annotation>
+  </element>
+  <complexType name="ObservingCapabilityType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element name="observingTime" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+Describes the time period that observations can be expected from this AbstractMonitoringObject. Can be only a start time for running measurements or an interval.</documentation>
+            </annotation>
+            <complexType>
+              <complexContent>
+                <extension base="gml:AbstractMemberType">
+                  <sequence minOccurs="0">
+                    <element ref="gml:AbstractTimeObject"/>
+                  </sequence>
+                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
+                </extension>
+              </complexContent>
+            </complexType>
+          </element>
+          <element name="processType" nillable="true" type="gml:ReferenceType">
+            <annotation>
+              <documentation>-- Definition --
+The type of object used for describing the process.</documentation>
+            </annotation>
+          </element>
+          <element name="resultNature" nillable="true" type="gml:ReferenceType">
+            <annotation>
+              <documentation>-- Definition --
+State of the provided result.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="onlineResource" nillable="true">
+            <annotation>
+              <documentation>-- Definition --
+A link to an external document providing further information about an ISO 19156 'Observations and Measurements' compliant data model used to store or exchange Observations and Measurements acquired.</documentation>
+            </annotation>
+            <complexType>
+              <simpleContent>
+                <extension base="anyURI">
+                  <attribute name="nilReason" type="gml:NilReasonType"/>
+                </extension>
+              </simpleContent>
+            </complexType>
+          </element>
+          <element name="procedure" type="om:OM_ProcessPropertyType">
+            <annotation>
+              <documentation>-- Definition --
+Link to the Process used to generate the result. The OM_Process shall be suitable for the observed property. As a corollary, details of the observed property are constrained by the procedure used.</documentation>
+            </annotation>
+          </element>
+          <element name="featureOfInterest" type="gml:FeaturePropertyType" nillable="true" minOccurs="0">
+            <annotation>
+              <documentation>-- Definition --
+This feature is the real-world object whose properties are under observation, or is a feature intended to sample the real-world object</documentation>
+		    </annotation>
+		  </element>
+          <element name="observedProperty" type="gml:ReferenceType">
+            <annotation>
+              <documentation>-- Definition --
+The property being observed or measured at this AMO.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ObservingCapabilityPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ef:ObservingCapability"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="OperationalActivityPeriod" substitutionGroup="gml:AbstractFeature" type="ef:OperationalActivityPeriodType">
+    <annotation>
+      <documentation>-- Name --
+operational activity period
+
+-- Definition --
+Corresponds to a period during which the EnvironmentalMonitoringFacility has been up and running.</documentation>
+    </annotation>
+  </element>
+  <complexType name="OperationalActivityPeriodType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element name="activityTime">
+            <annotation>
+              <documentation>-- Definition --
+Lifespan of the OperationalActivityPeriod.</documentation>
+            </annotation>
+            <complexType>
+              <complexContent>
+                <extension base="gml:AbstractMemberType">
+                  <sequence minOccurs="0">
+                    <element ref="gml:AbstractTimeObject"/>
+                  </sequence>
+                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
+                </extension>
+              </complexContent>
+            </complexType>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="OperationalActivityPeriodPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ef:OperationalActivityPeriod"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="ReportToLegalAct" substitutionGroup="gml:AbstractObject" type="ef:ReportToLegalActType">
+    <annotation>
+      <documentation>-- Name --
+report to legal act
+
+-- Definition --
+Information on the involvement of an AbstractMonitoringFeature in reporting. The information is specific per submitted reporting envelope and not per obligation/agreement.
+
+-- Description --
+From INSPIRE perspective, an AbstractMonitoringFeature requires the provision of  ISO 19156 compliant observations &amp; measurements only in the case that these have been required by a legal reporting obligation or a commonly agreed voluntarily data flow using INSPIRE EF dataspecification for the definition of datastructure.</documentation>
+    </annotation>
+  </element>
+  <complexType name="ReportToLegalActType">
+    <sequence>
+      <element name="legalAct">
+        <annotation>
+          <documentation>-- Definition --
+LegalAct which is reported to.</documentation>
+        </annotation>
+        <complexType>
+          <complexContent>
+            <extension base="gml:AbstractMemberType">
+              <sequence minOccurs="0">
+                <element ref="base2:LegislationCitation"/>
+              </sequence>
+              <attributeGroup ref="gml:AssociationAttributeGroup"/>
+            </extension>
+          </complexContent>
+        </complexType>
+      </element>
+      <element name="reportDate" nillable="true">
+        <annotation>
+          <documentation>-- Definition --
+Time of reporting.</documentation>
+        </annotation>
+        <complexType>
+          <simpleContent>
+            <extension base="dateTime">
+              <attribute name="nilReason" type="gml:NilReasonType"/>
+            </extension>
+          </simpleContent>
+        </complexType>
+      </element>
+      <element minOccurs="0" name="reportedEnvelope" nillable="true">
+        <annotation>
+          <documentation>-- Definition --
+Link to the reported data set according to the date indicated in the attribute reportDate.</documentation>
+        </annotation>
+        <complexType>
+          <simpleContent>
+            <extension base="anyURI">
+              <attribute name="nilReason" type="gml:NilReasonType"/>
+            </extension>
+          </simpleContent>
+        </complexType>
+      </element>
+      <element name="observationRequired" nillable="true">
+        <annotation>
+          <documentation>-- Definition --
+Indicates whether an observation is required for the AbstractMonitoringFeature.</documentation>
+        </annotation>
+        <complexType>
+          <simpleContent>
+            <extension base="boolean">
+              <attribute name="nilReason" type="gml:NilReasonType"/>
+            </extension>
+          </simpleContent>
+        </complexType>
+      </element>
+      <element name="observingCapabilityRequired" nillable="true">
+        <annotation>
+          <documentation>-- Definition --
+Indicates whether the observingCapability is required for the AbstractMonitoringFeature.</documentation>
+        </annotation>
+        <complexType>
+          <simpleContent>
+            <extension base="boolean">
+              <attribute name="nilReason" type="gml:NilReasonType"/>
+            </extension>
+          </simpleContent>
+        </complexType>
+      </element>
+      <element minOccurs="0" name="description" nillable="true">
+        <annotation>
+          <documentation>-- Definition --
+Additional information on the actual data reported.</documentation>
+        </annotation>
+        <complexType>
+          <simpleContent>
+            <extension base="string">
+              <attribute name="nilReason" type="gml:NilReasonType"/>
+            </extension>
+          </simpleContent>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="ReportToLegalActPropertyType">
+    <sequence>
+      <element ref="ef:ReportToLegalAct"/>
+    </sequence>
+  </complexType>
+</schema>
  64 http://inspire.ec.europa.eu/schemas/gn/3.0/GeographicalNames.xsd 24010 <?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:base="urn:x-inspire:specification:gmlas:BaseTypes:3.2" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gn="urn:x-inspire:specification:gmlas:GeographicalNames:3.0" elementFormDefault="qualified" targetNamespace="urn:x-inspire:specification:gmlas:GeographicalNames:3.0" version="3.0">
   <import namespace="urn:x-inspire:specification:gmlas:BaseTypes:3.2" schemaLocation="http://inspire.ec.europa.eu/schemas/base/3.2/BaseTypes.xsd"/>
   <import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
@@ -21222,6 +22233,203 @@ One member of the ObservationSet</documentation>
     <attributeGroup ref="gml:AssociationAttributeGroup"/>
     <attributeGroup ref="gml:OwnershipAttributeGroup"/>
   </complexType>
+</schema>
+ 58 http://inspire.ec.europa.eu/schemas/ompr/2.0/Processes.xsd 7352 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 sp1 (x64) (http://www.altova.com) by Chris Schubert (European Commission DG JRC - IES) -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:base="http://inspire.ec.europa.eu/schemas/base/3.3" xmlns:base2="http://inspire.ec.europa.eu/schemas/base2/1.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:ompr="http://inspire.ec.europa.eu/schemas/ompr/2.0" xmlns:sc="http://www.interactive-instruments.de/ShapeChange/AppInfo" targetNamespace="http://inspire.ec.europa.eu/schemas/ompr/2.0" elementFormDefault="qualified" version="2.0r">
+	<annotation>
+		<documentation>-- Definition --
+Application Schema for Processes</documentation>
+	</annotation>
+	<import namespace="http://inspire.ec.europa.eu/schemas/base/3.3" schemaLocation="http://inspire.ec.europa.eu/schemas/base/3.3/BaseTypes.xsd"/>
+	<import namespace="http://inspire.ec.europa.eu/schemas/base2/1.0" schemaLocation="http://inspire.ec.europa.eu/schemas/base2/1.0/BaseTypes2.xsd"/>
+	<import namespace="http://www.interactive-instruments.de/ShapeChange/AppInfo" schemaLocation="http://portele.de/ShapeChangeAppinfo.xsd"/>
+	<import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+	<!--XML Schema document created by ShapeChange-->
+	<element name="Process" type="ompr:ProcessType" substitutionGroup="gml:AbstractFeature">
+		<annotation>
+			<documentation>-- Name --
+Process
+
+-- Definition --
+Description of an observation process</documentation>
+		</annotation>
+	</element>
+	<complexType name="ProcessType">
+		<complexContent>
+			<extension base="gml:AbstractFeatureType">
+				<sequence>
+					<element name="inspireId" nillable="true">
+						<annotation>
+							<documentation>-- Name --
+inspireId
+
+-- Definition --
+External object identifier of the spatial object.</documentation>
+						</annotation>
+						<complexType>
+							<sequence>
+								<element ref="base:Identifier"/>
+							</sequence>
+							<attribute name="nilReason" type="gml:NilReasonType"/>
+						</complexType>
+					</element>
+					<element name="name" nillable="true" minOccurs="0">
+						<annotation>
+							<documentation>-- Name --
+name
+
+-- Definition --
+Name of the Process</documentation>
+						</annotation>
+						<complexType>
+							<simpleContent>
+								<extension base="string">
+									<attribute name="nilReason" type="gml:NilReasonType"/>
+								</extension>
+							</simpleContent>
+						</complexType>
+					</element>
+					<element name="type" nillable="true">
+						<annotation>
+							<documentation>-- Name --
+type
+
+-- Definition --
+Type of process.
+
+-- Description --
+EXAMPLE raingauge, numerical model.</documentation>
+						</annotation>
+						<complexType>
+							<simpleContent>
+								<extension base="string">
+									<attribute name="nilReason" type="gml:NilReasonType"/>
+								</extension>
+							</simpleContent>
+						</complexType>
+					</element>
+					<element name="documentation" nillable="true" minOccurs="0" maxOccurs="unbounded">
+						<annotation>
+							<documentation>-- Name --
+documentation
+
+-- Definition --
+Further information ( online/offline) associated with the  process .</documentation>
+						</annotation>
+						<complexType>
+							<complexContent>
+								<extension base="gml:AbstractMemberType">
+									<sequence minOccurs="0">
+										<element ref="base2:DocumentCitation"/>
+									</sequence>
+									<attributeGroup ref="gml:AssociationAttributeGroup"/>
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+					<element name="processParameter" nillable="true" minOccurs="0" maxOccurs="unbounded">
+						<annotation>
+							<documentation>-- Name --
+process parameter
+
+-- Definition --
+Parameter controlling the application of the process and as a consequence its output.
+
+-- Description --
+Typical examples of using processParameter are: description of  instrumentation settings for a specific measurement or measurement series ; description of intial contidions in  numerical computations e.g. simulations.  
+
+NOTE   The  values of a procesParameter are stored in  OM_Observation.parameter&gt;NamedValue.value as they are specific to the event of the observation  and not to the  applied process .  The relevant OM_Observation.parameter&gt;NamedValue.name shall be the same with Process.processParameter&gt;ProcessParameter.name.
+
+EXAMPLE  Analysis time of a forecast
+&lt;ul&gt;
+	&lt;li&gt;Instance of Process&lt;/li&gt;
+&lt;/ul&gt;
+Process.processParameter&gt;ProcessParameter.name:
+&lt;i&gt;http://inspire.jrc.ec.europa.eu/inspire/processParameterValue.html#AnalysisTime&lt;/i&gt;
+&lt;ul&gt;
+	&lt;li&gt;Instance of OM_Observation&lt;/li&gt;
+&lt;/ul&gt;
+OM_OObservation.parameter&gt;NamedValue.name:
+&lt;i&gt;http://inspire.jrc.ec.europa.eu/inspire/processParameterValue.html#AnalysisTime&lt;/i&gt;
+OM_Observation.parameter&gt;NamedValue.value:
+&lt;i&gt;00z-15/05/2011&lt;/i&gt;</documentation>
+						</annotation>
+						<complexType>
+							<sequence>
+								<element ref="ompr:ProcessParameter"/>
+							</sequence>
+							<attribute name="nilReason" type="gml:NilReasonType"/>
+						</complexType>
+					</element>
+					<element name="responsibleParty" nillable="true" maxOccurs="unbounded">
+						<annotation>
+							<documentation>-- Name --
+responsible party
+
+-- Definition --
+Individual or organisation related to the process.
+
+-- Description --
+EXAMPLE For a numerical simulation a responsible party may be the NWP centre which conducted the simulation</documentation>
+						</annotation>
+						<complexType>
+							<sequence>
+								<element ref="base2:RelatedParty"/>
+							</sequence>
+							<attribute name="nilReason" type="gml:NilReasonType"/>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="ProcessPropertyType">
+		<sequence minOccurs="0">
+			<element ref="ompr:Process"/>
+		</sequence>
+		<attributeGroup ref="gml:AssociationAttributeGroup"/>
+		<attributeGroup ref="gml:OwnershipAttributeGroup"/>
+	</complexType>
+	<element name="ProcessParameter" type="ompr:ProcessParameterType" substitutionGroup="gml:AbstractObject">
+		<annotation>
+			<documentation>-- Name --
+Process Parameter
+
+-- Definition --
+Description of the given parameter</documentation>
+		</annotation>
+	</element>
+	<complexType name="ProcessParameterType">
+		<sequence>
+			<element name="name" type="gml:ReferenceType">
+				<annotation>
+					<documentation>-- Name --
+name
+
+-- Definition --
+Name of the process parameter.</documentation>
+					<appinfo>
+						<taggedValue xmlns="http://www.interactive-instruments.de/ShapeChange/AppInfo" tag="obligation">technicalGuidance</taggedValue>
+					</appinfo>
+				</annotation>
+			</element>
+			<element name="description" type="string" minOccurs="0">
+				<annotation>
+					<documentation>-- Name --
+description
+
+-- Definition --
+Description of the process parameter.</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="ProcessParameterPropertyType">
+		<sequence>
+			<element ref="ompr:ProcessParameter"/>
+		</sequence>
+	</complexType>
 </schema>
  58 http://inspire.ec.europa.eu/schemas/ompr/3.0/Processes.xsd 7836 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:base="http://inspire.ec.europa.eu/schemas/base/3.3" xmlns:base2="http://inspire.ec.europa.eu/schemas/base2/2.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:ompr="http://inspire.ec.europa.eu/schemas/ompr/3.0" xmlns:sc="http://www.interactive-instruments.de/ShapeChange/AppInfo" elementFormDefault="qualified" targetNamespace="http://inspire.ec.europa.eu/schemas/ompr/3.0" version="3.0">
@@ -47419,6 +48627,96 @@ constructs, e.g.
         <attributeGroup ref="gml:AssociationAttributeGroup" />
     </complexType>
       
+</schema>
+ 93 http://xml.fmi.fi/schema/aviation-weather/special-products/2015/09/29/WinterPrecipitation.xsd 3614 <?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2"
+	xmlns:gmlcov="http://www.opengis.net/gmlcov/1.0"
+	xmlns:om="http://www.opengis.net/om/2.0"	
+	xmlns:tns="http://xml.fmi.fi/namespace/aviation-weather/special-products/2015/09/28"
+	targetNamespace="http://xml.fmi.fi/namespace/aviation-weather/special-products/2015/09/28"
+	elementFormDefault="qualified">
+
+	<import namespace="http://www.opengis.net/gml/3.2"
+		schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+	<import namespace="http://www.opengis.net/gmlcov/1.0"
+		schemaLocation="http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd"/>
+	<import namespace="http://www.opengis.net/om/2.0"
+		schemaLocation="http://schemas.opengis.net/om/2.0/observation.xsd" />
+
+	<!-- Product 1 -->
+	<element name="DrizzlePrecipitation" type="om:OM_ObservationType" />
+	<element name="FreezingDrizzlePrecipitation" type="om:OM_ObservationType" />
+	<element name="FreezingRainPrecipitation" type="om:OM_ObservationType" />
+	<element name="RainPrecipitation" type="om:OM_ObservationType" />
+	<element name="SleetPrecipitation" type="om:OM_ObservationType" />
+	<element name="SnowPrecipitation" type="om:OM_ObservationType" />		
+			
+	<complexType name="PrecipitationProbability">		 
+		<attribute name="probabilityValue" type="double" use="required"/>
+		<attribute name="probabilityUnit" type="tns:ProbabilityUnits" use="required"/>
+		<attribute name="dateTime" type="dateTime" use="required"/>
+		<attribute name="icaoCode" type="string" use="required"/>
+		<attribute name="latitude" type="double" use="required"/>
+		<attribute name="longitude" type="double" use="required"/>		
+	</complexType>
+
+	<!-- Product 2 -->	
+	<element name="WinterWeather" type="om:OM_ObservationType" />
+	
+	<simpleType name="WinterWeatherType">
+		<restriction base="string">
+			<enumeration value="LIGHT"/>
+			<enumeration value="MODERATE"/>
+			<enumeration value="HEAVY"/>
+		</restriction>
+	</simpleType>
+	
+	<element name="WinterWeatherContours" type="tns:DatedWinterWeatherContours" substitutionGroup="gml:AbstractGML"/>
+	
+	<complexType name="DatedWinterWeatherContours">
+		<complexContent>
+			<extension base="gml:MultiSurfaceType">
+				<sequence>
+					<element name="WeatherContour" type="gml:MultiSurfaceType" maxOccurs="unbounded" minOccurs="0"/>
+				</sequence>
+				<attribute name="dateTime" type="dateTime" use="required"/>
+				<attribute name="winterWeatherType" type="tns:WinterWeatherType" use="required"/>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<!-- Product 3 -->
+	<element name="GeneralWinterWeather" type="om:OM_ObservationType" />
+	
+	<simpleType name="GeneralWinterWeatherType">
+		<restriction base="string">
+			<enumeration value="LIGHT"/>
+			<enumeration value="MODERATE"/>
+			<enumeration value="HEAVY"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="ProbabilityUnits">
+		<restriction base="string">
+			<enumeration value="percent"/>
+		</restriction>
+	</simpleType>
+	
+	<element name="GeneralWinterWeatherContours" type="tns:DatedGeneralWinterWeatherContours" substitutionGroup="gml:AbstractGML"/>
+	
+	<complexType name="DatedGeneralWinterWeatherContours">
+		<complexContent>
+			<extension base="gml:MultiSurfaceType">
+				<sequence>
+					<element name="WeatherContour" type="gml:MultiSurfaceType" maxOccurs="unbounded" minOccurs="0"/>
+				</sequence>
+				<attribute name="dateTime" type="dateTime" use="required"/>
+				<attribute name="winterWeatherType" type="tns:GeneralWinterWeatherType" use="required" />
+			</extension>
+		</complexContent>
+	</complexType>		
+	
 </schema>
  76 http://xml.fmi.fi/schema/om/atmosphericfeatures/0.95/atmosphericfeatures.xsd 11139 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"

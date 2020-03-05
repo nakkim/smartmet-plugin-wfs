@@ -28,7 +28,7 @@ struct XmlNamespeceDef
 bw::Request::DescribeStoredQueries::DescribeStoredQueries(const std::string& language,
                                                           const std::vector<std::string>& ids,
                                                           const bw::PluginImpl& plugin_impl)
-    : RequestBase(language), plugin_impl(plugin_impl)
+  : RequestBase(language, plugin_impl)
 {
   try
   {

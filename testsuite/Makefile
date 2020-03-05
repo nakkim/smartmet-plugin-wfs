@@ -63,9 +63,12 @@ objdir = obj
 INCLUDES = -I$(includedir) \
 	-I$(includedir)/smartmet \
 	-I$(includedir)/mysql \
+	-I$(includedir)/jsoncpp \
 	-Iinclude
 
 LIBS = -L$(libdir) \
+	-lsmartmet-engine-gis \
+	-lsmartmet-gis \
 	-lsmartmet-spine \
 	-lsmartmet-newbase \
 	-lsmartmet-macgyver \
@@ -84,8 +87,10 @@ LIBS = -L$(libdir) \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \
+	-ljsoncpp \
 	-lcurl \
 	-lcrypto \
+	-lfmt \
 	-lbz2 -lz \
 	-lpthread \
 	-lm \
@@ -128,10 +133,14 @@ check-valgrind:	../libwfs.a $(TESTSUITE_TARGETS)
 ../libwfs.a:
 	$(MAKE) -C .. libwfs.a
 
-$(TESTSUITE_TARGETS) : ../libwfs.a
+$(TESTSUITE_TARGETS) : ../libwfs.a gis_engine_link
 
 %.test : obj/%.o ; @echo "Building $@"
-	$(CXX) -o $@ $(TESTSUITE_CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) -L.. -lwfs $(LIBS)
+	$(CXX) -o $@ $(TESTSUITE_CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(shell pwd) -L . ../libwfs.a $(LIBS)
+
+gis_engine_link:
+	rm -f libsmartmet-engine-gis.so
+	ln -sf /usr/share/smartmet/engines/gis.so libsmartmet-engine-gis.so
 
 CFLAGS += -I include
 

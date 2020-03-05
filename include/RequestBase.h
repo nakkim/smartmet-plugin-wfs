@@ -11,6 +11,9 @@ namespace Plugin
 {
 namespace WFS
 {
+
+class PluginImpl;
+
 /**
  *   @brief Abstract base class for WFS requests
  *
@@ -33,7 +36,7 @@ class RequestBase
   };
 
  public:
-  RequestBase(const std::string& language);
+  RequestBase(const std::string& language, const PluginImpl& plugin_impl);
 
   virtual ~RequestBase();
 
@@ -139,7 +142,13 @@ class RequestBase
    */
   static const xercesc::DOMElement* get_xml_root(const xercesc::DOMDocument& document);
 
-  static void check_output_format_attribute(const std::string& value);
+  static void check_output_format_attribute(const std::string& value, const PluginImpl& plugin_impl);
+
+  static void check_output_format_attribute(const xercesc::DOMElement* root,
+					    const PluginImpl& plugin_impl);
+
+  static void report_incorrect_output_format(const std::string& value,
+					     const PluginImpl& plugin_impl) __attribute__((noreturn));
 
   /**
    *   @brief Check WFS version (KVP only)
@@ -147,6 +156,9 @@ class RequestBase
    *   Require it to be 2.0.0 if provided.
    */
   static void check_wfs_version(const SmartMet::Spine::HTTP::Request& request);
+
+ protected:
+  const PluginImpl& plugin_impl;
 
  private:
   const std::string language;

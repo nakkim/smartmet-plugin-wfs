@@ -1,4 +1,0 @@
-GET /wfs?service=WFS&request=GetCapabilities HTTP/1.1
-Host: brainstormgw.fmi.fi
-fmi-apikey: foobar
-

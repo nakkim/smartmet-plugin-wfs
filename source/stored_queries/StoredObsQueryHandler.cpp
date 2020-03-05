@@ -9,6 +9,7 @@
 #include <macgyver/StringConversion.h>
 #include <smartmet/spine/Convenience.h>
 #include <smartmet/spine/Exception.h>
+#include <smartmet/spine/ParameterTools.h>
 #include <smartmet/spine/TimeSeries.h>
 #include <smartmet/spine/TimeSeriesOutput.h>
 #include <smartmet/spine/Value.h>
@@ -267,7 +268,8 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       BOOST_FOREACH (std::string name, param_names)
       {
         // Is the parameter configured in Observation
-        if (not obs_engine->isParameter(name, query_params.stationtype))
+        if (not (obs_engine->isParameter(name, query_params.stationtype)
+		 or SmartMet::Spine::is_special_parameter(name)))
         {
           SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
@@ -275,13 +277,13 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           throw exception;
         }
 
-        SmartMet::Spine::Parameter param = obs_engine->makeParameter(name);
+        SmartMet::Spine::Parameter param = SmartMet::Spine::makeParameter(name);
         query_params.parameters.push_back(param);
         int ind = query_params.parameters.size() - 1;
         if (first_param == 0)
           first_param = ind;
         last_param = ind;
-        if (!special(param))
+        if (!SmartMet::Spine::special(param))
           have_meteo_param = true;
       }
 
@@ -290,7 +292,8 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       // int last_qc_param = 0;
       BOOST_FOREACH (std::string name, qc_info_param_names)
       {
-        if (not obs_engine->isParameter(name, query_params.stationtype))
+        if (not obs_engine->isParameter(name, query_params.stationtype)
+	    and not is_special_parameter(name))
         {
           SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
@@ -298,7 +301,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           throw exception;
         }
 
-        SmartMet::Spine::Parameter param = obs_engine->makeParameter(name);
+        SmartMet::Spine::Parameter param = SmartMet::Spine::makeParameter(name);
         query_params.parameters.push_back(param);
         int ind = query_params.parameters.size() - 1;
         if (first_qc_param == 0)
@@ -601,7 +604,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           if (not region.empty())
             group["obsStationList"][ind]["region"] = region;
 
-          if (not wmo.empty())
+          if (not wmo.empty() && wmo != "0" && wmo != "NaN")
             group["obsStationList"][ind]["wmo"] = wmo;
 
           (geoid.empty() or geoid == "-1")

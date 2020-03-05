@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 19.12.12
+Version: 20.3.5
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -16,6 +16,7 @@ BuildRequires: make
 BuildRequires: boost-devel
 BuildRequires: ctpp2-devel
 BuildRequires: fmt-devel >= 5.2.0
+BuildRequires: jsoncpp-devel
 BuildRequires: libconfig-devel
 BuildRequires: libcurl-devel
 BuildRequires: xerces-c-devel
@@ -23,35 +24,36 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 19.10.31
-BuildRequires: smartmet-library-gis-devel >= 19.9.26
-BuildRequires: smartmet-library-locus-devel >= 19.9.26
-BuildRequires: smartmet-library-macgyver-devel >= 19.9.26
-BuildRequires: smartmet-engine-contour-devel >= 19.10.31
-BuildRequires: smartmet-engine-geonames-devel >= 19.10.25
-BuildRequires: smartmet-engine-gis-devel >= 19.10.31
+BuildRequires: smartmet-library-spine-devel >= 20.3.5
+BuildRequires: smartmet-library-gis-devel >= 20.2.18
+BuildRequires: smartmet-library-locus-devel >= 19.12.4
+BuildRequires: smartmet-library-macgyver-devel >= 20.3.5
+BuildRequires: smartmet-engine-contour-devel >= 19.11.20
+BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
+BuildRequires: smartmet-engine-gis-devel >= 20.2.25
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 19.10.31
+BuildRequires: smartmet-engine-observation-devel >= 20.2.20
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 19.10.31
+BuildRequires: smartmet-engine-querydata-devel >= 20.1.30
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 5.2.0
 Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
-Requires: smartmet-library-locus >= 19.9.26
-Requires: smartmet-library-macgyver >= 19.9.26
-Requires: smartmet-library-spine >= 19.10.31
-Requires: smartmet-library-gis >= 19.9.26
-Requires: smartmet-engine-contour >= 19.10.31
-Requires: smartmet-engine-geonames >= 19.10.25
-Requires: smartmet-engine-gis >= 19.10.31
+Requires: jsoncpp
+Requires: smartmet-library-locus >= 19.12.4
+Requires: smartmet-library-macgyver >= 20.3.5
+Requires: smartmet-library-spine >= 20.3.5
+Requires: smartmet-library-gis >= 20.2.18
+Requires: smartmet-engine-contour >= 19.11.20
+Requires: smartmet-engine-geonames >= 19.12.5
+Requires: smartmet-engine-gis >= 20.2.25
 %if %{with observation}
-Requires: smartmet-engine-observation >= 19.10.31
+Requires: smartmet-engine-observation >= 20.2.20
 %endif
-Requires: smartmet-engine-querydata >= 19.10.31
-Requires: smartmet-server >= 19.10.1
+Requires: smartmet-engine-querydata >= 20.1.30
+Requires: smartmet-server >= 20.2.13
 Requires: xerces-c
 Requires: xqilla
 Requires: boost-chrono
@@ -92,8 +94,50 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Mar  5 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.3.5-1.fmi
+- Use ParameterTools from smartmet-library-spine (part 1)
+
+* Fri Feb 21 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.2.21-1.fmi
+- Support special parameters fom smartmet-engine-observation
+
+* Wed Feb 19 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.2.19-1.fmi
+- Use SHA1 instead of SHA for generating feature ID
+
+* Thu Feb 13 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.13-1.fmi
+- Register admin requests as private so that the frontend will not know about them
+
+* Tue Feb 11 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.2.11-1.fmi
+- Use classes MultiLanguageString and MultiLanguageStringArray from smartmet-library-spine instead of local copies
+
+* Sun Feb  9 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.9-1.fmi
+- Fixed handling of missing wmo numbers
+
+* Fri Feb  7 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.7-2.fmi
+- Spine::Station API changed due to default construction of POD members
+
+* Fri Feb  7 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.7-1.fmi
+- Add support of boolean type for XML format requests
+
+* Thu Feb  6 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.6-1.fmi
+- WMO numbers have been deprecated, removed them from responses
+- Minor fix to request base output handling
+- Added support special boost posix_time values
+- Renamed admin request "constructorMap" to "constructors"
+
+* Wed Jan 29 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.1.29-1.fmi
+- Add admin request constructorMap
+
+* Thu Jan 23 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.1.23-1.fmi
+- Add support of request fallback encoding when not UTF-8
+
+* Tue Jan 21 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.1.21-1.fmi
+- Update support of outputFormat parameter
+
 * Thu Dec 12 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.12.12-1.fmi
 - Upgrade to GDAL 3.0
+
+* Fri Nov 29 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.11.29-1.fmi
+- Update monitoring stored query configuration changes
 
 * Wed Nov 20 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.11.20-1.fmi
 - Repackaged since Spine::Parameter size changed

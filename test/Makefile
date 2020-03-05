@@ -67,7 +67,33 @@ objdir = obj
 
 INCLUDES = -I$(includedir) \
 	-I$(includedir)/smartmet \
-	-I$(includedir)/mysql
+	-I$(includedir)/mysql \
+	-I$(includedir)/jsoncpp
+
+LIBS = -L$(libdir) \
+	-lsmartmet-spine \
+	-lsmartmet-newbase \
+	-lsmartmet-macgyver \
+	-lboost_date_time \
+        -lboost_serialization \
+	-lboost_thread \
+	-lboost_iostreams \
+	-lboost_filesystem \
+        -lboost_chrono \
+	-lboost_system \
+        -lxqilla \
+	-lxerces-c \
+	-lgdal \
+	-lpqxx /usr/pgsql-9.3/lib/libpq.a \
+	-lconfig++ \
+	-lconfig \
+	-lctpp2 \
+	-ljsoncpp \
+	-lcurl \
+	-lcrypto \
+	-lbz2 -lz \
+	-lpthread \
+	-lm
 
 INCLUDES := -I$(TOP)/include $(INCLUDES)
 
@@ -82,29 +108,6 @@ obj/%.o : %.cpp ; @echo Compiling $<
 PLUGIN_TEST_SRCS = PluginTest.cpp
 TEST_OBJS = $(patsubst %.cpp,obj/%.o,$(TEST_SRCS))
 TEST_TARGETS = PluginTest
-
-LIBS = -L$(libdir) \
-	-lsmartmet-spine \
-	-lsmartmet-newbase \
-	-lsmartmet-macgyver \
-	-lpqxx \
-	-lgdal \
-	-lboost_date_time \
-	-lboost_thread \
-	-lboost_iostreams \
-	-lboost_filesystem \
-	-lboost_system \
-	-lxerces-c \
-	-lconfig++ \
-	-lconfig \
-	-lctpp2 \
-	-lcurl \
-	-lcrypto \
-	-lbz2 -lz \
-	-lstdc++ \
-	-lpthread \
-	-lm
- #/usr/pgsql-9.3/lib/libpq.a \
 
 all:
 

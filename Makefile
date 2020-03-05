@@ -7,10 +7,11 @@ TOP = $(shell pwd)
 
 -include $(HOME)/.smartmet.mk
 GCC_DIAG_COLOR ?= always
+CXX_STD ?= c++11
 
 DEFINES = -DUNIX -D_REENTRANT
 
-FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter \
+FLAGS = -std=$(CXX_STD) -fPIC -Wall -W -Wno-unused-parameter \
 	-fno-omit-frame-pointer \
 	-fdiagnostics-color=$(GCC_DIAG_COLOR) \
 	-Wno-unknown-pragmas \
@@ -81,7 +82,8 @@ INCLUDES = -I$(includedir) \
 	-I$(includedir)/smartmet \
 	-I$(includedir)/oracle/11.2/client64 \
 	-I$(includedir)/mysql \
-	-I$(PREFIX)/gdal30/include
+	-I$(PREFIX)/gdal30/include \
+	-I$(includedir)/jsoncpp
 
 LIBS = -L$(libdir) \
 	-lsmartmet-spine \
@@ -102,6 +104,7 @@ LIBS = -L$(libdir) \
 	-lconfig \
 	-lctpp2 \
 	-lcurl \
+	-ljsoncpp \
 	-lcrypto \
 	-lbz2 -lz \
 	-lpthread \
@@ -233,7 +236,7 @@ RPMBUILD=$(shell test "$$CIRCLE_BUILD_NUM" && echo RPM_BUILD_NCPUS=2 rpmbuild ||
 
 rpm: clean file-list $(SPEC).spec
 	rm -f $(SPEC).tar.gz # Clean a possible leftover from previous attempt
-	tar -czvf $(SPEC).tar.gz \
+	tar -czvf $(SPEC).tar.gz --exclude test --exclude-vcs \
 		--transform "s,^,plugins/$(SPEC)/," $(shell cat files.list)
 	$(RPMBUILD) -ta $(SPEC).tar.gz
 	rm -f $(SPEC).tar.gz
@@ -251,15 +254,15 @@ file-list:	cnf/XMLGrammarPool.dump
 	echo cnf/XMLGrammarPool.dump >>files.list.new
 	echo cnf/XMLSchemas.cache >>files.list.new
 	find test/base -name '*.conf' >>files.list.new
-	find test/base/input -name '*.get' >>files.list.new
 	find test/base/output -name '*.get' -o -name '*.kvp.post' -o -name '*.xml.post' >>files.list.new
+	find test/base/kvp -name '*.kvp' >>files.list.new
 	find test/base/xml -name '*.xml' >>files.list.new
 	find test -name '*.pl' >>files.list.new
 	find test -name '*.cpp' >>files.list.new
 	echo ./test/PluginTest.cpp >>files.list.new
 	find server_tests -name '*.xml' -o -name '*.exp' -o -name '*.pl' >>files.list.new
 	find server_tests -name '*.kvp' -o -name '*.xslt' >>files.list.new
-	find tools/xml_samples -name '*.xml' >>files.list.new
+	find tools/xml/xml_samples -name '*.xml' >>files.list.new
 	cat files.list.new | sed -e 's:^\./::' | sort | uniq >files.list
 	rm -f files.list.new
 

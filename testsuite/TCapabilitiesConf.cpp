@@ -50,7 +50,8 @@ BOOST_AUTO_TEST_CASE(test_parsing_capabilities_info_1)
     auto& addr = hash.At("address");
     BOOST_REQUIRE(addr.Exists("city"));
     BOOST_REQUIRE_EQUAL(addr.At("city").ToString(), std::string("Helsinki"));
-    BOOST_REQUIRE_EQUAL(int(hash.Size()), 3);
+    //std::cout << hash.Dump() << std::endl;
+    BOOST_REQUIRE_EQUAL(int(hash.Size()), 4);
     BOOST_REQUIRE_EQUAL(int(addr.Size()), 1);
   }
 
@@ -66,7 +67,8 @@ BOOST_AUTO_TEST_CASE(test_parsing_capabilities_info_1)
     auto& addr = hash.At("address");
     BOOST_REQUIRE(addr.Exists("city"));
     BOOST_REQUIRE_EQUAL(addr.At("city").ToString(), std::string("Helsinki"));
-    BOOST_REQUIRE_EQUAL(int(hash.Size()), 3);
+    //std::cout << hash.Dump() << std::endl;
+    BOOST_REQUIRE_EQUAL(int(hash.Size()), 4);
     BOOST_REQUIRE_EQUAL(int(addr.Size()), 1);
   }
 }
