@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.3.5
+Version: 20.3.12
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -94,6 +94,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Mar 12 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.3.12-1.fmi
+- Rebuilt due to obsengine API changes
+
 * Thu Mar  5 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.3.5-1.fmi
 - Use ParameterTools from smartmet-library-spine (part 1)
 
