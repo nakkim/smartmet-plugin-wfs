@@ -262,54 +262,13 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           qc_info_param_names.push_back("qc_" + name);
       }
 
-      int first_param = 0, last_param = 0;
+      std::vector<int> parameter_index, qc_parameter_index;
       query_params.parameters = initial_bs_param;
 
-      BOOST_FOREACH (std::string name, param_names)
-      {
-        // Is the parameter configured in Observation
-        if (not (obs_engine->isParameter(name, query_params.stationtype)
-		 or SmartMet::Spine::is_special_parameter(name)))
-        {
-          SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
-          exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
-          exception.addParameter("Unknown parameter", name);
-          throw exception;
-        }
-
-        SmartMet::Spine::Parameter param = SmartMet::Spine::makeParameter(name);
-        query_params.parameters.push_back(param);
-        int ind = query_params.parameters.size() - 1;
-        if (first_param == 0)
-          first_param = ind;
-        last_param = ind;
-        if (!SmartMet::Spine::special(param))
-          have_meteo_param = true;
-      }
+      have_meteo_param |= add_parameters(param_names, query_params, parameter_index);
 
       // QC parameter inclusion.
-      int first_qc_param = 0;
-      // int last_qc_param = 0;
-      BOOST_FOREACH (std::string name, qc_info_param_names)
-      {
-        if (not obs_engine->isParameter(name, query_params.stationtype)
-	    and not is_special_parameter(name))
-        {
-          SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
-          exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
-          exception.addParameter("Unknown parameter", name);
-          throw exception;
-        }
-
-        SmartMet::Spine::Parameter param = SmartMet::Spine::makeParameter(name);
-        query_params.parameters.push_back(param);
-        int ind = query_params.parameters.size() - 1;
-        if (first_qc_param == 0)
-          first_qc_param = ind;
-        // last_qc_param = ind;
-        if (!special(param))
-          have_meteo_param = true;
-      }
+      have_meteo_param |= add_parameters(qc_info_param_names, query_params, qc_parameter_index);
 
       if (not have_meteo_param)
       {
@@ -631,17 +590,21 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           if (support_quality_info)
             group["qualityInfo"] = "on";
 
-          for (int k = first_param; k <= last_param; k++)
+          for (std::size_t k = 0; k < parameter_index.size(); k++)
           {
-            const int k0 = k - first_param;
-            group["obsParamList"][k0]["name"] = param_names.at(k0);
-            group["obsParamList"][k0]["featureId"] =
-                group_map.at(group_id).param_ids.at(param_names.at(k0));
+            int ind = parameter_index[k];
+            const std::string& name = query_params.parameters[ind].name();
+            group["obsParamList"][k]["name"] =  name;
+            group["obsParamList"][k]["featureId"] = group_map.at(group_id).param_ids.at(name) ;
 
             // Mark QC parameters
-            if (m_support_qc_parameters and
-                SupportsQualityParameters::isQCParameter(param_names.at(k0)))
-              group["obsParamList"][k0]["isQCParameter"] = "true";
+            if (m_support_qc_parameters) {
+                int qc_ind = qc_parameter_index[k];
+                const std::string qc_name = query_params.parameters[qc_ind].name();
+                if (SupportsQualityParameters::isQCParameter(name)) {
+                    group["obsParamList"][k]["isQCParameter"] = "true";
+                }
+            }
           }
 
           // Reference id of om:phenomenonTime and om:resultTime in
@@ -662,7 +625,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
               lt::time_zone_ptr tzp;
 
               const SmartMet::Spine::TimeSeries::TimeSeries& ts_epoch =
-                  obsengine_result->at(first_param);
+                  obsengine_result->at(initial_bs_param.size());
               BOOST_FOREACH (int row_num, it1.second.row_index_vect)
               {
                 static const long ref_jd = boost::gregorian::date(1970, 1, 1).julian_day();
@@ -697,26 +660,26 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
                 obs_rec["epochTime"] = s_epoch;
                 obs_rec["epochTimeStr"] = format_local_time(epoch, tzp);
 
-                for (int k = first_param; k <= last_param; k++)
+                for (std::size_t k = 0; k < parameter_index.size(); k++) // first_param; k <= last_param; k++)
                 {
-                  const SmartMet::Spine::TimeSeries::TimeSeries& ts_k = obsengine_result->at(k);
-                  const uint precision =
-                      get_meteo_parameter_options(param_names.at(k - first_param))->precision;
+                  int ind = parameter_index[k];
+                  const std::string& name = query_params.parameters[ind].name();
+                  const SmartMet::Spine::TimeSeries::TimeSeries& ts_k = obsengine_result->at(ind);
+                  const uint precision = get_meteo_parameter_options(name)->precision;
 
                   sv.setPrecision(precision);
                   const std::string value = boost::apply_visitor(sv, ts_k[row_num].value);
-                  obs_rec["data"][k - first_param]["value"] = value;
+                  obs_rec["data"][k]["value"] = value;
 
                   // QC data if requested.
                   if (qc_info_param_names.size() > 0)
                   {
+                    int ind2 = qc_parameter_index.at(k);
                     std::stringstream qc_value;
-                    const int qc_k = first_qc_param + k - first_param;
-                    const SmartMet::Spine::TimeSeries::TimeSeries& ts_qc_k =
-                        obsengine_result->at(qc_k);
+                    const SmartMet::Spine::TimeSeries::TimeSeries& ts_qc_k = obsengine_result->at(ind2);
                     sv.setPrecision(0);
                     const std::string value_qc = boost::apply_visitor(sv, ts_qc_k[row_num].value);
-                    obs_rec["data"][k - first_param]["qcValue"] = value_qc;
+                    obs_rec["data"][k]["qcValue"] = value_qc;
                   }
                 }
 
@@ -741,6 +704,49 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
   catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+bool StoredObsQueryHandler::add_parameters(const std::vector<std::string>& param_names,
+                                           SmartMet::Engine::Observation::Settings& query_params,
+                                           std::vector<int>& parameter_index) const
+{
+  try {
+    bool have_meteo_param = false;
+    for (const auto& name : param_names)
+    {
+      if (obs_engine->isParameter(name, query_params.stationtype)) {
+        parameter_index.push_back(query_params.parameters.size());
+        SmartMet::Spine::Parameter param = SmartMet::Spine::makeParameter(name);
+        query_params.parameters.push_back(param);
+        if (!SmartMet::Spine::special(param)) {
+          have_meteo_param = true;
+        }
+      } else if (SmartMet::Spine::is_special_parameter(name)) {
+        int ind = -1;
+        for (std::size_t i = 0; i < initial_bs_param.size() and ind < 0; i++) {
+          if (name == initial_bs_param[i].name()) {
+            ind = i;
+          }
+        }
+        if (ind < 0) {
+          parameter_index.push_back(query_params.parameters.size());
+          SmartMet::Spine::Parameter param = SmartMet::Spine::makeParameter(name);
+          query_params.parameters.push_back(param);
+        } else {
+          // Belongs to parameters which are queried always
+           parameter_index.push_back(ind);
+        }
+      } else {
+        SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!", nullptr);
+        exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
+        exception.addParameter("Unknown parameter", name);
+        throw exception;
+      }
+    }
+    return have_meteo_param;
+  } catch (...) {
+      throw SmartMet::Spine::Exception::Trace(BCP, "Operation processing failed!");
   }
 }
 

@@ -43,6 +43,12 @@ class StoredObsQueryHandler : public StoredQueryHandlerBase,
                      std::ostream& output) const;
 
  private:
+
+  bool add_parameters(const std::vector<std::string>& names,
+                      SmartMet::Engine::Observation::Settings& query_params,
+                      std::vector<int>& parameter_index) const;
+
+ private:
   struct GroupRec
   {
     int group_id;
