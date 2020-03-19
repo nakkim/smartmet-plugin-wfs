@@ -9,7 +9,7 @@
    <wfs:StoredQuery id="fmi::observations::weather::simple">
      <wfs:Parameter name="starttime">2019-06-06T120000Z</wfs:Parameter>
      <wfs:Parameter name="endtime">2019-06-06T121500Z</wfs:Parameter>
-     <wfs:Parameter name="parameters">t2m distance direction</wfs:Parameter>
+     <wfs:Parameter name="parameters">t2m fmisid geoid stationlon stationlat elevation stationname distance direction wmo</wfs:Parameter>
      <wfs:Parameter name="place">Hyvinkää</wfs:Parameter>
    </wfs:StoredQuery>
 </wfs:GetFeature>

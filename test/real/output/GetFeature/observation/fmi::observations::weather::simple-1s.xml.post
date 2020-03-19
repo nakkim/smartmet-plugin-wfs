@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wfs:FeatureCollection
   timeStamp="2012-12-12T12:12:12Z"
-  numberReturned="6"
-  numberMatched="6"
+  numberReturned="20"
+  numberMatched="20"
       xmlns:wfs="http://www.opengis.net/wfs/2.0"
     xmlns:gml="http://www.opengis.net/gml/3.2"
     xmlns:BsWfs="http://xml.fmi.fi/schema/wfs/2.0"
@@ -32,8 +32,8 @@
                     </gml:Point>
                 </BsWfs:Location>
                 <BsWfs:Time>2019-06-06T12:00:00Z</BsWfs:Time>
-                <BsWfs:ParameterName>distance</BsWfs:ParameterName>
-                <BsWfs:ParameterValue>5.4</BsWfs:ParameterValue>
+                <BsWfs:ParameterName>fmisid</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>101130</BsWfs:ParameterValue>
             </BsWfs:BsWfsElement>
 	</wfs:member>
 	
@@ -45,8 +45,99 @@
                     </gml:Point>
                 </BsWfs:Location>
                 <BsWfs:Time>2019-06-06T12:00:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>geoid</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>-16000152</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.1.4">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.1.4" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:00:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>stationlon</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>24.8</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.1.5">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.1.5" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:00:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>stationlat</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>60.6</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.1.6">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.1.6" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:00:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>elevation</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>86.0</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.1.7">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.1.7" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:00:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>stationname</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>Hyvinkää Hyvinkäänkylä</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.1.8">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.1.8" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:00:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>distance</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>5.4</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.1.9">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.1.9" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:00:00Z</BsWfs:Time>
                 <BsWfs:ParameterName>direction</BsWfs:ParameterName>
                 <BsWfs:ParameterValue>264.1</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.1.10">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.1.10" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:00:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>wmo</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>2829</BsWfs:ParameterValue>
             </BsWfs:BsWfsElement>
 	</wfs:member>
 	
@@ -71,8 +162,8 @@
                     </gml:Point>
                 </BsWfs:Location>
                 <BsWfs:Time>2019-06-06T12:10:00Z</BsWfs:Time>
-                <BsWfs:ParameterName>distance</BsWfs:ParameterName>
-                <BsWfs:ParameterValue>5.4</BsWfs:ParameterValue>
+                <BsWfs:ParameterName>fmisid</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>101130</BsWfs:ParameterValue>
             </BsWfs:BsWfsElement>
 	</wfs:member>
 	
@@ -84,8 +175,99 @@
                     </gml:Point>
                 </BsWfs:Location>
                 <BsWfs:Time>2019-06-06T12:10:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>geoid</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>-16000152</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.2.4">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.2.4" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:10:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>stationlon</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>24.8</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.2.5">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.2.5" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:10:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>stationlat</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>60.6</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.2.6">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.2.6" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:10:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>elevation</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>86.0</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.2.7">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.2.7" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:10:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>stationname</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>Hyvinkää Hyvinkäänkylä</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.2.8">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.2.8" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:10:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>distance</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>5.4</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.2.9">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.2.9" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:10:00Z</BsWfs:Time>
                 <BsWfs:ParameterName>direction</BsWfs:ParameterName>
                 <BsWfs:ParameterValue>264.1</BsWfs:ParameterValue>
+            </BsWfs:BsWfsElement>
+	</wfs:member>
+	
+	<wfs:member>
+            <BsWfs:BsWfsElement gml:id="BsWfsElement.1.2.10">
+                <BsWfs:Location>
+                    <gml:Point gml:id="BsWfsElementP.1.2.10" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4258">
+                        <gml:pos>60.59589 24.80297 </gml:pos>
+                    </gml:Point>
+                </BsWfs:Location>
+                <BsWfs:Time>2019-06-06T12:10:00Z</BsWfs:Time>
+                <BsWfs:ParameterName>wmo</BsWfs:ParameterName>
+                <BsWfs:ParameterValue>2829</BsWfs:ParameterValue>
             </BsWfs:BsWfsElement>
 	</wfs:member>
 	
