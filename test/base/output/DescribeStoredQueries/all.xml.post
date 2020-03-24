@@ -143,6 +143,117 @@
                          isPrivate="true"/>
   </StoredQueryDescription>
 
+  <StoredQueryDescription id="ObsQcTest">
+    <Title>FMI WFS &lt;test&gt; stored query with QC parameters enabled</Title>
+    <Abstract>
+    More detailed description of FMI WFS test stored query
+    </Abstract>
+    
+    <Parameter name="begin" type="xsi:dateTime">
+      <Title>Begin of the time interval</Title>
+      <Abstract>
+      More detailed description of optional parameter &lt;bar&gt;
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="end" type="xsi:dateTime">
+      <Title>Parameter bar2</Title>
+      <Abstract>
+      More detailed description of optional parameter bar2
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="place" type="string">
+      <Title>Sites for which to find observations</Title>
+      <Abstract>
+      Sites for which to find observations
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="wmo" type="integerList">
+      <Title>Sites for which to find observations</Title>
+      <Abstract>
+      Sites for which to find observations
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="parameter" type="gml:NameList">
+      <Title>Parameter bar4</Title>
+      <Abstract>
+      More detailed description of optional parameter bar4
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="timestep" type="unsignedInteger">
+      <Title>Parameter bar5</Title>
+      <Abstract>
+      More detailed description of optional parameter bar5
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="maxdistance" type="double">
+      <Title>Parameter bar5</Title>
+      <Abstract>
+      More detailed description of optional parameter bar5
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="numofstations" type="unsignedInteger">
+      <Title>Parameter bar5</Title>
+      <Abstract>
+      More detailed description of optional parameter bar5
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="locale" type="string">
+      <Title>Parameter bar5</Title>
+      <Abstract>
+      More detailed description of optional parameter bar5
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="bbox" type="string">
+      <Title>Parameter bar5</Title>
+      <Abstract>
+      More detailed description of optional parameter bar5
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="crs" type="string">
+      <Title>Coordinate projection to use in results</Title>
+      <Abstract>
+      Coordinate projection to use in results
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="missingtext" type="string">
+      <Title>missingText</Title>
+      <Abstract>
+      missingText
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="tz" type="string">
+      <Title>Time zone</Title>
+      <Abstract>
+      Time zone
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="qualityinfo" type="xsi:boolean">
+      <Title>Quality info</Title>
+      <Abstract>
+      Specifies whether to include quality info
+      </Abstract>
+    </Parameter>
+    
+    <QueryExpressionText xmlns:wfs_001="http://inspire.ec.europa.eu/schemas/omso/3.0"
+                         xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd"
+                         returnFeatureTypes="wfs_001:PointTimeSeriesObservation"
+                         language="urn:ogc:def:queryLanguage:OGC-WFS::WFS_QueryExpression"
+                         isPrivate="true"/>
+  </StoredQueryDescription>
+
   <StoredQueryDescription id="ObsTest">
     <Title>FMI WFS &lt;test&gt; stored query</Title>
     <Abstract>

@@ -18,6 +18,11 @@
   <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:PointTimeSeriesObservation</ReturnFeatureType>
   </StoredQuery>
 
+  <StoredQuery id="ObsQcTest">
+    <Title>FMI WFS &lt;test&gt; stored query with QC parameters enabled</Title>
+    <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:PointTimeSeriesObservation</ReturnFeatureType>
+  </StoredQuery>
+
   <StoredQuery id="ObsTest">
     <Title>FMI WFS &lt;test&gt; stored query</Title>
     <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:PointTimeSeriesObservation</ReturnFeatureType>
