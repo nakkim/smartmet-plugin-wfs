@@ -910,7 +910,6 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfsStoredSoundi
     StoredSoundingQueryHandler* qh =
         new StoredSoundingQueryHandler(reactor, config, pluginData, templateFileName);
     boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> instance(qh);
-    instance->init_handler();
     return instance;
   }
   catch (...)

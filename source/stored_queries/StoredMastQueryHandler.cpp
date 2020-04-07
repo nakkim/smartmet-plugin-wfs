@@ -728,7 +728,6 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_stored_mast
     bw::StoredMastQueryHandler* qh =
         new bw::StoredMastQueryHandler(reactor, config, plugin_data, template_file_name);
     boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> instance(qh);
-    instance->init_handler();
     return instance;
   }
   catch (...)

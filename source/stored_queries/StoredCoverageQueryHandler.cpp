@@ -181,7 +181,6 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_coverage_qu
   StoredCoverageQueryHandler* qh =
       new StoredCoverageQueryHandler(reactor, config, plugin_data, template_file_name);
   boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> result(qh);
-  result->init_handler();
   return result;
 }
 }  // namespace

@@ -927,7 +927,6 @@ wfs_stored_env_monitoring_facility_handler_create(SmartMet::Spine::Reactor *reac
         new bw::StoredEnvMonitoringFacilityQueryHandler(
             reactor, config, plugin_data, template_file_name);
     boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> instance(qh);
-    instance->init_handler();
     return instance;
   }
   catch (...)

@@ -75,7 +75,6 @@ boost::shared_ptr<bw::StoredQueryHandlerBase> wfs_get_feature_by_id_handler_crea
   {
     bw::StoredQueryHandlerBase* qh = new bw::GetFeatureByIdHandler(reactor, config, plugin_data);
     boost::shared_ptr<bw::StoredQueryHandlerBase> result(qh);
-    result->init_handler();
     return result;
   }
   catch (...)

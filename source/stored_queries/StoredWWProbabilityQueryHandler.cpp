@@ -618,7 +618,6 @@ wfs_winterweather_probabilities_query_handler_create(SmartMet::Spine::Reactor* r
     StoredWWProbabilityQueryHandler* qh =
         new StoredWWProbabilityQueryHandler(reactor, config, pluginData, templateFileName);
     boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> result(qh);
-    result->init_handler();
     return result;
   }
   catch (...)

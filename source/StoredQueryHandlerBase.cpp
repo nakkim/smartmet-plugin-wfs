@@ -51,6 +51,17 @@ StoredQueryHandlerBase::StoredQueryHandlerBase(SmartMet::Spine::Reactor* reactor
 
 StoredQueryHandlerBase::~StoredQueryHandlerBase() {}
 
+void StoredQueryHandlerBase::perform_init()
+{
+  try
+  {
+    execute_init_actions();
+    init_handler();
+  } catch (...) {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
 void StoredQueryHandlerBase::init_handler() {}
 
 std::string StoredQueryHandlerBase::get_query_name() const
