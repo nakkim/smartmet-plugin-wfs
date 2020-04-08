@@ -51,7 +51,7 @@ bw::StoredForecastQueryHandler::StoredForecastQueryHandler(
       bw::RequiresGeoEngine(reactor),
       bw::RequiresQEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
-      bw::SupportsLocationParameters(config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
+      bw::SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
       bw::SupportsTimeParameters(config),
       bw::SupportsTimeZone(config),
       common_params(),
@@ -130,7 +130,7 @@ void bw::StoredForecastQueryHandler::query(const StoredQuery& stored_query,
         query.tz_name = get_tz_name(params);
 
         parse_models(params, query);
-        get_location_options(geo_engine, params, query.language, &query.locations);
+        get_location_options(params, query.language, &query.locations);
 
         parse_level_heights(params, query);
         parse_levels(params, query);

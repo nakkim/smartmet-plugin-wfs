@@ -54,7 +54,7 @@ StoredObsQueryHandler::StoredObsQueryHandler(SmartMet::Spine::Reactor* reactor,
       RequiresGeoEngine(reactor),
       RequiresObsEngine(reactor),
       StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
-      SupportsLocationParameters(config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
+      SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
       SupportsBoundingBox(config, plugin_data.get_crs_registry()),
       SupportsTimeZone(config),
       SupportsQualityParameters(config),
@@ -178,7 +178,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
         check_time_interval(query_params.starttime, query_params.endtime, max_hours);
 
       std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > locations_list;
-      get_location_options(geo_engine, params, language, &locations_list);
+      get_location_options(params, language, &locations_list);
       std::transform(
           locations_list.begin(),
           locations_list.end(),

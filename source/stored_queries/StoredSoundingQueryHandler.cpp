@@ -33,7 +33,7 @@ StoredSoundingQueryHandler::StoredSoundingQueryHandler(
       RequiresObsEngine(reactor),
       StoredQueryHandlerBase(reactor, config, pluginData, templateFileName),
       SupportsLocationParameters(
-          config, SUPPORT_KEYWORDS | INCLUDE_FMISIDS | INCLUDE_GEOIDS | INCLUDE_WMOS),
+          reactor, config, SUPPORT_KEYWORDS | INCLUDE_FMISIDS | INCLUDE_GEOIDS | INCLUDE_WMOS),
       SupportsBoundingBox(config, pluginData.get_crs_registry()),
       SupportsQualityParameters(config)
 {
@@ -849,7 +849,7 @@ void StoredSoundingQueryHandler::getStationSearchSettings(
   using LocationListItem = std::pair<std::string, SmartMet::Spine::LocationPtr>;
   using LocationList = std::list<LocationListItem>;
   LocationList locationsList;
-  get_location_options(geo_engine, params, language, &locationsList);
+  get_location_options(params, language, &locationsList);
 
   settings.allplaces = false;
   settings.numberofstations = params.get_single<uint64_t>(P_NUM_OF_STATIONS);

@@ -36,7 +36,7 @@ bw::StoredAviationObservationQueryHandler::StoredAviationObservationQueryHandler
       bw::RequiresGeoEngine(reactor),
       bw::RequiresObsEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
-      bw::SupportsLocationParameters(config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
+      bw::SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
       bw::SupportsBoundingBox(config, plugin_data.get_crs_registry())
 {
   try
@@ -82,7 +82,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
 
       // Search locations.
       std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > validLocations;
-      get_location_options(geo_engine, params, language, &validLocations);
+      get_location_options(params, language, &validLocations);
 
       // Get ICAO codes requested
       std::vector<std::string> icaoCodeVector;

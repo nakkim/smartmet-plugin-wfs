@@ -69,9 +69,6 @@ class StoredAirNuclideQueryHandler : protected virtual SupportsExtraHandlerParam
   double m_maxHours;
   bool m_sqRestrictions;
   bool m_supportQCParameters;
-
-  SmartMet::Engine::Observation::Engine* m_obsEngine;
-  SmartMet::Engine::Geonames::Engine* m_geoEngine;
 };
 
 }  // namespace WFS

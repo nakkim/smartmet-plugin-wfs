@@ -22,7 +22,7 @@ bw::StoredAirNuclideQueryHandler::StoredAirNuclideQueryHandler(
       bw::RequiresObsEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       bw::SupportsLocationParameters(
-          config, INCLUDE_FMISIDS | INCLUDE_GEOIDS | INCLUDE_WMOS | SUPPORT_KEYWORDS),
+          reactor, config, INCLUDE_FMISIDS | INCLUDE_GEOIDS | INCLUDE_WMOS | SUPPORT_KEYWORDS),
       bw::SupportsBoundingBox(config, plugin_data.get_crs_registry()),
       bw::SupportsQualityParameters(config)
 
@@ -98,7 +98,7 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
       typedef std::pair<std::string, SmartMet::Spine::LocationPtr> LocationListItem;
       typedef std::list<LocationListItem> LocationList;
       LocationList locations_list;
-      get_location_options(m_geoEngine, params, language, &locations_list);
+      get_location_options(params, language, &locations_list);
 
       const int debug_level = get_config()->get_debug_level();
       if (debug_level > 2)
@@ -142,7 +142,7 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
       // Search stations based on location settings.
       // The result does not contain duplicates.
       SmartMet::Spine::Stations stationCandidates;
-      m_obsEngine->getStations(stationCandidates, stationSearchSettings);
+      obs_engine->getStations(stationCandidates, stationSearchSettings);
 
       std::string langCode = language;
       SupportsLocationParameters::engOrFinToEnOrFi(langCode);
@@ -158,7 +158,7 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
         std::string fmisidStr = std::to_string((*it).fmisid);
         stations.emplace(fmisidStr, *it);
 
-        SmartMet::Spine::LocationPtr geoLoc = m_geoEngine->idSearch(it->geoid, langCode);
+        SmartMet::Spine::LocationPtr geoLoc = geo_engine->idSearch(it->geoid, langCode);
         if (geoLoc)
         {
           stations[fmisidStr].country = geoLoc->country;
@@ -218,7 +218,7 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
 
       std::string paramName = "AC_P7D_avg";
       // Is the parameter configured in Observation
-      const uint64_t paramId = m_obsEngine->getParameterId(paramName, stationType);
+      const uint64_t paramId = obs_engine->getParameterId(paramName, stationType);
       if (not paramId)
       {
         SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
@@ -247,7 +247,7 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
       profileQuery.setQueryParams(&stationQueryParams);
       if (queryInitializationOK)
       {
-        m_obsEngine->makeQuery(&profileQuery);
+        obs_engine->makeQuery(&profileQuery);
       }
 
       // Container with the observation identities of the requested stations.
@@ -301,7 +301,7 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
         radioNuclidesQueryParams.useDistinct();
 
         radioNuclidesQuery.setQueryParams(&radioNuclidesQueryParams);
-        m_obsEngine->makeQuery(&radioNuclidesQuery);
+        obs_engine->makeQuery(&radioNuclidesQuery);
 
         std::shared_ptr<bo::QueryResult> radioNuclidesContainer =
             radioNuclidesQuery.getQueryResultContainer();
@@ -376,7 +376,7 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
         dataQuery.setQueryParams(&dataQueryParams);
 
         if (queryInitializationOK)
-          m_obsEngine->makeQuery(&dataQuery);
+          obs_engine->makeQuery(&dataQuery);
       }
 
       // Get the sequence number of query in the request
@@ -643,7 +643,7 @@ bw::StoredAirNuclideQueryHandler::dbRegistryConfig(const std::string& configName
   {
     // Get database registry from Engine::Observation.
     const std::shared_ptr<SmartMet::Engine::Observation::DBRegistry> dbRegistry =
-        m_obsEngine->dbRegistry();
+        obs_engine->dbRegistry();
     if (not dbRegistry)
     {
       SmartMet::Spine::Exception exception(BCP, "Database registry is not available!");

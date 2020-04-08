@@ -20,7 +20,7 @@ bw::StoredMastQueryHandler::StoredMastQueryHandler(SmartMet::Spine::Reactor* rea
       bw::RequiresGeoEngine(reactor),
       bw::RequiresObsEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
-      bw::SupportsLocationParameters(config, INCLUDE_FMISIDS | INCLUDE_GEOIDS | INCLUDE_WMOS),
+      bw::SupportsLocationParameters(reactor, config, INCLUDE_FMISIDS | INCLUDE_GEOIDS | INCLUDE_WMOS),
       bw::SupportsBoundingBox(config, plugin_data.get_crs_registry()),
       bw::SupportsQualityParameters(config)
 
@@ -92,7 +92,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       typedef std::pair<std::string, SmartMet::Spine::LocationPtr> LocationListItem;
       typedef std::list<LocationListItem> LocationList;
       LocationList locations_list;
-      get_location_options(geo_engine, params, language, &locations_list);
+      get_location_options(params, language, &locations_list);
 
       const int debug_level = get_config()->get_debug_level();
       if (debug_level > 2)

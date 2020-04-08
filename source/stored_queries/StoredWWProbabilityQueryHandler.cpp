@@ -169,7 +169,7 @@ StoredWWProbabilityQueryHandler::StoredWWProbabilityQueryHandler(
       RequiresGeoEngine(reactor),
       RequiresQEngine(reactor),
       StoredQueryHandlerBase(reactor, config, pluginData, templateFileName),
-      SupportsLocationParameters(config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
+      SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
       SupportsBoundingBox(config, pluginData.get_crs_registry(), false),
       SupportsTimeParameters(config),
       SupportsTimeZone(config)
@@ -440,7 +440,7 @@ void StoredWWProbabilityQueryHandler::query(const StoredQuery& query,
     typedef std::pair<std::string, SmartMet::Spine::LocationPtr> LocationListItem;
     std::list<LocationListItem> llist;
 
-    get_location_options(geo_engine, sq_params, language, &llist);
+    get_location_options(sq_params, language, &llist);
 
     if (llist.empty())
     {
@@ -467,7 +467,7 @@ void StoredWWProbabilityQueryHandler::query(const StoredQuery& query,
 
     // fetch all icao codes
     std::list<LocationListItem> llist_icao;
-    get_location_options(geo_engine, sq_params, "icao", &llist_icao);
+    get_location_options(sq_params, "icao", &llist_icao);
 
     // requested icao codes
     std::vector<std::string> icaoCodeVector;
