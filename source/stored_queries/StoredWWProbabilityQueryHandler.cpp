@@ -164,14 +164,15 @@ StoredWWProbabilityQueryHandler::StoredWWProbabilityQueryHandler(
     boost::shared_ptr<StoredQueryConfig> config,
     PluginImpl& pluginData,
     boost::optional<std::string> templateFileName)
+
     : SupportsExtraHandlerParams(config, false),
+      RequiresGeoEngine(reactor),
+      RequiresQEngine(reactor),
       StoredQueryHandlerBase(reactor, config, pluginData, templateFileName),
       SupportsLocationParameters(config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
       SupportsBoundingBox(config, pluginData.get_crs_registry(), false),
       SupportsTimeParameters(config),
-      SupportsTimeZone(config),
-      itsQEngine(nullptr),
-      itsGeonames(nullptr)
+      SupportsTimeZone(config)
 {
   try
   {
@@ -215,29 +216,6 @@ StoredWWProbabilityQueryHandler::StoredWWProbabilityQueryHandler(
 }
 
 StoredWWProbabilityQueryHandler::~StoredWWProbabilityQueryHandler() {}
-
-void StoredWWProbabilityQueryHandler::init_handler()
-{
-  try
-  {
-    auto* reactor = get_reactor();
-    void* engine = reactor->getSingleton("Querydata", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Querydata engine available");
-
-    itsQEngine = reinterpret_cast<SmartMet::Engine::Querydata::Engine*>(engine);
-
-    engine = reactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-
-    itsGeonames = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 void StoredWWProbabilityQueryHandler::parseQueryResults(
     const ProbabilityQueryResultSet& query_results,
@@ -462,7 +440,7 @@ void StoredWWProbabilityQueryHandler::query(const StoredQuery& query,
     typedef std::pair<std::string, SmartMet::Spine::LocationPtr> LocationListItem;
     std::list<LocationListItem> llist;
 
-    get_location_options(itsGeonames, sq_params, language, &llist);
+    get_location_options(geo_engine, sq_params, language, &llist);
 
     if (llist.empty())
     {
@@ -489,7 +467,7 @@ void StoredWWProbabilityQueryHandler::query(const StoredQuery& query,
 
     // fetch all icao codes
     std::list<LocationListItem> llist_icao;
-    get_location_options(itsGeonames, sq_params, "icao", &llist_icao);
+    get_location_options(geo_engine, sq_params, "icao", &llist_icao);
 
     // requested icao codes
     std::vector<std::string> icaoCodeVector;
@@ -526,9 +504,9 @@ void StoredWWProbabilityQueryHandler::query(const StoredQuery& query,
 
     SmartMet::Engine::Querydata::Q q;
     if (requested_origintime)
-      q = itsQEngine->get(producer, *requested_origintime);
+      q = q_engine->get(producer, *requested_origintime);
     else
-      q = itsQEngine->get(producer);
+      q = q_engine->get(producer);
 
     boost::posix_time::ptime origintime = q->originTime();
     boost::posix_time::ptime modificationtime = q->modificationTime();
@@ -537,7 +515,7 @@ void StoredWWProbabilityQueryHandler::query(const StoredQuery& query,
         get_time_generator_options(sq_params);
     // get data in UTC
     const std::string zone = "UTC";
-    auto tz = itsGeonames->getTimeZones().time_zone_from_string(zone);
+    auto tz = geo_engine->getTimeZones().time_zone_from_string(zone);
     SmartMet::Spine::TimeSeriesGenerator::LocalTimeList tlist =
         SmartMet::Spine::TimeSeriesGenerator::generate(*pTimeOptions, tz);
 

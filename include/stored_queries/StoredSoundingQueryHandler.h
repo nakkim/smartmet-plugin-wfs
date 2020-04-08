@@ -7,6 +7,8 @@
 #include "SupportsExtraHandlerParams.h"
 #include "SupportsLocationParameters.h"
 #include "SupportsQualityParameters.h"
+#include "RequiresGeoEngine.h"
+#include "RequiresObsEngine.h"
 #include <engines/geonames/Engine.h>
 #include <engines/observation/DBRegistry.h>
 #include <engines/observation/Engine.h>
@@ -37,6 +39,8 @@ namespace Plugin
 namespace WFS
 {
 class StoredSoundingQueryHandler : protected virtual SupportsExtraHandlerParams,
+                                   protected virtual RequiresGeoEngine,
+                                   protected virtual RequiresObsEngine,
                                    public StoredQueryHandlerBase,
                                    protected SupportsLocationParameters,
                                    protected SupportsBoundingBox,
@@ -121,9 +125,6 @@ class StoredSoundingQueryHandler : protected virtual SupportsExtraHandlerParams,
   uint64_t mMaxSoundings;
   bool mSqRestrictions;
   bool mSupportQCParameters;
-
-  SmartMet::Engine::Observation::Engine* mObservation;
-  SmartMet::Engine::Geonames::Engine* mGeonames;
 };
 }  // namespace WFS
 }  // namespace Plugin

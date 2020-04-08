@@ -17,6 +17,8 @@ bw::StoredMastQueryHandler::StoredMastQueryHandler(SmartMet::Spine::Reactor* rea
                                                    PluginImpl& plugin_data,
                                                    boost::optional<std::string> template_file_name)
     : bw::SupportsExtraHandlerParams(config),
+      bw::RequiresGeoEngine(reactor),
+      bw::RequiresObsEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       bw::SupportsLocationParameters(config, INCLUDE_FMISIDS | INCLUDE_GEOIDS | INCLUDE_WMOS),
       bw::SupportsBoundingBox(config, plugin_data.get_crs_registry()),
@@ -47,31 +49,6 @@ bw::StoredMastQueryHandler::StoredMastQueryHandler(SmartMet::Spine::Reactor* rea
 }
 
 bw::StoredMastQueryHandler::~StoredMastQueryHandler() {}
-
-void bw::StoredMastQueryHandler::init_handler()
-{
-  try
-  {
-    auto* reactor = get_reactor();
-
-    void* engine;
-    engine = reactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-
-    m_geoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-
-    engine = reactor->getSingleton("Observation", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Observation engine available");
-
-    m_obsEngine = reinterpret_cast<SmartMet::Engine::Observation::Engine*>(engine);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 void bw::StoredMastQueryHandler::query(const StoredQuery& query,
                                        const std::string& language,
@@ -115,7 +92,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       typedef std::pair<std::string, SmartMet::Spine::LocationPtr> LocationListItem;
       typedef std::list<LocationListItem> LocationList;
       LocationList locations_list;
-      get_location_options(m_geoEngine, params, language, &locations_list);
+      get_location_options(geo_engine, params, language, &locations_list);
 
       const int debug_level = get_config()->get_debug_level();
       if (debug_level > 2)
@@ -158,7 +135,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       // Search stations based on location settings.
       // The result does not contain duplicates.
       SmartMet::Spine::Stations stationCandidates;
-      m_obsEngine->getStations(stationCandidates, stationSearchSettings);
+      obs_engine->getStations(stationCandidates, stationSearchSettings);
 
       std::string langCode = language;
       SupportsLocationParameters::engOrFinToEnOrFi(langCode);
@@ -171,7 +148,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       {
         stations.push_back(*it);
 
-        SmartMet::Spine::LocationPtr geoLoc = m_geoEngine->idSearch(it->geoid, langCode);
+        SmartMet::Spine::LocationPtr geoLoc = geo_engine->idSearch(it->geoid, langCode);
         if (geoLoc)
         {
           stations.back().country = geoLoc->country;
@@ -234,7 +211,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       MeteoParameterMap meteoParameterMap;
       BOOST_FOREACH (std::string name, meteoParametersVector)
       {
-        const uint64_t paramId = m_obsEngine->getParameterId(name, stationType);
+        const uint64_t paramId = obs_engine->getParameterId(name, stationType);
         if (paramId == 0)
         {
           SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
@@ -374,7 +351,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       bo::MastQuery profileQuery;
       profileQuery.setQueryParams(&stationQueryParams);
       if (queryInitializationOK)
-        m_obsEngine->makeQuery(&profileQuery);
+        obs_engine->makeQuery(&profileQuery);
 
       // Container with the observation identities of the requested stations.
       std::shared_ptr<bo::QueryResult> profileContainer = profileQuery.getQueryResultContainer();
@@ -425,7 +402,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
         dataQuery.setQueryParams(&dataQueryParams);
 
         if (queryInitializationOK)
-          m_obsEngine->makeQuery(&dataQuery);
+          obs_engine->makeQuery(&dataQuery);
       }
 
       // Get the sequence number of query in the request
@@ -684,7 +661,7 @@ bw::StoredMastQueryHandler::dbRegistryConfig(const std::string& configName) cons
   {
     // Get database registry from Observation
     const std::shared_ptr<SmartMet::Engine::Observation::DBRegistry> dbRegistry =
-        m_obsEngine->dbRegistry();
+        obs_engine->dbRegistry();
     if (not dbRegistry)
     {
       std::ostringstream msg;

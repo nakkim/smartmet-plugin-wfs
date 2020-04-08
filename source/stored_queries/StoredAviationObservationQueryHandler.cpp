@@ -31,7 +31,10 @@ bw::StoredAviationObservationQueryHandler::StoredAviationObservationQueryHandler
     boost::shared_ptr<StoredQueryConfig> config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
+
     : bw::SupportsExtraHandlerParams(config),
+      bw::RequiresGeoEngine(reactor),
+      bw::RequiresObsEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       bw::SupportsLocationParameters(config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
       bw::SupportsBoundingBox(config, plugin_data.get_crs_registry())
@@ -53,34 +56,6 @@ bw::StoredAviationObservationQueryHandler::StoredAviationObservationQueryHandler
 }
 
 bw::StoredAviationObservationQueryHandler::~StoredAviationObservationQueryHandler() {}
-
-void bw::StoredAviationObservationQueryHandler::init_handler()
-{
-  try
-  {
-    auto* reactor = get_reactor();
-
-    void* engine;
-
-    // Get Geonames
-    engine = reactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-
-    m_geoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-
-    // Get Observation
-    engine = reactor->getSingleton("Observation", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Observation engine available");
-
-    m_obsEngine = reinterpret_cast<SmartMet::Engine::Observation::Engine*>(engine);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
                                                       const std::string& language,
@@ -107,7 +82,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
 
       // Search locations.
       std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > validLocations;
-      get_location_options(m_geoEngine, params, language, &validLocations);
+      get_location_options(geo_engine, params, language, &validLocations);
 
       // Get ICAO codes requested
       std::vector<std::string> icaoCodeVector;
@@ -138,7 +113,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
 
       // This is the station set allowed in this handler.
       SmartMet::Spine::LocationList locationsByStationType =
-          m_geoEngine->keywordSearch(nameSearchOptions, stationType);
+          geo_engine->keywordSearch(nameSearchOptions, stationType);
 
       if (haveBBox)
       {
@@ -171,7 +146,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
           continue;
 
         SmartMet::Spine::LocationList locationList =
-            m_geoEngine->nameSearch(nameSearchOptions, *it);
+            geo_engine->nameSearch(nameSearchOptions, *it);
 
         // ICAO code is uniq so the first one must be the one.
         if (locationList.size() == 0 or locationList.front()->name != *it)
@@ -224,7 +199,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
       if (not validIcaoCodes.empty())
       {
         const std::shared_ptr<bo::DBRegistryConfig> registryConfig =
-            m_obsEngine->dbRegistry()->dbRegistryConfig("QC_RUT.AVIOBS_V2");
+            obs_engine->dbRegistry()->dbRegistryConfig("QC_RUT.AVIOBS_V2");
         if (registryConfig == nullptr)
         {
           std::cerr
@@ -269,7 +244,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
 
           verifiableMessageQuery.setQueryParams(&queryParams);
 
-          m_obsEngine->makeQuery(&verifiableMessageQuery);
+          obs_engine->makeQuery(&verifiableMessageQuery);
         }
         catch (...)
         {

@@ -7,6 +7,8 @@
 #include "SupportsExtraHandlerParams.h"
 #include "SupportsLocationParameters.h"
 #include "SupportsTimeZone.h"
+#include "RequiresGeoEngine.h"
+#include "RequiresObsEngine.h"
 #include <engines/geonames/Engine.h>
 #include <engines/observation/Engine.h>
 
@@ -20,6 +22,8 @@ namespace WFS
  *  @brief This handler class is designed to fetch IWXXM messages from ObsEngine
  */
 class StoredAviationObservationQueryHandler : protected virtual SupportsExtraHandlerParams,
+                                              protected virtual RequiresGeoEngine,
+                                              protected virtual RequiresObsEngine,
                                               public StoredQueryHandlerBase,
                                               protected SupportsLocationParameters,
                                               protected SupportsBoundingBox
@@ -32,8 +36,6 @@ class StoredAviationObservationQueryHandler : protected virtual SupportsExtraHan
 
   virtual ~StoredAviationObservationQueryHandler();
 
-  virtual void init_handler();
-
   virtual void query(const StoredQuery& query,
                      const std::string& language,
 		     const boost::optional<std::string> &hostname,
@@ -44,9 +46,6 @@ class StoredAviationObservationQueryHandler : protected virtual SupportsExtraHan
       const RequestParameterMap& request_params,
       int seq_id,
       std::vector<boost::shared_ptr<RequestParameterMap> >& result) const;
-
-  SmartMet::Engine::Geonames::Engine* m_geoEngine;
-  SmartMet::Engine::Observation::Engine* m_obsEngine;
 
   bool m_sqRestrictions;
   double m_maxHours;

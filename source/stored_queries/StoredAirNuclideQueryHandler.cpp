@@ -16,7 +16,10 @@ bw::StoredAirNuclideQueryHandler::StoredAirNuclideQueryHandler(
     boost::shared_ptr<StoredQueryConfig> config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
+
     : bw::SupportsExtraHandlerParams(config),
+      bw::RequiresGeoEngine(reactor),
+      bw::RequiresObsEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       bw::SupportsLocationParameters(
           config, INCLUDE_FMISIDS | INCLUDE_GEOIDS | INCLUDE_WMOS | SUPPORT_KEYWORDS),
@@ -46,31 +49,6 @@ bw::StoredAirNuclideQueryHandler::StoredAirNuclideQueryHandler(
 }
 
 bw::StoredAirNuclideQueryHandler::~StoredAirNuclideQueryHandler() {}
-
-void bw::StoredAirNuclideQueryHandler::init_handler()
-{
-  try
-  {
-    auto* reactor = get_reactor();
-
-    void* engine;
-    engine = reactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-
-    m_geoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-
-    engine = reactor->getSingleton("Observation", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Observation engine available");
-
-    m_obsEngine = reinterpret_cast<SmartMet::Engine::Observation::Engine*>(engine);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
                                              const std::string& language,

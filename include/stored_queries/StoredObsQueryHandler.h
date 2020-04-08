@@ -11,8 +11,8 @@
 #include "SupportsMeteoParameterOptions.h"
 #include "SupportsQualityParameters.h"
 #include "SupportsTimeZone.h"
-#include <engines/geonames/Engine.h>
-#include <engines/observation/Engine.h>
+#include "RequiresGeoEngine.h"
+#include "RequiresObsEngine.h"
 namespace SmartMet
 {
 namespace Plugin
@@ -25,7 +25,9 @@ class StoredObsQueryHandler : public StoredQueryHandlerBase,
                               protected SupportsTimeZone,
                               protected SupportsQualityParameters,
                               protected SupportsMeteoParameterOptions,
-                              protected virtual SupportsExtraHandlerParams
+                              protected virtual SupportsExtraHandlerParams,
+                              protected virtual RequiresGeoEngine,
+                              protected virtual RequiresObsEngine
 {
  public:
   StoredObsQueryHandler(SmartMet::Spine::Reactor* reactor,
@@ -34,8 +36,6 @@ class StoredObsQueryHandler : public StoredQueryHandlerBase,
                         boost::optional<std::string> template_file_name);
 
   virtual ~StoredObsQueryHandler();
-
-  virtual void init_handler();
 
   virtual void query(const StoredQuery& query,
                      const std::string& language,
@@ -67,9 +67,6 @@ class StoredObsQueryHandler : public StoredQueryHandlerBase,
   };
 
  private:
-  SmartMet::Engine::Geonames::Engine* geo_engine;
-  SmartMet::Engine::Observation::Engine* obs_engine;
-
   /**
    *   @brief The vector of initial parameters which are queried always
    */

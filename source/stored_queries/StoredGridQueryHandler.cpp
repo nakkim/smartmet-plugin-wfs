@@ -73,6 +73,8 @@ StoredGridQueryHandler::StoredGridQueryHandler(SmartMet::Spine::Reactor* reactor
                                                PluginImpl& plugin_data,
                                                boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
+      RequiresGeoEngine(reactor),
+      RequiresQEngine(reactor),
       StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       SupportsBoundingBox(config, plugin_data.get_crs_registry(), false),
       SupportsTimeParameters(config),
@@ -100,32 +102,6 @@ StoredGridQueryHandler::StoredGridQueryHandler(SmartMet::Spine::Reactor* reactor
 }
 
 StoredGridQueryHandler::~StoredGridQueryHandler() {}
-
-void StoredGridQueryHandler::init_handler()
-{
-  try
-  {
-    auto* reactor = get_reactor();
-
-    void* engine;
-
-    engine = reactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-
-    geo_engine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-
-    engine = reactor->getSingleton("Querydata", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Querydata engine available");
-
-    q_engine = reinterpret_cast<SmartMet::Engine::Querydata::Engine*>(engine);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 StoredGridQueryHandler::Query::Query(boost::shared_ptr<const StoredQueryConfig> config)
     : missing_text("nan"),

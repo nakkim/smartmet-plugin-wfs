@@ -30,10 +30,11 @@ bw::StoredEnvMonitoringNetworkQueryHandler::StoredEnvMonitoringNetworkQueryHandl
     boost::shared_ptr<StoredQueryConfig> config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
+
     : bw::SupportsExtraHandlerParams(config),
-      bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
-      m_geoEngine(nullptr),
-      m_obsEngine(nullptr)
+      RequiresGeoEngine(reactor),
+      RequiresObsEngine(reactor),
+      bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name)
 {
   try
   {
@@ -55,34 +56,6 @@ bw::StoredEnvMonitoringNetworkQueryHandler::StoredEnvMonitoringNetworkQueryHandl
 }
 
 bw::StoredEnvMonitoringNetworkQueryHandler::~StoredEnvMonitoringNetworkQueryHandler() {}
-
-void bw::StoredEnvMonitoringNetworkQueryHandler::init_handler()
-{
-  try
-  {
-    auto* reactor = get_reactor();
-
-    void* engine;
-
-    // Get Geonames
-    engine = reactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-
-    m_geoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-
-    // Get Observation
-    engine = reactor->getSingleton("Observation", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Observation engine available");
-
-    m_obsEngine = reinterpret_cast<SmartMet::Engine::Observation::Engine*>(engine);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 void bw::StoredEnvMonitoringNetworkQueryHandler::query(const StoredQuery& query,
                                                        const std::string& language,
@@ -190,7 +163,7 @@ void bw::StoredEnvMonitoringNetworkQueryHandler::query(const StoredQuery& query,
     // bo::EnvironmentalMonitoringFacilityQuery emnQuery;
     bo::MastQuery emnQuery;
     emnQuery.setQueryParams(&emnQueryParams);
-    m_obsEngine->makeQuery(&emnQuery);
+    obs_engine->makeQuery(&emnQuery);
 
     CTPP::CDT hash;
     params.dump_params(hash["query_parameters"]);
@@ -290,7 +263,7 @@ bw::StoredEnvMonitoringNetworkQueryHandler::dbRegistryConfig(const std::string& 
     // Get database registry from Observation
 
     const std::shared_ptr<SmartMet::Engine::Observation::DBRegistry> dbRegistry =
-        m_obsEngine->dbRegistry();
+        obs_engine->dbRegistry();
     if (not dbRegistry)
     {
       SmartMet::Spine::Exception exception(BCP, "Database registry is not available!");
