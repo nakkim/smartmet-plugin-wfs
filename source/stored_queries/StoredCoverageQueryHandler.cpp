@@ -13,6 +13,9 @@ bw::StoredCoverageQueryHandler::StoredCoverageQueryHandler(
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
+      RequiresContourEngine(reactor),
+      RequiresQEngine(reactor),
+      RequiresGeoEngine(reactor),
       StoredContourQueryHandler(reactor, config, plugin_data, template_file_name)
 {
   try

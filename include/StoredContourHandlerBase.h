@@ -9,9 +9,9 @@
 #include "SupportsExtraHandlerParams.h"
 #include "SupportsTimeParameters.h"
 #include "SupportsTimeZone.h"
-
-#include <engines/contour/Engine.h>
-#include <engines/querydata/Engine.h>
+#include "RequiresContourEngine.h"
+#include "RequiresQEngine.h"
+#include "RequiresGeoEngine.h"
 
 #include <gis/OGR.h>
 
@@ -26,6 +26,9 @@ namespace WFS
  */
 class StoredContourQueryHandler : public StoredQueryHandlerBase,
                                   protected virtual SupportsExtraHandlerParams,
+                                  protected virtual RequiresContourEngine,
+                                  protected virtual RequiresQEngine,
+                                  protected virtual RequiresGeoEngine,
                                   protected SupportsBoundingBox,
                                   protected SupportsTimeParameters,
                                   protected SupportsTimeZone
@@ -40,8 +43,6 @@ class StoredContourQueryHandler : public StoredQueryHandlerBase,
                      const std::string& language,
 		     const boost::optional<std::string>& hostname,
                      std::ostream& output) const;
-
-  virtual void init_handler();
 
  protected:
   virtual void clipGeometry(OGRGeometryPtr& geom, Fmi::Box& bbox) const = 0;
@@ -62,10 +63,6 @@ class StoredContourQueryHandler : public StoredQueryHandlerBase,
   FmiParameterName id;
 
  private:
-  SmartMet::Engine::Querydata::Engine* itsQEngine;
-  SmartMet::Engine::Geonames::Engine* itsGeonames;
-  SmartMet::Engine::Contour::Engine* itsContourEngine;
-
   std::string formatCoordinates(const OGRGeometry* geom,
                                 bool latLonOrder,
                                 unsigned int precision) const;
