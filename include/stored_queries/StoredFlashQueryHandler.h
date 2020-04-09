@@ -8,6 +8,8 @@
 #include "SupportsBoundingBox.h"
 #include "SupportsExtraHandlerParams.h"
 #include "SupportsTimeZone.h"
+#include "RequiresGeoEngine.h"
+#include "RequiresObsEngine.h"
 #include <engines/geonames/Engine.h>
 #include <engines/observation/Engine.h>
 
@@ -20,7 +22,9 @@ namespace WFS
 class StoredFlashQueryHandler : public StoredQueryHandlerBase,
                                 protected SupportsBoundingBox,
                                 protected SupportsTimeZone,
-                                protected virtual SupportsExtraHandlerParams
+                                protected virtual SupportsExtraHandlerParams,
+                                protected virtual RequiresGeoEngine,
+                                protected virtual RequiresObsEngine
 {
  public:
   StoredFlashQueryHandler(SmartMet::Spine::Reactor *reactor,
@@ -30,18 +34,12 @@ class StoredFlashQueryHandler : public StoredQueryHandlerBase,
 
   virtual ~StoredFlashQueryHandler();
 
-  virtual void init_handler();
-
   virtual void query(const StoredQuery &query,
                      const std::string &language,
 		     const boost::optional<std::string> &hostname,
                      std::ostream &output) const;
 
  private:
-  SmartMet::Engine::Geonames::Engine *geo_engine;
-
-  SmartMet::Engine::Observation::Engine *obs_engine;
-
   std::vector<SmartMet::Spine::Parameter> bs_param;
   int stroke_time_ind;
   int lon_ind;

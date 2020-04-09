@@ -77,12 +77,12 @@ StoredGridForecastQueryHandler::StoredGridForecastQueryHandler(
     PluginImpl& plugin_impl,
     boost::optional<std::string> template_file_name) :
         SupportsExtraHandlerParams(config, false),
+        RequiresGridEngine(reactor),
+        RequiresGeoEngine(reactor),
         StoredQueryHandlerBase(reactor, config, plugin_impl, template_file_name),
-        SupportsLocationParameters(config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
+        SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
         SupportsTimeParameters(config),
         SupportsTimeZone(config),
-        geoEngine(NULL),
-        gridEngine(NULL),
         common_params(),
         ind_geoid(add_param(common_params, "geoid", Spine::Parameter::Type::DataIndependent)),
         ind_epoch(add_param(common_params, "time", Spine::Parameter::Type::DataIndependent)),
@@ -140,13 +140,13 @@ void StoredGridForecastQueryHandler::init_handler()
     if (engine == NULL)
       throw Spine::Exception(BCP, "No Geonames engine available");
 
-    geoEngine = reinterpret_cast<Engine::Geonames::Engine*>(engine);
+    geo_engine = reinterpret_cast<Engine::Geonames::Engine*>(engine);
 
     engine = reactor->getSingleton("grid", NULL);
     if (engine == NULL)
       throw Spine::Exception(BCP, "No Grid engine available");
 
-    gridEngine = reinterpret_cast<Engine::Grid::Engine*>(engine);
+    grid_engine = reinterpret_cast<Engine::Grid::Engine*>(engine);
   }
   catch (...)
   {
@@ -192,7 +192,7 @@ void StoredGridForecastQueryHandler::query(const StoredQuery& stored_query, cons
         query.tz_name = get_tz_name(params);
 
         parse_models(params, query);
-        get_location_options(geoEngine, params, query.language, &query.locations);
+        get_location_options(params, query.language, &query.locations);
 
         parse_level_heights(params, query);
         parse_levels(params, query);
@@ -423,7 +423,7 @@ uint StoredGridForecastQueryHandler::processGridQuery(
 {
   try
   {
-    std::shared_ptr < ContentServer::ServiceInterface > contentServer = gridEngine->getContentServer_sptr();
+    std::shared_ptr < ContentServer::ServiceInterface > contentServer = grid_engine->getContentServer_sptr();
     Spine::TimeSeries::Value missing_value = Spine::TimeSeries::None();
     std::string timezoneName = loc->timezone;
     boost::local_time::time_zone_ptr localtz = itsTimezones.time_zone_from_string(loc->timezone);
@@ -452,7 +452,7 @@ uint StoredGridForecastQueryHandler::processGridQuery(
 
     AdditionalParameters additionalParameters(itsTimezones, *wfsQuery.output_locale, *wfsQuery.time_formatter, *wfsQuery.value_formatter);
 
-    int result = gridEngine->executeQuery(gridQuery);
+    int result = grid_engine->executeQuery(gridQuery);
     if (result != 0)
     {
       Spine::Exception exception(BCP, "The query server returns an error message!");
@@ -646,7 +646,7 @@ uint StoredGridForecastQueryHandler::processGridQuery(
               if (gridQuery.mProducerNameList.size() == 1)
               {
                 std::vector<std::string> pnameList;
-                gridEngine->getProducerNameList(gridQuery.mProducerNameList[0], pnameList);
+                grid_engine->getProducerNameList(gridQuery.mProducerNameList[0], pnameList);
                 if (pnameList.size() > 0)
                   producer = pnameList[0];
               }
@@ -790,7 +790,7 @@ Table_sptr StoredGridForecastQueryHandler::extract_forecast(Query& wfsQuery) con
 
       Spine::LocationPtr loc = tloc->second;
       const std::string place = tloc->second->name;
-      const std::string country = geoEngine->countryName(loc->iso2, wfsQuery.language);
+      const std::string country = geo_engine->countryName(loc->iso2, wfsQuery.language);
 
       if (debug_level > 0)
         std::cout << "Location: " << loc->name << " in " << country << std::endl;
@@ -885,7 +885,7 @@ Table_sptr StoredGridForecastQueryHandler::extract_forecast(Query& wfsQuery) con
 
           std::string key = producerName + ";" + paramName;
 
-          gridEngine->getParameterDetails(producerName,paramName,parameters);
+          grid_engine->getParameterDetails(producerName,paramName,parameters);
 
           size_t len = parameters.size();
           if (len > 0  &&  strcasecmp(parameters[0].mProducerName.c_str(),key.c_str()) != 0)
@@ -1083,7 +1083,6 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_grid_foreca
   {
     StoredGridForecastQueryHandler* qh = new StoredGridForecastQueryHandler(reactor, config, plugin_impl, template_file_name);
     boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> result(qh);
-    result->init_handler();
     return result;
   }
   catch (...)

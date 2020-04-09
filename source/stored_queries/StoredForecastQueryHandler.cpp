@@ -46,13 +46,14 @@ bw::StoredForecastQueryHandler::StoredForecastQueryHandler(
     boost::shared_ptr<bw::StoredQueryConfig> config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
-    : SupportsExtraHandlerParams(config, false),
+
+    : bw::SupportsExtraHandlerParams(config, false),
+      bw::RequiresGeoEngine(reactor),
+      bw::RequiresQEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
-      bw::SupportsLocationParameters(config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
+      bw::SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
       bw::SupportsTimeParameters(config),
       bw::SupportsTimeZone(config),
-      geo_engine(nullptr),
-      q_engine(nullptr),
       common_params(),
       ind_geoid(SmartMet::add_param(common_params, "geoid", Parameter::Type::DataIndependent)),
       ind_epoch(SmartMet::add_param(common_params, "time", Parameter::Type::DataIndependent)),
@@ -89,30 +90,6 @@ bw::StoredForecastQueryHandler::StoredForecastQueryHandler(
 }
 
 bw::StoredForecastQueryHandler::~StoredForecastQueryHandler() {}
-
-void bw::StoredForecastQueryHandler::init_handler()
-{
-  try
-  {
-    auto* reactor = get_reactor();
-    void* engine;
-    engine = reactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-
-    geo_engine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-
-    engine = reactor->getSingleton("Querydata", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Querydata engine available");
-
-    q_engine = reinterpret_cast<SmartMet::Engine::Querydata::Engine*>(engine);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 void bw::StoredForecastQueryHandler::query(const StoredQuery& stored_query,
                                            const std::string& language,
@@ -153,7 +130,7 @@ void bw::StoredForecastQueryHandler::query(const StoredQuery& stored_query,
         query.tz_name = get_tz_name(params);
 
         parse_models(params, query);
-        get_location_options(geo_engine, params, query.language, &query.locations);
+        get_location_options(params, query.language, &query.locations);
 
         parse_level_heights(params, query);
         parse_levels(params, query);
@@ -932,7 +909,6 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_forecast_ha
     StoredForecastQueryHandler* qh =
         new StoredForecastQueryHandler(reactor, config, plugin_impl, template_file_name);
     boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> result(qh);
-    result->init_handler();
     return result;
   }
   catch (...)

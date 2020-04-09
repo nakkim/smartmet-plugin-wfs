@@ -31,14 +31,16 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
     boost::shared_ptr<bw::StoredQueryConfig> config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
+
     : SupportsExtraHandlerParams(config, false),
+      RequiresGridEngine(reactor),
+      RequiresContourEngine(reactor),
+      RequiresQEngine(reactor),
+      RequiresGeoEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       bw::SupportsBoundingBox(config, plugin_data.get_crs_registry(), false),
       bw::SupportsTimeParameters(config),
-      bw::SupportsTimeZone(config),
-      itsQEngine(nullptr),
-      itsGeonames(nullptr),
-      itsContourEngine(nullptr)
+      bw::SupportsTimeZone(config)
 {
   try
   {
@@ -81,47 +83,6 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
 }
 
 bw::StoredContourQueryHandler::~StoredContourQueryHandler() {}
-void bw::StoredContourQueryHandler::init_handler()
-{
-  try
-  {
-    auto* reactor = get_reactor();
-    void* engine;
-
-    engine = reactor->getSingleton("Contour", nullptr);
-    if (engine == nullptr)
-    {
-      throw SmartMet::Spine::Exception(BCP, "No Contour engine available");
-    }
-
-    itsContourEngine = reinterpret_cast<SmartMet::Engine::Contour::Engine*>(engine);
-
-    engine = reactor->getSingleton("Querydata", nullptr);
-    if (engine == nullptr)
-    {
-      throw SmartMet::Spine::Exception(BCP, "No Querydata engine available");
-    }
-    itsQEngine = reinterpret_cast<SmartMet::Engine::Querydata::Engine*>(engine);
-
-    engine = reactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-    {
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-    }
-    itsGeonames = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-
-    engine = reactor->getSingleton("grid", nullptr);
-    if (engine == nullptr)
-    {
-      throw SmartMet::Spine::Exception(BCP, "No Grid engine available");
-    }
-    itsGridEngine = reinterpret_cast<SmartMet::Engine::Grid::Engine*>(engine);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours(
     const ContourQueryParameter& queryParameter) const
@@ -198,17 +159,17 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_qEngine(
           }
         }
 
-        auto matrix = itsQEngine->getValues(queryParameter.q, valueshash, options.time);
+        auto matrix = q_engine->getValues(queryParameter.q, valueshash, options.time);
         CoordinatesPtr coords =
-            itsQEngine->getWorldCoordinates(queryParameter.q, &queryParameter.sr);
+            q_engine->getWorldCoordinates(queryParameter.q, &queryParameter.sr);
 
-        geoms = itsContourEngine->contour(qhash,
-                                          wkt,
-                                          *matrix,
-                                          coords,
-                                          options,
-                                          queryParameter.q->needsWraparound(),
-                                          &queryParameter.sr);
+        geoms = contour_engine->contour(qhash,
+                                        wkt,
+                                        *matrix,
+                                        coords,
+                                        options,
+                                        queryParameter.q->needsWraparound(),
+                                        &queryParameter.sr);
       }
       catch (const std::exception& e)
       {
@@ -279,7 +240,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
   try
   {
     std::shared_ptr<ContentServer::ServiceInterface> contentServer =
-        itsGridEngine->getContentServer_sptr();
+        grid_engine->getContentServer_sptr();
     Spine::TimeSeries::Value missing_value = Spine::TimeSeries::None();
     ContourQueryResultSet ret;
 
@@ -333,7 +294,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
     queryParameter.gridQuery.mAttributeList.setAttribute(
         "contour.coordinateType", std::to_string(T::CoordinateTypeValue::LATLON_COORDINATES));
 
-    int result = itsGridEngine->executeQuery(queryParameter.gridQuery);
+    int result = grid_engine->executeQuery(queryParameter.gridQuery);
     if (result != 0)
     {
       Spine::Exception exception(BCP, "The query server returns an error message!");
@@ -492,7 +453,7 @@ void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
     std::string dataSource = get_plugin_impl().get_data_source();
     bool gridengine_disabled = get_plugin_impl().is_gridengine_disabled();
 
-    if (!gridengine_disabled && dataSource == P_GRID && itsGridEngine->isGridProducer(producerName))
+    if (!gridengine_disabled && dataSource == P_GRID && grid_engine->isGridProducer(producerName))
     {
       query_gridEngine(stored_query, language, output);
     }
@@ -536,9 +497,9 @@ void bw::StoredContourQueryHandler::query_qEngine(const StoredQuery& stored_quer
 
     SmartMet::Engine::Querydata::Q q;
     if (requested_origintime)
-      q = itsQEngine->get(producer, *requested_origintime);
+      q = q_engine->get(producer, *requested_origintime);
     else
-      q = itsQEngine->get(producer);
+      q = q_engine->get(producer);
 
     boost::posix_time::ptime origintime = q->originTime();
     boost::posix_time::ptime modificationtime = q->modificationTime();
@@ -574,7 +535,7 @@ void bw::StoredContourQueryHandler::query_qEngine(const StoredQuery& stored_quer
 
     // get data in UTC
     const std::string zone = "UTC";
-    auto tz = itsGeonames->getTimeZones().time_zone_from_string(zone);
+    auto tz = geo_engine->getTimeZones().time_zone_from_string(zone);
     query_param->tlist = SmartMet::Spine::TimeSeriesGenerator::generate(*pTimeOptions, tz);
     query_param->tz_name = get_tz_name(sq_params);
 
@@ -654,7 +615,7 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
 
     std::string key = producer + ";" + pName;
 
-    itsGridEngine->getParameterDetails(producer, pName, parameters);
+    grid_engine->getParameterDetails(producer, pName, parameters);
 
     std::string prod;
     std::string geomId;
@@ -747,7 +708,7 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
     boost::shared_ptr<SmartMet::Spine::TimeSeriesGeneratorOptions> pTimeOptions =
         get_time_generator_options(sq_params);
     const std::string zone = "UTC";
-    auto tz = itsGeonames->getTimeZones().time_zone_from_string(zone);
+    auto tz = geo_engine->getTimeZones().time_zone_from_string(zone);
     query_param->tlist = SmartMet::Spine::TimeSeriesGenerator::generate(*pTimeOptions, tz);
     query_param->tz_name = get_tz_name(sq_params);
     get_bounding_box(sq_params, requestedCRS, &(query_param->bbox));

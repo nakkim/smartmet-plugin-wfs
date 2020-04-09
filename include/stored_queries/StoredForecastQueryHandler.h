@@ -7,6 +7,8 @@
 #include "SupportsLocationParameters.h"
 #include "SupportsTimeParameters.h"
 #include "SupportsTimeZone.h"
+#include "RequiresGeoEngine.h"
+#include "RequiresQEngine.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <engines/geonames/Engine.h>
 #include <engines/querydata/Engine.h>
@@ -24,6 +26,8 @@ namespace WFS
 {
 class StoredForecastQueryHandler : public StoredQueryHandlerBase,
                                    protected virtual SupportsExtraHandlerParams,
+                                   protected virtual RequiresGeoEngine,
+                                   protected virtual RequiresQEngine,
                                    protected SupportsLocationParameters,
                                    protected SupportsTimeParameters,
                                    protected SupportsTimeZone
@@ -86,8 +90,6 @@ class StoredForecastQueryHandler : public StoredQueryHandlerBase,
 
   virtual ~StoredForecastQueryHandler();
 
-  virtual void init_handler();
-
   virtual void query(const StoredQuery& query,
                      const std::string& language,
 		     const boost::optional<std::string> &hostname,
@@ -109,9 +111,6 @@ class StoredForecastQueryHandler : public StoredQueryHandlerBase,
       const std::string& producer, const boost::posix_time::ptime& origin_time) const;
 
  private:
-  SmartMet::Engine::Geonames::Engine* geo_engine;
-  SmartMet::Engine::Querydata::Engine* q_engine;
-
   std::vector<SmartMet::Spine::Parameter> common_params;
   double max_np_distance;
   bool separate_groups;

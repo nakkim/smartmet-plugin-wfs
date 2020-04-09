@@ -26,7 +26,12 @@ test:	../PluginTest s-input-files ../cnf/local.conf
 	@rm -f $(shell find failures -name '*.xml')
 	@../PluginTest
 
-valgrind: ../PluginTest s_input-files ../cnf/local.conf
+debug:	../PluginTest s-input-files ../cnf/local.conf
+	@mkdir -p failures
+	@rm -f $(shell find failures -name '*.xml')
+	@gdb --args ../PluginTest
+
+valgrind: ../PluginTest s-input-files ../cnf/local.conf
 	@mkdir -p failures
 	@rm -f $(shell find failures -name '*.xml')
 	@$(VALGRIND) ../PluginTest

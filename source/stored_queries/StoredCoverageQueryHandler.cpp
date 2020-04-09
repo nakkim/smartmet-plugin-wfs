@@ -13,6 +13,10 @@ bw::StoredCoverageQueryHandler::StoredCoverageQueryHandler(
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
+      RequiresGridEngine(reactor),
+      RequiresContourEngine(reactor),
+      RequiresQEngine(reactor),
+      RequiresGeoEngine(reactor),
       StoredContourQueryHandler(reactor, config, plugin_data, template_file_name)
 {
   try
@@ -181,7 +185,6 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_coverage_qu
   StoredCoverageQueryHandler* qh =
       new StoredCoverageQueryHandler(reactor, config, plugin_data, template_file_name);
   boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> result(qh);
-  result->init_handler();
   return result;
 }
 }  // namespace

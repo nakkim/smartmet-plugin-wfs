@@ -4,6 +4,8 @@
 #include "StoredQueryHandlerBase.h"
 #include "SupportsExtraHandlerParams.h"
 #include "SupportsLocationParameters.h"
+#include "RequiresGeoEngine.h"
+#include "RequiresObsEngine.h"
 #include <engines/geonames/Engine.h>
 #include <engines/observation/Engine.h>
 #include <engines/observation/MastQuery.h>
@@ -16,8 +18,9 @@ namespace Plugin
 namespace WFS
 {
 class StoredEnvMonitoringFacilityQueryHandler : public StoredQueryHandlerBase,
-                                                protected virtual SupportsExtraHandlerParams
-
+                                                protected virtual SupportsExtraHandlerParams,
+                                                protected virtual RequiresGeoEngine,
+                                                protected virtual RequiresObsEngine
 {
  public:
   StoredEnvMonitoringFacilityQueryHandler(SmartMet::Spine::Reactor* reactor,
@@ -25,8 +28,6 @@ class StoredEnvMonitoringFacilityQueryHandler : public StoredQueryHandlerBase,
                                           PluginImpl& plugin_impl,
                                           boost::optional<std::string> template_file_name);
   virtual ~StoredEnvMonitoringFacilityQueryHandler();
-
-  virtual void init_handler();
 
   virtual void query(const StoredQuery& query,
                      const std::string& language,
@@ -103,8 +104,6 @@ class StoredEnvMonitoringFacilityQueryHandler : public StoredQueryHandlerBase,
                                        const RequestParameterMap& params,
                                        const StationDataMap& validStations) const;
 
-  SmartMet::Engine::Geonames::Engine* m_geoEngine;
-  SmartMet::Engine::Observation::Engine* m_obsEngine;
   std::string m_missingText;
   int m_debugLevel;
 };

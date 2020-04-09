@@ -9,6 +9,8 @@
 #include "SupportsLocationParameters.h"
 #include "SupportsTimeParameters.h"
 #include "SupportsTimeZone.h"
+#include "RequiresGeoEngine.h"
+#include "RequiresQEngine.h"
 
 #include <engines/querydata/Engine.h>
 
@@ -110,6 +112,8 @@ typedef std::map<SmartMet::Spine::LocationPtr, WinterWeatherTypeProbabilities>
  */
 class StoredWWProbabilityQueryHandler : public StoredQueryHandlerBase,
                                         protected virtual SupportsExtraHandlerParams,
+                                        protected virtual RequiresGeoEngine,
+                                        protected virtual RequiresQEngine,
                                         protected SupportsLocationParameters,
                                         protected SupportsBoundingBox,
                                         protected SupportsTimeParameters,
@@ -128,8 +132,6 @@ class StoredWWProbabilityQueryHandler : public StoredQueryHandlerBase,
 		     const boost::optional<std::string>& hostname,
                      std::ostream& output) const;
 
-  virtual void init_handler();
-
  private:
   void parseQueryResults(const ProbabilityQueryResultSet& query_results,
                          const SmartMet::Spine::BoundingBox& bbox,
@@ -144,9 +146,6 @@ class StoredWWProbabilityQueryHandler : public StoredQueryHandlerBase,
 
   WinterWeatherIntensityProbabilities getProbabilities(
       const ProbabilityQueryParam& queryParam) const;
-
-  SmartMet::Engine::Querydata::Engine* itsQEngine;
-  SmartMet::Engine::Geonames::Engine* itsGeonames;
 
   ProbabilityConfigParams itsProbabilityConfigParams;
 };

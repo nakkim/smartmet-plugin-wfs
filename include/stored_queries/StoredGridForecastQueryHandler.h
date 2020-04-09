@@ -1,6 +1,9 @@
 #pragma once
 
+#include "StoredGridForecastQueryHandler.h"
 #include "StoredForecastQueryHandler.h"
+#include "RequiresGridEngine.h"
+#include "RequiresGeoEngine.h"
 #include <grid-files/common/AdditionalParameters.h>
 #include <engines/grid/Engine.h>
 #include <engines/gis/GeometryStorage.h>
@@ -21,10 +24,12 @@ typedef boost::shared_ptr<Spine::Table> Table_sptr;
 
 
 class StoredGridForecastQueryHandler: public StoredQueryHandlerBase,
-    protected virtual SupportsExtraHandlerParams,
-    protected SupportsLocationParameters,
-    protected SupportsTimeParameters,
-    protected SupportsTimeZone
+                                      protected virtual SupportsExtraHandlerParams,
+                                      protected virtual RequiresGridEngine,
+                                      protected virtual RequiresGeoEngine,
+                                      protected SupportsLocationParameters,
+                                      protected SupportsTimeParameters,
+                                      protected SupportsTimeZone
 {
 
   public:
@@ -61,10 +66,6 @@ class StoredGridForecastQueryHandler: public StoredQueryHandlerBase,
                     uint rowCount) const;
 
   private:
-
-    Engine::Geonames::Engine*     geoEngine;
-    Engine::Grid::Engine*         gridEngine;
-
     Engine::Gis::GeometryStorage  itsGeometryStorage;
     Fmi::TimeZones                itsTimezones;
     mutable string_vec            itsProducerList;
