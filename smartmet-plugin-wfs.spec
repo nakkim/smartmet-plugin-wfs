@@ -94,7 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
-- Thu Apr  9 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.4.9-1.fmi
+* Thu Apr  9 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.4.9-1.fmi
 - Access SmartMet engines using C++ class virtual inheritance instead of initializing
   access separately each time
 
