@@ -104,8 +104,6 @@ class StoredEnvMonitoringFacilityQueryHandler : public StoredQueryHandlerBase,
                                        const RequestParameterMap& params,
                                        const StationDataMap& validStations) const;
 
-  SmartMet::Engine::Geonames::Engine* m_geoEngine;
-  SmartMet::Engine::Observation::Engine* m_obsEngine;
   std::string m_missingText;
   int m_debugLevel;
 };

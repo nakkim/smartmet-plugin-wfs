@@ -154,9 +154,6 @@ class StoredGridQueryHandler : public StoredQueryHandlerBase,
       const std::string& dataCrs) const;
 
  private:
-  SmartMet::Engine::Geonames::Engine* geo_engine;
-  SmartMet::Engine::Querydata::Engine* q_engine;
-
   const int debug_level;
 };
 

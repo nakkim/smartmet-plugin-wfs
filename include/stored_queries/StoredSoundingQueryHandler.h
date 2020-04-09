@@ -78,8 +78,6 @@ class StoredSoundingQueryHandler : protected virtual SupportsExtraHandlerParams,
 
   virtual ~StoredSoundingQueryHandler();
 
-  virtual void init_handler();
-
   virtual void query(const StoredQuery& query,
                      const std::string& language,
                      const boost::optional<std::string>& hostname,

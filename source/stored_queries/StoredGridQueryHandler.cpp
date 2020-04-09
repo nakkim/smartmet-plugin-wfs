@@ -78,8 +78,6 @@ StoredGridQueryHandler::StoredGridQueryHandler(SmartMet::Spine::Reactor* reactor
       StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       SupportsBoundingBox(config, plugin_data.get_crs_registry(), false),
       SupportsTimeParameters(config),
-      geo_engine(nullptr),
-      q_engine(nullptr),
       debug_level(get_config()->get_debug_level())
 {
   try

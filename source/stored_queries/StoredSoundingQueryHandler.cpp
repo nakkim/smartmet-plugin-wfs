@@ -58,28 +58,6 @@ StoredSoundingQueryHandler::StoredSoundingQueryHandler(
 
 StoredSoundingQueryHandler::~StoredSoundingQueryHandler() {}
 
-void StoredSoundingQueryHandler::init_handler()
-{
-  auto* reactor = get_reactor();
-
-  void* engine;
-  engine = reactor->getSingleton("Geonames", nullptr);
-  if (engine == nullptr)
-  {
-    throw std::runtime_error("No Geonames available");
-  }
-
-  geo_engine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-
-  engine = reactor->getSingleton("Observation", nullptr);
-  if (engine == nullptr)
-  {
-    throw std::runtime_error("No Observation available");
-  }
-
-  obs_engine = reinterpret_cast<SmartMet::Engine::Observation::Engine*>(engine);
-}
-
 void StoredSoundingQueryHandler::query(const StoredQuery& query,
                                        const std::string& language,
                                        const boost::optional<std::string>& hostname,
