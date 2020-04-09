@@ -2,6 +2,7 @@
 
 #include "ArrayParameterTemplate.h"
 #include "ScalarParameterTemplate.h"
+#include "RequiresGeoEngine.h"
 #include "StoredQueryConfig.h"
 #include "StoredQueryParamRegistry.h"
 #include "SupportsExtraHandlerParams.h"
@@ -22,7 +23,8 @@ namespace WFS
  *  @brief Base class for stored query location parameter support
  */
 class SupportsLocationParameters : protected virtual SupportsExtraHandlerParams,
-                                   protected virtual StoredQueryParamRegistry
+                                   protected virtual StoredQueryParamRegistry,
+                                   protected virtual RequiresGeoEngine
 {
  public:
   enum location_options_t
@@ -33,7 +35,7 @@ class SupportsLocationParameters : protected virtual SupportsExtraHandlerParams,
     INCLUDE_WMOS = 16
   };
 
- public:
+ protected:
   /**
    *    @brief Constructor
    *
@@ -41,30 +43,30 @@ class SupportsLocationParameters : protected virtual SupportsExtraHandlerParams,
    *    @param options Options which specify what to support. See enum location_options_t
    *            for the meaning of separate bits
    */
-  SupportsLocationParameters(boost::shared_ptr<StoredQueryConfig> config, unsigned options);
+    SupportsLocationParameters(
+        SmartMet::Spine::Reactor* reactor,
+        boost::shared_ptr<StoredQueryConfig> config,
+        unsigned options);
 
+ public:
   virtual ~SupportsLocationParameters();
 
   void get_location_options(
-      SmartMet::Engine::Geonames::Engine *geo_engine,
       const RequestParameterMap &param_values,
       const std::string &language,
       std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > *locations) const;
 
   void get_geoids(
-      SmartMet::Engine::Geonames::Engine *geo_engine,
       const RequestParameterMap &param,
       const std::string &language_requested,
       std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > *locations) const;
 
   void get_fmisids(
-      SmartMet::Engine::Geonames::Engine *geo_engine,
       const RequestParameterMap &param,
       const std::string &language_requested,
       std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > *locations) const;
 
-  void get_wmos(SmartMet::Engine::Geonames::Engine *geo_engine,
-                const RequestParameterMap &param,
+  void get_wmos(const RequestParameterMap &param,
                 const std::string &language_requested,
                 std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > *locations) const;
 

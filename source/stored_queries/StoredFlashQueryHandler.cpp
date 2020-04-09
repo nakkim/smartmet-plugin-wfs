@@ -33,12 +33,13 @@ bw::StoredFlashQueryHandler::StoredFlashQueryHandler(
     boost::shared_ptr<StoredQueryConfig> config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
+
     : SupportsExtraHandlerParams(config, false),
+      RequiresGeoEngine(reactor),
+      RequiresObsEngine(reactor),
       StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       SupportsBoundingBox(config, plugin_data.get_crs_registry()),
       SupportsTimeZone(config),
-      geo_engine(nullptr),
-      obs_engine(nullptr),
       bs_param(),
       stroke_time_ind(
           add_param(bs_param, "utctime", SmartMet::Spine::Parameter::Type::DataIndependent)),
@@ -78,30 +79,6 @@ bw::StoredFlashQueryHandler::StoredFlashQueryHandler(
 }
 
 bw::StoredFlashQueryHandler::~StoredFlashQueryHandler() {}
-
-void bw::StoredFlashQueryHandler::init_handler()
-{
-  try
-  {
-    auto* reactor = get_reactor();
-
-    auto* engine = reactor->getSingleton("Observation", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Observation engine available");
-
-    obs_engine = reinterpret_cast<SmartMet::Engine::Observation::Engine*>(engine);
-
-    engine = reactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-
-    geo_engine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 namespace
 {
@@ -542,7 +519,6 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_flash_handl
     StoredFlashQueryHandler* qh =
         new StoredFlashQueryHandler(reactor, config, plugin_data, template_file_name);
     boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> result(qh);
-    result->init_handler();
     return result;
   }
   catch (...)

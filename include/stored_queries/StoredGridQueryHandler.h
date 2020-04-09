@@ -10,6 +10,8 @@
 #include <spine/TimeSeries.h>
 
 #include "RequestParameterMap.h"
+#include "RequiresGeoEngine.h"
+#include "RequiresQEngine.h"
 #include "SupportsBoundingBox.h"
 #include "SupportsTimeParameters.h"
 #include "stored_queries/StoredAtomQueryHandlerBase.h"
@@ -36,7 +38,9 @@ namespace WFS
 {
 class StoredGridQueryHandler : public StoredQueryHandlerBase,
                                protected SupportsBoundingBox,
-                               protected SupportsTimeParameters
+                               protected SupportsTimeParameters,
+                               protected virtual RequiresGeoEngine,
+                               protected virtual RequiresQEngine
 {
   struct Result
   {
@@ -117,8 +121,6 @@ class StoredGridQueryHandler : public StoredQueryHandlerBase,
                          boost::optional<std::string> template_file_name);
   virtual ~StoredGridQueryHandler();
 
-  virtual void init_handler();
-
   virtual void query(const StoredQuery& query,
                      const std::string& language,
 		     const boost::optional<std::string>& hostname,
@@ -152,9 +154,6 @@ class StoredGridQueryHandler : public StoredQueryHandlerBase,
       const std::string& dataCrs) const;
 
  private:
-  SmartMet::Engine::Geonames::Engine* geo_engine;
-  SmartMet::Engine::Querydata::Engine* q_engine;
-
   const int debug_level;
 };
 

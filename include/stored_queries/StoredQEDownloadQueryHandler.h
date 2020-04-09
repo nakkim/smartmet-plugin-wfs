@@ -2,6 +2,8 @@
 
 #include "SupportsBoundingBox.h"
 #include "stored_queries/StoredAtomQueryHandlerBase.h"
+#include "RequiresGeoEngine.h"
+#include "RequiresQEngine.h"
 #include <boost/geometry/geometry.hpp>
 #include <boost/shared_ptr.hpp>
 #include <gdal/ogr_geometry.h>
@@ -28,7 +30,10 @@ namespace Plugin
 namespace WFS
 {
 class StoredQEDownloadQueryHandler : public StoredAtomQueryHandlerBase,
-                                     protected SupportsBoundingBox
+                                     protected SupportsBoundingBox,
+                                     protected virtual RequiresGeoEngine,
+                                     protected virtual RequiresQEngine
+
 {
   typedef boost::geometry::model::point<float, 2, boost::geometry::cs::cartesian> point_t;
   typedef boost::geometry::model::box<point_t> box_t;
@@ -41,8 +46,6 @@ class StoredQEDownloadQueryHandler : public StoredAtomQueryHandlerBase,
                                boost::optional<std::string> template_file_name);
 
   virtual ~StoredQEDownloadQueryHandler();
-
-  virtual void init_handler();
 
  protected:
   virtual void update_parameters(
@@ -69,8 +72,6 @@ class StoredQEDownloadQueryHandler : public StoredAtomQueryHandlerBase,
                     OGRGeometry& polygon) const;
 
  private:
-  SmartMet::Engine::Geonames::Engine* geo_engine;
-  SmartMet::Engine::Querydata::Engine* q_engine;
   std::set<std::string> producers;
   std::set<std::string> formats;
   std::string default_format;

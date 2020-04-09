@@ -51,14 +51,14 @@ StoredObsQueryHandler::StoredObsQueryHandler(SmartMet::Spine::Reactor* reactor,
                                              PluginImpl& plugin_data,
                                              boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
+      RequiresGeoEngine(reactor),
+      RequiresObsEngine(reactor),
       StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
-      SupportsLocationParameters(config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
+      SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
       SupportsBoundingBox(config, plugin_data.get_crs_registry()),
       SupportsTimeZone(config),
       SupportsQualityParameters(config),
       SupportsMeteoParameterOptions(config),
-      geo_engine(nullptr),
-      obs_engine(nullptr),
       initial_bs_param(),
       fmisid_ind(SmartMet::add_param(initial_bs_param, "fmisid", Parameter::Type::DataIndependent)),
       geoid_ind(SmartMet::add_param(initial_bs_param, "geoid", Parameter::Type::DataIndependent)),
@@ -105,36 +105,6 @@ StoredObsQueryHandler::StoredObsQueryHandler(SmartMet::Spine::Reactor* reactor,
 }
 
 StoredObsQueryHandler::~StoredObsQueryHandler() {}
-
-void StoredObsQueryHandler::init_handler()
-{
-  try
-  {
-    auto* reactor = get_reactor();
-
-    void* engine;
-
-    engine = reactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-    {
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-    }
-
-    geo_engine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-
-    engine = reactor->getSingleton("Observation", nullptr);
-    if (engine == nullptr)
-    {
-      throw SmartMet::Spine::Exception(BCP, "No ObservationEngine available");
-    }
-
-    obs_engine = reinterpret_cast<SmartMet::Engine::Observation::Engine*>(engine);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 void StoredObsQueryHandler::query(const StoredQuery& query,
                                   const std::string& language,
@@ -208,7 +178,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
         check_time_interval(query_params.starttime, query_params.endtime, max_hours);
 
       std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > locations_list;
-      get_location_options(geo_engine, params, language, &locations_list);
+      get_location_options(params, language, &locations_list);
       std::transform(
           locations_list.begin(),
           locations_list.end(),
@@ -769,7 +739,6 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_obs_handler
     StoredObsQueryHandler* qh =
         new StoredObsQueryHandler(reactor, config, plugin_data, template_file_name);
     boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> result(qh);
-    result->init_handler();
     return result;
   }
   catch (...)

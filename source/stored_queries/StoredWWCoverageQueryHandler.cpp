@@ -14,6 +14,9 @@ bw::StoredWWCoverageQueryHandler::StoredWWCoverageQueryHandler(
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
     : SupportsExtraHandlerParams(config, false),
+      RequiresContourEngine(reactor),
+      RequiresQEngine(reactor),
+      RequiresGeoEngine(reactor),
       StoredCoverageQueryHandler(reactor, config, plugin_data, template_file_name)
 {
   try
@@ -139,7 +142,6 @@ wfs_winterweather_coverage_query_handler_create(SmartMet::Spine::Reactor* reacto
     StoredWWCoverageQueryHandler* qh =
         new StoredWWCoverageQueryHandler(reactor, config, plugin_data, template_file_name);
     boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> result(qh);
-    result->init_handler();
     return result;
   }
   catch (...)
