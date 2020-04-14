@@ -53,7 +53,7 @@ bw::StoredForecastQueryHandler::StoredForecastQueryHandler(
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       bw::SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
       bw::SupportsTimeParameters(config),
-      bw::SupportsTimeZone(config),
+      bw::SupportsTimeZone(reactor, config),
       common_params(),
       ind_geoid(SmartMet::add_param(common_params, "geoid", Parameter::Type::DataIndependent)),
       ind_epoch(SmartMet::add_param(common_params, "time", Parameter::Type::DataIndependent)),
