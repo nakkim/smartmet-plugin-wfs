@@ -27,10 +27,13 @@ StoredSoundingQueryHandler::StoredSoundingQueryHandler(
     boost::shared_ptr<StoredQueryConfig> config,
     PluginImpl& pluginData,
     boost::optional<std::string> templateFileName)
+
     : SupportsExtraHandlerParams(config),
+      RequiresGeoEngine(reactor),
+      RequiresObsEngine(reactor),
       StoredQueryHandlerBase(reactor, config, pluginData, templateFileName),
       SupportsLocationParameters(
-          config, SUPPORT_KEYWORDS | INCLUDE_FMISIDS | INCLUDE_GEOIDS | INCLUDE_WMOS),
+          reactor, config, SUPPORT_KEYWORDS | INCLUDE_FMISIDS | INCLUDE_GEOIDS | INCLUDE_WMOS),
       SupportsBoundingBox(config, pluginData.get_crs_registry()),
       SupportsQualityParameters(config)
 {
@@ -54,28 +57,6 @@ StoredSoundingQueryHandler::StoredSoundingQueryHandler(
 }
 
 StoredSoundingQueryHandler::~StoredSoundingQueryHandler() {}
-
-void StoredSoundingQueryHandler::init_handler()
-{
-  auto* reactor = get_reactor();
-
-  void* engine;
-  engine = reactor->getSingleton("Geonames", nullptr);
-  if (engine == nullptr)
-  {
-    throw std::runtime_error("No Geonames available");
-  }
-
-  mGeonames = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-
-  engine = reactor->getSingleton("Observation", nullptr);
-  if (engine == nullptr)
-  {
-    throw std::runtime_error("No Observation available");
-  }
-
-  mObservation = reinterpret_cast<SmartMet::Engine::Observation::Engine*>(engine);
-}
 
 void StoredSoundingQueryHandler::query(const StoredQuery& query,
                                        const std::string& language,
@@ -118,7 +99,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
 
     // The result does not contain duplicates.
     SmartMet::Spine::Stations stations;
-    mObservation->getStations(stations, stationSearchSettings);
+    obs_engine->getStations(stations, stationSearchSettings);
     if (stations.empty())
       queryInitializationOK = false;
 
@@ -503,7 +484,7 @@ const std::shared_ptr<SmartMet::Engine::Observation::DBRegistryConfig>
 StoredSoundingQueryHandler::dbRegistryConfig(const std::string& configName) const
 {
   const std::shared_ptr<SmartMet::Engine::Observation::DBRegistry> dbRegistry =
-      mObservation->dbRegistry();
+      obs_engine->dbRegistry();
   if (not dbRegistry)
   {
     std::ostringstream msg;
@@ -579,10 +560,10 @@ void StoredSoundingQueryHandler::validateAndPopulateMeteoParametersToMap(
   auto stationtype = params.get_single<std::string>(P_STATION_TYPE);
   for (auto& name : meteoParametersVector)
   {
-    const uint64_t paramId = mObservation->getParameterId(name, stationtype);
+    const uint64_t paramId = obs_engine->getParameterId(name, stationtype);
     if (paramId == 0)
     {
-      std::string paramIdStr = mObservation->getParameterIdAsString(name, stationtype);
+      std::string paramIdStr = obs_engine->getParameterIdAsString(name, stationtype);
       if (paramIdStr == "pressure")
       {
         pressureParameterName = name;
@@ -745,7 +726,7 @@ void StoredSoundingQueryHandler::makeSoundingQuery(const RequestParameterMap& pa
   // Execute query
   SmartMet::Engine::Observation::MastQuery profileQuery;
   profileQuery.setQueryParams(&profileQueryParams);
-  mObservation->makeQuery(&profileQuery);
+  obs_engine->makeQuery(&profileQuery);
 
   soundingQueryResult = profileQuery.getQueryResultContainer();
 }
@@ -833,7 +814,7 @@ void StoredSoundingQueryHandler::makeSoundingDataQuery(const RequestParameterMap
 
   SmartMet::Engine::Observation::MastQuery dataQuery;
   dataQuery.setQueryParams(&dataQueryParams);
-  mObservation->makeQuery(&dataQuery);
+  obs_engine->makeQuery(&dataQuery);
   dataContainer = dataQuery.getQueryResultContainer();
 }
 
@@ -846,7 +827,7 @@ void StoredSoundingQueryHandler::getStationSearchSettings(
   using LocationListItem = std::pair<std::string, SmartMet::Spine::LocationPtr>;
   using LocationList = std::list<LocationListItem>;
   LocationList locationsList;
-  get_location_options(mGeonames, params, language, &locationsList);
+  get_location_options(params, language, &locationsList);
 
   settings.allplaces = false;
   settings.numberofstations = params.get_single<uint64_t>(P_NUM_OF_STATIONS);
@@ -910,7 +891,6 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfsStoredSoundi
     StoredSoundingQueryHandler* qh =
         new StoredSoundingQueryHandler(reactor, config, pluginData, templateFileName);
     boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> instance(qh);
-    instance->init_handler();
     return instance;
   }
   catch (...)

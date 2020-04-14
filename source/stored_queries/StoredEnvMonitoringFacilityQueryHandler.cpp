@@ -42,10 +42,11 @@ bw::StoredEnvMonitoringFacilityQueryHandler::StoredEnvMonitoringFacilityQueryHan
     boost::shared_ptr<StoredQueryConfig> config,
     PluginImpl &plugin_data,
     boost::optional<std::string> template_file_name)
+
     : bw::SupportsExtraHandlerParams(config),
-      bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
-      m_geoEngine(nullptr),
-      m_obsEngine(nullptr)
+      RequiresGeoEngine(reactor),
+      RequiresObsEngine(reactor),
+      bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name)
 {
   try
   {
@@ -73,29 +74,6 @@ bw::StoredEnvMonitoringFacilityQueryHandler::StoredEnvMonitoringFacilityQueryHan
 }
 
 bw::StoredEnvMonitoringFacilityQueryHandler::~StoredEnvMonitoringFacilityQueryHandler() {}
-
-void bw::StoredEnvMonitoringFacilityQueryHandler::init_handler()
-{
-  try
-  {
-    auto *reactor = get_reactor();
-    void *engine;
-    engine = reactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-
-    m_geoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine *>(engine);
-    engine = reactor->getSingleton("Observation", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Observation engine available");
-
-    m_obsEngine = reinterpret_cast<SmartMet::Engine::Observation::Engine *>(engine);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query,
                                                         const std::string &language,
@@ -254,7 +232,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query
         std::string countryName;
 
         // Data from Geonames
-        SmartMet::Spine::LocationList locList = m_geoEngine->nameSearch(opts, (*vsIt).first);
+        SmartMet::Spine::LocationList locList = geo_engine->nameSearch(opts, (*vsIt).first);
         if (not locList.empty())
         {
           SmartMet::Spine::LocationPtr stationLocPtr = locList.front();
@@ -271,9 +249,9 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query
         std::string tmpCountryName;
         const std::string countryId = bo::QueryResult::toString((*vsIt).second.country_id);
         if (countryId == "246")
-          tmpCountryName = m_geoEngine->countryName("FI", lang);
+          tmpCountryName = geo_engine->countryName("FI", lang);
         else if (countryId == "752")
-          tmpCountryName = m_geoEngine->countryName("SE", lang);
+          tmpCountryName = geo_engine->countryName("SE", lang);
 
         if (not tmpCountryName.empty())
           hash["stations"][stationCounter]["country"] = tmpCountryName;
@@ -412,7 +390,7 @@ bw::StoredEnvMonitoringFacilityQueryHandler::dbRegistryConfig(const std::string 
   {
     // Get database registry from Observation
     const std::shared_ptr<SmartMet::Engine::Observation::DBRegistry> dbRegistry =
-        m_obsEngine->dbRegistry();
+        obs_engine->dbRegistry();
     if (not dbRegistry)
     {
       std::ostringstream msg;
@@ -547,7 +525,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getValidStations(
     // Making the query
     // bo::MastQuery stationQuery;
     stationQuery.setQueryParams(&stationQueryParams);
-    m_obsEngine->makeQuery(&stationQuery);
+    obs_engine->makeQuery(&stationQuery);
 
     // Store fmisids
     std::shared_ptr<bo::QueryResult> stationQueryResultContainer =
@@ -674,7 +652,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getStationCapabilities(
 
     // Making the query
     scQuery.setQueryParams(&scQueryParams);
-    m_obsEngine->makeQuery(&scQuery);
+    obs_engine->makeQuery(&scQuery);
 
     // Mapping the query result
     std::shared_ptr<bo::QueryResult> scResultContainer = scQuery.getQueryResultContainer();
@@ -793,7 +771,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getStationGroupData(
     // lang);
 
     sgQuery.setQueryParams(&sgQueryParams);
-    m_obsEngine->makeQuery(&sgQuery);
+    obs_engine->makeQuery(&sgQuery);
 
     std::shared_ptr<bo::QueryResult> resultContainer = sgQuery.getQueryResultContainer();
     bo::QueryResult::ValueVectorType::const_iterator stationIdBeginIt =
@@ -871,7 +849,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getStationNetworkMembershipDat
         "OR_GROUP_membership_start", "MEMBERSHIP_START", "PropertyIsLessThanOrEqualTo", endTime);
 
     emfQuery.setQueryParams(&emfQueryParams);
-    m_obsEngine->makeQuery(&emfQuery);
+    obs_engine->makeQuery(&emfQuery);
 
     std::shared_ptr<bo::QueryResult> resultContainer = emfQuery.getQueryResultContainer();
     bo::QueryResult::ValueVectorType::const_iterator stationIdBeginIt =
@@ -927,7 +905,6 @@ wfs_stored_env_monitoring_facility_handler_create(SmartMet::Spine::Reactor *reac
         new bw::StoredEnvMonitoringFacilityQueryHandler(
             reactor, config, plugin_data, template_file_name);
     boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> instance(qh);
-    instance->init_handler();
     return instance;
   }
   catch (...)

@@ -58,11 +58,12 @@ StoredQEDownloadQueryHandler::StoredQEDownloadQueryHandler(
     boost::shared_ptr<StoredQueryConfig> config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
+
     : SupportsExtraHandlerParams(config, false),
+      RequiresGeoEngine(reactor),
+      RequiresQEngine(reactor),
       StoredAtomQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       SupportsBoundingBox(config, plugin_data.get_crs_registry(), false),
-      geo_engine(nullptr),
-      q_engine(nullptr),
       producers(),
       default_format("grib2"),
       debug_level(get_config()->get_debug_level())
@@ -131,32 +132,6 @@ StoredQEDownloadQueryHandler::StoredQEDownloadQueryHandler(
 }
 
 StoredQEDownloadQueryHandler::~StoredQEDownloadQueryHandler() {}
-
-void StoredQEDownloadQueryHandler::init_handler()
-{
-  try
-  {
-    auto* reactor = get_reactor();
-
-    void* engine;
-
-    engine = reactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-
-    geo_engine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-
-    engine = reactor->getSingleton("Querydata", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Querydata engine available");
-
-    q_engine = reinterpret_cast<SmartMet::Engine::Querydata::Engine*>(engine);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 namespace
 {
@@ -783,7 +758,6 @@ wfs_stored_qe_download_handler_create(SmartMet::Spine::Reactor* reactor,
     StoredAtomQueryHandlerBase* qh =
         new StoredQEDownloadQueryHandler(reactor, config, plugin_data, template_file_name);
     boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> result(qh);
-    result->init_handler();
     return result;
   }
   catch (...)

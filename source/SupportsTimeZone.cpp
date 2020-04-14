@@ -1,7 +1,7 @@
 #include "SupportsTimeZone.h"
 #include <boost/algorithm/string.hpp>
 #include <macgyver/StringConversion.h>
-#include <macgyver/TimeZoneFactory.h>
+#include <macgyver/TimeZones.h>
 #include <spine/Convenience.h>
 #include <spine/Exception.h>
 
@@ -17,8 +17,9 @@ namespace
 const char* P_TZ = "timeZone";
 }
 
-bw::SupportsTimeZone::SupportsTimeZone(boost::shared_ptr<StoredQueryConfig> config)
+bw::SupportsTimeZone::SupportsTimeZone(SmartMet::Spine::Reactor* reactor, boost::shared_ptr<StoredQueryConfig> config)
     : bw::SupportsExtraHandlerParams(config, false)
+    , bw::RequiresGeoEngine(reactor)
 {
   try
   {
@@ -49,13 +50,15 @@ std::string bw::SupportsTimeZone::get_tz_name(const RequestParameterMap& param_v
 
 lt::time_zone_ptr bw::SupportsTimeZone::get_tz_for_site(double longitude,
                                                         double latitude,
-                                                        const std::string& tz_name)
+                                                        const std::string& tz_name) const
 {
   try
   {
     if (ba::iequals(tz_name, "local"))
     {
-      return Fmi::TimeZoneFactory::instance().time_zone_from_coordinate(longitude, latitude);
+      return geo_engine
+          ->getTimeZones()
+          .time_zone_from_coordinate(longitude, latitude);
     }
     else
     {
@@ -68,14 +71,16 @@ lt::time_zone_ptr bw::SupportsTimeZone::get_tz_for_site(double longitude,
   }
 }
 
-boost::local_time::time_zone_ptr bw::SupportsTimeZone::get_time_zone(const std::string& tz_name)
+boost::local_time::time_zone_ptr bw::SupportsTimeZone::get_time_zone(const std::string& tz_name) const
 {
   try
   {
     std::string name = ba::trim_copy(tz_name);
     if (ba::iequals(name, "utc") or (ba::iequals(name, "gmt")))
       name = "Etc/GMT";
-    return Fmi::TimeZoneFactory::instance().time_zone_from_region(name);
+    return geo_engine
+        ->getTimeZones()
+        .time_zone_from_region(name);
   }
   catch (...)
   {

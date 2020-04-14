@@ -58,6 +58,7 @@ boost::shared_ptr<StoredQueryHandlerBase> StoredQueryHandlerFactoryDef::construc
 
     auto result = factory_def->factory(reactor, config, plugin_data, template_file_name);
     config->warn_about_unused_params(result.get());
+    result->perform_init();
     return result;
   }
   catch (...)

@@ -40,8 +40,12 @@ void bw::SupportsLocationParameters::engOrFinToEnOrFi(std::string &language)
 }
 
 bw::SupportsLocationParameters::SupportsLocationParameters(
-    boost::shared_ptr<bw::StoredQueryConfig> config, unsigned options)
+    SmartMet::Spine::Reactor* reactor,
+    boost::shared_ptr<bw::StoredQueryConfig> config,
+    unsigned options)
+
     : SupportsExtraHandlerParams(config, false),
+      RequiresGeoEngine(reactor),
       support_keywords((options & SUPPORT_KEYWORDS) != 0),
       include_fmisids((options & INCLUDE_FMISIDS) != 0),
       include_geoids((options & INCLUDE_GEOIDS) != 0),
@@ -72,7 +76,6 @@ bw::SupportsLocationParameters::SupportsLocationParameters(
 bw::SupportsLocationParameters::~SupportsLocationParameters() {}
 
 void bw::SupportsLocationParameters::get_location_options(
-    SmartMet::Engine::Geonames::Engine *geo_engine,
     const RequestParameterMap &param,
     const std::string &language_requested,
     std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > *locations) const
@@ -110,9 +113,9 @@ void bw::SupportsLocationParameters::get_location_options(
       locations->push_back(std::make_pair(name, loc));
     }
 
-    get_geoids(geo_engine, param, language, locations);
-    get_fmisids(geo_engine, param, language, locations);
-    get_wmos(geo_engine, param, language, locations);
+    get_geoids(param, language, locations);
+    get_fmisids(param, language, locations);
+    get_wmos(param, language, locations);
 
     // Handle site names
     SmartMet::Spine::LocationList ptrs;
@@ -185,7 +188,6 @@ void bw::SupportsLocationParameters::get_location_options(
 }
 
 void bw::SupportsLocationParameters::get_geoids(
-    SmartMet::Engine::Geonames::Engine *geo_engine,
     const RequestParameterMap &param,
     const std::string &language,
     std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > *locations) const
@@ -220,7 +222,6 @@ void bw::SupportsLocationParameters::get_geoids(
 }
 
 void bw::SupportsLocationParameters::get_fmisids(
-    SmartMet::Engine::Geonames::Engine *geo_engine,
     const RequestParameterMap &param,
     const std::string &language,
     std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > *locations) const
@@ -269,7 +270,6 @@ void bw::SupportsLocationParameters::get_fmisids(
 }
 
 void bw::SupportsLocationParameters::get_wmos(
-    SmartMet::Engine::Geonames::Engine *geo_engine,
     const RequestParameterMap &param,
     const std::string &language,
     std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > *locations) const

@@ -7,6 +7,8 @@
 #include "SupportsExtraHandlerParams.h"
 #include "SupportsLocationParameters.h"
 #include "SupportsQualityParameters.h"
+#include "RequiresGeoEngine.h"
+#include "RequiresObsEngine.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/format.hpp>
@@ -39,6 +41,8 @@ namespace Plugin
 namespace WFS
 {
 class StoredAirNuclideQueryHandler : protected virtual SupportsExtraHandlerParams,
+                                     protected virtual RequiresGeoEngine,
+                                     protected virtual RequiresObsEngine,
                                      public StoredQueryHandlerBase,
                                      protected SupportsLocationParameters,
                                      protected SupportsBoundingBox,
@@ -51,8 +55,6 @@ class StoredAirNuclideQueryHandler : protected virtual SupportsExtraHandlerParam
                                boost::optional<std::string> template_file_name);
 
   virtual ~StoredAirNuclideQueryHandler();
-
-  virtual void init_handler();
 
   virtual void query(const StoredQuery& query,
                      const std::string& language,
@@ -67,9 +69,6 @@ class StoredAirNuclideQueryHandler : protected virtual SupportsExtraHandlerParam
   double m_maxHours;
   bool m_sqRestrictions;
   bool m_supportQCParameters;
-
-  SmartMet::Engine::Observation::Engine* m_obsEngine;
-  SmartMet::Engine::Geonames::Engine* m_geoEngine;
 };
 
 }  // namespace WFS

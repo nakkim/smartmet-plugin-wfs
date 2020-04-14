@@ -4,6 +4,7 @@
 #include "StandardPresentationParameters.h"
 #include "StoredQuery.h"
 #include "StoredQueryConfig.h"
+#include "StoredQueryHandlerInitBase.h"
 #include "StoredQueryMap.h"
 #include "StoredQueryParamRegistry.h"
 #include "SupportsExtraHandlerParams.h"
@@ -35,7 +36,8 @@ class StoredQuery;
 class StoredQueryMap;
 
 class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
-                               virtual protected StoredQueryParamRegistry
+                               virtual protected StoredQueryParamRegistry,
+                               virtual protected StoredQueryHandlerInitBase
 {
   SmartMet::Spine::Reactor* reactor;
   boost::shared_ptr<StoredQueryConfig> config;
@@ -53,7 +55,7 @@ class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
 
   virtual ~StoredQueryHandlerBase();
 
-  virtual void init_handler();
+  void perform_init();
 
   virtual std::string get_query_name() const;
 
@@ -101,6 +103,8 @@ class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
   }
 
  protected:
+  virtual void init_handler();
+
   boost::shared_ptr<Fmi::TemplateFormatter> get_formatter(bool debug_format) const;
 
   inline SmartMet::Spine::Reactor* get_reactor() const { return reactor; }

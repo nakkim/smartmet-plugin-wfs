@@ -99,20 +99,9 @@ PluginImpl::PluginImpl(SmartMet::Spine::Reactor* theReactor, const char* theConf
         .register_unimplemented_request_type("DropStoredQuery")
         .register_unimplemented_request_type("Transaction");
 
-    void* engine = theReactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-    itsGeonames = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-
-    engine = theReactor->getSingleton("Querydata", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Querydata engine available");
-    itsQEngine = reinterpret_cast<SmartMet::Engine::Querydata::Engine*>(engine);
-
-    engine = theReactor->getSingleton("Gis", nullptr);
-    if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "No Gis engine available");
-    itsGisEngine = reinterpret_cast<SmartMet::Engine::Gis::Engine*>(engine);
+    itsGeonames = theReactor->getEngine<SmartMet::Engine::Geonames::Engine>("Geonames");
+    itsQEngine = theReactor->getEngine<SmartMet::Engine::Querydata::Engine>("Querydata");
+    itsGisEngine = theReactor->getEngine<SmartMet::Engine::Gis::Engine>("Gis");
 
     debug_level = itsConfig.get_optional_config_param<int>("debugLevel", 1);
     fallback_hostname =

@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.3.5
+Version: 20.4.9
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -24,7 +24,7 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.3.5
+BuildRequires: smartmet-library-spine-devel >= 20.4.6
 BuildRequires: smartmet-library-gis-devel >= 20.2.18
 BuildRequires: smartmet-library-locus-devel >= 19.12.4
 BuildRequires: smartmet-library-macgyver-devel >= 20.3.5
@@ -44,7 +44,7 @@ Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 19.12.4
 Requires: smartmet-library-macgyver >= 20.3.5
-Requires: smartmet-library-spine >= 20.3.5
+Requires: smartmet-library-spine >= 20.4.6
 Requires: smartmet-library-gis >= 20.2.18
 Requires: smartmet-engine-contour >= 19.11.20
 Requires: smartmet-engine-geonames >= 19.12.5
@@ -94,6 +94,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Apr  9 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.4.9-1.fmi
+- Access SmartMet engines using C++ class virtual inheritance instead of initializing
+  access separately each time
+
+* Thu Mar 12 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.3.12-1.fmi
+- Rebuilt due to obsengine API changes
+
 * Thu Mar  5 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.3.5-1.fmi
 - Use ParameterTools from smartmet-library-spine (part 1)
 

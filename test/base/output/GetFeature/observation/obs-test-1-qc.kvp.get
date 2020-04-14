@@ -1,0 +1,165 @@
+Global data object:
+
+   fmi_apikey = "foobar";
+   fmi_apikey_prefix = "/fmi-apikey/";
+   groups = [
+              {
+                'crs' : "EPSG::4326",
+                'featureId' : "WFS-F22nemQ_MXUPWY6s9yn0XstZYYaJTowqU_Fzo46mXn0haWLLn07qmnbltf_Qq2IxsfLnWpFoU47p00ZsmzOy7slTTty2v_oVbFwxqM7Nt089OTnWYxYMHLdi6NeXz338sl_f2y8u_LT0w4tmWJmbMPTLz6RMzZvx4dmWtTNpvxpK7r0zOGttw.Imnn0w7seWlauhAaW3D4i8N.PRznRMb23L0y76GHlh25emXlzrG6MtrW26efPTuz1MvjpWNuw7m1u67Z.an0w9NO_dznCa3Hrh2aenmTuzb42tz6YemnfuqeeGWtDfwy7smHphbnPpv5ZcnHrl5eb.nJWlPxc6OOpl59Gh007ctPpl4T8hNDpp25bW_dlrGq1IYA--",
+                'groupId' : "1-1",
+                'groupNum' : 1,
+                'obsParamList' : [
+                                   {
+                                     'featureId' : "WFS-F22nemQ_MXUPWY6s9yn0XstZYYaJTowqU_Fzo46mXn0haWLLn07qmnbltf_Qq2IxsfLnWpFoU47p00ZsmzOy7slTTty2v_oVbFwxqM7Nt089OTnWYxYMHLdi6NeXz338sl_f2y8u_LT0w4tmWJmbMPTLz6RMzZvx4dmWtTNpvxpK7r0zOGttw.Imnn0w7seWlauhAaW3D4i8N.PRznRMb23L0y76GHlh25emXlzrG6MtrW26efPTuz1MvjpWNuw7m1u67Z.an0w9NO_dznCa3Hrh2aenmTuzb42tz6YemnfuqeeGWtDfwy7smHphbnPpv5ZcnHrl5eb.nJWlPxc6OOpl59Gh007ctPpl4T8hNDpp25bW_dlrGq1IYA--",
+                                     'name' : "t2m"
+                                   }
+                                 ],
+                'obsPhenomenonEndTime' : "2015-11-17T03:00:00Z",
+                'obsPhenomenonStartTime' : "2015-11-17T00:00:00Z",
+                'obsResultTime' : "2015-11-17T03:00:00Z",
+                'obsReturnArray' : [
+                                     {
+                                       'data' : [
+                                                  {
+                                                    'qcValue' : "1",
+                                                    'value' : "6.5"
+                                                  }
+                                                ],
+                                       'epochTime' : 1447718400,
+                                       'epochTimeStr' : "2015-11-17T00:00:00Z",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     },
+                                     {
+                                       'data' : [
+                                                  {
+                                                    'qcValue' : "1",
+                                                    'value' : "6.6"
+                                                  }
+                                                ],
+                                       'epochTime' : 1447722000,
+                                       'epochTimeStr' : "2015-11-17T01:00:00Z",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     },
+                                     {
+                                       'data' : [
+                                                  {
+                                                    'qcValue' : "1",
+                                                    'value' : "6.6"
+                                                  }
+                                                ],
+                                       'epochTime' : 1447725600,
+                                       'epochTimeStr' : "2015-11-17T02:00:00Z",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     },
+                                     {
+                                       'data' : [
+                                                  {
+                                                    'qcValue' : "1",
+                                                    'value' : "6.7"
+                                                  }
+                                                ],
+                                       'epochTime' : 1447729200,
+                                       'epochTimeStr' : "2015-11-17T03:00:00Z",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     }
+                                   ],
+                'obsStationList' : [
+                                     {
+                                       'bearing' : "5.8",
+                                       'distance' : "0.1",
+                                       'fmisid' : "100971",
+                                       'geoid' : "-16000150",
+                                       'name' : "Helsinki Kaisaniemi",
+                                       'region' : "Helsinki",
+                                       'wmo' : "2978",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     }
+                                   ],
+                'qualityInfo' : "on",
+                'timestep' : 60
+              }
+            ];
+   hostname = "brainstormgw.fmi.fi";
+   language = "eng";
+   named_parameters = {
+                        'defaultmeteoparam' : [
+                                                "Temperature",
+                                                "pressure",
+                                                "WindSpeedMS",
+                                                "WindDirection",
+                                                "Precipitation1h"
+                                              ]
+                      };
+   numMatched = 1;
+   numParam = 1;
+   numReturned = 1;
+   projEpochSrsDim = 3;
+   projEpochSrsName = "http://xml.fmi.fi/gml/crs/compoundCRS.php?crs=4326&amp;time=unixtime";
+   projSrsDim = 2;
+   projSrsName = "http://www.opengis.net/def/crs/EPSG/0/4326";
+   protocol = "http://";
+   queryName = "ObsQcTest";
+   queryNum = 1;
+   query_parameters = {
+                        'beginTime' : [
+                                        "20151117T000000Z"
+                                      ],
+                        'crs' : [
+                                  "EPSG::4326"
+                                ],
+                        'endTime' : [
+                                      "20151117T030000Z"
+                                    ],
+                        'keyword' : [
+                                      ""
+                                    ],
+                        'keyword_overwritable' : [
+                                                   "false"
+                                                 ],
+                        'latest' : [
+                                     "false"
+                                   ],
+                        'locale' : [
+                                     "fi_FI.utf8"
+                                   ],
+                        'maxDistance' : [
+                                          "50000"
+                                        ],
+                        'maxEpochs' : [
+                                        "200"
+                                      ],
+                        'meteoParameters' : [
+                                              "t2m"
+                                            ],
+                        'missingText' : [
+                                          "nan"
+                                        ],
+                        'numOfStations' : [
+                                            "1"
+                                          ],
+                        'places' : [
+                                     "Kaisaniemi"
+                                   ],
+                        'qualityInfo' : [
+                                          "true"
+                                        ],
+                        'stationType' : [
+                                          "opendata"
+                                        ],
+                        'storedquery_id' : [
+                                             "ObsQcTest"
+                                           ],
+                        'timeStep' : [
+                                       "60"
+                                     ],
+                        'timeZone' : [
+                                       "UTC"
+                                     ]
+                      };
+   responseTimestamp = "2012-12-12T12:12:12Z"
+ 

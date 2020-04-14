@@ -25,14 +25,15 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
     boost::shared_ptr<bw::StoredQueryConfig> config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
+
     : SupportsExtraHandlerParams(config, false),
+      RequiresContourEngine(reactor),
+      RequiresQEngine(reactor),
+      RequiresGeoEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       bw::SupportsBoundingBox(config, plugin_data.get_crs_registry(), false),
       bw::SupportsTimeParameters(config),
-      bw::SupportsTimeZone(config),
-      itsQEngine(nullptr),
-      itsGeonames(nullptr),
-      itsContourEngine(nullptr)
+      bw::SupportsTimeZone(reactor, config)
 {
   try
   {
@@ -72,40 +73,6 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
 }
 
 bw::StoredContourQueryHandler::~StoredContourQueryHandler() {}
-void bw::StoredContourQueryHandler::init_handler()
-{
-  try
-  {
-    auto* reactor = get_reactor();
-    void* engine;
-
-    engine = reactor->getSingleton("Contour", nullptr);
-    if (engine == nullptr)
-    {
-      throw SmartMet::Spine::Exception(BCP, "No Contour engine available");
-    }
-
-    itsContourEngine = reinterpret_cast<SmartMet::Engine::Contour::Engine*>(engine);
-
-    engine = reactor->getSingleton("Querydata", nullptr);
-    if (engine == nullptr)
-    {
-      throw SmartMet::Spine::Exception(BCP, "No Querydata engine available");
-    }
-    itsQEngine = reinterpret_cast<SmartMet::Engine::Querydata::Engine*>(engine);
-
-    engine = reactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-    {
-      throw SmartMet::Spine::Exception(BCP, "No Geonames engine available");
-    }
-    itsGeonames = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
 
 bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours(
     const ContourQueryParameter& queryParameter) const
@@ -158,17 +125,17 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours(
           }
         }
 
-        auto matrix = itsQEngine->getValues(queryParameter.q, valueshash, options.time);
+        auto matrix = q_engine->getValues(queryParameter.q, valueshash, options.time);
         CoordinatesPtr coords =
-            itsQEngine->getWorldCoordinates(queryParameter.q, &queryParameter.sr);
+            q_engine->getWorldCoordinates(queryParameter.q, &queryParameter.sr);
 
-        geoms = itsContourEngine->contour(qhash,
-                                          wkt,
-                                          *matrix,
-                                          coords,
-                                          options,
-                                          queryParameter.q->needsWraparound(),
-                                          &queryParameter.sr);
+        geoms = contour_engine->contour(qhash,
+                                        wkt,
+                                        *matrix,
+                                        coords,
+                                        options,
+                                        queryParameter.q->needsWraparound(),
+                                        &queryParameter.sr);
       }
       catch (const std::exception& e)
       {
@@ -294,9 +261,9 @@ void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
 
     SmartMet::Engine::Querydata::Q q;
     if (requested_origintime)
-      q = itsQEngine->get(producer, *requested_origintime);
+      q = q_engine->get(producer, *requested_origintime);
     else
-      q = itsQEngine->get(producer);
+      q = q_engine->get(producer);
 
     boost::posix_time::ptime origintime = q->originTime();
     boost::posix_time::ptime modificationtime = q->modificationTime();
@@ -332,7 +299,7 @@ void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
 
     // get data in UTC
     const std::string zone = "UTC";
-    auto tz = itsGeonames->getTimeZones().time_zone_from_string(zone);
+    auto tz = geo_engine->getTimeZones().time_zone_from_string(zone);
     query_param->tlist = SmartMet::Spine::TimeSeriesGenerator::generate(*pTimeOptions, tz);
     query_param->tz_name = get_tz_name(sq_params);
 
