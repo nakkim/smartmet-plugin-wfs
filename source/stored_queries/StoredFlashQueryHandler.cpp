@@ -39,7 +39,7 @@ bw::StoredFlashQueryHandler::StoredFlashQueryHandler(
       RequiresObsEngine(reactor),
       StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       SupportsBoundingBox(config, plugin_data.get_crs_registry()),
-      SupportsTimeZone(config),
+      SupportsTimeZone(reactor, config),
       bs_param(),
       stroke_time_ind(
           add_param(bs_param, "utctime", SmartMet::Spine::Parameter::Type::DataIndependent)),

@@ -172,7 +172,7 @@ StoredWWProbabilityQueryHandler::StoredWWProbabilityQueryHandler(
       SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
       SupportsBoundingBox(config, pluginData.get_crs_registry(), false),
       SupportsTimeParameters(config),
-      SupportsTimeZone(config)
+      SupportsTimeZone(reactor, config)
 {
   try
   {

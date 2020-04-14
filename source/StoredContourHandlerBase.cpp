@@ -40,7 +40,7 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       bw::SupportsBoundingBox(config, plugin_data.get_crs_registry(), false),
       bw::SupportsTimeParameters(config),
-      bw::SupportsTimeZone(config)
+      bw::SupportsTimeZone(reactor, config)
 {
   try
   {
