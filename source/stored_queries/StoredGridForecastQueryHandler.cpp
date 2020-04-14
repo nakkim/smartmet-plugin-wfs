@@ -82,7 +82,7 @@ StoredGridForecastQueryHandler::StoredGridForecastQueryHandler(
         StoredQueryHandlerBase(reactor, config, plugin_impl, template_file_name),
         SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
         SupportsTimeParameters(config),
-        SupportsTimeZone(config),
+        SupportsTimeZone(reactor, config),
         common_params(),
         ind_geoid(add_param(common_params, "geoid", Spine::Parameter::Type::DataIndependent)),
         ind_epoch(add_param(common_params, "time", Spine::Parameter::Type::DataIndependent)),
