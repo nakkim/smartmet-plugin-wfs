@@ -1,0 +1,1 @@
+request=GetFeature&storedquery_id=ObsQcTest&place=Kaisaniemi&begin=2019-03-13T20:00:00Z&end=2019-03-13T21:00:00Z&qualityInfo=1&parameter=t2m,direction,distance
