@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.4.9
+Version: 20.4.15
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -94,6 +94,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Wed Apr 15 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.4.15-1.fmi
+- Class SupportsTimeZones now uses Fmi::TimeZines git from Geonames engine
+- Support of location and time special parameters like in timeseries plugin
+- Update of support of QC parameters (not yet in use and not supported in templates)
+
 * Thu Apr  9 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.4.9-1.fmi
 - Access SmartMet engines using C++ class virtual inheritance instead of initializing
   access separately each time
