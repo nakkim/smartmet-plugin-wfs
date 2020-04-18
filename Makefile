@@ -20,11 +20,8 @@ FLAGS = -std=$(CXX_STD) -fPIC -Wall -W -Wno-unused-parameter \
 	-Wno-inline \
 	-Wno-multichar \
 	-Wno-pmf-conversions \
-	-Woverloaded-virtual  \
 	-Wpointer-arith \
-	-Wredundant-decls \
-	-Wwrite-strings \
-	-Wnon-virtual-dtor 
+	-Wwrite-strings
 
 ifeq ($(TSAN), yes)
   FLAGS += -fsanitize=thread
@@ -78,13 +75,20 @@ objdir = obj
 
 #
 
-INCLUDES = -I$(includedir) \
+# Boost 1.69
+
+ifneq "$(wildcard /usr/include/boost169)" ""
+  INCLUDES += -I/usr/include/boost169
+  LIBS += -L/usr/lib64/boost169
+endif
+
+INCLUDES += -I$(includedir) \
 	-I$(includedir)/smartmet \
 	-I$(includedir)/oracle/11.2/client64 \
 	-I$(includedir)/mysql \
 	-I$(includedir)/jsoncpp
 
-LIBS = -L$(libdir) \
+LIBS += -L$(libdir) \
 	-lsmartmet-spine \
 	-lsmartmet-newbase \
 	-lsmartmet-macgyver \
