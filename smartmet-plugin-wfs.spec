@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.4.9
+Version: 20.4.18
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -13,7 +13,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: rpm-build
 BuildRequires: gcc-c++
 BuildRequires: make
-BuildRequires: boost-devel
+BuildRequires: boost169-devel
 BuildRequires: ctpp2-devel
 BuildRequires: fmt-devel >= 5.2.0
 BuildRequires: jsoncpp-devel
@@ -24,17 +24,17 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.4.6
-BuildRequires: smartmet-library-gis-devel >= 20.2.18
-BuildRequires: smartmet-library-locus-devel >= 19.12.4
-BuildRequires: smartmet-library-macgyver-devel >= 20.3.5
-BuildRequires: smartmet-engine-contour-devel >= 19.11.20
-BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
-BuildRequires: smartmet-engine-gis-devel >= 20.2.25
+BuildRequires: smartmet-library-spine-devel >= 20.4.18
+BuildRequires: smartmet-library-gis-devel >= 20.4.18
+BuildRequires: smartmet-library-locus-devel >= 20.4.18
+BuildRequires: smartmet-library-macgyver-devel >= 20.4.18
+BuildRequires: smartmet-engine-contour-devel >= 20.4.18
+BuildRequires: smartmet-engine-geonames-devel >= 20.4.18
+BuildRequires: smartmet-engine-gis-devel >= 20.4.18
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.2.20
+BuildRequires: smartmet-engine-observation-devel >= 20.4.18
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 20.1.30
+BuildRequires: smartmet-engine-querydata-devel >= 20.4.18
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 5.2.0
@@ -42,27 +42,27 @@ Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
-Requires: smartmet-library-locus >= 19.12.4
-Requires: smartmet-library-macgyver >= 20.3.5
-Requires: smartmet-library-spine >= 20.4.6
-Requires: smartmet-library-gis >= 20.2.18
-Requires: smartmet-engine-contour >= 19.11.20
-Requires: smartmet-engine-geonames >= 19.12.5
-Requires: smartmet-engine-gis >= 20.2.25
+Requires: smartmet-library-locus >= 20.4.18
+Requires: smartmet-library-macgyver >= 20.4.18
+Requires: smartmet-library-spine >= 20.4.18
+Requires: smartmet-library-gis >= 20.4.18
+Requires: smartmet-engine-contour >= 20.4.18
+Requires: smartmet-engine-geonames >= 20.4.18
+Requires: smartmet-engine-gis >= 20.4.18
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.2.20
+Requires: smartmet-engine-observation >= 20.4.18
 %endif
-Requires: smartmet-engine-querydata >= 20.1.30
-Requires: smartmet-server >= 20.2.13
+Requires: smartmet-engine-querydata >= 20.4.18
+Requires: smartmet-server >= 20.4.18
 Requires: xerces-c
 Requires: xqilla
-Requires: boost-chrono
-Requires: boost-date-time
-Requires: boost-filesystem
-Requires: boost-iostreams
-Requires: boost-serialization
-Requires: boost-system
-Requires: boost-thread
+Requires: boost169-chrono
+Requires: boost169-date-time
+Requires: boost169-filesystem
+Requires: boost169-iostreams
+Requires: boost169-serialization
+Requires: boost169-system
+Requires: boost169-thread
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-wfs < 16.11.1
 Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
@@ -94,6 +94,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Sat Apr 18 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.18-1.fmi
+- Upgraded to Boost 1.69
+
+* Wed Apr 15 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.4.15-1.fmi
+- Class SupportsTimeZones now uses Fmi::TimeZines git from Geonames engine
+- Support of location and time special parameters like in timeseries plugin
+- Update of support of QC parameters (not yet in use and not supported in templates)
+
 * Thu Apr  9 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.4.9-1.fmi
 - Access SmartMet engines using C++ class virtual inheritance instead of initializing
   access separately each time
