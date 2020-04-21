@@ -104,7 +104,7 @@ bool bw::GetDataSetByIdHandler::redirect(const StoredQuery& query,
       SmartMet::Spine::Exception exception(BCP, "Data set ID '" + data_set_id + "' not found!");
       exception.addDetail(msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
     else
     {

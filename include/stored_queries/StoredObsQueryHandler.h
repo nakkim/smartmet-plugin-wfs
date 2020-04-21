@@ -44,9 +44,37 @@ class StoredObsQueryHandler : public StoredQueryHandlerBase,
 
  private:
 
-  bool add_parameters(const std::vector<std::string>& names,
+  struct ParamIndexEntry
+  {
+      /** Parameter index in obsengine response or -1 for special parameters generated separately */
+      int ind;
+
+      /** Parameter name */
+      std::string name;
+  };
+
+  struct ExtParamIndexEntry
+  {
+      ParamIndexEntry p;
+      boost::optional<ParamIndexEntry> qc;
+  };
+
+  /**
+   *   @brief Verifies requested parameter names
+   *
+   *   Throws an exception if on of the following is detected
+   *   - duplicate parameter name (case insensitive)
+   *   - qc_parameter requested explictitly but QC parameters support is not enabled
+   */
+  void check_parameter_names(const RequestParameterMap& params,
+                             const std::vector<std::string>& param_names) const;
+
+  int lookup_initial_parameter(const std::string& name) const;
+
+  bool add_parameters(const RequestParameterMap& params,
+                      const std::vector<std::string>& names,
                       SmartMet::Engine::Observation::Settings& query_params,
-                      std::vector<int>& parameter_index) const;
+                      std::vector<ExtParamIndexEntry>& parameter_index) const;
 
  private:
   struct GroupRec

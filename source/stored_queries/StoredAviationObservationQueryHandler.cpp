@@ -155,7 +155,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
           msg << "ICAO code '" << *it << "' not found.";
           SmartMet::Spine::Exception exception(BCP, msg.str());
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
-          throw exception;
+          throw exception.disableStackTrace();
         }
 
         // Do not add dublicates.

@@ -565,7 +565,7 @@ void StoredQEDownloadQueryHandler::update_parameters(
         exception.addDetail(msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
         exception.addParameter("Requested format", req_format);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       pm->add("format", req_format);
@@ -586,7 +586,7 @@ void StoredQEDownloadQueryHandler::update_parameters(
       {
         SmartMet::Spine::Exception exception(BCP, "Failed to get EPSG code for CRS '" + crs + "'!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
       pm->add("crs", str(format("EPSG:%04d") % epsg));
 

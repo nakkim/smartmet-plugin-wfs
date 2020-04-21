@@ -84,7 +84,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
       SmartMet::Spine::Exception exception(BCP, "Invalid parameter value");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       exception.addDetail("A crs without z dimension is not allowed in this query.");
-      throw exception;
+      throw exception.disableStackTrace();
     }
 
     std::string projUri = "UNKNOWN";
@@ -229,7 +229,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
               SmartMet::Spine::Exception exception(BCP, "Operation processsing failed");
               exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
               exception.addDetail(msg.str());
-              throw exception;
+              throw exception.disableStackTrace();
             }
 
             currentStationId =
@@ -300,7 +300,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
                 SmartMet::Spine::Exception exception(BCP, "Operation processsing failed");
                 exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
                 exception.addDetail(msg.str());
-                throw exception;
+                throw exception.disableStackTrace();
               }
             }
 
@@ -321,7 +321,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
               SmartMet::Spine::Exception exception(BCP, "Operation processsing failed");
               exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
               exception.addDetail(msg.str());
-              throw exception;
+              throw exception.disableStackTrace();
             }
 
             showValue = std::get<3>(it->second);
@@ -336,7 +336,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
               SmartMet::Spine::Exception exception(BCP, "Operation processsing failed");
               exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
               exception.addDetail(msg.str());
-              throw exception;
+              throw exception.disableStackTrace();
             }
 
             if (showValue)
@@ -367,7 +367,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
             SmartMet::Spine::Exception exception(BCP, "Operation processsing failed");
             exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
             exception.addDetail(msg.str());
-            throw exception;
+            throw exception.disableStackTrace();
           }
 
           CTPP::CDT& row = hash["groups"][groupId]["obsReturnArray"][dataId];

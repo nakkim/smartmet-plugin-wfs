@@ -155,7 +155,8 @@ void bw::StoredFileQueryHandler::update_parameters(
         {
           // Should really be catched earlier and not be here
           throw SmartMet::Spine::Exception(
-              BCP, "INTERNAL ERROR: wrong bbox specification in '" + params.as_string() + "'!");
+              BCP, "INTERNAL ERROR: wrong bbox specification in '" + params.as_string() + "'!")
+              .disableStackTrace();
         }
 
         const box_t sel_box(point_t(bbox[0], bbox[1]), point_t(bbox[2], bbox[3]));
