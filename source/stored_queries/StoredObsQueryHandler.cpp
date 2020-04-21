@@ -195,7 +195,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 
       std::vector<ExtParamIndexEntry> param_index;
       query_params.parameters = initial_bs_param;
-      add_parameters(params, param_names, query_params, param_index);
+      have_meteo_param &= add_parameters(params, param_names, query_params, param_index);
 
       if (not have_meteo_param)
       {
