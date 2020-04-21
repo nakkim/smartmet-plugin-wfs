@@ -5,20 +5,20 @@ Global data object:
    groups = [
               {
                 'crs' : "EPSG::4326",
-                'featureId' : "WFS-uF7bKplUpoq4UBZV1bl7qch_OFWJTowqU_Fzo46mXn0haWLLn07qmnbltR_wo1rBVNEY2PlzrUi0Kcd06aM2TZnZd2Spp25bUf8KNa4dUxGdm26eenJzrMYsGDluxdGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51jdGW2tLLsy9sPTTv3Vxc.mHpp37r.XZl7Yemnfua23Tz56d2epl8dKxt2Hc2t3XbPzU.mHpp37uc4TW49cOzT08yd2bfG1ufTD00791Tzwy1ob.GXdkw9MLc59N_LLk49cvLzf05K0p.LnRx1MvPo0Omnblp9MvCfkJodNO3La37stY1WpDAA--",
+                'featureId' : "WFS-g3U3afaHQ4CAwv0mL0FDBkZSs_SJTowqU_Fzo46mXn0haWLLn07qmnbltR_wo1rBVNEY2PlzrUi0Kcd06aM2TZnZd2Spp25bUf8KNa4dUxGdm26eenJzrMYsGDly2dGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51jdGW2tLLsy9sPTTv3Vxc.mHpp37r.XZl7Yemnfua23Tz56d2epl8dKxt2Hc2t3XbPzU.mHpp37uc4TW49cOzT08yd2bfG1ufTD00791Tzwy1ob.GXdkw9MLc59N_LLk49cvLzf05K0p.LnRx1MvPo0Omnblp9MvCfkJodNO3La37stY1WpDAA--",
                 'groupId' : "1-1",
                 'groupNum' : 1,
                 'obsParamList' : [
                                    {
-                                     'featureId' : "WFS-BVnWDQ5NO1ijfljOgsphlGv6q1WJTowqU_Fzo46mXn0haWLLn07qmnbltR_wo1rBVNEY2PlzrUi0Kcd06aM2TZnZd2Spp25bUf8KNa4dUxGdm26eenJzrMYsGDluxdGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51jdGW1rbdPPnp3Z6mXx0rG3Ydza3dds_NT6Yemnfu5zhNbj1w7NPTzJ3Zt8bW59MPTTv3VPPDLWhv4Zd2TD0wtzn038suTj1y8vN_TkrSn4udHHUy8.jQ6aduWn0y8J.Qmh007ctrfuy1jVakMA-",
+                                     'featureId' : "WFS-u5HlWcXZ2yEknESVCxYF_CNcXbCJTowqU_Fzo46mXn0haWLLn07qmnbltR_wo1rBVNEY2PlzrUi0Kcd06aM2TZnZd2Spp25bUf8KNa4dUxGdm26eenJzrMYsGDly2dGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51jdGW1rbdPPnp3Z6mXx0rG3Ydza3dds_NT6Yemnfu5zhNbj1w7NPTzJ3Zt8bW59MPTTv3VPPDLWhv4Zd2TD0wtzn038suTj1y8vN_TkrSn4udHHUy8.jQ6aduWn0y8J.Qmh007ctrfuy1jVakMA-",
                                      'name' : "t2m"
                                    },
                                    {
-                                     'featureId' : "WFS-uDUdwLoa_wDpJglpcAQcP81ttrGJTowqU_Fzo46mXn0haWLLn07qmnbltR_wo1rBVNEY2PlzrUi0Kcd06aM2TZnZd2Spp25bUf8KNa4dUxGdm26eenJzrMYsGDluxdGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51pZdmXth6ad.5rbdPPnp3Z6mXx0rG3Ydza3dds_NT6Yemnfu5zhNbj1w7NPTzJ3Zt8bW59MPTTv3VPPDLWhv4Zd2TD0wtzn038suTj1y8vN_TkrSn4udHHUy8.jQ6aduWn0y8J.Qmh007ctrfuy1jVakMA--",
+                                     'featureId' : "WFS-QmpVtFf1NeM0GPlWHhW1hX2wFEWJTowqU_Fzo46mXn0haWLLn07qmnbltR_wo1rBVNEY2PlzrUi0Kcd06aM2TZnZd2Spp25bUf8KNa4dUxGdm26eenJzrMYsGDly2dGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51pZdmXth6ad.5rbdPPnp3Z6mXx0rG3Ydza3dds_NT6Yemnfu5zhNbj1w7NPTzJ3Zt8bW59MPTTv3VPPDLWhv4Zd2TD0wtzn038suTj1y8vN_TkrSn4udHHUy8.jQ6aduWn0y8J.Qmh007ctrfuy1jVakMA--",
                                      'name' : "elevation"
                                    },
                                    {
-                                     'featureId' : "WFS-q2Jd.3oFeGbiWREKYJE2jAIFr6yJTowqU_Fzo46mXn0haWLLn07qmnbltR_wo1rBVNEY2PlzrUi0Kcd06aM2TZnZd2Spp25bUf8KNa4dUxGdm26eenJzrMYsGDluxdGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51xc.mHpp37r.XZl7Yemnfua23Tz56d2epl8dKxt2Hc2t3XbPzU.mHpp37uc4TW49cOzT08yd2bfG1ufTD00791Tzwy1ob.GXdkw9MLc59N_LLk49cvLzf05K0p.LnRx1MvPo0Omnblp9MvCfkJodNO3La37stY1WpDA-",
+                                     'featureId' : "WFS-gUoYww7nnJuLZC3upF5Ysj.BxP6JTowqU_Fzo46mXn0haWLLn07qmnbltR_wo1rBVNEY2PlzrUi0Kcd06aM2TZnZd2Spp25bUf8KNa4dUxGdm26eenJzrMYsGDly2dGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51xc.mHpp37r.XZl7Yemnfua23Tz56d2epl8dKxt2Hc2t3XbPzU.mHpp37uc4TW49cOzT08yd2bfG1ufTD00791Tzwy1ob.GXdkw9MLc59N_LLk49cvLzf05K0p.LnRx1MvPo0Omnblp9MvCfkJodNO3La37stY1WpDA-",
                                      'name' : "station_elevation"
                                    }
                                  ],
@@ -30,19 +30,19 @@ Global data object:
                                        'data' : [
                                                   {
                                                     'qcValue' : "1",
-                                                    'value' : "-1.1"
+                                                    'value' : "-0.9"
                                                   },
                                                   {
-                                                    'value' : "3.0"
+                                                    'value' : "6.0"
                                                   },
                                                   {
-                                                    'value' : "3.0"
+                                                    'value' : "6.0"
                                                   }
                                                 ],
                                        'epochTime' : 1552507200,
                                        'epochTimeStr' : "2019-03-13T20:00:00Z",
-                                       'x' : "60.17523",
-                                       'y' : "24.94459"
+                                       'x' : "60.10512",
+                                       'y' : "24.97539"
                                      },
                                      {
                                        'data' : [
@@ -51,29 +51,29 @@ Global data object:
                                                     'value' : "-0.9"
                                                   },
                                                   {
-                                                    'value' : "3.0"
+                                                    'value' : "6.0"
                                                   },
                                                   {
-                                                    'value' : "3.0"
+                                                    'value' : "6.0"
                                                   }
                                                 ],
                                        'epochTime' : 1552510800,
                                        'epochTimeStr' : "2019-03-13T21:00:00Z",
-                                       'x' : "60.17523",
-                                       'y' : "24.94459"
+                                       'x' : "60.10512",
+                                       'y' : "24.97539"
                                      }
                                    ],
                 'obsStationList' : [
                                      {
-                                       'bearing' : "5.8",
+                                       'bearing' : "170.9",
                                        'distance' : "0.1",
-                                       'fmisid' : "100971",
-                                       'geoid' : "-16000150",
-                                       'name' : "Helsinki Kaisaniemi",
+                                       'fmisid' : "100996",
+                                       'geoid' : "-16000153",
+                                       'name' : "Helsinki Harmaja",
                                        'region' : "Helsinki",
-                                       'wmo' : "2978",
-                                       'x' : "60.17523",
-                                       'y' : "24.94459"
+                                       'wmo' : "2795",
+                                       'x' : "60.10512",
+                                       'y' : "24.97539"
                                      }
                                    ],
                 'qualityInfo' : "on",
@@ -141,7 +141,7 @@ Global data object:
                                             "1"
                                           ],
                         'places' : [
-                                     "Kaisaniemi"
+                                     "Harmaja"
                                    ],
                         'qualityInfo' : [
                                           "true"
