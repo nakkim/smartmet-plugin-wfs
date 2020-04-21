@@ -168,7 +168,7 @@ void bw::StoredGeoserverQueryHandler::update_parameters(
         SmartMet::Spine::Exception exception(
             BCP, "Parameter configuration for layer '" + layer + "' not found!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
     }
 
@@ -177,7 +177,7 @@ void bw::StoredGeoserverQueryHandler::update_parameters(
     {
       SmartMet::Spine::Exception exception(BCP, "Invalid or missing bounding box!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
 
     std::map<std::string, std::string> db_select_map;
@@ -212,7 +212,7 @@ void bw::StoredGeoserverQueryHandler::update_parameters(
           BCP, "Invalid image size : " + std::to_string(width) + "x" + std::to_string(height));
       exception.addDetail("The values must be " + std::to_string(MIN_SIZE) + " or larger.");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
 
     double bb[4] = {
@@ -237,7 +237,7 @@ void bw::StoredGeoserverQueryHandler::update_parameters(
     {
       SmartMet::Spine::Exception exception(BCP, "No data found!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
 
     result.clear();

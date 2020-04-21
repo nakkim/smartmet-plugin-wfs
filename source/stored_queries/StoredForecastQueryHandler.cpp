@@ -415,7 +415,7 @@ boost::shared_ptr<SmartMet::Spine::Table> bw::StoredForecastQueryHandler::extrac
         {
           SmartMet::Spine::Exception exception(BCP, "No data available for '" + loc->name + "'!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-          throw exception;
+          throw exception.disableStackTrace();
         }
       }
 
@@ -429,7 +429,7 @@ boost::shared_ptr<SmartMet::Spine::Table> bw::StoredForecastQueryHandler::extrac
         SmartMet::Spine::Exception exception(BCP, "Weather model mixing is not allowed!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         exception.addParameter("Config name", configName);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       model_path = q->path().string();
@@ -538,7 +538,7 @@ boost::shared_ptr<SmartMet::Spine::Table> bw::StoredForecastQueryHandler::extrac
         Spine::Exception exception(
             BCP, "Only hybrid data supports data fetching from an arbitrary height.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       if (not query.levels.empty() and not query.level_heights.empty())
@@ -547,7 +547,7 @@ boost::shared_ptr<SmartMet::Spine::Table> bw::StoredForecastQueryHandler::extrac
                                    "Fetching data from a level and an arbitrary height is not "
                                    "supported in a same request.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       /*
@@ -885,7 +885,7 @@ void bw::StoredForecastQueryHandler::Query::set_locale(const std::string& locale
           BCP, "Failed to set locale '" + locale_name + "'!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
   }
   catch (...)

@@ -152,7 +152,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
         SmartMet::Spine::Exception exception(
             BCP, "Projection '" + crs + "' not supported for lightning data!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       pt::ptime begin = params.get_single<pt::ptime>(P_BEGIN_TIME);
@@ -254,7 +254,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
         SmartMet::Spine::Exception exception(BCP, "No meteo parameter found!");
         exception.addDetail("At least one meteo parameter must be specified!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       // Fetch the values

@@ -184,7 +184,7 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
         exception.addDetail("Invalid time step value. Maximum is 1440 minutes.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
         exception.addParameter("Timestep", std::to_string(timestep));
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       //
@@ -224,7 +224,7 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
         SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
         exception.addParameter("Unknown parameter", paramName);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       stationQueryParams.addOperation(

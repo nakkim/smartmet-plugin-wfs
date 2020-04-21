@@ -156,14 +156,14 @@ SmartMet::Spine::Value StoredQueryParamDef::readValue(const std::string& value) 
           BCP, "Invalid stored query parameter value in '" + value + "'!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
     catch (...)
     {
       SmartMet::Spine::Exception exception(BCP, "Operation failed!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
   }
   catch (...)
