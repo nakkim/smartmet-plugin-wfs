@@ -82,11 +82,18 @@ ifneq "$(wildcard /usr/include/boost169)" ""
   LIBS += -L/usr/lib64/boost169
 endif
 
+ifneq "$(wildcard /usr/gdal30/include)" ""
+  INCLUDES += -I/usr/gdal30/include
+  LIBS += -L/usr/gdal30/lib
+else
+  INCLUDES += -I/usr/include/gdal
+endif
+
+
 INCLUDES += -I$(includedir) \
 	-I$(includedir)/smartmet \
 	-I$(includedir)/oracle/11.2/client64 \
 	-I$(includedir)/mysql \
-	-I$(PREFIX)/gdal30/include \
 	-I$(includedir)/jsoncpp
 
 LIBS += -L$(libdir) \
@@ -102,7 +109,7 @@ LIBS += -L$(libdir) \
 	-lboost_system \
         -lxqilla \
 	-lxerces-c \
-	-L$(PREFIX)/gdal30/lib -lgdal \
+	-lgdal \
 	-lpqxx \
 	-lconfig++ \
 	-lconfig \
