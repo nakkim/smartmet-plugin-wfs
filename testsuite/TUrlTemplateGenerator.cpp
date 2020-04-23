@@ -1,7 +1,7 @@
 #include <iostream>
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <newbase/NFmiPoint.h>
 #include <macgyver/TypeName.h>
 #include <spine/Exception.h>

@@ -6,7 +6,7 @@ int main() { return 0; }
 #else
 
 #include <iostream>
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <newbase/NFmiPoint.h>
 #include "SupportsTimeZone.h"
 

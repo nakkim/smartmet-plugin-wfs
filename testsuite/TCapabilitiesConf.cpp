@@ -1,5 +1,5 @@
 #include <iostream>
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <CapabilitiesConf.h>
 #include <spine/Exception.h>
 
