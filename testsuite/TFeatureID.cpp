@@ -1,3 +1,5 @@
+#define BOOST_TEST_MODULE TFeatureID
+#define BOOST_TEST_DYN_LINK 1
 #include <iostream>
 #include <random>
 #include <boost/foreach.hpp>

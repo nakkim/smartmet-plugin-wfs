@@ -5,6 +5,8 @@ int main() { return 0; }
 
 #else
 
+#define BOOST_TEST_MODULE TSupportsTimeZone
+#define BOOST_TEST_DYN_LINK 1
 #include <iostream>
 #include <boost/test/unit_test.hpp>
 #include <newbase/NFmiPoint.h>

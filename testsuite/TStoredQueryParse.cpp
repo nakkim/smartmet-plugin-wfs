@@ -1,3 +1,5 @@
+#define BOOST_TEST_MODULE TStoredQueryParse
+#define BOOST_TEST_DYN_LINK 1
 #include "ArrayParameterTemplate.h"
 #include "ConfigBuild.h"
 #include "ScalarParameterTemplate.h"
