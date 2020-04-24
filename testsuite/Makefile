@@ -95,7 +95,6 @@ LIBS += -L$(libdir) \
         -lxqilla \
 	-lxerces-c \
 	-lgdal \
-	-lpqxx -lpq \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \
