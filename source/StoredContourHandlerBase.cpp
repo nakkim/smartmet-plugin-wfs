@@ -132,8 +132,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours(
                                         queryParameter.sr,
                                         *matrix,
                                         *coords,
-                                        options,
-                                        queryParameter.q->needsWraparound());
+                                        options);
       }
       catch (const std::exception& e)
       {
