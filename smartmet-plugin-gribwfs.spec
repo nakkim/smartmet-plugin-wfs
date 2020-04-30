@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.4.18
+Version: 20.4.30
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -32,9 +32,9 @@ BuildRequires: smartmet-engine-contour-devel >= 20.4.18
 BuildRequires: smartmet-engine-geonames-devel >= 20.4.18
 BuildRequires: smartmet-engine-gis-devel >= 20.4.18
 BuildRequires: smartmet-engine-gis-devel >= 20.4.18
-BuildRequires: smartmet-engine-grid-devel >= 20.4.18
-BuildRequires: smartmet-library-grid-content-devel >= 20.4.18
-BuildRequires: smartmet-library-grid-files-devel >= 20.4.18
+BuildRequires: smartmet-engine-grid-devel >= 20.4.30
+BuildRequires: smartmet-library-grid-content-devel >= 20.4.30
+BuildRequires: smartmet-library-grid-files-devel >= 20.4.30
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 20.4.18
 %endif
@@ -53,9 +53,9 @@ Requires: smartmet-library-gis >= 20.4.18
 Requires: smartmet-engine-contour >= 20.4.18
 Requires: smartmet-engine-geonames >= 20.4.18
 Requires: smartmet-engine-gis >= 20.4.18
-Requires: smartmet-engine-grid >= 20.4.18
-Requires: smartmet-library-grid-content >= 20.4.18
-Requires: smartmet-library-grid-files >= 20.4.18
+Requires: smartmet-engine-grid >= 20.4.30
+Requires: smartmet-library-grid-content >= 20.4.30
+Requires: smartmet-library-grid-files >= 20.4.30
 %if %{with observation}
 Requires: smartmet-engine-observation >= 20.4.18
 %endif
@@ -101,6 +101,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Thu Apr 30 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.30-1.fmi
+- Repackaged due to base library API changes
+
 * Sat Apr 18 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.18-1.fmi
 - Upgraded to Boost 1.69
 
