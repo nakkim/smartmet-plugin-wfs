@@ -195,8 +195,6 @@ class PluginImpl : public boost::noncopyable
    */
   std::unique_ptr<RequestFactory> request_factory;
 
-  SmartMet::Engine::Geonames::Engine* itsGeonames;
-  SmartMet::Engine::Querydata::Engine* itsQEngine;
   SmartMet::Engine::Gis::Engine* itsGisEngine;
 
   Fmi::TemplateFactory itsTemplateFactory;
