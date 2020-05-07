@@ -34,9 +34,7 @@ endif
 
 CFLAGS_RELEASE = $(DEFINES) $(FLAGS) -DNDEBUG -O2 -g
 CFLAGS_DEBUG   = $(DEFINES) $(FLAGS) -Werror  -O0 -g
-
-ARFLAGS = -r
-DEFINES = -DUNIX -D_REENTRANT
+CFLAGS_PROFILE = $(DEFINES)  $(FLAGS)-O2 -g -pg -DNDEBUG
 
 ifneq (,$(findstring debug,$(MAKECMDGOALS)))
   override CFLAGS += $(CFLAGS_DEBUG)
@@ -74,7 +72,6 @@ plugindir = $(datadir)/smartmet/plugins
 objdir = obj
 
 #
-
 # Boost 1.69
 
 ifneq "$(wildcard /usr/include/boost169)" ""
@@ -84,8 +81,6 @@ endif
 
 INCLUDES += -I$(includedir) \
 	-I$(includedir)/smartmet \
-	-I$(includedir)/oracle/11.2/client64 \
-	-I$(includedir)/mysql \
 	-I$(includedir)/jsoncpp
 
 LIBS += -L$(libdir) \
@@ -113,24 +108,13 @@ LIBS += -L$(libdir) \
 	-lpthread \
 	-lm
 
-INCLUDES := -I$(TOP)/include $(INCLUDES)
+INCLUDES := -I$(TOP)/libwfs -I$(TOP)/include $(INCLUDES)
 
 obj/%.o : %.cpp ; @echo Compiling $<
 	@mkdir -p obj
 	$(CXX) $(CFLAGS) $(INCLUDES) -c -MD -MF $(patsubst obj/%.o, obj/%.d.new, $@) -o $@ $<
 	@sed -e "s|^$(notdir $@):|$@:|" $(patsubst obj/%.o, obj/%.d.new, $@) >$(patsubst obj/%.o, obj/%.d, $@)
 	@rm -f $(patsubst obj/%.o, obj/%.d.new, $@)
-
-
-
-obj/StoredObsQueryHandler.o \
-obj/StoredFlashQueryHandler.o \
-obj/StoredAviationObservationQueryHandler.o \
-obj/StoredMastQueryHandler.o \
-obj/StoredAirNuclideQueryHandler.o \
-obj/StoredEnvMonitoringFacilityQueryHandler.o \
-obj/StoredEnvMonitoringNetworkQueryHandler.o \
-: INCLUDES += -isystem -I$(includedir)/smartmet/engines/observation -I$(includedir)/oracle/11.2/client64
 
 # What to install
 
@@ -153,8 +137,8 @@ endif
 
 # Compilation directories
 
-vpath %.cpp source source/request source/stored_queries
-vpath %.h include
+vpath %.cpp source source/stored_queries libwfs libwfs/request
+vpath %.h include libwfs
 
 # The files to be compiled
 
@@ -162,8 +146,9 @@ SRCS = $(wildcard source/*.cpp) $(wildcard source/request/*.cpp) $(wildcard sour
 HDRS = $(wildcard include/*.h) $(wildcard include/request/*.h) $(wildcard include/stored_queries/*.h)
 OBJS = $(patsubst %.cpp, obj/%.o, $(notdir $(SRCS)))
 
-TESTSUITE_SRCS = $(wildcard testsuite/*.cpp)
-TESTSUITE_TARGETS = $(patsubst %.cpp, %.test, $(TESTSUITE_SRCS))
+LIBWFS_SRCS := $(wildcard libwfs/*.cpp) $(wildcard libwfs/request/*.cpp)
+LIBWFS_HDRS := $(wildcard libwfs/*.h) $(wildcard libwfs/request/*.h)
+LIBWFS_OBJS = $(patsubst %.cpp, obj/%.o, $(notdir $(LIBWFS_SRCS)))
 
 TEMPLATES = $(wildcard cnf/templates/*.template)
 COMPILED_TEMPLATES = $(patsubst %.template, %.c2t, $(TEMPLATES))
@@ -173,11 +158,16 @@ CONFIG_FILES = $(wildcard cnf/crs/*.conf) \
 
 .PHONY: test rpm
 
+LIBWFS = $(TOP)/libsmartmet-plugin-wfs.a
+
 # The rules
 
-all: configtest objdir $(LIBFILE) all-templates
+all: configtest objdir $(LIBWFS) $(LIBFILE) all-templates
+
 debug: all
+
 release: all
+
 profile: all
 
 configtest:
@@ -189,12 +179,15 @@ configtest:
 	fi; \
 	$$ok
 
-$(LIBFILE): $(OBJS)
-	$(CC) -shared -rdynamic $(CFLAGS) -o $(LIBFILE) $(OBJS) $(LIBS)
+$(LIBFILE): $(OBJS) $(LIBWFS)
+	$(CC) -shared -rdynamic $(CFLAGS) -o $@ $(OBJS) $(LIBWFS) $(LIBS)
+
+$(LIBWFS): $(LIBWFS_OBJS)
+	ar rcs $@ $(LIBWFS_OBJS)
+	ranlib $@
 
 clean:	clean-templates
 	rm -f $(LIBFILE) obj/*.o obj/*.d *~ source/*~ include/*~ cnf/templates/*.c2t
-	rm -f libwfs.a
 	rm -f files.list files.tmp
 	$(MAKE) -C testsuite $@
 	$(MAKE) -C examples $@
@@ -202,17 +195,24 @@ clean:	clean-templates
 
 format:
 	clang-format -i -style=file include/*.h include/*/*.h source/*.cpp source/*/*.cpp test/*.cpp
+	$(MAKE) -C libwfs $@
 
 install:
-	@mkdir -p $(plugindir)
+	mkdir -p $(plugindir)
+	mkdir -p $(libdir)
+	mkdir -p $(includedir)/smartmet/plugin/wfs/request
+	mkdir -p $(sysconfdir)/smartmet/plugins/wfs/templates
 	$(INSTALL_PROG) $(LIBFILE) $(plugindir)/$(LIBFILE)
-	@mkdir -p $(sysconfdir)/smartmet/plugins/wfs/templates
 	@for file in cnf/templates/*.c2t; do \
 	 echo $(INSTALL_DATA) $$file $(sysconfdir)/smartmet/plugins/wfs/templates/; \
 	 $(INSTALL_DATA) $$file $(sysconfdir)/smartmet/plugins/wfs/templates/; \
 	done
 	$(INSTALL_DATA) cnf/XMLGrammarPool.dump $(sysconfdir)/smartmet/plugins/wfs/
 	$(INSTALL_DATA) cnf/XMLSchemas.cache $(sysconfdir)/smartmet/plugins/wfs/
+	$(INSTALL_DATA) cnf/XMLSchemas.cache $(sysconfdir)/smartmet/plugins/wfs/
+	$(INSTALL_DATA) $(wildcard libwfs/*.h) $(includedir)/smartmet/plugin/wfs/
+	$(INSTALL_DATA) $(wildcard libwfs/request/*.h) $(includedir)/smartmet/plugin/wfs/request/
+	$(INSTALL_DATA) $(LIBWFS) $(libdir)
 
 # Separate depend target is no more needed as dependencies are updated automatically
 # and are always up to time
@@ -247,6 +247,7 @@ rpm: clean file-list $(SPEC).spec
 file-list:	cnf/XMLGrammarPool.dump
 	find . -name '.gitignore' >files.list.new
 	find . -name 'Makefile' -o -name '*.spec' >>files.list.new
+	find libwfs -name '*.h' -o -name '*.cpp' >>files.list.new
 	find source -name '*.h' -o -name '*.cpp' >>files.list.new
 	find include -name '*.h' >>files.list.new
 	find tools -name '*.h' -o -name '*.cpp' >>files.list.new
@@ -269,7 +270,7 @@ file-list:	cnf/XMLGrammarPool.dump
 	cat files.list.new | sed -e 's:^\./::' | sort | uniq >files.list
 	rm -f files.list.new
 
-file-list-test: file-list
+chaile-list-test: file-list
 	git ls-files . | sort >files.tmp
 	diff -u files.list files.tmp
 	rm -f files.tmp
@@ -277,6 +278,7 @@ file-list-test: file-list
 headertest:
 	@echo "Checking self-sufficiency of each header:"
 	@echo
+	$(MAKE) -C libwfs $@
 	@for hdr in $(HDRS); do \
 	echo $$hdr; \
 	echo "#include \"$$hdr\"" > /tmp/$(SPEC).cpp; \
@@ -288,18 +290,16 @@ cnf/templates/%.c2t: cnf/templates/%.template ; ( cd cnf/templates && $(PREFIX)/
 
 .SUFFIXES: $(SUFFIXES) .cpp
 
-check:		libwfs.a $(LIBFILE)
-	$(MAKE) -C testsuite $@ PREFIX=$(PREFIX)
+check check-valgrind: $(LIBWFS)
+	$(MAKE) -C testsuite $@
+
+check-installed:
+	$(MAKE) -C testsuite $@
 
 examples:	examples-build
 
-examples-build:	libwfs.a $(LIBFILE)
+examples-build:	libwfs-build $(LIBFILE)
 	$(MAKE) -C examples examples PREFIX=$(PREFIX)
-
-libwfs.a:	$(OBJS)
-	rm -f $@
-	ar rcs $@ $(OBJS)
-	ranlib $@
 
 ifneq ($(wildcard obj/*.d),)
 -include $(wildcard obj/*.d)
