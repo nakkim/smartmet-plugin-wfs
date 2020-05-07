@@ -3,7 +3,7 @@
 #include "StoredQueryConfig.h"
 #include "StoredQueryParamRegistry.h"
 #include "SupportsExtraHandlerParams.h"
-#include <engines/gis/CRSRegistry.h>
+#include <spine/CRSRegistry.h>
 #include <gdal/ogr_geometry.h>
 
 namespace SmartMet
@@ -20,7 +20,7 @@ class SupportsBoundingBox : protected virtual SupportsExtraHandlerParams,
 {
  public:
   SupportsBoundingBox(boost::shared_ptr<StoredQueryConfig> config,
-                      SmartMet::Engine::Gis::CRSRegistry& crs_registry,
+                      SmartMet::Spine::CRSRegistry& crs_registry,
                       bool mandatory = false);
 
   virtual ~SupportsBoundingBox();
@@ -54,7 +54,7 @@ class SupportsBoundingBox : protected virtual SupportsExtraHandlerParams,
       const SmartMet::Spine::BoundingBox& boundingBox) const;
 
  protected:
-  SmartMet::Engine::Gis::CRSRegistry& crs_registry;
+  SmartMet::Spine::CRSRegistry& crs_registry;
   static const char* P_BOUNDING_BOX;
 };
 

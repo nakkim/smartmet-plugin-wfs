@@ -161,7 +161,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query
 
     if (not validStations.empty())
     {
-      SmartMet::Engine::Gis::CRSRegistry &crs_registry = get_plugin_impl().get_crs_registry();
+      auto &crs_registry = get_plugin_impl().get_crs_registry();
 
       // Stations are bounded by..
       const std::string boundedByCRS = "EPSG:4258";

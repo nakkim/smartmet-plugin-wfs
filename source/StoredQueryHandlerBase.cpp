@@ -209,7 +209,7 @@ void StoredQueryHandlerBase::format_output(CTPP::CDT& hash,
 }
 
 std::pair<std::string, std::string> StoredQueryHandlerBase::get_2D_coord(
-    boost::shared_ptr<SmartMet::Engine::Gis::CRSRegistry::Transformation> transformation,
+    boost::shared_ptr<SmartMet::Spine::CRSRegistry::Transformation> transformation,
     double X,
     double Y)
 {
@@ -230,7 +230,7 @@ std::pair<std::string, std::string> StoredQueryHandlerBase::get_2D_coord(
 }
 
 void StoredQueryHandlerBase::set_2D_coord(
-    boost::shared_ptr<SmartMet::Engine::Gis::CRSRegistry::Transformation> transformation,
+    boost::shared_ptr<SmartMet::Spine::CRSRegistry::Transformation> transformation,
     double sx,
     double sy,
     CTPP::CDT& hash)
@@ -248,7 +248,7 @@ void StoredQueryHandlerBase::set_2D_coord(
 }  // namespace WFS
 
 void StoredQueryHandlerBase::set_2D_coord(
-    boost::shared_ptr<SmartMet::Engine::Gis::CRSRegistry::Transformation> transformation,
+    boost::shared_ptr<SmartMet::Spine::CRSRegistry::Transformation> transformation,
     const std::string& sx,
     const std::string& sy,
     CTPP::CDT& hash)

@@ -12,7 +12,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/utility.hpp>
-#include <engines/gis/CRSRegistry.h>
+#include <spine/CRSRegistry.h>
 #include <spine/ConfigBase.h>
 #include <spine/MultiLanguageString.h>
 #include <libconfig.h++>
@@ -64,7 +64,7 @@ class Config : private boost::noncopyable, public SmartMet::Spine::ConfigBase
   inline int getCacheTimeConstant() const { return cache_time_constant; }
   inline const std::string& get_default_locale() const { return default_locale; }
   std::vector<boost::shared_ptr<WfsFeatureDef> > read_features_config(
-      SmartMet::Engine::Gis::CRSRegistry& theCRSRegistry);
+      SmartMet::Spine::CRSRegistry& theCRSRegistry);
   const CapabilitiesConf& get_capabilities_config() const { return capabilities_conf; }
   boost::optional<std::pair<std::string, std::string> > get_admin_credentials() const
   {

@@ -222,7 +222,7 @@ void StoredWWProbabilityQueryHandler::parseQueryResults(
     const SmartMet::Spine::BoundingBox& bbox,
     const AirportLocationList& airp_llist,
     const std::string& language,
-    SmartMet::Engine::Gis::CRSRegistry& crsRegistry,
+    SmartMet::Spine::CRSRegistry& crsRegistry,
     const std::string& requestedCRS,
     const boost::posix_time::ptime& origintime,
     const boost::posix_time::ptime& modificationtime,
@@ -554,7 +554,7 @@ void StoredWWProbabilityQueryHandler::query(const StoredQuery& query,
       query_results.insert(make_pair(airp_loc.loc, wwprobs));
     }
 
-    SmartMet::Engine::Gis::CRSRegistry& crsRegistry = plugin_impl.get_crs_registry();
+    SmartMet::Spine::CRSRegistry& crsRegistry = plugin_impl.get_crs_registry();
     CTPP::CDT hash;
 
     parseQueryResults(query_results,
