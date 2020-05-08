@@ -6,7 +6,7 @@
 
 namespace bw = SmartMet::Plugin::WFS;
 
-bw::WfsFeatureDef::WfsFeatureDef(SmartMet::Engine::Gis::CRSRegistry& crs_registry,
+bw::WfsFeatureDef::WfsFeatureDef(SmartMet::Spine::CRSRegistry& crs_registry,
                                  const std::string& default_language,
                                  boost::shared_ptr<SmartMet::Spine::ConfigBase> config,
                                  libconfig::Setting& setting)
@@ -63,7 +63,7 @@ bw::WfsFeatureDef::WfsFeatureDef(SmartMet::Engine::Gis::CRSRegistry& crs_registr
 bw::WfsFeatureDef::~WfsFeatureDef() {}
 
 std::string bw::WfsFeatureDef::resolve_crs_url(const std::string& name,
-                                               SmartMet::Engine::Gis::CRSRegistry& crs_registry)
+                                               SmartMet::Spine::CRSRegistry& crs_registry)
 {
   try
   {

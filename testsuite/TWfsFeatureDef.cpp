@@ -1,7 +1,7 @@
 #include <iostream>
 #include <boost/test/included/unit_test.hpp>
 #include <boost/optional/optional_io.hpp>
-#include <smartmet/engines/gis/CRSRegistry.h>
+#include <spine/CRSRegistry.h>
 #include "WfsFeatureDef.h"
 
 using namespace boost::unit_test;
@@ -19,7 +19,7 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
 
 using SmartMet::Spine::ConfigBase;
 using namespace SmartMet::Plugin::WFS;
-using namespace SmartMet::Engine::Gis;
+using SmartMet::Spine::CRSRegistry;
 
 namespace
 {

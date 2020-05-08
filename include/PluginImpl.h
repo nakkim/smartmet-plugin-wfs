@@ -13,9 +13,9 @@
 #include <boost/shared_ptr.hpp>
 #include <json/json.h>
 #include <engines/geonames/Engine.h>
-#include <engines/gis/CRSRegistry.h>
 #include <engines/gis/Engine.h>
 #include <engines/querydata/Engine.h>
+#include <spine/CRSRegistry.h>
 #include <macgyver/DirectoryMonitor.h>
 #include <macgyver/TemplateFactory.h>
 #include <macgyver/TimedCache.h>
@@ -43,7 +43,7 @@ class PluginImpl : public boost::noncopyable
                                   const SmartMet::Spine::HTTP::Request& theRequest,
                                   SmartMet::Spine::HTTP::Response& theResponse);
 
-  inline SmartMet::Engine::Gis::CRSRegistry& get_crs_registry() const
+  inline SmartMet::Spine::CRSRegistry& get_crs_registry() const
   {
     return itsGisEngine->getCRSRegistry();
   }
@@ -200,8 +200,6 @@ class PluginImpl : public boost::noncopyable
    */
   std::unique_ptr<RequestFactory> request_factory;
 
-  SmartMet::Engine::Geonames::Engine* itsGeonames;
-  SmartMet::Engine::Querydata::Engine* itsQEngine;
   SmartMet::Engine::Gis::Engine* itsGisEngine;
 
   Fmi::TemplateFactory itsTemplateFactory;

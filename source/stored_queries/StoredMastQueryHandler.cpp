@@ -73,7 +73,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       const std::string requestedCrs = params.get_single<std::string>(P_CRS);
 
       const char* DATA_CRS_NAME = "urn:ogc:def:crs:EPSG::4326";
-      SmartMet::Engine::Gis::CRSRegistry& crs_registry = plugin_impl.get_crs_registry();
+      auto& crs_registry = plugin_impl.get_crs_registry();
 
       // Output CRS priority: user defined -> default in stored query -> feature type default crs
       const std::string crs = requestedCrs.empty() ? DATA_CRS_NAME : requestedCrs;

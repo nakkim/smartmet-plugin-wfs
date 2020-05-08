@@ -8,6 +8,9 @@ GCC_DIAG_COLOR ?= always
 
 DEFINES = -DUNIX -D_REENTRANT
 
+BOOST169_WARNING_DISABLE = -Wno-redundant-decls -Wno-overloaded-virtual
+
+
 
 FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter -Wno-unknown-pragmas \
       -Wcast-align \
@@ -19,6 +22,7 @@ FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter -Wno-unknown-pragmas \
       -Wpointer-arith \
       -Wredundant-decls \
       -fdiagnostics-color=$(GCC_DIAG_COLOR) \
+      $(BOOST169_WARNING_DISABLE) \
       -Wwrite-strings
 
 # Compile options in detault, debug and profile modes
@@ -79,6 +83,7 @@ LIBS += -L$(libdir) \
 	-lsmartmet-spine \
 	-lsmartmet-newbase \
 	-lsmartmet-macgyver \
+        -lboost_unit_test_framework \
 	-lboost_date_time \
         -lboost_serialization \
 	-lboost_thread \
@@ -90,7 +95,6 @@ LIBS += -L$(libdir) \
         -lxqilla \
 	-lxerces-c \
 	-lgdal \
-	-lpqxx -lpq \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \

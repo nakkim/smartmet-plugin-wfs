@@ -89,7 +89,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
       params.get<std::string>(P_ICAO_CODE, std::back_inserter(icaoCodeVector));
 
       const char* DATA_CRS_NAME = "urn:ogc:def:crs:EPSG::4326";
-      SmartMet::Engine::Gis::CRSRegistry& crs_registry = plugin_impl.get_crs_registry();
+      auto& crs_registry = plugin_impl.get_crs_registry();
 
       // Default output CRS.
       const std::string crs = DATA_CRS_NAME;

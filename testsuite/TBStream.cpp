@@ -1,7 +1,9 @@
+#define BOOST_TEST_MODULE TBStream
+#define BOOST_TEST_DYN_LINK 1
 #include <iostream>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <BStream.h>
 #include <boost/algorithm/hex.hpp>
 #include <spine/Exception.h>

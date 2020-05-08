@@ -1,7 +1,9 @@
+#define BOOST_TEST_MODULE TFeatureID
+#define BOOST_TEST_DYN_LINK 1
 #include <iostream>
 #include <random>
 #include <boost/foreach.hpp>
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <newbase/NFmiPoint.h>
 #include "FeatureID.h"
 
