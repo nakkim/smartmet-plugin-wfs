@@ -95,7 +95,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Fri May  8 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.5.8-1.fmi
-- Use CRSRegistry fromsmartmet-library-spine
+- Use CRSRegistry from smartmet-library-spine
 
 * Tue May  5 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.5.5-1.fmi
 - Avoid unnecessary stack traces
