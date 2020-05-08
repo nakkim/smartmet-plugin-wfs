@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.5.5
+Version: 20.5.8
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -24,13 +24,13 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.4.18
+BuildRequires: smartmet-library-spine-devel >= 20.5.7
 BuildRequires: smartmet-library-gis-devel >= 20.4.18
 BuildRequires: smartmet-library-locus-devel >= 20.4.18
 BuildRequires: smartmet-library-macgyver-devel >= 20.4.18
 BuildRequires: smartmet-engine-contour-devel >= 20.4.18
 BuildRequires: smartmet-engine-geonames-devel >= 20.4.18
-BuildRequires: smartmet-engine-gis-devel >= 20.4.18
+BuildRequires: smartmet-engine-gis-devel >= 20.5.7
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 20.4.18
 %endif
@@ -48,7 +48,7 @@ Requires: smartmet-library-spine >= 20.4.18
 Requires: smartmet-library-gis >= 20.4.18
 Requires: smartmet-engine-contour >= 20.4.18
 Requires: smartmet-engine-geonames >= 20.4.18
-Requires: smartmet-engine-gis >= 20.4.18
+Requires: smartmet-engine-gis >= 20.5.7
 %if %{with observation}
 Requires: smartmet-engine-observation >= 20.4.18
 %endif
@@ -94,6 +94,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Fri May  8 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.5.8-1.fmi
+- Use CRSRegistry fromsmartmet-library-spine
+
 * Tue May  5 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.5.5-1.fmi
 - Avoid unnecessary stack traces
 - Removed unused members from PluginImpl class
