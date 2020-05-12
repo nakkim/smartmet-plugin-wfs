@@ -178,11 +178,17 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 
       std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > locations_list;
       get_location_options(params, language, &locations_list);
-      std::transform(
-          locations_list.begin(),
-          locations_list.end(),
-          std::back_inserter(query_params.locations),
-          boost::bind(&std::pair<std::string, SmartMet::Spine::LocationPtr>::second, ::_1));
+
+      SmartMet::Engine::Observation::StationSettings stationSettings;
+
+      for (const auto& item : locations_list)
+      {
+        stationSettings.nearest_station_settings.emplace_back(item.second->longitude,
+                                                              item.second->latitude,
+                                                              query_params.maxdistance,
+                                                              query_params.numberofstations,
+                                                              item.first);
+      }
 
       std::vector<std::string> param_names;
       bool have_meteo_param =
@@ -235,13 +241,19 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 
       query_params.starttimeGiven = true;
 
-      params.get<int64_t>(P_WMOS, std::back_inserter(query_params.wmos));
+      params.get<int64_t>(P_WMOS, std::back_inserter(stationSettings.wmos));
 
-      params.get<int64_t>(P_LPNNS, std::back_inserter(query_params.lpnns));
+      params.get<int64_t>(P_LPNNS, std::back_inserter(stationSettings.lpnns));
 
-      params.get<int64_t>(P_FMISIDS, std::back_inserter(query_params.fmisids));
+      params.get<int64_t>(P_FMISIDS, std::back_inserter(stationSettings.fmisids));
 
-      params.get<int64_t>(P_GEOIDS, std::back_inserter(query_params.geoids));
+      params.get<int64_t>(P_GEOIDS, std::back_inserter(stationSettings.geoid_settings.geoids));
+      if (stationSettings.geoid_settings.geoids.size() > 0)
+      {
+        stationSettings.geoid_settings.maxdistance = query_params.maxdistance;
+        stationSettings.geoid_settings.numberofstations = query_params.numberofstations;
+        stationSettings.geoid_settings.language = language;
+      }
 
       params.get<int64_t>(P_HOURS, std::back_inserter(query_params.hours));
 
@@ -259,6 +271,11 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       {
         query_bbox.reset(new BoundingBox);
         *query_bbox = transform_bounding_box(requested_bbox, DATA_CRS_NAME);
+        stationSettings.bounding_box_settings["minx"] = query_bbox->xMin;
+        stationSettings.bounding_box_settings["miny"] = query_bbox->yMin;
+        stationSettings.bounding_box_settings["maxx"] = query_bbox->xMax;
+        stationSettings.bounding_box_settings["maxy"] = query_bbox->yMax;
+
         query_params.boundingBox["minx"] = query_bbox->xMin;
         query_params.boundingBox["miny"] = query_bbox->yMin;
         query_params.boundingBox["maxx"] = query_bbox->xMax;
@@ -318,6 +335,8 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       /*******************************************
        *  Finally perform the query              *
        *******************************************/
+      query_params.taggedFMISIDs = obs_engine->translateToFMISID(
+          query_params.starttime, query_params.endtime, query_params.stationtype, stationSettings);
 
       SmartMet::Spine::TimeSeries::TimeSeriesVectorPtr obsengine_result(
           obs_engine->values(query_params));
@@ -404,8 +423,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
         }
       }
 
-      hash["responseTimestamp"] =
-          Fmi::to_iso_extended_string(now) + "Z";
+      hash["responseTimestamp"] = Fmi::to_iso_extended_string(now) + "Z";
       hash["numMatched"] = num_groups;
       hash["numReturned"] = num_groups;
       hash["numParam"] = param_names.size();
@@ -532,12 +550,13 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           {
             const auto& entry = param_index[k];
             const std::string& name = entry.p.name;
-            group["obsParamList"][k]["name"] =  name;
+            group["obsParamList"][k]["name"] = name;
             group["obsParamList"][k]["featureId"] = group_map.at(group_id).param_ids.at(name);
 
             // Mark QC parameters
-            if (SupportsQualityParameters::isQCParameter(name)) {
-                group["obsParamList"][k]["isQCParameter"] = "true";
+            if (SupportsQualityParameters::isQCParameter(name))
+            {
+              group["obsParamList"][k]["isQCParameter"] = "true";
             }
           }
 
@@ -595,51 +614,73 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
                 obs_rec["epochTime"] = s_epoch;
                 obs_rec["epochTimeStr"] = format_local_time(epoch, tzp);
 
-                for (std::size_t k = 0; k < param_index.size(); k++) {
+                for (std::size_t k = 0; k < param_index.size(); k++)
+                {
                   const auto& entry = param_index[k];
                   const std::string& name = entry.p.name;
                   const int ind = entry.p.ind;
-                  if (ind >= 0) {
-                      const SmartMet::Spine::TimeSeries::TimeSeries& ts_k = obsengine_result->at(ind);
-                      const uint precision = get_meteo_parameter_options(name)->precision;
-                      sv.setPrecision(precision);
-                      const std::string value = boost::apply_visitor(sv, ts_k[row_num].value);
-                      obs_rec["data"][k]["value"] = value;
-                      if (entry.qc) {
-                          const int qc_ind = entry.qc->ind;
-                          std::stringstream qc_value;
-                          const SmartMet::Spine::TimeSeries::TimeSeries& ts_qc_k = obsengine_result->at(qc_ind);
-                          sv.setPrecision(0);
-                          const std::string value_qc = boost::apply_visitor(sv, ts_qc_k[row_num].value);
-                          obs_rec["data"][k]["qcValue"] = value_qc;
+                  if (ind >= 0)
+                  {
+                    const SmartMet::Spine::TimeSeries::TimeSeries& ts_k = obsengine_result->at(ind);
+                    const uint precision = get_meteo_parameter_options(name)->precision;
+                    sv.setPrecision(precision);
+                    const std::string value = boost::apply_visitor(sv, ts_k[row_num].value);
+                    obs_rec["data"][k]["value"] = value;
+                    if (entry.qc)
+                    {
+                      const int qc_ind = entry.qc->ind;
+                      std::stringstream qc_value;
+                      const SmartMet::Spine::TimeSeries::TimeSeries& ts_qc_k =
+                          obsengine_result->at(qc_ind);
+                      sv.setPrecision(0);
+                      const std::string value_qc = boost::apply_visitor(sv, ts_qc_k[row_num].value);
+                      obs_rec["data"][k]["qcValue"] = value_qc;
+                    }
+                  }
+                  else
+                  {
+                    auto geoLoc = sites.at(group_id);
+                    if (geoLoc)
+                    {
+                      if (SmartMet::Spine::is_location_parameter(name))
+                      {
+                        const std::string val = SmartMet::Spine::location_parameter(
+                            geoLoc,
+                            name,
+                            fmt,
+                            tz_name,
+                            get_meteo_parameter_options(name)->precision);
+                        obs_rec["data"][k]["value"] = val;
                       }
-                  } else {
-                      auto geoLoc = sites.at(group_id);
-                      if (geoLoc) {
-                          if (SmartMet::Spine::is_location_parameter(name)) {
-                              const std::string val = SmartMet::Spine::location_parameter(
-                                  geoLoc, name, fmt, tz_name,
-                                  get_meteo_parameter_options(name)->precision);
-                              obs_rec["data"][k]["value"] = val;
-                          } else if (SmartMet::Spine::is_time_parameter(name)) {
-                              const std::string timestring = "Not supported";
-                              if (not curr_locale) {
-                                  curr_locale.reset(new std::locale(query_params.localename.c_str()));
-                              }
-                              const auto val = SmartMet::Spine::time_parameter(
-                                  name, ldt, now, *geoLoc, tz_name,
-                                  geo_engine->getTimeZones(), *curr_locale,
-                                  *tfmt, timestring);
-                              std::ostringstream val_str;
-                              val_str << val;
-                              obs_rec["data"][k]["value"] = val_str.str();
-                          } else {
-                              assert(0 /* Not supposed to be here */);
-                          }
+                      else if (SmartMet::Spine::is_time_parameter(name))
+                      {
+                        const std::string timestring = "Not supported";
+                        if (not curr_locale)
+                        {
+                          curr_locale.reset(new std::locale(query_params.localename.c_str()));
+                        }
+                        const auto val = SmartMet::Spine::time_parameter(name,
+                                                                         ldt,
+                                                                         now,
+                                                                         *geoLoc,
+                                                                         tz_name,
+                                                                         geo_engine->getTimeZones(),
+                                                                         *curr_locale,
+                                                                         *tfmt,
+                                                                         timestring);
+                        std::ostringstream val_str;
+                        val_str << val;
+                        obs_rec["data"][k]["value"] = val_str.str();
                       }
-                      else {
-                          obs_rec["data"][k]["value"] = query_params.missingtext;
+                      else
+                      {
+                        assert(0 /* Not supposed to be here */);
                       }
+                    }
+                    else
+                    {
+                      obs_rec["data"][k]["value"] = query_params.missingtext;
+                    }
                   }
                 }
 
@@ -670,36 +711,40 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 void StoredObsQueryHandler::check_parameter_names(const RequestParameterMap& params,
                                                   const std::vector<std::string>& param_names) const
 {
-    std::set<std::string> lowerCaseParamNames;
-    const bool support_quality_info = SupportsQualityParameters::supportQualityInfo(params);
-    for (const std::string& name : param_names) {
-        const std::string l_name = Fmi::ascii_tolower_copy(name);
-        if (not lowerCaseParamNames.insert(l_name).second) {
-            throw SmartMet::Spine::Exception::Trace(BCP, "Duplicate parameter name '" + name + "'!")
-                .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
-        }
-
-        // FIXME: handle possible conflict case when QC paremeter explicit specification is allowed
-        //        and sama QC parameter may also be added automatically
-
-        if ((not m_support_qc_parameters or not support_quality_info)
-            and SupportsQualityParameters::isQCParameter(name))
-        {
-            throw SmartMet::Spine::Exception::Trace(BCP, "Invalid parameter!")
-                .addDetail("Quality code parameter '" + name + "' is not allowed in this query.")
-                .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
-        }
+  std::set<std::string> lowerCaseParamNames;
+  const bool support_quality_info = SupportsQualityParameters::supportQualityInfo(params);
+  for (const std::string& name : param_names)
+  {
+    const std::string l_name = Fmi::ascii_tolower_copy(name);
+    if (not lowerCaseParamNames.insert(l_name).second)
+    {
+      throw SmartMet::Spine::Exception::Trace(BCP, "Duplicate parameter name '" + name + "'!")
+          .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
     }
+
+    // FIXME: handle possible conflict case when QC paremeter explicit specification is allowed
+    //        and sama QC parameter may also be added automatically
+
+    if ((not m_support_qc_parameters or not support_quality_info) and
+        SupportsQualityParameters::isQCParameter(name))
+    {
+      throw SmartMet::Spine::Exception::Trace(BCP, "Invalid parameter!")
+          .addDetail("Quality code parameter '" + name + "' is not allowed in this query.")
+          .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
+    }
+  }
 }
 
 int StoredObsQueryHandler::lookup_initial_parameter(const std::string& name) const
 {
-    for (std::size_t i = 0; i < initial_bs_param.size(); i++) {
-        if (name == initial_bs_param[i].name()) {
-            return i;
-        }
+  for (std::size_t i = 0; i < initial_bs_param.size(); i++)
+  {
+    if (name == initial_bs_param[i].name())
+    {
+      return i;
     }
-    return -1;
+  }
+  return -1;
 }
 
 bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
@@ -707,86 +752,106 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
                                            SmartMet::Engine::Observation::Settings& query_params,
                                            std::vector<ExtParamIndexEntry>& parameter_index) const
 {
-    using SmartMet::Spine::is_special_parameter;
-    using SmartMet::Spine::is_location_parameter;
-    using SmartMet::Spine::is_time_parameter;
-    using SmartMet::Spine::makeParameter;
+  using SmartMet::Spine::is_location_parameter;
+  using SmartMet::Spine::is_special_parameter;
+  using SmartMet::Spine::is_time_parameter;
+  using SmartMet::Spine::makeParameter;
 
-    try {
-        bool have_meteo_param = false;
-        std::set<std::string> lowerCaseParamNames;
-        const bool support_quality_info = SupportsQualityParameters::supportQualityInfo(params);
+  try
+  {
+    bool have_meteo_param = false;
+    std::set<std::string> lowerCaseParamNames;
+    const bool support_quality_info = SupportsQualityParameters::supportQualityInfo(params);
 
-        auto qc_param_name_ref = SupportsQualityParameters::firstQCParameter(param_names);
-        const bool have_explicit_qc_params = qc_param_name_ref != param_names.end();
-        if ((not m_support_qc_parameters or not support_quality_info) and have_explicit_qc_params) {
-            throw SmartMet::Spine::Exception::Trace(BCP, "Invalid parameter!")
-                .addDetail("Quality code parameter '" + *qc_param_name_ref + "' is not allowed in this query.")
-                .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
-        }
-
-        for (const auto& name : param_names) {
-            const std::string l_name = Fmi::ascii_tolower_copy(name);
-
-            // Check for duplicates
-            if (not lowerCaseParamNames.insert(l_name).second) {
-                throw SmartMet::Spine::Exception::Trace(BCP, "Duplicate parameter name '" + name + "'!")
-                    .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
-            }
-
-            if (obs_engine->isParameter(name, query_params.stationtype)) {
-                // Normal parameter
-                ExtParamIndexEntry entry;
-                entry.p.ind = query_params.parameters.size();
-                entry.p.name = name;
-                SmartMet::Spine::Parameter param = makeParameter(name);
-                query_params.parameters.push_back(param);
-                if (not SmartMet::Spine::special(param)) {
-                    have_meteo_param = true;
-                }
-
-                if (not have_explicit_qc_params and support_quality_info) {
-                    const std::string qc_name = "qc_" + name;
-                    ParamIndexEntry qc_entry;
-                    qc_entry.ind = query_params.parameters.size();
-                    qc_entry.name = qc_name;
-                    entry.qc = qc_entry;
-                    SmartMet::Spine::Parameter param = makeParameter(qc_name);
-                    query_params.parameters.push_back(param);
-                }
-
-                parameter_index.push_back(entry);
-            } else if (is_special_parameter(name)) {
-                int ind = lookup_initial_parameter(l_name);
-                if (ind >= 0) {
-                    ExtParamIndexEntry entry;
-                    entry.p.ind = ind;
-                    entry.p.name = name;
-                    parameter_index.push_back(entry);
-                } else {
-                    if (is_location_parameter(name) or is_time_parameter(name)) {
-                        ExtParamIndexEntry entry;
-                        entry.p.ind = -1;
-                        entry.p.name = name;
-                        parameter_index.push_back(entry);
-                    } else {
-                        ExtParamIndexEntry entry;
-                        entry.p.ind = query_params.parameters.size();
-                        entry.p.name = name;
-                        SmartMet::Spine::Parameter param = makeParameter(name);
-                        query_params.parameters.push_back(param);
-                        parameter_index.push_back(entry);
-                    }
-                }
-            } else {
-                throw SmartMet::Spine::Exception::Trace(BCP, "Unrecognozed parameter '" + name + "'")
-                    .disableStackTrace();
-            }
-        }
-        return have_meteo_param;
-    } catch (...) {
-        throw SmartMet::Spine::Exception::Trace(BCP, "Operation processing failed!");
+    auto qc_param_name_ref = SupportsQualityParameters::firstQCParameter(param_names);
+    const bool have_explicit_qc_params = qc_param_name_ref != param_names.end();
+    if ((not m_support_qc_parameters or not support_quality_info) and have_explicit_qc_params)
+    {
+      throw SmartMet::Spine::Exception::Trace(BCP, "Invalid parameter!")
+          .addDetail("Quality code parameter '" + *qc_param_name_ref +
+                     "' is not allowed in this query.")
+          .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
     }
+
+    for (const auto& name : param_names)
+    {
+      const std::string l_name = Fmi::ascii_tolower_copy(name);
+
+      // Check for duplicates
+      if (not lowerCaseParamNames.insert(l_name).second)
+      {
+        throw SmartMet::Spine::Exception::Trace(BCP, "Duplicate parameter name '" + name + "'!")
+            .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
+      }
+
+      if (obs_engine->isParameter(name, query_params.stationtype))
+      {
+        // Normal parameter
+        ExtParamIndexEntry entry;
+        entry.p.ind = query_params.parameters.size();
+        entry.p.name = name;
+        SmartMet::Spine::Parameter param = makeParameter(name);
+        query_params.parameters.push_back(param);
+        if (not SmartMet::Spine::special(param))
+        {
+          have_meteo_param = true;
+        }
+
+        if (not have_explicit_qc_params and support_quality_info)
+        {
+          const std::string qc_name = "qc_" + name;
+          ParamIndexEntry qc_entry;
+          qc_entry.ind = query_params.parameters.size();
+          qc_entry.name = qc_name;
+          entry.qc = qc_entry;
+          SmartMet::Spine::Parameter param = makeParameter(qc_name);
+          query_params.parameters.push_back(param);
+        }
+
+        parameter_index.push_back(entry);
+      }
+      else if (is_special_parameter(name))
+      {
+        int ind = lookup_initial_parameter(l_name);
+        if (ind >= 0)
+        {
+          ExtParamIndexEntry entry;
+          entry.p.ind = ind;
+          entry.p.name = name;
+          parameter_index.push_back(entry);
+        }
+        else
+        {
+          if (is_location_parameter(name) or is_time_parameter(name))
+          {
+            ExtParamIndexEntry entry;
+            entry.p.ind = -1;
+            entry.p.name = name;
+            parameter_index.push_back(entry);
+          }
+          else
+          {
+            ExtParamIndexEntry entry;
+            entry.p.ind = query_params.parameters.size();
+            entry.p.name = name;
+            SmartMet::Spine::Parameter param = makeParameter(name);
+            query_params.parameters.push_back(param);
+            parameter_index.push_back(entry);
+          }
+        }
+      }
+      else
+      {
+        throw SmartMet::Spine::Exception::Trace(BCP, "Unrecognozed parameter '" + name + "'")
+            .disableStackTrace();
+      }
+    }
+    return have_meteo_param;
+  }
+  catch (...)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation processing failed!");
+  }
 }
 
 }  // namespace WFS

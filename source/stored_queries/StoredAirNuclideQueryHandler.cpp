@@ -52,7 +52,7 @@ bw::StoredAirNuclideQueryHandler::~StoredAirNuclideQueryHandler() {}
 
 void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
                                              const std::string& language,
-					     const boost::optional<std::string> &hostname,
+                                             const boost::optional<std::string>& hostname,
                                              std::ostream& output) const
 {
   try
@@ -108,6 +108,23 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
                     << "\n";
       }
 
+      pt::ptime startTime = params.get_single<pt::ptime>(P_BEGIN_TIME);
+      pt::ptime endTime = params.get_single<pt::ptime>(P_END_TIME);
+      const uint64_t timestep = params.get_single<uint64_t>(P_TIME_STEP);
+
+      if (m_sqRestrictions)
+        check_time_interval(startTime, endTime, m_maxHours);
+
+      // Only 24 hours allowed
+      if (1440 < timestep)
+      {
+        SmartMet::Spine::Exception exception(BCP, "Operation processing failed!");
+        exception.addDetail("Invalid time step value. Maximum is 1440 minutes.");
+        exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
+        exception.addParameter("Timestep", std::to_string(timestep));
+        throw exception.disableStackTrace();
+      }
+
       // Get all the information needed in a OBsEngine station search.
       SmartMet::Engine::Observation::Settings stationSearchSettings;
       stationSearchSettings.allplaces = false;
@@ -115,13 +132,17 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
       stationSearchSettings.stationtype = stationType;
       stationSearchSettings.maxdistance = maxDistance;
       stationSearchSettings.useDataCache = false;
+      stationSearchSettings.starttime = startTime;
+      stationSearchSettings.endtime = endTime;
+
+      SmartMet::Engine::Observation::StationSettings stationSettings;
 
       // Include valid locations.
-      std::transform(
-          locations_list.begin(),
-          locations_list.end(),
-          std::back_inserter(stationSearchSettings.locations),
-          boost::bind(&std::pair<std::string, SmartMet::Spine::LocationPtr>::second, ::_1));
+      for (const auto& item : locations_list)
+      {
+        stationSettings.nearest_station_settings.emplace_back(
+            item.second->longitude, item.second->latitude, maxDistance, 1, item.first);
+      }
 
       // Bounding box search options.
       SmartMet::Spine::BoundingBox requested_bbox;
@@ -133,11 +154,17 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
         *query_bbox =
             bw::SupportsBoundingBox::transform_bounding_box(requested_bbox, DATA_CRS_NAME);
         SmartMet::Engine::Observation::Settings bboxSettings;
-        stationSearchSettings.boundingBox["minx"] = query_bbox->xMin;
-        stationSearchSettings.boundingBox["miny"] = query_bbox->yMin;
-        stationSearchSettings.boundingBox["maxx"] = query_bbox->xMax;
-        stationSearchSettings.boundingBox["maxy"] = query_bbox->yMax;
+        stationSettings.bounding_box_settings["minx"] = query_bbox->xMin;
+        stationSettings.bounding_box_settings["miny"] = query_bbox->yMin;
+        stationSettings.bounding_box_settings["maxx"] = query_bbox->xMax;
+        stationSettings.bounding_box_settings["maxy"] = query_bbox->yMax;
       }
+
+      stationSearchSettings.taggedFMISIDs =
+          obs_engine->translateToFMISID(stationSearchSettings.starttime,
+                                        stationSearchSettings.endtime,
+                                        stationSearchSettings.stationtype,
+                                        stationSettings);
 
       // Search stations based on location settings.
       // The result does not contain duplicates.
@@ -168,24 +195,6 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
 
       if (stations.empty())
         queryInitializationOK = false;
-
-      // Time range restriction to get data.
-      pt::ptime startTime = params.get_single<pt::ptime>(P_BEGIN_TIME);
-      pt::ptime endTime = params.get_single<pt::ptime>(P_END_TIME);
-      const uint64_t timestep = params.get_single<uint64_t>(P_TIME_STEP);
-
-      if (m_sqRestrictions)
-        check_time_interval(startTime, endTime, m_maxHours);
-
-      // Only 24 hours allowed
-      if (1440 < timestep)
-      {
-        SmartMet::Spine::Exception exception(BCP, "Operation processing failed!");
-        exception.addDetail("Invalid time step value. Maximum is 1440 minutes.");
-        exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
-        exception.addParameter("Timestep", std::to_string(timestep));
-        throw exception.disableStackTrace();
-      }
 
       //
       // Observation ID search

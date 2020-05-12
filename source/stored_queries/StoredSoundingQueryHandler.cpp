@@ -726,6 +726,7 @@ void StoredSoundingQueryHandler::makeSoundingQuery(const RequestParameterMap& pa
   // Execute query
   SmartMet::Engine::Observation::MastQuery profileQuery;
   profileQuery.setQueryParams(&profileQueryParams);
+
   obs_engine->makeQuery(&profileQuery);
 
   soundingQueryResult = profileQuery.getQueryResultContainer();
@@ -814,7 +815,9 @@ void StoredSoundingQueryHandler::makeSoundingDataQuery(const RequestParameterMap
 
   SmartMet::Engine::Observation::MastQuery dataQuery;
   dataQuery.setQueryParams(&dataQueryParams);
+
   obs_engine->makeQuery(&dataQuery);
+
   dataContainer = dataQuery.getQueryResultContainer();
 }
 
@@ -834,6 +837,7 @@ void StoredSoundingQueryHandler::getStationSearchSettings(
   settings.stationtype = params.get_single<std::string>(P_STATION_TYPE);
   settings.maxdistance = params.get_single<double>(P_MAX_DISTANCE);
 
+  SmartMet::Engine::Observation::StationSettings stationSettings;
   SmartMet::Spine::BoundingBox requestedBBox;
   bool haveBBox = get_bounding_box(params, solveCrs(params), &requestedBBox);
   if (haveBBox)
@@ -841,17 +845,21 @@ void StoredSoundingQueryHandler::getStationSearchSettings(
     std::unique_ptr<SmartMet::Spine::BoundingBox> queryBBox;
     queryBBox.reset(new SmartMet::Spine::BoundingBox);
     *queryBBox = SupportsBoundingBox::transform_bounding_box(requestedBBox, DATA_CRS_NAME);
-    settings.boundingBox["minx"] = queryBBox->xMin;
-    settings.boundingBox["miny"] = queryBBox->yMin;
-    settings.boundingBox["maxx"] = queryBBox->xMax;
-    settings.boundingBox["maxy"] = queryBBox->yMax;
+    stationSettings.bounding_box_settings["minx"] = queryBBox->xMin;
+    stationSettings.bounding_box_settings["miny"] = queryBBox->yMin;
+    stationSettings.bounding_box_settings["maxx"] = queryBBox->xMax;
+    stationSettings.bounding_box_settings["maxy"] = queryBBox->yMax;
   }
 
+  // Use nearest station settings
   // Include valid locations.
-  std::transform(locationsList.begin(),
-                 locationsList.end(),
-                 std::back_inserter(settings.locations),
-                 boost::bind(&std::pair<std::string, SmartMet::Spine::LocationPtr>::second, ::_1));
+  for (const auto& item : locationsList)
+  {
+    stationSettings.nearest_station_settings.emplace_back(
+        item.second->longitude, item.second->latitude, settings.maxdistance, 1, item.first);
+  }
+  settings.taggedFMISIDs = obs_engine->translateToFMISID(
+      settings.starttime, settings.endtime, settings.stationtype, stationSettings);
 }
 
 void StoredSoundingQueryHandler::checkMaxSoundings(const pt::ptime startTime,

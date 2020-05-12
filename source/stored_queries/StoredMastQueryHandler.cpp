@@ -20,7 +20,8 @@ bw::StoredMastQueryHandler::StoredMastQueryHandler(SmartMet::Spine::Reactor* rea
       bw::RequiresGeoEngine(reactor),
       bw::RequiresObsEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
-      bw::SupportsLocationParameters(reactor, config, INCLUDE_FMISIDS | INCLUDE_GEOIDS | INCLUDE_WMOS),
+      bw::SupportsLocationParameters(
+          reactor, config, INCLUDE_FMISIDS | INCLUDE_GEOIDS | INCLUDE_WMOS),
       bw::SupportsBoundingBox(config, plugin_data.get_crs_registry()),
       bw::SupportsQualityParameters(config)
 
@@ -109,12 +110,14 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       stationSearchSettings.stationtype = stationType;
       stationSearchSettings.maxdistance = maxDistance;
 
+      SmartMet::Engine::Observation::StationSettings stationSettings;
+
       // Include valid locations.
-      std::transform(
-          locations_list.begin(),
-          locations_list.end(),
-          std::back_inserter(stationSearchSettings.locations),
-          boost::bind(&std::pair<std::string, SmartMet::Spine::LocationPtr>::second, ::_1));
+      for (const auto& item : locations_list)
+      {
+        stationSettings.nearest_station_settings.emplace_back(
+            item.second->longitude, item.second->latitude, maxDistance, 1, item.first);
+      }
 
       // Bounding box search options.
       SmartMet::Spine::BoundingBox requested_bbox;
@@ -126,11 +129,17 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
         *query_bbox =
             bw::SupportsBoundingBox::transform_bounding_box(requested_bbox, DATA_CRS_NAME);
         SmartMet::Engine::Observation::Settings bboxSettings;
-        stationSearchSettings.boundingBox["minx"] = query_bbox->xMin;
-        stationSearchSettings.boundingBox["miny"] = query_bbox->yMin;
-        stationSearchSettings.boundingBox["maxx"] = query_bbox->xMax;
-        stationSearchSettings.boundingBox["maxy"] = query_bbox->yMax;
+        stationSettings.bounding_box_settings["minx"] = query_bbox->xMin;
+        stationSettings.bounding_box_settings["miny"] = query_bbox->yMin;
+        stationSettings.bounding_box_settings["maxx"] = query_bbox->xMax;
+        stationSettings.bounding_box_settings["maxy"] = query_bbox->yMax;
       }
+
+      stationSearchSettings.taggedFMISIDs =
+          obs_engine->translateToFMISID(stationSearchSettings.starttime,
+                                        stationSearchSettings.endtime,
+                                        stationSearchSettings.stationtype,
+                                        stationSettings);
 
       // Search stations based on location settings.
       // The result does not contain duplicates.

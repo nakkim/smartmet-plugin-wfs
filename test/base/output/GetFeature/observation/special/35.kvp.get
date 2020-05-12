@@ -55,7 +55,7 @@ Global data object:
                                    ],
                 'obsStationList' : [
                                      {
-                                       'bearing' : "5.8",
+                                       'bearing' : "290.8",
                                        'distance' : "0.1",
                                        'fmisid' : "100971",
                                        'geoid' : "-16000150",
