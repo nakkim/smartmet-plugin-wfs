@@ -1,4 +1,6 @@
-#include <boost/test/included/unit_test.hpp>
+#define BOOST_TEST_MODULE TStoredQueryDef
+#define BOOST_TEST_DYN_LINK 1
+#include <boost/test/unit_test.hpp>
 
 #include "StoredQueryParamDef.h"
 #include "WfsException.h"

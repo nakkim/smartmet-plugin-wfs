@@ -11,7 +11,7 @@ using SmartMet::Spine::Value;
 const char* bw::SupportsBoundingBox::P_BOUNDING_BOX = "boundingBox";
 
 bw::SupportsBoundingBox::SupportsBoundingBox(boost::shared_ptr<StoredQueryConfig> config,
-                                             SmartMet::Engine::Gis::CRSRegistry& crs_registry,
+                                             SmartMet::Spine::CRSRegistry& crs_registry,
                                              bool mandatory)
     : SupportsExtraHandlerParams(config, false), crs_registry(crs_registry)
 {

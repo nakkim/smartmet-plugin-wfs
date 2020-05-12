@@ -73,7 +73,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       const std::string requestedCrs = params.get_single<std::string>(P_CRS);
 
       const char* DATA_CRS_NAME = "urn:ogc:def:crs:EPSG::4326";
-      SmartMet::Engine::Gis::CRSRegistry& crs_registry = plugin_impl.get_crs_registry();
+      auto& crs_registry = plugin_impl.get_crs_registry();
 
       // Output CRS priority: user defined -> default in stored query -> feature type default crs
       const std::string crs = requestedCrs.empty() ? DATA_CRS_NAME : requestedCrs;
@@ -168,7 +168,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
         msg << "At least one producer has to be given.";
         SmartMet::Spine::Exception exception(BCP, msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       // Meteo parameters
@@ -179,7 +179,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
         SmartMet::Spine::Exception exception(BCP, "Operation processing failed!");
         exception.addDetail("At least one meteo parameter has to be given.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       // Do not allow QC parameters if it is not enabled in a stored query.
@@ -190,7 +190,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
         exception.addDetail("Quality code parameter '" + *qc_param_name_ref +
                             "' is not allowed in this query.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       // In case if someone is trying to use quality info support.
@@ -217,7 +217,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
           SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
           exception.addParameter("Unknown parameter", name);
-          throw exception;
+          throw exception.disableStackTrace();
         }
 
         bool isQCParameter = SupportsQualityParameters::isQCParameter(name);
@@ -286,7 +286,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
         exception.addDetail("Maximum timestep value is 1440 minutes.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
         exception.addParameter("Timestep", std::to_string(timestep));
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       // Assume timestep 1 minutes when value is 0.
@@ -298,7 +298,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         exception.addParameter("Start time", pt::to_simple_string(startTime));
         exception.addParameter("End time", pt::to_simple_string(endTime));
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       //

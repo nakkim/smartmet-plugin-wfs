@@ -2,7 +2,7 @@
 
 #include <boost/optional.hpp>
 #include <boost/shared_ptr.hpp>
-#include <engines/gis/CRSRegistry.h>
+#include <spine/CRSRegistry.h>
 #include <spine/ConfigBase.h>
 #include <spine/MultiLanguageString.h>
 #include <array>
@@ -16,7 +16,7 @@ namespace WFS
 class WfsFeatureDef
 {
  public:
-  WfsFeatureDef(SmartMet::Engine::Gis::CRSRegistry& crs_registry,
+  WfsFeatureDef(SmartMet::Spine::CRSRegistry& crs_registry,
                 const std::string& default_language,
                 boost::shared_ptr<SmartMet::Spine::ConfigBase> config,
                 libconfig::Setting& setting);
@@ -39,7 +39,7 @@ class WfsFeatureDef
 
  private:
   static std::string resolve_crs_url(const std::string& name,
-                                     SmartMet::Engine::Gis::CRSRegistry& crs_registry);
+                                     SmartMet::Spine::CRSRegistry& crs_registry);
 
  private:
   std::string name;

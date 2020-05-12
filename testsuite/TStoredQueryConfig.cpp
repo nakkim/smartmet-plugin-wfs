@@ -1,4 +1,6 @@
-#include <boost/test/included/unit_test.hpp>
+#define BOOST_TEST_MODULE TStoredQueryConfig
+#define BOOST_TEST_DYN_LINK 1
+#include <boost/test/unit_test.hpp>
 #include <array>
 #include "ArrayParameterTemplate.h"
 #include "RequestParameterMap.h"

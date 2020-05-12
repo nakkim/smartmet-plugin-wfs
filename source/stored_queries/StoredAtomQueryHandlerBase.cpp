@@ -92,7 +92,7 @@ void bw::StoredAtomQueryHandlerBase::query(const bw::StoredQuery& query,
     {
       SmartMet::Spine::Exception exception(BCP, "No data available!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
 
     req_param_map.dump_params(hash["query_parameters"]);

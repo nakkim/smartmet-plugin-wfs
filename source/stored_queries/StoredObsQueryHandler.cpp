@@ -185,7 +185,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           boost::bind(&std::pair<std::string, SmartMet::Spine::LocationPtr>::second, ::_1));
 
       std::vector<std::string> param_names;
-      const bool have_meteo_param =
+      bool have_meteo_param =
           params.get<std::string>(P_METEO_PARAMETERS, std::back_inserter(param_names), 1);
 
       query_params.stationtype =
@@ -195,13 +195,14 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 
       std::vector<ExtParamIndexEntry> param_index;
       query_params.parameters = initial_bs_param;
-      add_parameters(params, param_names, query_params, param_index);
+      have_meteo_param &= add_parameters(params, param_names, query_params, param_index);
 
       if (not have_meteo_param)
       {
         SmartMet::Spine::Exception exception(BCP, "Operation processin failed!");
         exception.addDetail("At least one meteo parameter must be specified");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
+        exception.disableStackTrace();
         throw exception;
       }
 
@@ -282,7 +283,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         exception.addParameter("Start time", pt::to_simple_string(query_params.starttime));
         exception.addParameter("End time", pt::to_simple_string(query_params.endtime));
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       // Avoid an attempt to dump too much data.
@@ -296,7 +297,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         exception.addParameter("Start time", pt::to_simple_string(query_params.starttime));
         exception.addParameter("End time", pt::to_simple_string(query_params.endtime));
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       if (sq_restrictions and max_station_count > 0 and have_bbox)
@@ -310,7 +311,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
               "Too many stations (" + std::to_string(stations.size()) + ") in the bounding box!");
           exception.addDetail("No more than " + std::to_string(max_station_count) + " is allowed.");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-          throw exception;
+          throw exception.disableStackTrace();
         }
       }
 
@@ -778,7 +779,8 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
                     }
                 }
             } else {
-                throw SmartMet::Spine::Exception::Trace(BCP, "Unrecognozed parameter '" + name + "'");
+                throw SmartMet::Spine::Exception::Trace(BCP, "Unrecognozed parameter '" + name + "'")
+                    .disableStackTrace();
             }
         }
         return have_meteo_param;

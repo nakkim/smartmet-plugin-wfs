@@ -115,16 +115,16 @@ void bw::AdHocQuery::create_from_kvp(const std::string& language,
     {
       SmartMet::Spine::Exception exception(BCP, "Not a request!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
 
-    // Sanity check: not get feaure or get property value
+    // Sanity check: not get feature or get property value
     if (not ba::iequals(*request, "getFeature") and not ba::iequals(*request, "getPropertyValue"))
     {
       SmartMet::Spine::Exception exception(BCP,
                                            "Expected 'getFeature' or 'getPropertyValue' request!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
 
     // Sanity check: have typenames?
@@ -132,7 +132,7 @@ void bw::AdHocQuery::create_from_kvp(const std::string& language,
     {
       SmartMet::Spine::Exception exception(BCP, "No 'TYPENAMES' parameter found!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
 
     // Find stored query ids
@@ -145,7 +145,7 @@ void bw::AdHocQuery::create_from_kvp(const std::string& language,
     {
       SmartMet::Spine::Exception exception(BCP, "Failed to extract 'storedquery_id'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
 
     if (bbox)
@@ -157,7 +157,7 @@ void bw::AdHocQuery::create_from_kvp(const std::string& language,
     {
       SmartMet::Spine::Exception exception(BCP, "RESOURCEID not implemented!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
     else if (filter)
     {
@@ -219,7 +219,7 @@ void bw::AdHocQuery::create_filter_query_from_kvp(
       {
         SmartMet::Spine::Exception exception(BCP, "Failed to access filter 'TMP' element!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       const std::string& root_name = XMLString::transcode(root->getTagName());
@@ -228,7 +228,7 @@ void bw::AdHocQuery::create_filter_query_from_kvp(
       {
         SmartMet::Spine::Exception exception(BCP, "Failed to parse filter xml!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       BOOST_FOREACH (const auto& query_id, stored_query_ids)
@@ -256,7 +256,7 @@ void bw::AdHocQuery::create_filter_query_from_kvp(
     {
       SmartMet::Spine::Exception exception(BCP, "Selected 'FILTER_LANGUAGE' not implemented!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
   }
   catch (...)
@@ -296,7 +296,7 @@ void bw::AdHocQuery::create_bbox_query_from_kvp(
         SmartMet::Spine::Exception exception(BCP, "Stored query does not support BBOX!");
         exception.addDetail(msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
       else
       {
@@ -378,7 +378,7 @@ void bw::AdHocQuery::create_from_xml(const std::string& language,
     {
       SmartMet::Spine::Exception exception(BCP, "Failed to get stored query ID!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
 
     // Find the the Filter element in the query.
@@ -611,7 +611,7 @@ void bw::AdHocQuery::replace_aliases(const std::vector<std::string>& aliases,
         msg << "The number of aliases does not match the number of type names.";
         SmartMet::Spine::Exception exception(BCP, msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       // Loop through the queries and replace aliases in each of the filtering expressions.
@@ -704,7 +704,7 @@ void bw::AdHocQuery::extract_filter_elements(const xercesc::DOMElement& root_ele
         SmartMet::Spine::Exception exception(BCP,
                                              "The 'fes:not' filtering element is not supported!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       // Get pointer to the last query in the list.
@@ -1201,7 +1201,7 @@ void bw::AdHocQuery::read_query_parameter(const xercesc::DOMElement& element,
         }
         SmartMet::Spine::Exception exception(BCP, msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       for (auto it = param_desc.conflicts_with.begin(); it != param_desc.conflicts_with.end(); ++it)
@@ -1455,7 +1455,7 @@ void check_param_max_occurs(int actual_count,
 
       SmartMet::Spine::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
   }
   catch (...)

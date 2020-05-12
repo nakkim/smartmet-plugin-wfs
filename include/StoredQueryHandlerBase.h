@@ -9,7 +9,7 @@
 #include "StoredQueryParamRegistry.h"
 #include "SupportsExtraHandlerParams.h"
 
-#include <engines/gis/CRSRegistry.h>
+#include <spine/CRSRegistry.h>
 #include <spine/Reactor.h>
 #include <spine/Value.h>
 #include <spine/ValueFormatter.h>
@@ -112,18 +112,18 @@ class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
   void format_output(CTPP::CDT& hash, std::ostream& output, bool debug_format) const;
 
   static std::pair<std::string, std::string> get_2D_coord(
-      boost::shared_ptr<SmartMet::Engine::Gis::CRSRegistry::Transformation> transformation,
+      boost::shared_ptr<SmartMet::Spine::CRSRegistry::Transformation> transformation,
       double X,
       double Y);
 
   static void set_2D_coord(
-      boost::shared_ptr<SmartMet::Engine::Gis::CRSRegistry::Transformation> transformation,
+      boost::shared_ptr<SmartMet::Spine::CRSRegistry::Transformation> transformation,
       double X,
       double Y,
       CTPP::CDT& hash);
 
   static void set_2D_coord(
-      boost::shared_ptr<SmartMet::Engine::Gis::CRSRegistry::Transformation> transformation,
+      boost::shared_ptr<SmartMet::Spine::CRSRegistry::Transformation> transformation,
       const std::string& X,
       const std::string& Y,
       CTPP::CDT& hash);

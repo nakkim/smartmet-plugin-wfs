@@ -7,7 +7,7 @@ TEST_DIRECTORIES = base real
 # Compiler options
 
 DEFINES = -DUNIX -D_REENTRANT
- 
+
 FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter -Wno-unknown-pragmas \
       -Wcast-align \
       -Wcast-qual \
@@ -68,16 +68,21 @@ objdir = obj
 # Boost 1.69
 
 ifneq "$(wildcard /usr/include/boost169)" ""
-  INCLUDES += -I/usr/include/boost169
-  LIBS += -L/usr/lib64/boost169
+  BOOST_INCLUDES = -I/usr/include/boost169
+  BOOST_LIBS = -L/usr/lib64/boost169
+  FLAGS += -Wno-overloaded-virtual -Wno-redundant-decls
 endif
 
-INCLUDES += -I$(includedir) \
+INCLUDES = \
+	$(BOOST_INCLUDES) \
+	-I$(includedir) \
 	-I$(includedir)/smartmet \
 	-I$(includedir)/mysql \
 	-I$(includedir)/jsoncpp
 
-LIBS += -L$(libdir) \
+LIBS = \
+	$(BOOST_LIBS) \
+	-L$(libdir) \
 	-lsmartmet-spine \
 	-lsmartmet-newbase \
 	-lsmartmet-macgyver \
@@ -91,7 +96,6 @@ LIBS += -L$(libdir) \
         -lxqilla \
 	-lxerces-c \
 	-lgdal \
-	-lpqxx /usr/pgsql-9.3/lib/libpq.a \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \
@@ -99,6 +103,8 @@ LIBS += -L$(libdir) \
 	-lcurl \
 	-lcrypto \
 	-lbz2 -lz \
+	-lstdc++ \
+	-lssl \
 	-lpthread \
 	-lm
 

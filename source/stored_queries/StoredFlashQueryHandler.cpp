@@ -152,7 +152,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
         SmartMet::Spine::Exception exception(
             BCP, "Projection '" + crs + "' not supported for lightning data!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       pt::ptime begin = params.get_single<pt::ptime>(P_BEGIN_TIME);
@@ -197,7 +197,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
       const std::string tz_name = get_tz_name(params);
       boost::local_time::time_zone_ptr tzp = get_time_zone(tz_name);
 
-      boost::shared_ptr<SmartMet::Engine::Gis::CRSRegistry::Transformation> to_bbox_transform;
+      boost::shared_ptr<SmartMet::Spine::CRSRegistry::Transformation> to_bbox_transform;
 
       // boost::optional<> aiheuttaa täällä strict aliasing varoituksen jos gcc-4.4.X
       // on käytössä. Sen vuoksi std::unique_ptr on käytetty boost::optionla tilalle.
@@ -254,7 +254,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
         SmartMet::Spine::Exception exception(BCP, "No meteo parameter found!");
         exception.addDetail("At least one meteo parameter must be specified!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
-        throw exception;
+        throw exception.disableStackTrace();
       }
 
       // Fetch the values

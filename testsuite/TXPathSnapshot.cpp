@@ -1,5 +1,7 @@
+#define BOOST_TEST_MODULE TXPathSnapshot
+#define BOOST_TEST_DYN_LINK 1
 #include <iostream>
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <xercesc/framework/MemBufInputSource.hpp>
 #include "XmlEnvInit.h"
 #include "XPathSnapshot.h"

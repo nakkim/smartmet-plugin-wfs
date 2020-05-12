@@ -310,7 +310,7 @@ void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
 
     std::vector<ContourQueryResultPtr> query_results(processQuery(*query_param));
 
-    SmartMet::Engine::Gis::CRSRegistry& crsRegistry = plugin_impl.get_crs_registry();
+    SmartMet::Spine::CRSRegistry& crsRegistry = plugin_impl.get_crs_registry();
 
     parseQueryResults(query_results,
                       query_param->bbox,
@@ -521,7 +521,7 @@ void bw::StoredContourQueryHandler::parseQueryResults(
     const std::vector<ContourQueryResultPtr>& query_results,
     const SmartMet::Spine::BoundingBox& bbox,
     const std::string& language,
-    SmartMet::Engine::Gis::CRSRegistry& crsRegistry,
+    SmartMet::Spine::CRSRegistry& crsRegistry,
     const std::string& requestedCRS,
     const boost::posix_time::ptime& origintime,
     const boost::posix_time::ptime& modificationtime,

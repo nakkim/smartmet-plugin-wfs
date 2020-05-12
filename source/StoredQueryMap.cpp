@@ -137,7 +137,7 @@ boost::shared_ptr<bw::StoredQueryHandlerBase> bw::StoredQueryMap::get_handler_by
     {
       SmartMet::Spine::Exception exception(BCP, "No handler for '" + name + "' found!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
-      throw exception;
+      throw exception.disableStackTrace();
     }
     else
     {

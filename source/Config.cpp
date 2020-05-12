@@ -133,7 +133,7 @@ Config::Config(const string& configfile)
 }
 
 std::vector<boost::shared_ptr<WfsFeatureDef> > Config::read_features_config(
-    SmartMet::Engine::Gis::CRSRegistry& theCRSRegistry)
+    SmartMet::Spine::CRSRegistry& theCRSRegistry)
 {
   try
   {
