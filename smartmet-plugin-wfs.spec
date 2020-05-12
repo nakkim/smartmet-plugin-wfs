@@ -94,15 +94,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %changelog
+* Fri May  8 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.5.8-1.fmi
+- Use CRSRegistry from smartmet-library-spine
+
 * Tue May  5 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.5.5-1.fmi
 - Avoid unnecessary stack traces
 - Removed unused members from PluginImpl class
 
 * Tue Apr 28 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.28-1.fmi
 - Use GDAL 3.0
-
-* Fri May  8 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.5.8-1.fmi
-- Use CRSRegistry from smartmet-library-spine
 
 * Sat Apr 18 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.18-1.fmi
 - Upgraded to Boost 1.69
