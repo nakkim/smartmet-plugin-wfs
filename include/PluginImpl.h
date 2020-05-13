@@ -35,7 +35,11 @@ class PluginImpl : public boost::noncopyable
   struct RequestResult;
 
  public:
-  PluginImpl(SmartMet::Spine::Reactor* theReactor, const char* theConfig);
+  PluginImpl(
+      SmartMet::Spine::Reactor* theReactor,
+      const char* theConfig,
+      Spine::CRSRegistry& crs_registry);
+
   virtual ~PluginImpl();
 
   virtual void realRequestHandler(SmartMet::Spine::Reactor& theReactor,
@@ -45,7 +49,7 @@ class PluginImpl : public boost::noncopyable
 
   inline SmartMet::Spine::CRSRegistry& get_crs_registry() const
   {
-    return itsGisEngine->getCRSRegistry();
+    return itsCRSRegistry;
   }
 
   inline Config& get_config() { return itsConfig; }
@@ -195,7 +199,7 @@ class PluginImpl : public boost::noncopyable
    */
   std::unique_ptr<RequestFactory> request_factory;
 
-  SmartMet::Engine::Gis::Engine* itsGisEngine;
+  SmartMet::Spine::CRSRegistry& itsCRSRegistry;
 
   Fmi::TemplateFactory itsTemplateFactory;
 
