@@ -18,6 +18,7 @@
 #include <macgyver/StringConversion.h>
 #include <macgyver/TimeParser.h>
 #include <spine/Convenience.h>
+#include <spine/CRSRegistry.h>
 #include <spine/Exception.h>
 #include <spine/FmiApiKey.h>
 
@@ -37,8 +38,13 @@ struct PluginImpl::RequestResult
   RequestResult() : status(SmartMet::Spine::HTTP::not_a_status), may_validate_xml(true), output() {}
 };
 
-PluginImpl::PluginImpl(SmartMet::Spine::Reactor* theReactor, const char* theConfig)
+PluginImpl::PluginImpl(
+    SmartMet::Spine::Reactor* theReactor,
+    const char* theConfig,
+    Spine::CRSRegistry& crs_registry)
+
     : itsConfig(theConfig)
+    , itsCRSRegistry(crs_registry)
     , wfs_capabilities(new WfsCapabilities)
 {
   try
@@ -99,7 +105,7 @@ PluginImpl::PluginImpl(SmartMet::Spine::Reactor* theReactor, const char* theConf
         .register_unimplemented_request_type("DropStoredQuery")
         .register_unimplemented_request_type("Transaction");
 
-    itsGisEngine = theReactor->getEngine<SmartMet::Engine::Gis::Engine>("Gis");
+    //itsGisEngine = theReactor->getEngine<SmartMet::Engine::Gis::Engine>("Gis");
 
     debug_level = itsConfig.get_optional_config_param<int>("debugLevel", 1);
     fallback_hostname =
@@ -114,7 +120,7 @@ PluginImpl::PluginImpl(SmartMet::Spine::Reactor* theReactor, const char* theConf
     create_xml_parser();
     init_geo_server_access();
 
-    const auto& feature_vect = itsConfig.read_features_config(itsGisEngine->getCRSRegistry());
+    const auto& feature_vect = itsConfig.read_features_config(itsCRSRegistry);
     BOOST_FOREACH (auto feature, feature_vect)
     {
       wfs_capabilities->register_feature(feature);

@@ -41,8 +41,6 @@ void Plugin::init()
   {
     try
     {
-      boost::shared_ptr<PluginImpl> new_impl(new PluginImpl(itsReactor, itsConfig));
-
       if (itsReactor->getRequiredAPIVersion() != SMARTMET_API_VERSION)
       {
         std::ostringstream msg;
@@ -51,6 +49,14 @@ void Plugin::init()
             << itsReactor->getRequiredAPIVersion() << ")";
         throw SmartMet::Spine::Exception(BCP, msg.str());
       }
+
+      auto itsGisEngine = itsReactor->getEngine<SmartMet::Engine::Gis::Engine>("Gis");
+
+      boost::shared_ptr<PluginImpl> new_impl(
+          new PluginImpl(
+              itsReactor,
+              itsConfig,
+              itsGisEngine->getCRSRegistry()));
 
       itsReactor->removeContentHandlers(this);
 

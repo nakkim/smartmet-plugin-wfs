@@ -124,7 +124,7 @@
                 </BsWfs:Location>
                 <BsWfs:Time>2019-06-06T12:00:00Z</BsWfs:Time>
                 <BsWfs:ParameterName>direction</BsWfs:ParameterName>
-                <BsWfs:ParameterValue>264.1</BsWfs:ParameterValue>
+                <BsWfs:ParameterValue>219.9</BsWfs:ParameterValue>
             </BsWfs:BsWfsElement>
 	</wfs:member>
 	
@@ -254,7 +254,7 @@
                 </BsWfs:Location>
                 <BsWfs:Time>2019-06-06T12:10:00Z</BsWfs:Time>
                 <BsWfs:ParameterName>direction</BsWfs:ParameterName>
-                <BsWfs:ParameterValue>264.1</BsWfs:ParameterValue>
+                <BsWfs:ParameterValue>219.9</BsWfs:ParameterValue>
             </BsWfs:BsWfsElement>
 	</wfs:member>
 	
