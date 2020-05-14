@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.5.12
+Version: 20.5.14
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -108,6 +108,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Thu May 14 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.5.14-1.fmi
+- Refactor (basic functionality in static library, add devel package)
+- Makefile cleanups
+
 * Tue May 12 2020 Anssi Reponen <anssi.reponen@fmi.fi> - 20.5.12-1.fmi
 - Observation-engine API changed (BRAINSTORM-1678)
 
