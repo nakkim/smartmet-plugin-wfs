@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.5.12
+Version: 20.5.14
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -76,6 +76,15 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 %description
 SmartMet WFS plugin
 
+%package -n %{SPECNAME}-devel
+Summary: SmartMet WFS plugin development files
+Requires: smartmet-library-spine-devel
+Requires: smartmet-library-gis-devel
+Requires: smartmet-library-locus-devel
+Requires: smartmet-library-macgyver-devel
+%description -n %{SPECNAME}-devel
+SmartMet WFS plugin development files (for building testsuite without rebuilding plugin)
+
 %prep
 rm -rf $RPM_BUILD_ROOT
 
@@ -99,7 +108,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLGrammarPool.dump
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
+%files -n %{SPECNAME}-devel
+%{_libdir}/libsmartmet-plugin-wfs.a
+%{_includedir}/smartmet/plugin/wfs/*.h
+%{_includedir}/smartmet/plugin/wfs/request/*.h
+
 %changelog
+* Thu May 14 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.5.14-1.fmi
+- Refactor (basic functionality in static library, add devel package)
+- Makefile cleanups
+
 * Tue May 12 2020 Anssi Reponen <anssi.reponen@fmi.fi> - 20.5.12-1.fmi
 - Observation-engine API changed (BRAINSTORM-1678)
 

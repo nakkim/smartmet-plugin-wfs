@@ -1,3 +1,4 @@
+
 INCDIR = smartmet/plugins/$(SUBNAME)
 TOP = $(shell pwd)/..
 
@@ -9,8 +10,6 @@ GCC_DIAG_COLOR ?= always
 DEFINES = -DUNIX -D_REENTRANT
 
 BOOST169_WARNING_DISABLE = -Wno-redundant-decls -Wno-overloaded-virtual
-
-
 
 FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter -Wno-unknown-pragmas \
       -Wcast-align \
@@ -29,9 +28,6 @@ FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter -Wno-unknown-pragmas \
 
 CFLAGS_RELEASE = $(DEFINES) $(FLAGS) -DNDEBUG -O2 -g
 CFLAGS_DEBUG   = $(DEFINES) $(FLAGS) -Werror  -O0 -g
-
-ARFLAGS = -r
-DEFINES = -DUNIX -D_REENTRANT
 
 ifneq (,$(findstring debug,$(MAKECMDGOALS)))
   override CFLAGS += $(CFLAGS_DEBUG)
@@ -63,7 +59,6 @@ plugindir = $(datadir)/smartmet/plugins
 objdir = obj
 
 #
-
 # Boost 1.69
 
 ifneq "$(wildcard /usr/include/boost169)" ""
@@ -78,7 +73,6 @@ INCLUDES += -I$(includedir) \
 	-Iinclude
 
 LIBS += -L$(libdir) \
-	-lsmartmet-engine-gis \
 	-lsmartmet-gis \
 	-lsmartmet-spine \
 	-lsmartmet-newbase \
@@ -107,7 +101,15 @@ LIBS += -L$(libdir) \
 	-lm \
 	-ldl
 
-INCLUDES := -I$(TOP)/include $(INCLUDES)
+ifneq (,$(findstring check-installed,$(MAKECMDGOALS)))
+LIBWFS_INCLUDES := -I$(includedir)/smartmet/plugin/wfs
+LIBWFS_LDFLAGS := -lsmartmet-plugin-wfs
+else
+LIBWFS_INCLUDES := -I../libwfs
+LIBWFS_LDFLAGS := -L$(TOP) -lsmartmet-plugin-wfs
+endif
+
+INCLUDES := $(LIBWFS_INCLUDES) $(INCLUDES)
 
 obj/%.o : %.cpp ; @echo Compiling $<
 	@mkdir -p obj
@@ -127,33 +129,24 @@ clean:
 	rm -rf obj/*.o obj/*.d
 	rm -rf $(TESTSUITE_TARGETS)
 
-check:	../libwfs.a $(TESTSUITE_TARGETS)
+check check-installed:	$(TESTSUITE_TARGETS)
 	@ok=true; \
 	for test in $(TESTSUITE_TARGETS); do \
 		if ! LD_LIBRARY_PATH=$(libdir) ./$$test --log_level=message ; then ok=false; fi; \
 	done; \
 	$$ok;
 
-check-valgrind:	../libwfs.a $(TESTSUITE_TARGETS)
+check-valgrind:	$(TESTSUITE_TARGETS)
 	@ok=true; \
 	for test in $(TESTSUITE_TARGETS); do \
 		if ! LD_LIBRARY_PATH=$(libdir) valgrind ./$$test --log_level=message ; then ok=false; fi; \
 	done; \
 	$$ok;
 
-../libwfs.a:
-	$(MAKE) -C .. libwfs.a
-
-$(TESTSUITE_TARGETS) : ../libwfs.a gis_engine_link
-
 %.test : obj/%.o ; @echo "Building $@"
-	$(CXX) -o $@ $(TESTSUITE_CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(shell pwd) -L . ../libwfs.a $(LIBS)
+	$(CXX) -o $@ $(TESTSUITE_CFLAGS) $(INCLUDES) $< -Ltestsuite $(LIBWFS_LDFLAGS) $(LIBS)
 
-gis_engine_link:
-	rm -f libsmartmet-engine-gis.so
-	ln -sf /usr/share/smartmet/engines/gis.so libsmartmet-engine-gis.so
-
-CFLAGS += -I include
+CFLAGS += -I include -I $(TOP)/libwfs
 
 ifneq ($(wildcard obj/*.d),)
 -include $(wildcard obj/*.d)

@@ -1,5 +1,7 @@
+#define BOOST_TEST_MODULE TWfsFeatureDef
+#define BOOST_TEST_DYN_LINK 1
+#include <boost/test/unit_test.hpp>
 #include <iostream>
-#include <boost/test/included/unit_test.hpp>
 #include <boost/optional/optional_io.hpp>
 #include <spine/CRSRegistry.h>
 #include "WfsFeatureDef.h"
