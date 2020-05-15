@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.5.14
+Version: 20.5.15
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -31,11 +31,11 @@ BuildRequires: smartmet-library-macgyver-devel >= 20.4.18
 BuildRequires: smartmet-engine-contour-devel >= 20.5.13
 BuildRequires: smartmet-engine-geonames-devel >= 20.4.18
 BuildRequires: smartmet-engine-gis-devel >= 20.5.7
-BuildRequires: smartmet-engine-grid-devel >= 20.4.30
-BuildRequires: smartmet-library-grid-content-devel >= 20.4.30
-BuildRequires: smartmet-library-grid-files-devel >= 20.4.30
+BuildRequires: smartmet-engine-grid-devel >= 20.5.15
+BuildRequires: smartmet-library-grid-content-devel >= 20.5.15
+BuildRequires: smartmet-library-grid-files-devel >= 20.5.15
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.5.12
+BuildRequires: smartmet-engine-observation-devel >= 20.5.13
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 20.5.13
 # BuildRequires: postgresql95-libs
@@ -52,11 +52,11 @@ Requires: smartmet-library-gis >= 20.4.18
 Requires: smartmet-engine-contour >= 20.5.13
 Requires: smartmet-engine-geonames >= 20.4.18
 Requires: smartmet-engine-gis >= 20.5.7
-Requires: smartmet-engine-grid >= 20.4.30
-Requires: smartmet-library-grid-content >= 20.4.30
-Requires: smartmet-library-grid-files >= 20.4.30
+Requires: smartmet-engine-grid >= 20.5.15
+Requires: smartmet-library-grid-content >= 20.5.15
+Requires: smartmet-library-grid-files >= 20.5.15
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.5.12
+Requires: smartmet-engine-observation >= 20.5.13
 %endif
 Requires: smartmet-engine-querydata >= 20.5.13
 Requires: smartmet-server >= 20.4.18
@@ -114,6 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Fri May 15 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.5.15-1.fmi
+- Repackaged due to base library changes
+
 * Thu May 14 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.5.14-1.fmi
 - Refactor (basic functionality in static library, add devel package)
 - Makefile cleanups
