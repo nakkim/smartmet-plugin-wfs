@@ -42,8 +42,8 @@ jobs:
       - attach_workspace:
           at: /dist
       - run:
-          name: Install build dependencies
-          command: ci-build deps
+          name: Installation test
+          command: ci-build dummy ; sudo yum install -y /dist/*.rpm
       - run:
           name: Unit tests
           command: make check-installed
