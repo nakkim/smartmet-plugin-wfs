@@ -1,0 +1,165 @@
+Global data object:
+
+   fmi_apikey = "foobar";
+   fmi_apikey_prefix = "/fmi-apikey/";
+   groups = [
+              {
+                'crs' : "EPSG::4326",
+                'featureId' : "WFS-H_cFO_YUEifoUebxMDRY2Z6AIbqJTowqU_Fzo46mXn0haWLLn07qmnbltQ_wolrBNVCY2PlzrUi0Kcd06aM2TZnZd2Spp25bUP8KJa4b6Qmdm26eenJzrMYsGDluxdGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51jdGW1rbdPPnp3Z6mXx0rG3Ydza3dds_NT6Yemnfu5zhNbj1w7NPTzJ3Zt8bW59MPTTv3VPPDLWhv4Zd2TD0wtzn038suTj1y8vN_TkrSn4udHHUy8.jQ6aduWn0y8J.Qmh007ctrfuy1jVakMA-",
+                'groupId' : "1-1",
+                'groupNum' : 1,
+                'obsParamList' : [
+                                   {
+                                     'featureId' : "WFS-H_cFO_YUEifoUebxMDRY2Z6AIbqJTowqU_Fzo46mXn0haWLLn07qmnbltQ_wolrBNVCY2PlzrUi0Kcd06aM2TZnZd2Spp25bUP8KJa4b6Qmdm26eenJzrMYsGDluxdGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51jdGW1rbdPPnp3Z6mXx0rG3Ydza3dds_NT6Yemnfu5zhNbj1w7NPTzJ3Zt8bW59MPTTv3VPPDLWhv4Zd2TD0wtzn038suTj1y8vN_TkrSn4udHHUy8.jQ6aduWn0y8J.Qmh007ctrfuy1jVakMA-",
+                                     'name' : "t2m"
+                                   }
+                                 ],
+                'obsPhenomenonEndTime' : "2017-02-13T15:00:00Z",
+                'obsPhenomenonStartTime' : "2017-02-13T12:00:00Z",
+                'obsResultTime' : "2017-02-13T15:00:00Z",
+                'obsReturnArray' : [
+                                     {
+                                       'data' : [
+                                                  {
+                                                    'qcValue' : "1",
+                                                    'value' : "4.6"
+                                                  }
+                                                ],
+                                       'epochTime' : 1486987200,
+                                       'epochTimeStr' : "2017-02-13T12:00:00Z",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     },
+                                     {
+                                       'data' : [
+                                                  {
+                                                    'qcValue' : "1",
+                                                    'value' : "5.1"
+                                                  }
+                                                ],
+                                       'epochTime' : 1486990800,
+                                       'epochTimeStr' : "2017-02-13T13:00:00Z",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     },
+                                     {
+                                       'data' : [
+                                                  {
+                                                    'qcValue' : "1",
+                                                    'value' : "5.1"
+                                                  }
+                                                ],
+                                       'epochTime' : 1486994400,
+                                       'epochTimeStr' : "2017-02-13T14:00:00Z",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     },
+                                     {
+                                       'data' : [
+                                                  {
+                                                    'qcValue' : "1",
+                                                    'value' : "4.8"
+                                                  }
+                                                ],
+                                       'epochTime' : 1486998000,
+                                       'epochTimeStr' : "2017-02-13T15:00:00Z",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     }
+                                   ],
+                'obsStationList' : [
+                                     {
+                                       'bearing' : "290.8",
+                                       'distance' : "0.1",
+                                       'fmisid' : "100971",
+                                       'geoid' : "-16000150",
+                                       'name' : "Helsinki Kaisaniemi",
+                                       'region' : "Helsinki",
+                                       'wmo' : "2978",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     }
+                                   ],
+                'qualityInfo' : "on",
+                'timestep' : 60
+              }
+            ];
+   hostname = "brainstormgw.fmi.fi";
+   language = "eng";
+   named_parameters = {
+                        'defaultmeteoparam' : [
+                                                "Temperature",
+                                                "pressure",
+                                                "WindSpeedMS",
+                                                "WindDirection",
+                                                "Precipitation1h"
+                                              ]
+                      };
+   numMatched = 1;
+   numParam = 1;
+   numReturned = 1;
+   projEpochSrsDim = 3;
+   projEpochSrsName = "http://xml.fmi.fi/gml/crs/compoundCRS.php?crs=4326&amp;time=unixtime";
+   projSrsDim = 2;
+   projSrsName = "http://www.opengis.net/def/crs/EPSG/0/4326";
+   protocol = "http://";
+   queryName = "ObsQcTest";
+   queryNum = 1;
+   query_parameters = {
+                        'beginTime' : [
+                                        "20170213T120000Z"
+                                      ],
+                        'crs' : [
+                                  "EPSG::4326"
+                                ],
+                        'endTime' : [
+                                      "20170213T150000Z"
+                                    ],
+                        'keyword' : [
+                                      ""
+                                    ],
+                        'keyword_overwritable' : [
+                                                   "false"
+                                                 ],
+                        'latest' : [
+                                     "false"
+                                   ],
+                        'locale' : [
+                                     "fi_FI.utf8"
+                                   ],
+                        'maxDistance' : [
+                                          "50000"
+                                        ],
+                        'maxEpochs' : [
+                                        "200"
+                                      ],
+                        'meteoParameters' : [
+                                              "t2m"
+                                            ],
+                        'missingText' : [
+                                          "nan"
+                                        ],
+                        'numOfStations' : [
+                                            "1"
+                                          ],
+                        'places' : [
+                                     "Kaisaniemi"
+                                   ],
+                        'qualityInfo' : [
+                                          "true"
+                                        ],
+                        'stationType' : [
+                                          "opendata"
+                                        ],
+                        'storedquery_id' : [
+                                             "ObsQcTest"
+                                           ],
+                        'timeStep' : [
+                                       "60"
+                                     ],
+                        'timeZone' : [
+                                       "UTC"
+                                     ]
+                      };
+   responseTimestamp = "2012-12-12T12:12:12Z"
+ 
