@@ -237,14 +237,16 @@ objdir:
 # Forcibly lower RPM_BUILD_NCPUs in CircleCI cloud(but not on local builds)
 RPMBUILD=$(shell test "$$CIRCLE_BUILD_NUM" && echo RPM_BUILD_NCPUS=2 rpmbuild || echo rpmbuild)
 
-rpm: clean file-list $(SPEC).spec
+rpm: $(SPEC).spec
+	$(MAKE) clean
+	$(MAKE) file-list
 	rm -f $(SPEC).tar.gz # Clean a possible leftover from previous attempt
 	tar -czvf $(SPEC).tar.gz --exclude test --exclude-vcs \
-		--transform "s,^,plugins/$(SPEC)/," $(shell cat files.list)
+		--transform "s,^,plugins/$(SPEC)/," --files-from files.list
 	$(RPMBUILD) -ta $(SPEC).tar.gz
 	rm -f $(SPEC).tar.gz
 
-file-list:	cnf/XMLGrammarPool.dump
+file-list:
 	find . -name '.gitignore' >files.list.new
 	find . -name 'Makefile' -o -name '*.spec' >>files.list.new
 	find libwfs -name '*.h' -o -name '*.cpp' >>files.list.new
