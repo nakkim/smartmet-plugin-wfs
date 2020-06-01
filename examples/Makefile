@@ -55,12 +55,24 @@ objdir = obj
 
 #
 
-INCLUDES = -I$(includedir) \
+# Boost 1.69
+
+ifneq "$(wildcard /usr/include/boost169)" ""
+  BOOST_INCLUDES = -I/usr/include/boost169
+  BOOST_LIBS = -L/usr/lib64/boost169
+  FLAGS += -Wno-overloaded-virtual -Wno-redundant-decls
+endif
+
+INCLUDES = \
+	$(BOOST_INCLUDES) \
+	-I$(includedir) \
 	-I$(includedir)/smartmet \
 	-I$(includedir)/mysql
 
 LIBS = -L$(libdir) \
+	$(BOOST_LIBS) \
 	-lsmartmet-spine \
+	-lsmartmet-gis \
 	-lsmartmet-newbase \
 	-lsmartmet-macgyver \
 	-lboost_date_time \
@@ -74,7 +86,7 @@ LIBS = -L$(libdir) \
         -lxqilla \
 	-lxerces-c \
 	-lgdal \
-	-lpqxx /usr/pgsql-9.3/lib/libpq.a \
+	-lpqxx \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \
@@ -84,11 +96,11 @@ LIBS = -L$(libdir) \
 	-lpthread \
 	-lm
 
-INCLUDES := -I$(TOP)/include $(INCLUDES)
+INCLUDES := -I$(TOP)/libwfs $(INCLUDES)
 
 obj/%.o : %.cpp ; @echo Compiling $<
 	@mkdir -p obj
-	$(CXX) $(CFLAGS) $(INCLUDES) -c -MD -MF $(patsubst obj/%.o, obj/%.d.new, $@) -o $@ $<
+	$(CXX) -v $(CFLAGS) $(INCLUDES) -c -MD -MF $(patsubst obj/%.o, obj/%.d.new, $@) -o $@ $<
 	@sed -e "s|^$(notdir $@):|$@:|" $(patsubst obj/%.o, obj/%.d.new, $@) >$(patsubst obj/%.o, obj/%.d, $@)
 	@rm -f $(patsubst obj/%.o, obj/%.d.new, $@)
 
@@ -112,7 +124,7 @@ clean:
 .SUFFIXES: $(SUFFIXES) .cpp
 
 %:  %.cpp; echo Building $@
-	$(CC) -o $@ $(CFLAGS) $(INCLUDES) $< -L .. -Wl,--rpath=$(libdir) -lwfs $(LIBS)
+	$(CXX) -o $@ $(CFLAGS) $(INCLUDES) $< -L .. -Wl,--rpath=$(libdir) -lwfs $(LIBS)
 
 $(EXAMPLE_BINS): ../libwfs.a
 
