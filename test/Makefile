@@ -108,7 +108,7 @@ LIBS = \
 	-lpthread \
 	-lm
 
-INCLUDES := -I$(TOP)/include -I$(TOP)/libwfs $(INCLUDES)
+INCLUDES := -I$(TOP)/wfs -I$(TOP)/libwfs $(INCLUDES)
 
 obj/%.o : %.cpp ; @echo Compiling $<
 	@mkdir -p obj

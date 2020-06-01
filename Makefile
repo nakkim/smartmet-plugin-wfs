@@ -108,7 +108,7 @@ LIBS += -L$(libdir) \
 	-lpthread \
 	-lm
 
-INCLUDES := -I$(TOP)/libwfs -I$(TOP)/include $(INCLUDES)
+INCLUDES := -I$(TOP)/libwfs -I$(TOP)/wfs $(INCLUDES)
 
 obj/%.o : %.cpp ; @echo Compiling $<
 	@mkdir -p obj
@@ -137,13 +137,13 @@ endif
 
 # Compilation directories
 
-vpath %.cpp source source/stored_queries libwfs libwfs/request
+vpath %.cpp wfs wfs/stored_queries libwfs libwfs/request
 vpath %.h include libwfs
 
 # The files to be compiled
 
-SRCS = $(wildcard source/*.cpp) $(wildcard source/request/*.cpp) $(wildcard source/stored_queries/*.cpp)
-HDRS = $(wildcard include/*.h) $(wildcard include/request/*.h) $(wildcard include/stored_queries/*.h)
+SRCS = $(wildcard wfs/*.cpp) $(wildcard wfs/stored_queries/*.cpp)
+HDRS = $(wildcard wfs/*.h) $(wildcard wfs/stored_queries/*.h)
 OBJS = $(patsubst %.cpp, obj/%.o, $(notdir $(SRCS)))
 
 LIBWFS_SRCS := $(wildcard libwfs/*.cpp) $(wildcard libwfs/request/*.cpp)
@@ -250,8 +250,7 @@ file-list:
 	find . -name '.gitignore' >files.list.new
 	find . -name 'Makefile' -o -name '*.spec' >>files.list.new
 	find libwfs -name '*.h' -o -name '*.cpp' >>files.list.new
-	find source -name '*.h' -o -name '*.cpp' >>files.list.new
-	find include -name '*.h' >>files.list.new
+	find wfs -name '*.h' -o -name '*.cpp' >>files.list.new
 	find tools -name '*.h' -o -name '*.cpp' >>files.list.new
 	find testsuite -name '*.h' -o -name '*.cpp' >>files.list.new
 	find examples -name '*.h' -o -name '*.cpp' >>files.list.new
