@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.5.14
+Version: 20.6.8
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -108,6 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Mon Jun  8 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.8-1.fmi
+- Upgraded libpqxx dependencies
+
 * Thu May 14 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.5.14-1.fmi
 - Refactor (basic functionality in static library, add devel package)
 - Makefile cleanups
