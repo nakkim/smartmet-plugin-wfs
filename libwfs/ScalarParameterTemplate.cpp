@@ -63,7 +63,23 @@ SmartMet::Spine::Value ScalarParameterTemplate::get_value(
 {
   try
   {
-    return boost::get<SmartMet::Spine::Value>(item.get_value(req_param_map, extra_params));
+    const boost::variant<SmartMet::Spine::Value, std::vector<SmartMet::Spine::Value> > value =
+        item.get_value(req_param_map, extra_params);
+    if (value.which() == 0) {
+      return boost::get<SmartMet::Spine::Value>(value);
+    } else {
+      const std::vector<SmartMet::Spine::Value>& arr = boost::get<std::vector<SmartMet::Spine::Value> >(value);
+      if (arr.size() == 0) {
+        // Empty array: treat as empty value
+          return SmartMet::Spine::Value();
+      } else if (arr.size() == 1) {
+        return arr.at(0);
+      } else {
+        throw SmartMet::Spine::Exception::Trace(BCP,
+            METHOD_NAME + ": cannot convert array of size > 2 to scalar value")
+            .disableStackTrace();
+      }
+    }
   }
   catch (...)
   {
