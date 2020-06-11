@@ -34,6 +34,26 @@ jobs:
           path: /dist
           destination: dist/
 
+  unit-tests:
+    docker:
+      - image: fmidev/smartmet-cibase:latest
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /dist
+      - run:
+          name: Install build dependencies
+          command: ci-build deps
+      - run:
+          name: Installation test
+          command: ci-build dummy ; sudo yum install -y /dist/*.rpm
+      - run:
+          name: Unit tests
+          command: make check-installed
+      - store_artifacts:
+          path: /dist
+          destination: dist/
+
 workflows:
   version: 2
   build-test:
@@ -43,5 +63,8 @@ workflows:
             branches:
               only: master
       - test:
+          requires:
+            - build
+      - unit-tests:
           requires:
             - build

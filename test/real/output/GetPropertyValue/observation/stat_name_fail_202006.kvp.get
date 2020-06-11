@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<wfs:ValueCollection xmlns:wfs="http://www.opengis.net/wfs/2.0" numberMatched="1" numberReturned="1" timeStamp="2012-12-12T12:12:12Z" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd   http://www.opengis.net/gmlcov/1.0 http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd   http://www.opengis.net/sampling/2.0 http://schemas.opengis.net/sampling/2.0/samplingFeature.xsd   http://www.opengis.net/samplingSpatial/2.0 http://schemas.opengis.net/samplingSpatial/2.0/spatialSamplingFeature.xsd   http://www.opengis.net/swe/2.0 http://schemas.opengis.net/sweCommon/2.0/swe.xsd   http://inspire.ec.europa.eu/schemas/ompr/3.0 http://inspire.ec.europa.eu/schemas/ompr/3.0/Processes.xsd   http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd   http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0 http://xml.fmi.fi/schema/om/atmosphericfeatures/1.0/atmosphericfeatures.xsd">
+
+  <wfs:member>
+    <gml:rangeSet xmlns:gml="http://www.opengis.net/gml/3.2">
+      <gml:DataBlock>
+        <gml:rangeParameters/>
+        <gml:doubleOrNilReasonTupleList>
+                -16000063 Helsinki-Vantaa Airport 11.6 
+                -16000138 Kumpula 11.9 
+                -101009 Helsinki-Malmi airport 8.6 
+                </gml:doubleOrNilReasonTupleList>
+      </gml:DataBlock>
+    </gml:rangeSet>
+  </wfs:member>
+
+</wfs:ValueCollection>

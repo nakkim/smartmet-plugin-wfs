@@ -77,7 +77,6 @@ INCLUDES = \
 	$(BOOST_INCLUDES) \
 	-I$(includedir) \
 	-I$(includedir)/smartmet \
-	-I$(includedir)/mysql \
 	-I$(includedir)/jsoncpp
 
 LIBS = \
@@ -85,6 +84,7 @@ LIBS = \
 	-L$(libdir) \
 	-lsmartmet-spine \
 	-lsmartmet-newbase \
+	-lsmartmet-gis \
 	-lsmartmet-macgyver \
 	-lboost_date_time \
         -lboost_serialization \
@@ -108,7 +108,7 @@ LIBS = \
 	-lpthread \
 	-lm
 
-INCLUDES := -I$(TOP)/include $(INCLUDES)
+INCLUDES := -I$(TOP)/wfs -I$(TOP)/libwfs $(INCLUDES)
 
 obj/%.o : %.cpp ; @echo Compiling $<
 	@mkdir -p obj

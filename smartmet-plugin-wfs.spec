@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.5.12
+Version: 20.6.11
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -32,7 +32,7 @@ BuildRequires: smartmet-engine-contour-devel >= 20.5.13
 BuildRequires: smartmet-engine-geonames-devel >= 20.4.18
 BuildRequires: smartmet-engine-gis-devel >= 20.5.7
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.5.12
+BuildRequires: smartmet-engine-observation-devel >= 20.6.10
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 20.5.13
 # BuildRequires: postgresql95-libs
@@ -50,7 +50,7 @@ Requires: smartmet-engine-contour >= 20.5.13
 Requires: smartmet-engine-geonames >= 20.4.18
 Requires: smartmet-engine-gis >= 20.5.7
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.5.12
+Requires: smartmet-engine-observation >= 20.6.10
 %endif
 Requires: smartmet-engine-querydata >= 20.5.13
 Requires: smartmet-server >= 20.4.18
@@ -69,6 +69,15 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 
 %description
 SmartMet WFS plugin
+
+%package -n %{SPECNAME}-devel
+Summary: SmartMet WFS plugin development files
+Requires: smartmet-library-spine-devel
+Requires: smartmet-library-gis-devel
+Requires: smartmet-library-locus-devel
+Requires: smartmet-library-macgyver-devel
+%description -n %{SPECNAME}-devel
+SmartMet WFS plugin development files (for building testsuite without rebuilding plugin)
 
 %prep
 rm -rf $RPM_BUILD_ROOT
@@ -93,7 +102,26 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/smartmet/plugins/wfs/XMLGrammarPool.dump
 %{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
+%files -n %{SPECNAME}-devel
+%{_libdir}/libsmartmet-plugin-wfs.a
+%{_includedir}/smartmet/plugin/wfs/*.h
+%{_includedir}/smartmet/plugin/wfs/request/*.h
+
 %changelog
+* Thu Jun 11 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.11-1.fmi
+- Handle flash queries into the future more gracefully
+- Rebuilt due to obsengine API change
+
+* Wed Jun 10 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.6.10-1.fmi
+- Fix returning location parameters in response
+
+* Mon Jun  8 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.8-1.fmi
+- Upgraded libpqxx dependencies
+
+* Thu May 14 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.5.14-1.fmi
+- Refactor (basic functionality in static library, add devel package)
+- Makefile cleanups
+
 * Tue May 12 2020 Anssi Reponen <anssi.reponen@fmi.fi> - 20.5.12-1.fmi
 - Observation-engine API changed (BRAINSTORM-1678)
 
