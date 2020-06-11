@@ -100,7 +100,7 @@ pt::ptime round_time(const pt::ptime& t0, unsigned step, int offset = 0)
 
 void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
                                         const std::string& language,
-					const boost::optional<std::string> &hostname,
+                                        const boost::optional<std::string>& hostname,
                                         std::ostream& output) const
 {
   try
@@ -162,6 +162,9 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
 
       query_params.starttime = round_time(begin, time_block_size, 0);
       query_params.endtime = round_time(std::min(end, last), time_block_size, time_block_size - 1);
+
+      // This "fixes" queries into the future so that they don't crowd error logs
+      query_params.endtime = std::max(query_params.endtime, query_params.starttime);
 
       if (sq_restrictions)
         check_time_interval(query_params.starttime, query_params.endtime, max_hours);
