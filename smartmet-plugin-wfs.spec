@@ -32,7 +32,7 @@ BuildRequires: smartmet-engine-contour-devel >= 20.5.13
 BuildRequires: smartmet-engine-geonames-devel >= 20.4.18
 BuildRequires: smartmet-engine-gis-devel >= 20.5.7
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.5.12
+BuildRequires: smartmet-engine-observation-devel >= 20.6.10
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 20.5.13
 # BuildRequires: postgresql95-libs
@@ -50,7 +50,7 @@ Requires: smartmet-engine-contour >= 20.5.13
 Requires: smartmet-engine-geonames >= 20.4.18
 Requires: smartmet-engine-gis >= 20.5.7
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.5.12
+Requires: smartmet-engine-observation >= 20.6.10
 %endif
 Requires: smartmet-engine-querydata >= 20.5.13
 Requires: smartmet-server >= 20.4.18
@@ -110,6 +110,10 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Thu Jun 11 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.11-1.fmi
 - Handle flash queries into the future more gracefully
+- Rebuilt due to obsengine API change
+
+* Wed Jun 10 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.6.10-1.fmi
+- Fix returning location parameters in response
 
 * Mon Jun  8 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.8-1.fmi
 - Upgraded libpqxx dependencies
