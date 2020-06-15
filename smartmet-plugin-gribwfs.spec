@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.6.11
+Version: 20.6.15
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -102,18 +102,21 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(0775,root,root,0775)
-%{_datadir}/smartmet/plugins/wfs.so
+%{_datadir}/smartmet/plugins/gribwfs.so
 %defattr(0664,root,root,0775)
-%{_sysconfdir}/smartmet/plugins/wfs/templates/*.c2t
-%{_sysconfdir}/smartmet/plugins/wfs/XMLGrammarPool.dump
-%{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
+%{_sysconfdir}/smartmet/plugins/gribwfs/templates/*.c2t
+%{_sysconfdir}/smartmet/plugins/gribwfs/XMLGrammarPool.dump
+%{_sysconfdir}/smartmet/plugins/gribwfs/XMLSchemas.cache
 
 %files -n %{SPECNAME}-devel
-%{_libdir}/libsmartmet-plugin-wfs.a
-%{_includedir}/smartmet/plugin/wfs/*.h
-%{_includedir}/smartmet/plugin/wfs/request/*.h
+%{_libdir}/libsmartmet-plugin-gribwfs.a
+%{_includedir}/smartmet/plugin/gribwfs/*.h
+%{_includedir}/smartmet/plugin/gribwfs/request/*.h
 
 %changelog
+* Mon Jun 15 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.15-1.fmi
+- Renamed .so to enable simultaneous installation of wfs and gribwfs
+
 * Thu Jun 11 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.11-1.fmi
 - Handle flash queries into the future more gracefully
 - Rebuilt due to obsengine API change

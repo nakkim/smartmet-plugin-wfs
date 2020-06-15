@@ -118,7 +118,7 @@ obj/%.o : %.cpp ; @echo Compiling $<
 
 # What to install
 
-LIBFILE = $(SUBNAME).so
+LIBFILE = grib$(SUBNAME).so
 
 # How to install
 
@@ -158,7 +158,7 @@ CONFIG_FILES = $(wildcard cnf/crs/*.conf) \
 
 .PHONY: test rpm
 
-LIBWFS = $(TOP)/libsmartmet-plugin-wfs.a
+LIBWFS = $(TOP)/libsmartmet-plugin-gribwfs.a
 
 # The rules
 
@@ -200,18 +200,18 @@ format:
 install:
 	mkdir -p $(plugindir)
 	mkdir -p $(libdir)
-	mkdir -p $(includedir)/smartmet/plugin/wfs/request
-	mkdir -p $(sysconfdir)/smartmet/plugins/wfs/templates
+	mkdir -p $(includedir)/smartmet/plugin/gribwfs/request
+	mkdir -p $(sysconfdir)/smartmet/plugins/gribwfs/templates
 	$(INSTALL_PROG) $(LIBFILE) $(plugindir)/$(LIBFILE)
 	@for file in cnf/templates/*.c2t; do \
-	 echo $(INSTALL_DATA) $$file $(sysconfdir)/smartmet/plugins/wfs/templates/; \
-	 $(INSTALL_DATA) $$file $(sysconfdir)/smartmet/plugins/wfs/templates/; \
+	 echo $(INSTALL_DATA) $$file $(sysconfdir)/smartmet/plugins/gribwfs/templates/; \
+	 $(INSTALL_DATA) $$file $(sysconfdir)/smartmet/plugins/gribwfs/templates/; \
 	done
-	$(INSTALL_DATA) cnf/XMLGrammarPool.dump $(sysconfdir)/smartmet/plugins/wfs/
-	$(INSTALL_DATA) cnf/XMLSchemas.cache $(sysconfdir)/smartmet/plugins/wfs/
-	$(INSTALL_DATA) cnf/XMLSchemas.cache $(sysconfdir)/smartmet/plugins/wfs/
-	$(INSTALL_DATA) $(wildcard libwfs/*.h) $(includedir)/smartmet/plugin/wfs/
-	$(INSTALL_DATA) $(wildcard libwfs/request/*.h) $(includedir)/smartmet/plugin/wfs/request/
+	$(INSTALL_DATA) cnf/XMLGrammarPool.dump $(sysconfdir)/smartmet/plugins/gribwfs/
+	$(INSTALL_DATA) cnf/XMLSchemas.cache $(sysconfdir)/smartmet/plugins/gribwfs/
+	$(INSTALL_DATA) cnf/XMLSchemas.cache $(sysconfdir)/smartmet/plugins/gribwfs/
+	$(INSTALL_DATA) $(wildcard libwfs/*.h) $(includedir)/smartmet/plugin/gribwfs/
+	$(INSTALL_DATA) $(wildcard libwfs/request/*.h) $(includedir)/smartmet/plugin/gribwfs/request/
 	$(INSTALL_DATA) $(LIBWFS) $(libdir)
 
 # Separate depend target is no more needed as dependencies are updated automatically
