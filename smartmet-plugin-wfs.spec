@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.6.11
+Version: 20.6.15
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -108,9 +108,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Mon Jun 15 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.6.15-1.fmi
+- Rebuilt due to obsengine API change
+
 * Thu Jun 11 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.11-1.fmi
 - Handle flash queries into the future more gracefully
-- Rebuilt due to obsengine API change
 
 * Wed Jun 10 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.6.10-1.fmi
 - Fix returning location parameters in response
