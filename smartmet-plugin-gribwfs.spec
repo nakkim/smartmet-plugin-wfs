@@ -24,18 +24,18 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.5.27
+BuildRequires: smartmet-library-spine-devel >= 20.6.8
 BuildRequires: smartmet-library-gis-devel >= 20.4.18
-BuildRequires: smartmet-library-locus-devel >= 20.5.20
-BuildRequires: smartmet-library-macgyver-devel >= 20.4.18
+BuildRequires: smartmet-library-locus-devel >= 20.6.8
+BuildRequires: smartmet-library-macgyver-devel >= 20.6.8
 BuildRequires: smartmet-engine-contour-devel >= 20.5.13
-BuildRequires: smartmet-engine-geonames-devel >= 20.4.18
+BuildRequires: smartmet-engine-geonames-devel >= 20.6.8
 BuildRequires: smartmet-engine-gis-devel >= 20.5.7
 BuildRequires: smartmet-engine-grid-devel >= 20.6.8
-BuildRequires: smartmet-library-grid-content-devel >= 20.6.8
-BuildRequires: smartmet-library-grid-files-devel >= 20.6.8
+BuildRequires: smartmet-library-grid-content-devel >= 20.6.15
+BuildRequires: smartmet-library-grid-files-devel >= 20.6.15
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.6.10
+BuildRequires: smartmet-engine-observation-devel >= 20.6.8
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 20.5.13
 # BuildRequires: postgresql95-libs
@@ -45,18 +45,18 @@ Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
-Requires: smartmet-library-locus >= 20.5.20
-Requires: smartmet-library-macgyver >= 20.4.18
-Requires: smartmet-library-spine >= 20.5.27
+Requires: smartmet-library-locus >= 20.6.8
+Requires: smartmet-library-macgyver >= 20.6.8
+Requires: smartmet-library-spine >= 20.6.8
 Requires: smartmet-library-gis >= 20.4.18
 Requires: smartmet-engine-contour >= 20.5.13
-Requires: smartmet-engine-geonames >= 20.4.18
+Requires: smartmet-engine-geonames >= 20.6.8
 Requires: smartmet-engine-gis >= 20.5.7
 Requires: smartmet-engine-grid >= 20.6.8
-Requires: smartmet-library-grid-content >= 20.6.8
-Requires: smartmet-library-grid-files >= 20.6.8
+Requires: smartmet-library-grid-content >= 20.6.15
+Requires: smartmet-library-grid-files >= 20.6.15
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.6.10
+Requires: smartmet-engine-observation >= 20.6.8
 %endif
 Requires: smartmet-engine-querydata >= 20.5.13
 Requires: smartmet-server >= 20.4.18
@@ -116,10 +116,10 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Mon Jun 15 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.15-1.fmi
 - Renamed .so to enable simultaneous installation of wfs and gribwfs
+- Rebuilt due to obsengine API change
 
 * Thu Jun 11 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.11-1.fmi
 - Handle flash queries into the future more gracefully
-- Rebuilt due to obsengine API change
 
 * Wed Jun 10 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.6.10-1.fmi
 - Fix returning location parameters in response
