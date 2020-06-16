@@ -103,13 +103,13 @@ LIBS += -L$(libdir) \
 
 ifneq (,$(findstring check-installed,$(MAKECMDGOALS)))
 
-LIBWFS_INCLUDES := -I$(includedir)/smartmet/plugin/wfs
-LIBWFS_LDFLAGS := -lsmartmet-plugin-wfs
+LIBWFS_INCLUDES := -I$(includedir)/smartmet/plugin/gribwfs
+LIBWFS_LDFLAGS := -lsmartmet-plugin-gribwfs
 
 else
 
 LIBWFS_INCLUDES := -I../libwfs
-LIBWFS_LDFLAGS := ../libsmartmet-plugin-wfs.a
+LIBWFS_LDFLAGS := ../libsmartmet-plugin-gribwfs.a
 
 endif
 
