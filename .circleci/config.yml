@@ -61,7 +61,7 @@ workflows:
       - build:
           filters:
             branches:
-              only: master
+              only: grid_dev_new
       - test:
           requires:
             - build
