@@ -47,31 +47,31 @@ Global data object:
    numReturned = 1;
    param_sets = [
                   {
-                    &#39;URL&#39; : &quot;producer=hirlam&amp;param=GeopHeight,Temperature,Pressure,Humidity,DewPoint,WindUMS,WindVMS,TotalCloudCover,LowCloudCover,MediumCloudCover,HighCloudCover,Precipitation1h&amp;bbox=23.9999992950295,59.9999982094533,24.999999265234,60.9999981795647&amp;origintime=2013-03-18T00:00:00Z&amp;starttime=2013-03-18T00:00:00Z&amp;endtime=2013-03-20T06:00:00Z&amp;format=grib2&amp;projection=epsg:4326&quot;,
+                    &#39;URL&#39; : &quot;producer=hirlam&amp;param=GeopHeight,Temperature,Pressure,Humidity,DewPoint,WindUMS,WindVMS,TotalCloudCover,LowCloudCover,MediumCloudCover,HighCloudCover,Precipitation1h&amp;bbox=24,59.9997624630996,25,60.9997592027033&amp;origintime=2013-03-18T00:00:00Z&amp;starttime=2013-03-18T00:00:00Z&amp;endtime=2013-03-20T06:00:00Z&amp;format=grib2&amp;projection=epsg:4326&quot;,
                     &#39;params&#39; : {
                                  &#39;_WKT&#39; : [
-                                            &quot;PROJCS[\&quot;Plate_Carree\&quot;,GEOGCS[\&quot;FMI_Sphere\&quot;,DATUM[\&quot;FMI_2007\&quot;,SPHEROID[\&quot;FMI_Sphere\&quot;,6371220,0]],PRIMEM[\&quot;Greenwich\&quot;,0],UNIT[\&quot;Degree\&quot;,0.017453292519943295]],PROJECTION[\&quot;Plate_Carree\&quot;],EXTENSION[\&quot;PROJ4\&quot;,\&quot;+proj=ob_tran +o_proj=longlat +o_lon_p=-180 +o_lat_p=30 +a=6371220 +k=1 +wktext\&quot;],UNIT[\&quot;Meter\&quot;,1]]&quot;
+                                            &quot;PROJCS[\&quot;unknown\&quot;,GEOGCS[\&quot;unknown\&quot;,DATUM[\&quot;unknown\&quot;,SPHEROID[\&quot;unknown\&quot;,6371229,0],TOWGS84[0,0,0,0,0,0,0]],PRIMEM[\&quot;Greenwich\&quot;,0,AUTHORITY[\&quot;EPSG\&quot;,\&quot;8901\&quot;]],UNIT[\&quot;degree\&quot;,0.0174532925199433,AUTHORITY[\&quot;EPSG\&quot;,\&quot;9122\&quot;]]],PROJECTION[\&quot;custom_proj4\&quot;],UNIT[\&quot;metre\&quot;,1,AUTHORITY[\&quot;EPSG\&quot;,\&quot;9001\&quot;]],AXIS[\&quot;Easting\&quot;,EAST],AXIS[\&quot;Northing\&quot;,NORTH],EXTENSION[\&quot;PROJ4\&quot;,\&quot;+proj=ob_tran +o_proj=eqc +o_lon_p=0 +o_lat_p=30 +lon_0=0 +R=6371229 +over +towgs84=0,0,0 +no_defs\&quot;]]&quot;
                                           ],
                                  &#39;_areaHeight&#39; : [
-                                                   &quot;1867.69448268221&quot;
+                                                   &quot;1867.69712099172&quot;
                                                  ],
                                  &#39;_areaWidth&#39; : [
-                                                  &quot;536.852308618362&quot;
+                                                  &quot;536.853066977168&quot;
                                                 ],
                                  &#39;_aspectRatio&#39; : [
-                                                    &quot;0.28744118141174&quot;
+                                                    &quot;0.287441181411741&quot;
                                                   ],
                                  &#39;_bllat&#39; : [
-                                              &quot;56.9847982506964&quot;
+                                              &quot;57.1601653412161&quot;
                                             ],
                                  &#39;_bllon&#39; : [
-                                              &quot;17.9645055517152&quot;
+                                              &quot;17.9645063865565&quot;
                                             ],
                                  &#39;_brlat&#39; : [
-                                              &quot;55.4114497404559&quot;
+                                              &quot;55.5908777874055&quot;
                                             ],
                                  &#39;_brlon&#39; : [
-                                              &quot;26.1717205818894&quot;
+                                              &quot;26.1717217177981&quot;
                                             ],
                                  &#39;_firstTime&#39; : [
                                                   &quot;20130318T000000Z&quot;
@@ -122,34 +122,34 @@ Global data object:
                                                  &quot;60&quot;
                                                ],
                                  &#39;_ullat&#39; : [
-                                              &quot;72.6449334049051&quot;
+                                              &quot;72.7539894761177&quot;
                                             ],
                                  &#39;_ullon&#39; : [
-                                              &quot;32.9673769093995&quot;
+                                              &quot;32.9673800041818&quot;
                                             ],
                                  &#39;_urlat&#39; : [
-                                              &quot;70.0044748537634&quot;
+                                              &quot;70.127592360461&quot;
                                             ],
                                  &#39;_urlon&#39; : [
-                                              &quot;45.0119232619529&quot;
+                                              &quot;45.0119267281501&quot;
                                             ],
                                  &#39;_xNumber&#39; : [
                                                 &quot;72&quot;
                                               ],
                                  &#39;_xResolution&#39; : [
-                                                    &quot;7.45628206414392&quot;
+                                                    &quot;7.45629259690512&quot;
                                                   ],
                                  &#39;_yNumber&#39; : [
                                                 &quot;248&quot;
                                               ],
                                  &#39;_yResolution&#39; : [
-                                                    &quot;7.53102613984762&quot;
+                                                    &quot;7.53103677819243&quot;
                                                   ],
                                  &#39;calcBBox&#39; : [
-                                                &quot;23.9999992950295&quot;,
-                                                &quot;59.9999982094533&quot;,
-                                                &quot;24.999999265234&quot;,
-                                                &quot;60.9999981795647&quot;
+                                                &quot;24&quot;,
+                                                &quot;59.9997624630996&quot;,
+                                                &quot;25&quot;,
+                                                &quot;60.9997592027033&quot;
                                               ],
                                  &#39;crs&#39; : [
                                            &quot;EPSG:4326&quot;
@@ -164,43 +164,43 @@ Global data object:
                                               &quot;grib2&quot;
                                             ],
                                  &#39;intersection&#39; : [
-                                                    &quot;24.0000 60.0000&quot;,
-                                                    &quot;24.1111 60.0000&quot;,
-                                                    &quot;24.2222 60.0000&quot;,
-                                                    &quot;24.3333 60.0000&quot;,
-                                                    &quot;24.4444 60.0000&quot;,
-                                                    &quot;24.5556 60.0000&quot;,
-                                                    &quot;24.6667 60.0000&quot;,
-                                                    &quot;24.7778 60.0000&quot;,
-                                                    &quot;24.8889 60.0000&quot;,
-                                                    &quot;25.0000 60.0000&quot;,
-                                                    &quot;25.0000 60.1111&quot;,
-                                                    &quot;25.0000 60.2222&quot;,
-                                                    &quot;25.0000 60.3333&quot;,
-                                                    &quot;25.0000 60.4444&quot;,
-                                                    &quot;25.0000 60.5556&quot;,
-                                                    &quot;25.0000 60.6667&quot;,
-                                                    &quot;25.0000 60.7778&quot;,
-                                                    &quot;25.0000 60.8889&quot;,
-                                                    &quot;25.0000 61.0000&quot;,
-                                                    &quot;24.8889 61.0000&quot;,
-                                                    &quot;24.7778 61.0000&quot;,
-                                                    &quot;24.6667 61.0000&quot;,
-                                                    &quot;24.5556 61.0000&quot;,
-                                                    &quot;24.4444 61.0000&quot;,
-                                                    &quot;24.3333 61.0000&quot;,
-                                                    &quot;24.2222 61.0000&quot;,
-                                                    &quot;24.1111 61.0000&quot;,
-                                                    &quot;24.0000 61.0000&quot;,
-                                                    &quot;24.0000 60.8889&quot;,
-                                                    &quot;24.0000 60.7778&quot;,
-                                                    &quot;24.0000 60.6667&quot;,
-                                                    &quot;24.0000 60.5556&quot;,
-                                                    &quot;24.0000 60.4444&quot;,
-                                                    &quot;24.0000 60.3333&quot;,
-                                                    &quot;24.0000 60.2222&quot;,
-                                                    &quot;24.0000 60.1111&quot;,
-                                                    &quot;24.0000 60.0000&quot;
+                                                    &quot;24.0000 59.9998&quot;,
+                                                    &quot;24.1111 59.9998&quot;,
+                                                    &quot;24.2222 59.9998&quot;,
+                                                    &quot;24.3333 59.9998&quot;,
+                                                    &quot;24.4444 59.9998&quot;,
+                                                    &quot;24.5556 59.9998&quot;,
+                                                    &quot;24.6667 59.9998&quot;,
+                                                    &quot;24.7778 59.9998&quot;,
+                                                    &quot;24.8889 59.9998&quot;,
+                                                    &quot;25.0000 59.9998&quot;,
+                                                    &quot;25.0000 60.1109&quot;,
+                                                    &quot;25.0000 60.2220&quot;,
+                                                    &quot;25.0000 60.3331&quot;,
+                                                    &quot;25.0000 60.4442&quot;,
+                                                    &quot;25.0000 60.5553&quot;,
+                                                    &quot;25.0000 60.6664&quot;,
+                                                    &quot;25.0000 60.7775&quot;,
+                                                    &quot;25.0000 60.8886&quot;,
+                                                    &quot;25.0000 60.9998&quot;,
+                                                    &quot;24.8889 60.9998&quot;,
+                                                    &quot;24.7778 60.9998&quot;,
+                                                    &quot;24.6667 60.9998&quot;,
+                                                    &quot;24.5556 60.9998&quot;,
+                                                    &quot;24.4444 60.9998&quot;,
+                                                    &quot;24.3333 60.9998&quot;,
+                                                    &quot;24.2222 60.9998&quot;,
+                                                    &quot;24.1111 60.9998&quot;,
+                                                    &quot;24.0000 60.9998&quot;,
+                                                    &quot;24.0000 60.8886&quot;,
+                                                    &quot;24.0000 60.7775&quot;,
+                                                    &quot;24.0000 60.6664&quot;,
+                                                    &quot;24.0000 60.5553&quot;,
+                                                    &quot;24.0000 60.4442&quot;,
+                                                    &quot;24.0000 60.3331&quot;,
+                                                    &quot;24.0000 60.2220&quot;,
+                                                    &quot;24.0000 60.1109&quot;,
+                                                    &quot;24.0000 59.9998&quot;
                                                   ],
                                  &#39;lastTime&#39; : [
                                                 &quot;2013-03-20T06:00:00Z&quot;
@@ -209,10 +209,10 @@ Global data object:
                                              &quot;0&quot;
                                            ],
                                  &#39;modelBBox&#39; : [
-                                                 &quot;17.9645055517152&quot;,
-                                                 &quot;55.4114497404559&quot;,
-                                                 &quot;45.0119232619529&quot;,
-                                                 &quot;72.6449334049051&quot;
+                                                 &quot;17.9645063865565&quot;,
+                                                 &quot;55.5908777874055&quot;,
+                                                 &quot;45.0119267281501&quot;,
+                                                 &quot;72.7539894761177&quot;
                                                ],
                                  &#39;originTime&#39; : [
                                                   &quot;2013-03-18T00:00:00Z&quot;

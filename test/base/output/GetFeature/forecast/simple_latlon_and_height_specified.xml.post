@@ -10,20 +10,20 @@ Global data object:
                 'metadata' : {
                                'boundingBox' : {
                                                  'lowerLeft' : {
-                                                                 'lat' : 59.9827196409,
-                                                                 'lon' : 24.90804492
+                                                                 'lat' : 60.148905733,
+                                                                 'lon' : 24.9080451199
                                                                },
                                                  'lowerRight' : {
-                                                                  'lat' : 59.942555365,
-                                                                  'lon' : 25.8894911496
+                                                                  'lat' : 60.108876633,
+                                                                  'lon' : 25.8894914128
                                                                 },
                                                  'upperLeft' : {
-                                                                 'lat' : 61.0586102407,
-                                                                 'lon' : 25.0732394668
+                                                                 'lat' : 61.2210554916,
+                                                                 'lon' : 25.073239686
                                                                },
                                                  'upperRight' : {
-                                                                  'lat' : 61.0170996051,
-                                                                  'lon' : 26.087353378
+                                                                  'lat' : 61.1796934343,
+                                                                  'lon' : 26.0873536649
                                                                 }
                                                }
                              },
@@ -40,7 +40,7 @@ Global data object:
                 'returnArray' : [
                                   {
                                     'data' : [
-                                               "-1.2"
+                                               "0.4"
                                              ],
                                     'elev' : "12.345679",
                                     'epochTime' : 1494554400,
@@ -50,7 +50,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "-1.3"
+                                               "0.2"
                                              ],
                                     'elev' : "12.345679",
                                     'epochTime' : 1494558000,
@@ -60,7 +60,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "-1.2"
+                                               "0.3"
                                              ],
                                     'elev' : "25.000000",
                                     'epochTime' : 1494554400,
@@ -70,7 +70,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "-1.3"
+                                               "0.0"
                                              ],
                                     'elev' : "25.000000",
                                     'epochTime' : 1494558000,
