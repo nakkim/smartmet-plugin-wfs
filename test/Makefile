@@ -68,19 +68,25 @@ objdir = obj
 # Boost 1.69
 
 ifneq "$(wildcard /usr/include/boost169)" ""
-  BOOST_INCLUDES = -I/usr/include/boost169
-  BOOST_LIBS = -L/usr/lib64/boost169
+  INCLUDES += -I/usr/include/boost169
+  LIBS += -L/usr/lib64/boost169
   FLAGS += -Wno-overloaded-virtual -Wno-redundant-decls
 endif
 
-INCLUDES = \
-	$(BOOST_INCLUDES) \
+ifneq "$(wildcard /usr/gdal30/include)" ""
+  INCLUDES += -I/usr/gdal30/include
+  LIBS += -L/usr/gdal30/lib
+else
+  INCLUDES += -I/usr/include/gdal
+endif
+
+
+INCLUDES += \
 	-I$(includedir) \
 	-I$(includedir)/smartmet \
 	-I$(includedir)/jsoncpp
 
-LIBS = \
-	$(BOOST_LIBS) \
+LIBS += \
 	-L$(libdir) \
 	-lsmartmet-spine \
 	-lsmartmet-newbase \
