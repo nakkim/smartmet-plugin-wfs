@@ -187,7 +187,8 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
                                                               item.second->latitude,
                                                               query_params.maxdistance,
                                                               query_params.numberofstations,
-                                                              item.first);
+                                                              item.first,
+                                                              item.second->fmisid);
       }
 
       std::vector<std::string> param_names;

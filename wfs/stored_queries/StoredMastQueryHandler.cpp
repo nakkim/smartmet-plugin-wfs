@@ -115,8 +115,12 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       // Include valid locations.
       for (const auto& item : locations_list)
       {
-        stationSettings.nearest_station_settings.emplace_back(
-            item.second->longitude, item.second->latitude, maxDistance, 1, item.first);
+        stationSettings.nearest_station_settings.emplace_back(item.second->longitude,
+                                                              item.second->latitude,
+                                                              maxDistance,
+                                                              1,
+                                                              item.first,
+                                                              item.second->fmisid);
       }
 
       // Bounding box search options.

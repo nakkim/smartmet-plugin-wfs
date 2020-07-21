@@ -855,8 +855,12 @@ void StoredSoundingQueryHandler::getStationSearchSettings(
   // Include valid locations.
   for (const auto& item : locationsList)
   {
-    stationSettings.nearest_station_settings.emplace_back(
-        item.second->longitude, item.second->latitude, settings.maxdistance, 1, item.first);
+    stationSettings.nearest_station_settings.emplace_back(item.second->longitude,
+                                                          item.second->latitude,
+                                                          settings.maxdistance,
+                                                          1,
+                                                          item.first,
+                                                          item.second->fmisid);
   }
   settings.taggedFMISIDs = obs_engine->translateToFMISID(
       settings.starttime, settings.endtime, settings.stationtype, stationSettings);
