@@ -11,8 +11,8 @@ namespace WFS
 {
 ArrayParameterTemplate::ArrayParameterTemplate(StoredQueryConfig& config,
                                                const std::string& config_path,
-                                               int min_size,
-                                               int max_size)
+                                               std::size_t min_size,
+                                               std::size_t max_size)
     : ParameterTemplateBase(config, HANDLER_PARAM_NAME, config_path),
       min_size(min_size),
       max_size(max_size)
@@ -37,8 +37,8 @@ ArrayParameterTemplate::ArrayParameterTemplate(StoredQueryConfig& config,
 ArrayParameterTemplate::ArrayParameterTemplate(StoredQueryConfig& config,
                                                const std::string& base_path,
                                                const std::string& config_path,
-                                               int min_size,
-                                               int max_size)
+                                               std::size_t min_size,
+                                               std::size_t max_size)
     : ParameterTemplateBase(config, base_path, config_path), min_size(min_size), max_size(max_size)
 {
   try
@@ -125,7 +125,7 @@ boost::tribool ArrayParameterTemplate::get_value(
       }
     }
 
-    if ((int)tmp_result.size() > max_size)
+    if (tmp_result.size() > max_size)
     {
       std::ostringstream msg;
       msg << "Result array size " << tmp_result.size() << " exceeds upper limit " << max_size
@@ -135,7 +135,7 @@ boost::tribool ArrayParameterTemplate::get_value(
       throw exception;
     }
 
-    if ((int)tmp_result.size() < min_size)
+    if (tmp_result.size() < min_size)
     {
       std::ostringstream msg;
       msg << "Result array size " << tmp_result.size() << " is smaller than lower limit "
@@ -376,8 +376,8 @@ void ArrayParameterTemplate::init()
     else
     {
       bool have_weak_ref = false;
-      int calc_min_size = 0;
-      int calc_max_size = 0;
+      std::size_t calc_min_size = 0;
+      std::size_t calc_max_size = 0;
       int len = setting_root->getLength();
       for (int i = 0; i < len; i++)
       {
