@@ -356,7 +356,7 @@ void ArrayParameterTemplate::init()
     if (base_prefix != "")
       base_prefix += ".";
 
-    libconfig::Setting* setting_root = get_setting_root();
+    libconfig::Setting* setting_root = get_setting_root(true);
     if (not setting_root->isArray())
     {
       std::ostringstream msg;

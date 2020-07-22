@@ -451,7 +451,7 @@ void ScalarParameterTemplate::init()
 {
   try
   {
-    libconfig::Setting& setting = *get_setting_root();
+    libconfig::Setting& setting = *get_setting_root(true);
     const SmartMet::Spine::Value value = SmartMet::Spine::Value::from_config(setting);
     item.parse(value, true);
     if (not item.weak and item.param_ref)
