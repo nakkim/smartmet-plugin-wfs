@@ -512,3 +512,35 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_3)
   BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo", 2, 2)),
                       SmartMet::Spine::Exception);
 }
+
+BOOST_AUTO_TEST_CASE(array_with_min_len_0_ommitted_in_config)
+{
+  using namespace SmartMet;
+  using namespace SmartMet::Plugin::WFS;
+
+  const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
+
+  boost::shared_ptr<StoredQueryConfig> config;
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
+  unlink(fn.c_str());
+
+  boost::shared_ptr<ArrayParameterTemplate> pt;
+  BOOST_REQUIRE_NO_THROW(pt.reset(new ArrayParameterTemplate(*config, "bar", 0, 10)));
+  BOOST_CHECK_EQUAL(0, int(pt->get_items().size()));
+}
+
+BOOST_AUTO_TEST_CASE(array_with_min_len_1_ommitted_in_config)
+{
+  using namespace SmartMet;
+  using namespace SmartMet::Plugin::WFS;
+
+  const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
+
+  boost::shared_ptr<StoredQueryConfig> config;
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
+  unlink(fn.c_str());
+
+  boost::shared_ptr<ArrayParameterTemplate> pt;
+  BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "bar", 1, 10)),
+                      SmartMet::Spine::Exception);
+}

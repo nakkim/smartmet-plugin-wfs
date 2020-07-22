@@ -356,7 +356,23 @@ void ArrayParameterTemplate::init()
     if (base_prefix != "")
       base_prefix += ".";
 
-    libconfig::Setting* setting_root = get_setting_root(true);
+    libconfig::Setting* setting_root = get_setting_root(false);
+
+    if (not setting_root) {
+        if (min_size > 0) {
+            std::ostringstream msg;
+            msg << "Definition of array parameter " << get_config_path()
+                << " with minimal size " << min_size
+                << " not provided in stored query configuration";
+            throw SmartMet::Spine::Exception::Trace(BCP, msg.str());
+        } else {
+            std::cout << "WARNING: Definition of array parameter " << get_config_path()
+                      << " with minimal size 0 is not provided in stored query configuration"
+                      << std::endl;
+            return;
+        }
+    }
+
     if (not setting_root->isArray())
     {
       std::ostringstream msg;
