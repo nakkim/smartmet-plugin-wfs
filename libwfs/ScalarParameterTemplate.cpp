@@ -451,32 +451,38 @@ void ScalarParameterTemplate::init()
 {
   try
   {
-    libconfig::Setting& setting = *get_setting_root(true);
-    const SmartMet::Spine::Value value = SmartMet::Spine::Value::from_config(setting);
-    item.parse(value, true);
-    if (not item.weak and item.param_ref)
-    {
-      const StoredQueryConfig::ParamDesc& param = get_param_desc(*item.param_ref);
+    libconfig::Setting* setting = get_setting_root(false);
+    if (setting) {
+        const SmartMet::Spine::Value value = SmartMet::Spine::Value::from_config(*setting);
+        item.parse(value, true);
+        if (not item.weak and item.param_ref)
+        {
+            const StoredQueryConfig::ParamDesc& param = get_param_desc(*item.param_ref);
 
-      if (param.isArray())
-      {
-        // The source for parameters is an array.
-        if (not item.param_ind)
-        {
-          // Do not accept request to copy entire array over scalar value
-          std::ostringstream msg;
-          msg << "Cannot copy entire parameter array '" << *item.param_ref << "' to scalar value";
-          throw SmartMet::Spine::Exception(BCP, msg.str());
+            if (param.isArray())
+            {
+                // The source for parameters is an array.
+                if (not item.param_ind)
+                {
+                    // Do not accept request to copy entire array over scalar value
+                    std::ostringstream msg;
+                    msg << "Cannot copy entire parameter array '" << *item.param_ref << "' to scalar value";
+                    throw SmartMet::Spine::Exception(BCP, msg.str());
+                }
+                else if (*item.param_ind >= param.getMaxSize())
+                {
+                    // The requested index is above max. possible size of parameter array
+                    std::ostringstream msg;
+                    msg << "The array index " << *item.param_ind << " is out of range 0.."
+                        << param.getMaxSize();
+                    throw SmartMet::Spine::Exception(BCP, msg.str());
+                }
+            }
         }
-        else if (*item.param_ind >= param.getMaxSize())
-        {
-          // The requested index is above max. possible size of parameter array
-          std::ostringstream msg;
-          msg << "The array index " << *item.param_ind << " is out of range 0.."
-              << param.getMaxSize();
-          throw SmartMet::Spine::Exception(BCP, msg.str());
-        }
-      }
+    } else {
+        std::cout << "WARNING: stored query scalar parameter '" << get_config_path()
+                  << "' definition missing in '" << get_config().get_file_name() << '\''
+                  << std::endl;
     }
   }
   catch (...)
