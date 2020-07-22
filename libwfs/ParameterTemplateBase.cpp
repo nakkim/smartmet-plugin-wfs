@@ -24,14 +24,14 @@ ParameterTemplateBase::ParameterTemplateBase(StoredQueryConfig& config,
 
 ParameterTemplateBase::~ParameterTemplateBase() {}
 
-libconfig::Setting* ParameterTemplateBase::get_setting_root(bool mandatory)
+libconfig::Setting* ParameterTemplateBase::get_setting_root()
 {
   try
   {
     auto& root = base_path == ""
         ? config.get_config().getRoot()
         : config.get_mandatory_config_param<libconfig::Setting&>(base_path);
-    return config.find_setting(root, config_path, mandatory);
+    return config.find_setting(root, config_path, false);
   }
   catch (...)
   {

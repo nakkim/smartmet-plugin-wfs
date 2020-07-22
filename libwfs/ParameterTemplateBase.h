@@ -60,7 +60,7 @@ class ParameterTemplateBase
   inline const StoredQueryConfig& get_config() const { return config; }
   inline const std::string& get_base_path() const { return base_path; }
   inline const std::string& get_config_path() const { return config_path; }
-  libconfig::Setting* get_setting_root(bool mandatory);
+  libconfig::Setting* get_setting_root();
 
   /**
    *   @brief Get the description of WFS request parameter by its name

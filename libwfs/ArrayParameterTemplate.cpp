@@ -356,7 +356,7 @@ void ArrayParameterTemplate::init()
     if (base_prefix != "")
       base_prefix += ".";
 
-    libconfig::Setting* setting_root = get_setting_root(false);
+    libconfig::Setting* setting_root = get_setting_root();
 
     if (not setting_root) {
         if (min_size > 0) {
