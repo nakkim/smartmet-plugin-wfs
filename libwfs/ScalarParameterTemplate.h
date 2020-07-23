@@ -70,33 +70,84 @@ class ScalarParameterTemplate : public ParameterTemplateBase
       const RequestParameterMap& req_param_map,
       const SupportsExtraHandlerParams* extra_params = nullptr) const;
 
-  bool get(const RequestParameterMap& req_param_map,
-           int64_t* dest,
-           const SupportsExtraHandlerParams* extra_params = nullptr) const;
+  template <typename ValueType>
+  ValueType get(
+      const RequestParameterMap& req_param_map,
+      const SupportsExtraHandlerParams* extra_params = nullptr) const
+    {
+        try {
+            const auto tmp = get_optional<ValueType>(req_param_map, extra_params);
+            if (tmp) {
+                return *tmp;
+            } else {
+                const std::string name = this->get_config_path();
+                throw SmartMet::Spine::Exception::Trace(BCP, "Mandatory scalar query parameter '"
+                    + name + "' missing").disableStackTrace();
+            }
+        } catch (...) {
+            throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+        }
+    }
 
+  template <typename ValueType>
   bool get(const RequestParameterMap& req_param_map,
-           uint64_t* dest,
-           const SupportsExtraHandlerParams* extra_params = nullptr) const;
+           ValueType* dest,
+           const SupportsExtraHandlerParams* extra_params = nullptr) const
+    {
+        try {
+            const auto tmp = Getter<ValueType>(*this)(req_param_map, extra_params);
+            if (tmp) {
+                *dest = *tmp;
+                return true;
+            } else {
+                return false;
+            }
+        } catch (...) {
+            throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+        }
+    }
 
-  bool get(const RequestParameterMap& req_param_map,
-           double* dest,
-           const SupportsExtraHandlerParams* extra_params = nullptr) const;
+  template <typename ValueType>
+  boost::optional<ValueType> get_optional(
+      const RequestParameterMap& req_param_map,
+      const SupportsExtraHandlerParams* extra_params = nullptr) const
+    {
+        try {
+            return Getter<ValueType>(*this)(req_param_map, extra_params);
+        } catch (...) {
+            throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+        }
+    }
 
-  bool get(const RequestParameterMap& req_param_map,
-           std::string* dest,
-           const SupportsExtraHandlerParams* extra_params = nullptr) const;
+ private:
+  template<typename ValueType>
+  class Getter
+  {
+   public:
+      Getter(const ScalarParameterTemplate& spt) : spt(spt) {}
 
-  bool get(const RequestParameterMap& req_param_map,
-           boost::posix_time::ptime* dest,
-           const SupportsExtraHandlerParams* extra_params = nullptr) const;
+      boost::optional<ValueType> operator()(
+          const RequestParameterMap& req_param_map,
+          const SupportsExtraHandlerParams* extra_params = nullptr) const
+      {
+          SmartMet::Spine::Value tmp;
+          bool found = spt.get_value(tmp, req_param_map, extra_params);
+          if (found) {
+              return boost::optional<ValueType>(extract(tmp));
+          } else {
+              return boost::none;
+          }
+      }
 
-  bool get(const RequestParameterMap& req_param_map,
-           SmartMet::Spine::Point* dest,
-           const SupportsExtraHandlerParams* extra_params = nullptr) const;
+   private:
+      ValueType extract(const SmartMet::Spine::Value& src) const
+      {
+          return src.get<ValueType>();
+      }
 
-  bool get(const RequestParameterMap& req_param_map,
-           SmartMet::Spine::BoundingBox* dest,
-           const SupportsExtraHandlerParams* extra_params = nullptr) const;
+  private:
+      const ScalarParameterTemplate& spt;
+  };
 
  private:
   void init();
@@ -104,6 +155,10 @@ class ScalarParameterTemplate : public ParameterTemplateBase
  private:
   ParameterTemplateItem item;
 };
+
+template <>
+boost::posix_time::ptime
+ScalarParameterTemplate::Getter<boost::posix_time::ptime>::extract(const SmartMet::Spine::Value& src) const;
 
 }  // namespace WFS
 }  // namespace Plugin

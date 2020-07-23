@@ -300,153 +300,6 @@ SmartMet::Spine::BoundingBox ScalarParameterTemplate::get_bbox_value(
   }
 }
 
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  int64_t* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map, extra_params);
-    if (found)
-    {
-      *dest = tmp.get_int();
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  uint64_t* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map, extra_params);
-    if (found)
-    {
-      *dest = tmp.get_uint();
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  double* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map, extra_params);
-    if (found)
-    {
-      *dest = tmp.get_double();
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  std::string* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map);
-    if (found)
-    {
-      *dest = tmp.get_string();
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  boost::posix_time::ptime* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map);
-    if (found)
-    {
-      *dest = tmp.get_ptime(true);
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  SmartMet::Spine::Point* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map);
-    if (found)
-    {
-      *dest = tmp.get_point();
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  SmartMet::Spine::BoundingBox* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map);
-    if (found)
-    {
-      *dest = tmp.get_bbox();
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
 void ScalarParameterTemplate::init()
 {
   try
@@ -489,6 +342,13 @@ void ScalarParameterTemplate::init()
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
+}
+
+template <>
+boost::posix_time::ptime
+ScalarParameterTemplate::Getter<boost::posix_time::ptime>::extract(const SmartMet::Spine::Value& src) const
+{
+    return src.get_ptime(true);
 }
 
 }  // namespace WFS
