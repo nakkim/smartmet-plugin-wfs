@@ -46,30 +46,6 @@ class ScalarParameterTemplate : public ParameterTemplateBase
       const SupportsExtraHandlerParams* extra_params = nullptr,
       bool strict = true) const;
 
-  int64_t get_int_value(const RequestParameterMap& req_param_map,
-                        const SupportsExtraHandlerParams* extra_params = nullptr) const;
-
-  uint64_t get_uint_value(const RequestParameterMap& req_param_map,
-                          const SupportsExtraHandlerParams* extra_params = nullptr) const;
-
-  double get_double_value(const RequestParameterMap& req_param_map,
-                          const SupportsExtraHandlerParams* extra_params = nullptr) const;
-
-  std::string get_string_value(const RequestParameterMap& req_param_map,
-                               const SupportsExtraHandlerParams* extra_params = nullptr) const;
-
-  boost::posix_time::ptime get_ptime_value(
-      const RequestParameterMap& req_param_map,
-      const SupportsExtraHandlerParams* extra_params = nullptr) const;
-
-  SmartMet::Spine::Point get_point_value(
-      const RequestParameterMap& req_param_map,
-      const SupportsExtraHandlerParams* extra_params = nullptr) const;
-
-  SmartMet::Spine::BoundingBox get_bbox_value(
-      const RequestParameterMap& req_param_map,
-      const SupportsExtraHandlerParams* extra_params = nullptr) const;
-
   template <typename ValueType>
   ValueType get(
       const RequestParameterMap& req_param_map,
