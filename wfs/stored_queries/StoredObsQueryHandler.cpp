@@ -187,7 +187,8 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
                                                               item.second->latitude,
                                                               query_params.maxdistance,
                                                               query_params.numberofstations,
-                                                              item.first);
+                                                              item.first,
+                                                              item.second->fmisid);
       }
 
       std::vector<std::string> param_names;
@@ -455,7 +456,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
         const SmartMet::Spine::TimeSeries::TimeSeries& ts_geoid = obsengine_result->at(geoid_ind);
         const SmartMet::Spine::TimeSeries::TimeSeries& ts_wmo = obsengine_result->at(wmo_ind);
 
-        std::map<int, SmartMet::Spine::LocationPtr> sites;
+        std::map<std::string, SmartMet::Spine::LocationPtr> sites;
 
         BOOST_FOREACH (const auto& it1, site_map)
         {
@@ -502,7 +503,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
             {
             }
 
-            sites[group_id] = geoLoc;
+            sites[geoid] = geoLoc;
           }
 
           if (show_height)
@@ -588,6 +589,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
                 // SHOULD FIX Delfoi instead!
                 const std::string latitude = boost::apply_visitor(sv, ts_lat[row_1].value);
                 const std::string longitude = boost::apply_visitor(sv, ts_lon[row_1].value);
+                const std::string geoid = boost::apply_visitor(sv, ts_geoid[row_1].value);
 
                 if (first)
                 {
@@ -639,7 +641,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
                   }
                   else
                   {
-                    auto geoLoc = sites.at(group_id);
+                    auto geoLoc = sites.at(geoid);
                     if (geoLoc)
                     {
                       if (SmartMet::Spine::is_location_parameter(name))

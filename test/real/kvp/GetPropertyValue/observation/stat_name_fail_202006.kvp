@@ -1,0 +1,1 @@
+/wfs?service=WFS&version=2.0.0&request=getPropertyValue&storedquery_id=fmi::observations::weather::multipointcoverage&parameters=geoid,name,temperature&maxlocations=5&geoid=634928&starttime=20200601T000500Z&endtime=20200601T001500Z&timestep=10&VALUEREFERENCE=wfs:FeatureCollection/wfs:member/omso:GridSeriesObservation/om:result/gmlcov:MultiPointCoverage/gml:rangeSet

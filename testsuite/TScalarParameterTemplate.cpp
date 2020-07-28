@@ -491,3 +491,26 @@ BOOST_AUTO_TEST_CASE(using_absent_parameters)
   BOOST_CHECK_THROW(pt->get_double_value(param_map), SmartMet::Spine::Exception);
   BOOST_CHECK_NO_THROW(not pt->get(param_map, &foo));
 }
+
+
+BOOST_AUTO_TEST_CASE(parameter_definition_missing_from_config)
+{
+  using namespace SmartMet;
+  using namespace SmartMet::Plugin::WFS;
+
+  BOOST_TEST_MESSAGE("+ [Testing case when parameter definition is missing from config (warning expected)]");
+
+  const std::string fn = create_config("test", "string[3]", "foo", "\"${}\"");
+  boost::shared_ptr<StoredQueryConfig> config;
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
+  unlink(fn.c_str());
+
+  boost::shared_ptr<ScalarParameterTemplate> pt;
+  BOOST_REQUIRE_NO_THROW(pt.reset(new ScalarParameterTemplate(*config, "bar")));
+
+  const ParameterTemplateItem& item = pt->get_item();
+  BOOST_CHECK(item.absent);
+  BOOST_CHECK(not item.param_ref);
+  BOOST_CHECK(not item.param_ind);
+  BOOST_CHECK(not item.default_value);
+}

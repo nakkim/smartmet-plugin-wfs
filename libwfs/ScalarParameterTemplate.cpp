@@ -63,7 +63,23 @@ SmartMet::Spine::Value ScalarParameterTemplate::get_value(
 {
   try
   {
-    return boost::get<SmartMet::Spine::Value>(item.get_value(req_param_map, extra_params));
+    const boost::variant<SmartMet::Spine::Value, std::vector<SmartMet::Spine::Value> > value =
+        item.get_value(req_param_map, extra_params);
+    if (value.which() == 0) {
+      return boost::get<SmartMet::Spine::Value>(value);
+    } else {
+      const std::vector<SmartMet::Spine::Value>& arr = boost::get<std::vector<SmartMet::Spine::Value> >(value);
+      if (arr.size() == 0) {
+        // Empty array: treat as empty value
+          return SmartMet::Spine::Value();
+      } else if (arr.size() == 1) {
+        return arr.at(0);
+      } else {
+        throw SmartMet::Spine::Exception::Trace(BCP,
+            METHOD_NAME + ": cannot convert array of size > 2 to scalar value")
+            .disableStackTrace();
+      }
+    }
   }
   catch (...)
   {
@@ -435,32 +451,38 @@ void ScalarParameterTemplate::init()
 {
   try
   {
-    libconfig::Setting& setting = *get_setting_root();
-    const SmartMet::Spine::Value value = SmartMet::Spine::Value::from_config(setting);
-    item.parse(value, true);
-    if (not item.weak and item.param_ref)
-    {
-      const StoredQueryConfig::ParamDesc& param = get_param_desc(*item.param_ref);
+    libconfig::Setting* setting = get_setting_root();
+    if (setting) {
+        const SmartMet::Spine::Value value = SmartMet::Spine::Value::from_config(*setting);
+        item.parse(value, true);
+        if (not item.weak and item.param_ref)
+        {
+            const StoredQueryConfig::ParamDesc& param = get_param_desc(*item.param_ref);
 
-      if (param.isArray())
-      {
-        // The source for parameters is an array.
-        if (not item.param_ind)
-        {
-          // Do not accept request to copy entire array over scalar value
-          std::ostringstream msg;
-          msg << "Cannot copy entire parameter array '" << *item.param_ref << "' to scalar value";
-          throw SmartMet::Spine::Exception(BCP, msg.str());
+            if (param.isArray())
+            {
+                // The source for parameters is an array.
+                if (not item.param_ind)
+                {
+                    // Do not accept request to copy entire array over scalar value
+                    std::ostringstream msg;
+                    msg << "Cannot copy entire parameter array '" << *item.param_ref << "' to scalar value";
+                    throw SmartMet::Spine::Exception(BCP, msg.str());
+                }
+                else if (*item.param_ind >= param.getMaxSize())
+                {
+                    // The requested index is above max. possible size of parameter array
+                    std::ostringstream msg;
+                    msg << "The array index " << *item.param_ind << " is out of range 0.."
+                        << param.getMaxSize();
+                    throw SmartMet::Spine::Exception(BCP, msg.str());
+                }
+            }
         }
-        else if (*item.param_ind >= param.getMaxSize())
-        {
-          // The requested index is above max. possible size of parameter array
-          std::ostringstream msg;
-          msg << "The array index " << *item.param_ind << " is out of range 0.."
-              << param.getMaxSize();
-          throw SmartMet::Spine::Exception(BCP, msg.str());
-        }
-      }
+    } else {
+        std::cout << "WARNING: stored query scalar parameter '" << get_config_path()
+                  << "' definition missing in '" << get_config().get_file_name() << '\''
+                  << std::endl;
     }
   }
   catch (...)

@@ -109,6 +109,8 @@ BOOST_AUTO_TEST_CASE(array_param_1)
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
 
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: part 1 (configuration root)]");
+
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\"]");
   boost::shared_ptr<StoredQueryConfig> config;
   BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
@@ -150,6 +152,8 @@ BOOST_AUTO_TEST_CASE(array_param_1_non_root)
 {
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
+
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: part 2 (not configuration root)]");
 
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\"]", "bar");
   boost::shared_ptr<StoredQueryConfig> config;
@@ -194,6 +198,8 @@ BOOST_AUTO_TEST_CASE(mix_of_predefined_and_given_parameters_1)
 {
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
+
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: mix of predefined and given parameters (part 1)]");
 
   const std::string fn = create_config("test", "double", "foo", "[\"1.1\", \"${test}\", \"1.3\"]");
   boost::shared_ptr<StoredQueryConfig> config;
@@ -241,6 +247,8 @@ BOOST_AUTO_TEST_CASE(mix_of_predefined_and_given_parameters_2)
 {
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
+
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: mix of predefined and given parameters (part 2)]");
 
   const std::string fn =
       create_config("test", "double[2]", "foo", "[\"1.1\", \"${test}\", \"1.3\"]");
@@ -292,6 +300,8 @@ BOOST_AUTO_TEST_CASE(array_parameter_shuffle)
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
 
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: array parameter shuffle 1]");
+
   const std::string fn =
       create_config("test",
                     "string[4]",
@@ -324,6 +334,8 @@ BOOST_AUTO_TEST_CASE(array_parameter_shuffle_2)
 {
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
+
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: array parameter shuffle 2]");
 
   const std::string fn =
       create_config("test",
@@ -387,6 +399,8 @@ BOOST_AUTO_TEST_CASE(array_parameter_shuffle_out_of_range_index)
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
 
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: array parameter shuffle out of range]");
+
   const std::string fn =
       create_config("test",
                     "string[4]",
@@ -405,6 +419,8 @@ BOOST_AUTO_TEST_CASE(typo_in_parameter_reference)
 {
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
+
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: typo in param reference]");
 
   const std::string fn =
       create_config("test",
@@ -425,6 +441,8 @@ BOOST_AUTO_TEST_CASE(array_size_detection_1)
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
 
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: array size detection 1]");
+
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
@@ -439,6 +457,8 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_1)
 {
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
+
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: array size detection error 1]");
 
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\"]");
 
@@ -456,6 +476,8 @@ BOOST_AUTO_TEST_CASE(array_size_detection_2)
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
 
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: array size detection 2]");
+
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
@@ -470,6 +492,8 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_2)
 {
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
+
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: array size detection error 2]");
 
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
 
@@ -487,6 +511,8 @@ BOOST_AUTO_TEST_CASE(array_size_detection_3)
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
 
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: array size detection 3]");
+
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
@@ -502,6 +528,8 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_3)
   using namespace SmartMet;
   using namespace SmartMet::Plugin::WFS;
 
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: array size detection error 3]");
+
   const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
 
   boost::shared_ptr<StoredQueryConfig> config;
@@ -510,5 +538,43 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_3)
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
   BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo", 2, 2)),
+                      SmartMet::Spine::Exception);
+}
+
+BOOST_AUTO_TEST_CASE(array_with_min_len_0_ommitted_in_config)
+{
+  using namespace SmartMet;
+  using namespace SmartMet::Plugin::WFS;
+
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: array with min size 0 not found in config"
+      " (should get warning)]");
+
+  const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
+
+  boost::shared_ptr<StoredQueryConfig> config;
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
+  unlink(fn.c_str());
+
+  boost::shared_ptr<ArrayParameterTemplate> pt;
+  BOOST_REQUIRE_NO_THROW(pt.reset(new ArrayParameterTemplate(*config, "bar", 0, 10)));
+  BOOST_CHECK_EQUAL(0, int(pt->get_items().size()));
+}
+
+BOOST_AUTO_TEST_CASE(array_with_min_len_1_ommitted_in_config)
+{
+  using namespace SmartMet;
+  using namespace SmartMet::Plugin::WFS;
+
+  BOOST_TEST_MESSAGE("+[Testing ArrayParameterTemplate: array with min size 1 not found in config"
+      " (test pass if exception thrown)]");
+
+  const std::string fn = create_config("test", "string[4]", "foo", "[\"${test}\", \"${test}\"]");
+
+  boost::shared_ptr<StoredQueryConfig> config;
+  BOOST_REQUIRE_NO_THROW(config.reset(new StoredQueryConfig(fn, nullptr)));
+  unlink(fn.c_str());
+
+  boost::shared_ptr<ArrayParameterTemplate> pt;
+  BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "bar", 1, 10)),
                       SmartMet::Spine::Exception);
 }
