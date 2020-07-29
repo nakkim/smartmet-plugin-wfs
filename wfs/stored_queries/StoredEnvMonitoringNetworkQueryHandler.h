@@ -16,8 +16,7 @@ namespace Plugin
 {
 namespace WFS
 {
-class StoredEnvMonitoringNetworkQueryHandler : protected virtual SupportsExtraHandlerParams,
-                                               protected virtual RequiresGeoEngine,
+class StoredEnvMonitoringNetworkQueryHandler : protected virtual RequiresGeoEngine,
                                                protected virtual RequiresObsEngine,
                                                public StoredQueryHandlerBase
 

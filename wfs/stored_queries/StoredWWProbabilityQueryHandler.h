@@ -111,7 +111,6 @@ typedef std::map<SmartMet::Spine::LocationPtr, WinterWeatherTypeProbabilities>
  *   @brief Handler for StoredWWProbabilityQuery stored query
  */
 class StoredWWProbabilityQueryHandler : public StoredQueryHandlerBase,
-                                        protected virtual SupportsExtraHandlerParams,
                                         protected virtual RequiresGeoEngine,
                                         protected virtual RequiresQEngine,
                                         protected SupportsLocationParameters,

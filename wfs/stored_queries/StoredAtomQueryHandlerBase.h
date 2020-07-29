@@ -14,8 +14,7 @@ namespace Plugin
 {
 namespace WFS
 {
-class StoredAtomQueryHandlerBase : public StoredQueryHandlerBase,
-                                   virtual public SupportsExtraHandlerParams
+class StoredAtomQueryHandlerBase : public StoredQueryHandlerBase
 {
  public:
   StoredAtomQueryHandlerBase(SmartMet::Spine::Reactor* reactor,

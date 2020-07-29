@@ -38,10 +38,9 @@ namespace Plugin
 {
 namespace WFS
 {
-class StoredSoundingQueryHandler : protected virtual SupportsExtraHandlerParams,
+class StoredSoundingQueryHandler : public StoredQueryHandlerBase,
                                    protected virtual RequiresGeoEngine,
                                    protected virtual RequiresObsEngine,
-                                   public StoredQueryHandlerBase,
                                    protected SupportsLocationParameters,
                                    protected SupportsBoundingBox,
                                    protected SupportsQualityParameters

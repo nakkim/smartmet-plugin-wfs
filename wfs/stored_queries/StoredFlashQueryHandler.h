@@ -22,7 +22,6 @@ namespace WFS
 class StoredFlashQueryHandler : public StoredQueryHandlerBase,
                                 protected SupportsBoundingBox,
                                 protected SupportsTimeZone,
-                                protected virtual SupportsExtraHandlerParams,
                                 protected virtual RequiresGeoEngine,
                                 protected virtual RequiresObsEngine
 {

@@ -31,11 +31,11 @@ bw::StoredEnvMonitoringNetworkQueryHandler::StoredEnvMonitoringNetworkQueryHandl
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 
-    : bw::StoredQueryParamRegistry(config),
-      bw::SupportsExtraHandlerParams(config),
-      RequiresGeoEngine(reactor),
-      RequiresObsEngine(reactor),
-      bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name)
+    : RequiresGeoEngine(reactor)
+    , RequiresObsEngine(reactor)
+    , StoredQueryParamRegistry(config)
+    , SupportsExtraHandlerParams(config)
+    , StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name)
 {
   try
   {

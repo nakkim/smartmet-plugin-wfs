@@ -46,10 +46,9 @@ namespace Plugin
 {
 namespace WFS
 {
-class StoredMastQueryHandler : protected virtual SupportsExtraHandlerParams,
+class StoredMastQueryHandler : public StoredQueryHandlerBase,
                                protected virtual RequiresGeoEngine,
                                protected virtual RequiresObsEngine,
-                               public StoredQueryHandlerBase,
                                protected SupportsLocationParameters,
                                protected SupportsBoundingBox,
                                protected SupportsQualityParameters

@@ -25,7 +25,6 @@ namespace Plugin
 namespace WFS
 {
 class StoredForecastQueryHandler : public StoredQueryHandlerBase,
-                                   protected virtual SupportsExtraHandlerParams,
                                    protected virtual RequiresGeoEngine,
                                    protected virtual RequiresQEngine,
                                    protected SupportsLocationParameters,

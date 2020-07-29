@@ -25,7 +25,6 @@ class StoredObsQueryHandler : public StoredQueryHandlerBase,
                               protected SupportsTimeZone,
                               protected SupportsQualityParameters,
                               protected SupportsMeteoParameterOptions,
-                              protected virtual SupportsExtraHandlerParams,
                               protected virtual RequiresGeoEngine,
                               protected virtual RequiresObsEngine
 {
