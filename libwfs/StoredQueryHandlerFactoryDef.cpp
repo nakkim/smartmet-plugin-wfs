@@ -31,7 +31,7 @@ StoredQueryHandlerFactoryDef::~StoredQueryHandlerFactoryDef() {}
 boost::shared_ptr<StoredQueryHandlerBase> StoredQueryHandlerFactoryDef::construct(
     const std::string &symbol_name,
     SmartMet::Spine::Reactor *reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl &plugin_data,
     boost::optional<std::string> template_file_name)
 {

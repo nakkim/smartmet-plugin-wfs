@@ -47,10 +47,11 @@ using boost::format;
 using boost::str;
 
 StoredObsQueryHandler::StoredObsQueryHandler(SmartMet::Spine::Reactor* reactor,
-                                             boost::shared_ptr<StoredQueryConfig> config,
+                                             StoredQueryConfig::Ptr config,
                                              PluginImpl& plugin_data,
                                              boost::optional<std::string> template_file_name)
-    : SupportsExtraHandlerParams(config, false),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
       RequiresGeoEngine(reactor),
       RequiresObsEngine(reactor),
       StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -75,22 +76,22 @@ StoredObsQueryHandler::StoredObsQueryHandler(SmartMet::Spine::Reactor* reactor,
 {
   try
   {
-    register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config);
-    register_scalar_param<pt::ptime>(P_END_TIME, *config);
-    register_scalar_param<bool>(P_LATEST, *config);
-    register_array_param<std::string>(P_METEO_PARAMETERS, *config, 1);
-    register_scalar_param<std::string>(P_STATION_TYPE, *config);
-    register_scalar_param<uint64_t>(P_TIME_STEP, *config);
-    register_array_param<int64_t>(P_LPNNS, *config);
-    register_scalar_param<uint64_t>(P_NUM_OF_STATIONS, *config);
-    register_array_param<int64_t>(P_HOURS, *config);
-    register_array_param<int64_t>(P_WEEK_DAYS, *config);
-    register_scalar_param<std::string>(P_LOCALE, *config);
-    register_scalar_param<std::string>(P_MISSING_TEXT, *config);
-    register_scalar_param<uint64_t>(P_MAX_EPOCHS, *config);
-    register_scalar_param<std::string>(P_CRS, *config);
-    register_array_param<int64_t>(P_FMISIDS, *config);
-    register_array_param<int64_t>(P_WMOS, *config);
+    register_scalar_param<pt::ptime>(P_BEGIN_TIME);
+    register_scalar_param<pt::ptime>(P_END_TIME);
+    register_scalar_param<bool>(P_LATEST);
+    register_array_param<std::string>(P_METEO_PARAMETERS, 1);
+    register_scalar_param<std::string>(P_STATION_TYPE);
+    register_scalar_param<uint64_t>(P_TIME_STEP);
+    register_array_param<int64_t>(P_LPNNS);
+    register_scalar_param<uint64_t>(P_NUM_OF_STATIONS);
+    register_array_param<int64_t>(P_HOURS);
+    register_array_param<int64_t>(P_WEEK_DAYS);
+    register_scalar_param<std::string>(P_LOCALE);
+    register_scalar_param<std::string>(P_MISSING_TEXT);
+    register_scalar_param<uint64_t>(P_MAX_EPOCHS);
+    register_scalar_param<std::string>(P_CRS);
+    register_array_param<int64_t>(P_FMISIDS);
+    register_array_param<int64_t>(P_WMOS);
 
     max_hours = config->get_optional_config_param<double>("maxHours", 7.0 * 24.0);
     max_station_count = config->get_optional_config_param<unsigned>("maxStationCount", 0);
@@ -866,7 +867,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_obs_handler_create(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 {

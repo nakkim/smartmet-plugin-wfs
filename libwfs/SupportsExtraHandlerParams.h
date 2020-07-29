@@ -27,7 +27,7 @@ class ParameterTemplateBase;
 class SupportsExtraHandlerParams : virtual protected StoredQueryParamRegistry
 {
  public:
-  SupportsExtraHandlerParams(boost::shared_ptr<StoredQueryConfig> config,
+  SupportsExtraHandlerParams(StoredQueryConfig::Ptr config,
                              bool mandatory = false,
                              const char* path = "named_params");
 
@@ -51,7 +51,7 @@ class SupportsExtraHandlerParams : virtual protected StoredQueryParamRegistry
  private:
   const std::string path;
   std::map<std::string, boost::shared_ptr<ParameterTemplateBase> > handler_params;
-  boost::shared_ptr<StoredQueryConfig> config;
+  StoredQueryConfig::Ptr config;
 };
 
 }  // namespace WFS

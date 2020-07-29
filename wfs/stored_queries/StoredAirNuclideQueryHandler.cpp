@@ -13,11 +13,12 @@ namespace bw = SmartMet::Plugin::WFS;
 
 bw::StoredAirNuclideQueryHandler::StoredAirNuclideQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 
-    : bw::SupportsExtraHandlerParams(config),
+    : bw::StoredQueryParamRegistry(config),
+      bw::SupportsExtraHandlerParams(config),
       bw::RequiresGeoEngine(reactor),
       bw::RequiresObsEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -29,14 +30,14 @@ bw::StoredAirNuclideQueryHandler::StoredAirNuclideQueryHandler(
 {
   try
   {
-    register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config);
-    register_scalar_param<pt::ptime>(P_END_TIME, *config);
-    register_scalar_param<std::string>(P_STATION_TYPE, *config);
-    register_scalar_param<uint64_t>(P_TIME_STEP, *config);
-    register_scalar_param<uint64_t>(P_NUM_OF_STATIONS, *config);
-    register_scalar_param<std::string>(P_CRS, *config);
-    register_scalar_param<bool>(P_LATEST, *config);
-    register_array_param<std::string>(P_NUCLIDE_CODES, *config);
+    register_scalar_param<pt::ptime>(P_BEGIN_TIME);
+    register_scalar_param<pt::ptime>(P_END_TIME);
+    register_scalar_param<std::string>(P_STATION_TYPE);
+    register_scalar_param<uint64_t>(P_TIME_STEP);
+    register_scalar_param<uint64_t>(P_NUM_OF_STATIONS);
+    register_scalar_param<std::string>(P_CRS);
+    register_scalar_param<bool>(P_LATEST);
+    register_array_param<std::string>(P_NUCLIDE_CODES);
 
     m_maxHours = config->get_optional_config_param<double>("maxHours", 365 * 24.0);
     m_sqRestrictions = plugin_data.get_config().getSQRestrictions();
@@ -689,7 +690,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_stored_air_nuclide_handler_create(SmartMet::Spine::Reactor* reactor,
-                                      boost::shared_ptr<StoredQueryConfig> config,
+                                      StoredQueryConfig::Ptr config,
                                       PluginImpl& plugin_data,
                                       boost::optional<std::string> template_file_name)
 {

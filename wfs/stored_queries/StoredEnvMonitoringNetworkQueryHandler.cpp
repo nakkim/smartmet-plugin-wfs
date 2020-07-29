@@ -27,25 +27,26 @@ const char* P_AUTHORITY_DOMAIN = "authorityDomain";
 
 bw::StoredEnvMonitoringNetworkQueryHandler::StoredEnvMonitoringNetworkQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 
-    : bw::SupportsExtraHandlerParams(config),
+    : bw::StoredQueryParamRegistry(config),
+      bw::SupportsExtraHandlerParams(config),
       RequiresGeoEngine(reactor),
       RequiresObsEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name)
 {
   try
   {
-    register_array_param<int64_t>(P_NETWORK_ID, *config);
-    register_array_param<int64_t>(P_CLASS_ID, *config);
-    register_array_param<std::string>(P_CLASS_NAME, *config, false);
-    register_array_param<int64_t>(P_GROUP_ID, *config);
-    register_array_param<int64_t>(P_STATION_ID, *config);
-    register_array_param<std::string>(P_STATION_NAME, *config, false);
-    register_scalar_param<std::string>(P_INSPIRE_NAMESPACE, *config);
-    register_scalar_param<std::string>(P_AUTHORITY_DOMAIN, *config);
+    register_array_param<int64_t>(P_NETWORK_ID);
+    register_array_param<int64_t>(P_CLASS_ID);
+    register_array_param<std::string>(P_CLASS_NAME, false);
+    register_array_param<int64_t>(P_GROUP_ID);
+    register_array_param<int64_t>(P_STATION_ID);
+    register_array_param<std::string>(P_STATION_NAME, false);
+    register_scalar_param<std::string>(P_INSPIRE_NAMESPACE);
+    register_scalar_param<std::string>(P_AUTHORITY_DOMAIN);
     m_missingText = config->get_optional_config_param<std::string>(P_MISSING_TEXT, "NaN");
     m_debugLevel = config->get_debug_level();
   }
@@ -296,7 +297,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_stored_env_monitoring_network_handler_create(SmartMet::Spine::Reactor* reactor,
-                                                 boost::shared_ptr<StoredQueryConfig> config,
+                                                 StoredQueryConfig::Ptr config,
                                                  PluginImpl& plugin_data,
                                                  boost::optional<std::string> template_file_name)
 {

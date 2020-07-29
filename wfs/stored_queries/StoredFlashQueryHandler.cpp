@@ -30,11 +30,12 @@ const char* P_MULTIPOINTCOVERAGE_QUERY = "lightning_multipointcoverage.c2t";
 
 bw::StoredFlashQueryHandler::StoredFlashQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 
-    : SupportsExtraHandlerParams(config, false),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
       RequiresGeoEngine(reactor),
       RequiresObsEngine(reactor),
       StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -48,10 +49,10 @@ bw::StoredFlashQueryHandler::StoredFlashQueryHandler(
 {
   try
   {
-    register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config);
-    register_scalar_param<pt::ptime>(P_END_TIME, *config);
-    register_array_param<std::string>(P_PARAM, *config, 1, 999);
-    register_scalar_param<std::string>(P_CRS, *config);
+    register_scalar_param<pt::ptime>(P_BEGIN_TIME);
+    register_scalar_param<pt::ptime>(P_END_TIME);
+    register_array_param<std::string>(P_PARAM, 1, 999);
+    register_scalar_param<std::string>(P_CRS);
 
     station_type = config->get_optional_config_param<std::string>("stationType", "flash");
     max_hours = config->get_optional_config_param<double>("maxHours", 7.0 * 24.0);
@@ -513,7 +514,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_flash_handler_create(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 {

@@ -161,11 +161,12 @@ namespace WFS
 {
 StoredWWProbabilityQueryHandler::StoredWWProbabilityQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& pluginData,
     boost::optional<std::string> templateFileName)
 
-    : SupportsExtraHandlerParams(config, false),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
       RequiresGeoEngine(reactor),
       RequiresQEngine(reactor),
       StoredQueryHandlerBase(reactor, config, pluginData, templateFileName),
@@ -176,13 +177,13 @@ StoredWWProbabilityQueryHandler::StoredWWProbabilityQueryHandler(
 {
   try
   {
-    register_scalar_param<int64_t>(P_FIND_NEAREST_VALID, *config);
-    register_scalar_param<std::string>(P_LOCALE, *config);
-    register_scalar_param<std::string>(P_MISSING_TEXT, *config);
-    register_scalar_param<std::string>(P_PRODUCER, *config);
-    register_scalar_param<boost::posix_time::ptime>(P_ORIGIN_TIME, *config, false);
-    register_scalar_param<std::string>(P_CRS, *config);
-    register_array_param<std::string>(P_ICAO_CODE, *config);
+    register_scalar_param<int64_t>(P_FIND_NEAREST_VALID);
+    register_scalar_param<std::string>(P_LOCALE);
+    register_scalar_param<std::string>(P_MISSING_TEXT);
+    register_scalar_param<std::string>(P_PRODUCER);
+    register_scalar_param<boost::posix_time::ptime>(P_ORIGIN_TIME, false);
+    register_scalar_param<std::string>(P_CRS);
+    register_array_param<std::string>(P_ICAO_CODE);
 
     itsProbabilityConfigParams.probabilityUnit =
         config->get_mandatory_config_param<std::string>("probability_params.probabilityUnit");
@@ -587,7 +588,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_winterweather_probabilities_query_handler_create(SmartMet::Spine::Reactor* reactor,
-                                                     boost::shared_ptr<StoredQueryConfig> config,
+                                                     StoredQueryConfig::Ptr config,
                                                      PluginImpl& pluginData,
                                                      boost::optional<std::string> templateFileName)
 {

@@ -15,14 +15,15 @@ const char* P_ID = "feature_id";
 }
 
 bw::GetFeatureByIdHandler::GetFeatureByIdHandler(SmartMet::Spine::Reactor* reactor,
-                                                 boost::shared_ptr<bw::StoredQueryConfig> config,
+                                                 bw::StoredQueryConfig::Ptr config,
                                                  PluginImpl& plugin_data)
-    : bw::SupportsExtraHandlerParams(config),
+    : bw::StoredQueryParamRegistry(config),
+      bw::SupportsExtraHandlerParams(config),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, boost::optional<std::string>())
 {
   try
   {
-    register_scalar_param<std::string>(P_ID, *config);
+    register_scalar_param<std::string>(P_ID);
   }
   catch (...)
   {
@@ -67,7 +68,7 @@ namespace
 {
 boost::shared_ptr<bw::StoredQueryHandlerBase> wfs_get_feature_by_id_handler_create(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<bw::StoredQueryConfig> config,
+    bw::StoredQueryConfig::Ptr config,
     bw::PluginImpl& plugin_data,
     boost::optional<std::string> /* unused template_file_name */)
 {

@@ -18,18 +18,20 @@ const char *bw::SupportsTimeParameters::P_END_TIME = "endTime";
 const char *bw::SupportsTimeParameters::P_TIME_STEP = "timeStep";
 const char *bw::SupportsTimeParameters::P_NUM_STEPS = "timeSteps";
 
-bw::SupportsTimeParameters::SupportsTimeParameters(boost::shared_ptr<bw::StoredQueryConfig> config)
-    : SupportsExtraHandlerParams(config, false), debug_level(config->get_debug_level())
+bw::SupportsTimeParameters::SupportsTimeParameters(bw::StoredQueryConfig::Ptr config)
+    : bw::StoredQueryParamRegistry(config)
+    , SupportsExtraHandlerParams(config, false)
+    , debug_level(config->get_debug_level())
 {
   try
   {
-    register_array_param<uint64_t>(P_HOURS, *config);
-    register_array_param<uint64_t>(P_TIMES, *config);
-    register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config, false);
-    register_scalar_param<uint64_t>(P_START_STEP, *config, false);
-    register_scalar_param<pt::ptime>(P_END_TIME, *config, false);
-    register_scalar_param<uint64_t>(P_TIME_STEP, *config, false);
-    register_scalar_param<uint64_t>(P_NUM_STEPS, *config, false);
+    register_array_param<uint64_t>(P_HOURS);
+    register_array_param<uint64_t>(P_TIMES);
+    register_scalar_param<pt::ptime>(P_BEGIN_TIME, false);
+    register_scalar_param<uint64_t>(P_START_STEP, false);
+    register_scalar_param<pt::ptime>(P_END_TIME, false);
+    register_scalar_param<uint64_t>(P_TIME_STEP, false);
+    register_scalar_param<uint64_t>(P_NUM_STEPS, false);
   }
   catch (...)
   {
