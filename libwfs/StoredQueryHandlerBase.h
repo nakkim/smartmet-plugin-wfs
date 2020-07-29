@@ -36,7 +36,6 @@ class StoredQuery;
 class StoredQueryMap;
 
 class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
-                               virtual protected StoredQueryParamRegistry,
                                virtual protected StoredQueryHandlerInitBase
 {
   SmartMet::Spine::Reactor* reactor;
