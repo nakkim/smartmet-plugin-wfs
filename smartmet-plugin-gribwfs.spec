@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.6.15
+Version: 20.7.22
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -35,7 +35,7 @@ BuildRequires: smartmet-engine-grid-devel >= 20.6.8
 BuildRequires: smartmet-library-grid-content-devel >= 20.6.15
 BuildRequires: smartmet-library-grid-files-devel >= 20.6.15
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.6.8
+BuildRequires: smartmet-engine-observation-devel >= 20.7.21
 %endif
 BuildRequires: smartmet-engine-querydata-devel >= 20.5.13
 # BuildRequires: postgresql95-libs
@@ -56,7 +56,7 @@ Requires: smartmet-engine-grid >= 20.6.8
 Requires: smartmet-library-grid-content >= 20.6.15
 Requires: smartmet-library-grid-files >= 20.6.15
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.6.8
+Requires: smartmet-engine-observation >= 20.7.21
 %endif
 Requires: smartmet-engine-querydata >= 20.5.13
 Requires: smartmet-server >= 20.4.18
@@ -114,9 +114,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/gribwfs/request/*.h
 
 %changelog
+* Wed Jul 30 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.7.30-1.fmi
+- Stored query configuration support update
+- Refaktorointi
+
+* Tue Jul 21 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.21-1.fmi
+- Improved handling of locations with fmisid information available
+
 * Mon Jun 15 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.15-1.fmi
 - Renamed .so to enable simultaneous installation of wfs and gribwfs
-- Rebuilt due to obsengine API change
 
 * Thu Jun 11 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.11-1.fmi
 - Handle flash queries into the future more gracefully

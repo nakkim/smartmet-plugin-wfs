@@ -176,7 +176,7 @@ std::vector<std::string> bw::StoredQueryMap::get_return_type_names() const
   }
 }
 
-void bw::StoredQueryMap::add_handler(boost::shared_ptr<StoredQueryConfig> sqh_config,
+void bw::StoredQueryMap::add_handler(StoredQueryConfig::Ptr sqh_config,
                                      const boost::filesystem::path& template_dir)
 {
   try
@@ -224,7 +224,7 @@ void bw::StoredQueryMap::add_handler(boost::shared_ptr<StoredQueryConfig> sqh_co
   }
 }
 
-void bw::StoredQueryMap::add_handler_thread_proc(boost::shared_ptr<bw::StoredQueryConfig> config,
+void bw::StoredQueryMap::add_handler_thread_proc(StoredQueryConfig::Ptr config,
                                                  const boost::filesystem::path& template_dir)
 {
   try
@@ -466,7 +466,7 @@ void bw::StoredQueryMap::handle_query_add(const std::string& config_file_name,
   try {
     const int debug_level = plugin_impl.get_debug_level();
     const bool verbose = not initial_update or debug_level > 0;
-    boost::shared_ptr<StoredQueryConfig> sqh_config(new StoredQueryConfig(config_file_name, &plugin_impl.get_config()));
+    StoredQueryConfig::Ptr sqh_config(new StoredQueryConfig(config_file_name, &plugin_impl.get_config()));
 
     auto prev_handler = get_handler_by_name_nothrow(sqh_config->get_query_id());
     if (prev_handler) {
@@ -499,7 +499,7 @@ void bw::StoredQueryMap::handle_query_modify(const std::string& config_file_name
 					     const boost::filesystem::path& template_dir)
 {
   try {
-    boost::shared_ptr<StoredQueryConfig> sqh_config(new StoredQueryConfig(config_file_name, &plugin_impl.get_config()));
+    StoredQueryConfig::Ptr sqh_config(new StoredQueryConfig(config_file_name, &plugin_impl.get_config()));
     const std::string id = sqh_config->get_query_id();
 
     if (should_be_ignored(*sqh_config)) {
@@ -618,7 +618,7 @@ boost::shared_ptr<bw::StoredQueryHandlerBase> bw::StoredQueryMap::get_handler_by
   }
 }
 
-void bw::StoredQueryMap::enqueue_query_add(boost::shared_ptr<StoredQueryConfig> sqh_config,
+void bw::StoredQueryMap::enqueue_query_add(StoredQueryConfig::Ptr sqh_config,
 					   const boost::filesystem::path& template_dir,
 					   bool initial_update)
 {

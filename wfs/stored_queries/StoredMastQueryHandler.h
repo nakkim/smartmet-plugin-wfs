@@ -46,17 +46,16 @@ namespace Plugin
 {
 namespace WFS
 {
-class StoredMastQueryHandler : protected virtual SupportsExtraHandlerParams,
+class StoredMastQueryHandler : public StoredQueryHandlerBase,
                                protected virtual RequiresGeoEngine,
                                protected virtual RequiresObsEngine,
-                               public StoredQueryHandlerBase,
                                protected SupportsLocationParameters,
                                protected SupportsBoundingBox,
                                protected SupportsQualityParameters
 {
  public:
   StoredMastQueryHandler(SmartMet::Spine::Reactor* reactor,
-                         boost::shared_ptr<StoredQueryConfig> config,
+                         StoredQueryConfig::Ptr config,
                          PluginImpl& plugin_impl,
                          boost::optional<std::string> template_file_name);
 

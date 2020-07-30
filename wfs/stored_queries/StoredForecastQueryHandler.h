@@ -25,7 +25,6 @@ namespace Plugin
 namespace WFS
 {
 class StoredForecastQueryHandler : public StoredQueryHandlerBase,
-                                   protected virtual SupportsExtraHandlerParams,
                                    protected virtual RequiresGeoEngine,
                                    protected virtual RequiresQEngine,
                                    protected SupportsLocationParameters,
@@ -84,7 +83,7 @@ class StoredForecastQueryHandler : public StoredQueryHandlerBase,
 
  public:
   StoredForecastQueryHandler(SmartMet::Spine::Reactor* reactor,
-                             boost::shared_ptr<StoredQueryConfig> config,
+                             StoredQueryConfig::Ptr config,
                              PluginImpl& plugin_impl,
                              boost::optional<std::string> template_file_name);
 

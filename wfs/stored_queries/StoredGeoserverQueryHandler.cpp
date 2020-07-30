@@ -25,22 +25,24 @@ const char* bw::StoredGeoserverQueryHandler::P_CRS = "crs";
 
 bw::StoredGeoserverQueryHandler::StoredGeoserverQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
-    : bw::SupportsExtraHandlerParams(config),
+
+    : bw::StoredQueryParamRegistry(config),
+      bw::SupportsExtraHandlerParams(config),
       bw::StoredAtomQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       bw::SupportsBoundingBox(config, plugin_data.get_crs_registry()),
       debug_level(get_config()->get_debug_level())
 {
   try
   {
-    register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config);
-    register_scalar_param<pt::ptime>(P_END_TIME, *config);
-    register_array_param<std::string>(P_LAYERS, *config, 1, 999);
-    register_scalar_param<uint64_t>(P_WIDTH, *config);
-    register_scalar_param<uint64_t>(P_HEIGHT, *config);
-    register_scalar_param<std::string>(P_CRS, *config);
+    register_scalar_param<pt::ptime>(P_BEGIN_TIME);
+    register_scalar_param<pt::ptime>(P_END_TIME);
+    register_array_param<std::string>(P_LAYERS, 1, 999);
+    register_scalar_param<uint64_t>(P_WIDTH);
+    register_scalar_param<uint64_t>(P_HEIGHT);
+    register_scalar_param<std::string>(P_CRS);
 
     std::string table_name_format;
     if (config->get_config().lookupValue("layerDbTableNameFormat", table_name_format))
@@ -378,7 +380,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_stored_geoserver_handler_create(SmartMet::Spine::Reactor* reactor,
-                                    boost::shared_ptr<StoredQueryConfig> config,
+                                    StoredQueryConfig::Ptr config,
                                     PluginImpl& plugin_data,
                                     boost::optional<std::string> template_file_name)
 {

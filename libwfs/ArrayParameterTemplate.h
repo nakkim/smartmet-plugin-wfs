@@ -20,14 +20,14 @@ class ArrayParameterTemplate : public ParameterTemplateBase
  public:
   ArrayParameterTemplate(StoredQueryConfig& config,
                          const std::string& config_path,
-                         int min_size = 0,
-                         int max_size = 999);
+                         std::size_t min_size = 0,
+                         std::size_t max_size = 999);
 
   ArrayParameterTemplate(StoredQueryConfig& config,
                          const std::string& base_path,
                          const std::string& config_path,
-                         int min_size = 0,
-                         int max_size = 999);
+                         std::size_t min_size = 0,
+                         std::size_t max_size = 999);
 
   virtual ~ArrayParameterTemplate();
 
@@ -74,8 +74,8 @@ class ArrayParameterTemplate : public ParameterTemplateBase
 
  private:
   std::vector<ParameterTemplateItem> items;
-  int min_size;
-  int max_size;
+  const std::size_t min_size;
+  const std::size_t max_size;
 };
 
 }  // namespace WFS

@@ -21,16 +21,15 @@ namespace WFS
 /**
  *  @brief This handler class is designed to fetch IWXXM messages from ObsEngine
  */
-class StoredAviationObservationQueryHandler : protected virtual SupportsExtraHandlerParams,
+class StoredAviationObservationQueryHandler : public StoredQueryHandlerBase,
                                               protected virtual RequiresGeoEngine,
                                               protected virtual RequiresObsEngine,
-                                              public StoredQueryHandlerBase,
                                               protected SupportsLocationParameters,
                                               protected SupportsBoundingBox
 {
  public:
   StoredAviationObservationQueryHandler(SmartMet::Spine::Reactor* reactor,
-                                        boost::shared_ptr<StoredQueryConfig> config,
+                                        StoredQueryConfig::Ptr config,
                                         PluginImpl& plugin_impl,
                                         boost::optional<std::string> template_file_name);
 

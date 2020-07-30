@@ -16,15 +16,14 @@ namespace Plugin
 {
 namespace WFS
 {
-class StoredEnvMonitoringNetworkQueryHandler : protected virtual SupportsExtraHandlerParams,
-                                               protected virtual RequiresGeoEngine,
+class StoredEnvMonitoringNetworkQueryHandler : protected virtual RequiresGeoEngine,
                                                protected virtual RequiresObsEngine,
                                                public StoredQueryHandlerBase
 
 {
  public:
   StoredEnvMonitoringNetworkQueryHandler(SmartMet::Spine::Reactor* reactor,
-                                         boost::shared_ptr<StoredQueryConfig> config,
+                                         StoredQueryConfig::Ptr config,
                                          PluginImpl& plugin_impl,
                                          boost::optional<std::string> template_file_name);
   virtual ~StoredEnvMonitoringNetworkQueryHandler();

@@ -28,11 +28,12 @@ const char* P_RETURN_ONLY_LATEST = "returnOnlyLatest";
 
 bw::StoredAviationObservationQueryHandler::StoredAviationObservationQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 
-    : bw::SupportsExtraHandlerParams(config),
+    : bw::StoredQueryParamRegistry(config),
+      bw::SupportsExtraHandlerParams(config),
       bw::RequiresGeoEngine(reactor),
       bw::RequiresObsEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -41,11 +42,11 @@ bw::StoredAviationObservationQueryHandler::StoredAviationObservationQueryHandler
 {
   try
   {
-    register_array_param<std::string>(P_ICAO_CODE, *config);
-    register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config);
-    register_scalar_param<pt::ptime>(P_END_TIME, *config);
-    register_scalar_param<std::string>(P_STATION_TYPE, *config);
-    register_scalar_param<std::string>(P_RETURN_ONLY_LATEST, *config, "false");
+    register_array_param<std::string>(P_ICAO_CODE);
+    register_scalar_param<pt::ptime>(P_BEGIN_TIME);
+    register_scalar_param<pt::ptime>(P_END_TIME);
+    register_scalar_param<std::string>(P_STATION_TYPE);
+    register_scalar_param<std::string>(P_RETURN_ONLY_LATEST, "false");
     m_sqRestrictions = plugin_data.get_config().getSQRestrictions();
     m_maxHours = config->get_optional_config_param<double>("maxHours", 7.0 * 24.0);
   }
@@ -373,7 +374,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_stored_aviation_observation_handler_create(SmartMet::Spine::Reactor* reactor,
-                                               boost::shared_ptr<StoredQueryConfig> config,
+                                               StoredQueryConfig::Ptr config,
                                                PluginImpl& plugin_data,
                                                boost::optional<std::string> template_file_name)
 {

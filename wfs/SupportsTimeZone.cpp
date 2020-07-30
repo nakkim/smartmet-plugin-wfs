@@ -17,13 +17,14 @@ namespace
 const char* P_TZ = "timeZone";
 }
 
-bw::SupportsTimeZone::SupportsTimeZone(SmartMet::Spine::Reactor* reactor, boost::shared_ptr<StoredQueryConfig> config)
-    : bw::SupportsExtraHandlerParams(config, false)
+bw::SupportsTimeZone::SupportsTimeZone(SmartMet::Spine::Reactor* reactor, StoredQueryConfig::Ptr config)
+    : bw::StoredQueryParamRegistry(config)
+    , bw::SupportsExtraHandlerParams(config, false)
     , bw::RequiresGeoEngine(reactor)
 {
   try
   {
-    register_scalar_param<std::string>(P_TZ, *config);
+    register_scalar_param<std::string>(P_TZ);
   }
   catch (...)
   {
