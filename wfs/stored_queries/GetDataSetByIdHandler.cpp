@@ -21,14 +21,15 @@ const char* P_DATA_SET_ID = "datasetid";
 }
 
 bw::GetDataSetByIdHandler::GetDataSetByIdHandler(SmartMet::Spine::Reactor* reactor,
-                                                 boost::shared_ptr<bw::StoredQueryConfig> config,
+                                                 bw::StoredQueryConfig::Ptr config,
                                                  PluginImpl& plugin_data)
-    : bw::SupportsExtraHandlerParams(config),
+    : bw::StoredQueryParamRegistry(config),
+      bw::SupportsExtraHandlerParams(config),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, boost::optional<std::string>())
 {
   try
   {
-    register_scalar_param<std::string>(P_DATA_SET_ID, *config);
+    register_scalar_param<std::string>(P_DATA_SET_ID);
 
     auto& ds_list = config->get_mandatory_config_param<libconfig::Setting&>("datasetids");
     config->assert_is_list(ds_list);
@@ -135,7 +136,7 @@ namespace
 {
 boost::shared_ptr<bw::StoredQueryHandlerBase> wfs_get_data_set_by_id_handler_create(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<bw::StoredQueryConfig> config,
+    bw::StoredQueryConfig::Ptr config,
     bw::PluginImpl& plugin_data,
     boost::optional<std::string> /* unused template_file_name */)
 {

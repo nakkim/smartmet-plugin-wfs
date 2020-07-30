@@ -57,7 +57,7 @@ class StoredQueryMap final
  private:
   void add_handler(boost::shared_ptr<StoredQueryHandlerBase> handler);
 
-  void add_handler(boost::shared_ptr<StoredQueryConfig> sqh_config,
+    void add_handler(boost::shared_ptr<StoredQueryConfig> sqh_config,
                    const boost::filesystem::path& template_dir);
 
   void add_handler_thread_proc(boost::shared_ptr<StoredQueryConfig> config,
@@ -74,10 +74,10 @@ class StoredQueryMap final
 		       const std::string& message);
 
   boost::shared_ptr<const StoredQueryHandlerBase>
-    get_handler_by_file_name(const std::string& config_file_name) const;
+  get_handler_by_file_name(const std::string& config_file_name) const;
 
   boost::shared_ptr<const StoredQueryConfig>
-    get_query_config_by_file_name(const std::string& name) const;
+  get_query_config_by_file_name(const std::string& name) const;
 
   bool should_be_ignored(const StoredQueryConfig& config) const;
 

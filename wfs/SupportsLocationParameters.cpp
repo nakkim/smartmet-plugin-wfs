@@ -41,10 +41,11 @@ void bw::SupportsLocationParameters::engOrFinToEnOrFi(std::string &language)
 
 bw::SupportsLocationParameters::SupportsLocationParameters(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<bw::StoredQueryConfig> config,
+    bw::StoredQueryConfig::Ptr config,
     unsigned options)
 
-    : SupportsExtraHandlerParams(config, false),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
       RequiresGeoEngine(reactor),
       support_keywords((options & SUPPORT_KEYWORDS) != 0),
       include_fmisids((options & INCLUDE_FMISIDS) != 0),
@@ -53,18 +54,18 @@ bw::SupportsLocationParameters::SupportsLocationParameters(
 {
   try
   {
-    register_array_param<std::string>(P_PLACES, *config);
-    register_array_param<double>(P_LATLONS, *config, 0, 999, 2);
+    register_array_param<std::string>(P_PLACES);
+    register_array_param<double>(P_LATLONS, 0, 999, 2);
     if (include_fmisids)
-      register_array_param<int64_t>(P_FMISIDS, *config);
-    register_array_param<int64_t>(P_GEOIDS, *config);
+      register_array_param<int64_t>(P_FMISIDS);
+    register_array_param<int64_t>(P_GEOIDS);
     if (include_wmos)
-      register_array_param<int64_t>(P_WMOS, *config);
-    register_scalar_param<double>(P_MAX_DISTANCE, *config);
+      register_array_param<int64_t>(P_WMOS);
+    register_scalar_param<double>(P_MAX_DISTANCE);
     if (support_keywords)
     {
-      register_scalar_param<std::string>(P_KEYWORD, *config);
-      register_scalar_param<bool>(P_KEYWORD_OVERWRITABLE, *config);
+      register_scalar_param<std::string>(P_KEYWORD);
+      register_scalar_param<bool>(P_KEYWORD_OVERWRITABLE);
     }
   }
   catch (...)

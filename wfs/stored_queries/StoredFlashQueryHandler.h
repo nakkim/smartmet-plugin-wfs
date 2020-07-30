@@ -22,13 +22,12 @@ namespace WFS
 class StoredFlashQueryHandler : public StoredQueryHandlerBase,
                                 protected SupportsBoundingBox,
                                 protected SupportsTimeZone,
-                                protected virtual SupportsExtraHandlerParams,
                                 protected virtual RequiresGeoEngine,
                                 protected virtual RequiresObsEngine
 {
  public:
   StoredFlashQueryHandler(SmartMet::Spine::Reactor *reactor,
-                          boost::shared_ptr<StoredQueryConfig> config,
+                          StoredQueryConfig::Ptr config,
                           PluginImpl &plugin_impl,
                           boost::optional<std::string> template_file_name);
 
