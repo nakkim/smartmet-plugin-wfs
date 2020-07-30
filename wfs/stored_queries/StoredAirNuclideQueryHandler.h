@@ -40,10 +40,9 @@ namespace Plugin
 {
 namespace WFS
 {
-class StoredAirNuclideQueryHandler : protected virtual SupportsExtraHandlerParams,
+class StoredAirNuclideQueryHandler : public StoredQueryHandlerBase,
                                      protected virtual RequiresGeoEngine,
                                      protected virtual RequiresObsEngine,
-                                     public StoredQueryHandlerBase,
                                      protected SupportsLocationParameters,
                                      protected SupportsBoundingBox,
                                      protected SupportsQualityParameters

@@ -10,8 +10,7 @@ namespace Plugin
 {
 namespace WFS
 {
-class StoredFileQueryHandler : public StoredAtomQueryHandlerBase,
-                               virtual public SupportsExtraHandlerParams
+class StoredFileQueryHandler : public StoredAtomQueryHandlerBase
 {
  public:
   StoredFileQueryHandler(SmartMet::Spine::Reactor* reactor,
