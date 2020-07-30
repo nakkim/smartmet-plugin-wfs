@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.7.22
+Version: 20.7.30
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -108,8 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
-* Wed Jul 22 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.7.22-1.fmi
+* Thu Jul 22 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.7.30-1.fmi
 - Stored query configuration support update
+- Refactoring
 
 * Tue Jul 21 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.21-1.fmi
 - Improved handling of locations with fmisid information available
