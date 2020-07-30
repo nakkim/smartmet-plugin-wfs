@@ -83,6 +83,8 @@ LIBS = \
 	$(BOOST_LIBS) \
 	-L$(libdir) \
 	-lsmartmet-spine \
+        -lsmartmet-grid-files \
+        -lsmartmet-grid-content \
 	-lsmartmet-newbase \
 	-lsmartmet-gis \
 	-lsmartmet-macgyver \
