@@ -50,7 +50,7 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
     register_scalar_param<std::string>(P_CRS);
 
     if (config->find_setting(config->get_root(), "handler_params.imageFile", false))
-      register_scalar_param<std::string>(P_IMAGE_FILE, *config);
+      register_scalar_param<std::string>(P_IMAGE_FILE);
 
     if (config->find_setting(config->get_root(), "handler_params.limits", false))
       register_array_param<double>(P_LIMITS, 0, 999, 2);

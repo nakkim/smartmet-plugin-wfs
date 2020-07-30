@@ -73,9 +73,11 @@ struct StationRec
 
 StoredGridForecastQueryHandler::StoredGridForecastQueryHandler(
     Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_impl,
     boost::optional<std::string> template_file_name) :
+
+        StoredQueryParamRegistry(config),
         SupportsExtraHandlerParams(config, false),
         RequiresGridEngine(reactor),
         RequiresGeoEngine(reactor),
@@ -98,16 +100,16 @@ StoredGridForecastQueryHandler::StoredGridForecastQueryHandler(
 {
   try
   {
-    register_array_param<std::string>(P_MODEL, *config);
-    register_scalar_param<pt::ptime>(P_ORIGIN_TIME, *config, false);
-    register_array_param<double>(P_LEVEL_HEIGHTS, *config, 0, 99);
-    register_array_param<int64_t>(P_LEVEL, *config, 0, 99);
-    register_scalar_param<std::string>(P_LEVEL_TYPE, *config);
-    register_array_param<std::string>(P_PARAM, *config, 1, 99);
-    register_scalar_param<int64_t>(P_FIND_NEAREST_VALID, *config);
-    register_scalar_param<std::string>(P_LOCALE, *config);
-    register_scalar_param<std::string>(P_MISSING_TEXT, *config);
-    register_scalar_param<std::string>(P_CRS, *config);
+    register_array_param<std::string>(P_MODEL);
+    register_scalar_param<pt::ptime>(P_ORIGIN_TIME, false);
+    register_array_param<double>(P_LEVEL_HEIGHTS, 0, 99);
+    register_array_param<int64_t>(P_LEVEL, 0, 99);
+    register_scalar_param<std::string>(P_LEVEL_TYPE);
+    register_array_param<std::string>(P_PARAM, 1, 99);
+    register_scalar_param<int64_t>(P_FIND_NEAREST_VALID);
+    register_scalar_param<std::string>(P_LOCALE);
+    register_scalar_param<std::string>(P_MISSING_TEXT);
+    register_scalar_param<std::string>(P_CRS);
 
     max_np_distance = config->get_optional_config_param<double>("maxNpDistance", -1.0);
     separate_groups = config->get_optional_config_param<bool>("separateGroups", false);

@@ -24,7 +24,6 @@ typedef boost::shared_ptr<Spine::Table> Table_sptr;
 
 
 class StoredGridForecastQueryHandler: public StoredQueryHandlerBase,
-                                      protected virtual SupportsExtraHandlerParams,
                                       protected virtual RequiresGridEngine,
                                       protected virtual RequiresGeoEngine,
                                       protected SupportsLocationParameters,
