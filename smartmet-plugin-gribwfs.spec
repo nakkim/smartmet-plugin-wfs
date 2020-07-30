@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.7.22
+Version: 20.7.30
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
