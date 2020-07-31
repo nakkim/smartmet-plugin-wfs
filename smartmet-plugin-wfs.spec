@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.7.30
+Version: 20.7.31
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -24,17 +24,17 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.6.8
-BuildRequires: smartmet-library-gis-devel >= 20.4.18
-BuildRequires: smartmet-library-locus-devel >= 20.6.8
-BuildRequires: smartmet-library-macgyver-devel >= 20.6.8
-BuildRequires: smartmet-engine-contour-devel >= 20.5.13
-BuildRequires: smartmet-engine-geonames-devel >= 20.6.8
-BuildRequires: smartmet-engine-gis-devel >= 20.5.7
+BuildRequires: smartmet-library-spine-devel >= 20.7.31
+BuildRequires: smartmet-library-gis-devel >= 20.7.2
+BuildRequires: smartmet-library-locus-devel >= 20.7.31
+BuildRequires: smartmet-library-macgyver-devel >= 20.7.31
+BuildRequires: smartmet-engine-contour-devel >= 20.7.2
+BuildRequires: smartmet-engine-geonames-devel >= 20.7.31
+BuildRequires: smartmet-engine-gis-devel >= 20.7.2
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.7.21
+BuildRequires: smartmet-engine-observation-devel >= 20.7.31
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 20.5.13
+BuildRequires: smartmet-engine-querydata-devel >= 20.7.2
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 5.2.0
@@ -42,18 +42,18 @@ Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
-Requires: smartmet-library-locus >= 20.6.8
-Requires: smartmet-library-macgyver >= 20.6.8
-Requires: smartmet-library-spine >= 20.6.8
-Requires: smartmet-library-gis >= 20.4.18
-Requires: smartmet-engine-contour >= 20.5.13
-Requires: smartmet-engine-geonames >= 20.6.8
-Requires: smartmet-engine-gis >= 20.5.7
+Requires: smartmet-library-locus >= 20.7.31
+Requires: smartmet-library-macgyver >= 20.7.31
+Requires: smartmet-library-spine >= 20.7.31
+Requires: smartmet-library-gis >= 20.7.2
+Requires: smartmet-engine-contour >= 20.7.2
+Requires: smartmet-engine-geonames >= 20.7.31
+Requires: smartmet-engine-gis >= 20.7.2
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.7.21
+Requires: smartmet-engine-observation >= 20.7.31
 %endif
-Requires: smartmet-engine-querydata >= 20.5.13
-Requires: smartmet-server >= 20.4.18
+Requires: smartmet-engine-querydata >= 20.7.2
+Requires: smartmet-server >= 20.7.31
 Requires: xerces-c
 Requires: xqilla
 Requires: boost169-chrono
@@ -108,6 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Fri Jul 31 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.7.31-1.fmi
+- Repackaged due to libpqxx upgrade
+
 * Thu Jul 22 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.7.30-1.fmi
 - Stored query configuration support update
 - Refactoring
