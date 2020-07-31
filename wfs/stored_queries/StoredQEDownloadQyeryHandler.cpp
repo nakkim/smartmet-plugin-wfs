@@ -87,11 +87,12 @@ class ToLatLonVisitor : public OGRDefaultGeometryVisitor
 
 StoredQEDownloadQueryHandler::StoredQEDownloadQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 
-    : SupportsExtraHandlerParams(config, false),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
       RequiresGeoEngine(reactor),
       RequiresQEngine(reactor),
       StoredAtomQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -102,16 +103,16 @@ StoredQEDownloadQueryHandler::StoredQEDownloadQueryHandler(
 {
   try
   {
-    register_array_param<std::string>(P_PRODUCER, *config, 0, 1);
-    register_array_param<pt::ptime>(P_ORIGIN_TIME, *config, 0, 1);
-    register_array_param<pt::ptime>(P_BEGIN, *config, 0, 1);
-    register_array_param<pt::ptime>(P_END, *config, 0, 1);
-    register_scalar_param<int64_t>(P_FULL_INTERVAL, *config, false);
-    register_array_param<std::string>(P_PARAM, *config);
-    register_array_param<std::string>(P_LEVEL_TYPE, *config, 0);
-    register_array_param<double>(P_LEVEL_VALUE, *config, 0);
-    register_array_param<std::string>(P_FORMAT, *config, 0, 1);
-    register_array_param<std::string>(P_PROJECTION, *config, 0, 1);
+    register_array_param<std::string>(P_PRODUCER, 0, 1);
+    register_array_param<pt::ptime>(P_ORIGIN_TIME, 0, 1);
+    register_array_param<pt::ptime>(P_BEGIN, 0, 1);
+    register_array_param<pt::ptime>(P_END, 0, 1);
+    register_scalar_param<int64_t>(P_FULL_INTERVAL, false);
+    register_array_param<std::string>(P_PARAM);
+    register_array_param<std::string>(P_LEVEL_TYPE, 0);
+    register_array_param<double>(P_LEVEL_VALUE, 0);
+    register_array_param<std::string>(P_FORMAT, 0, 1);
+    register_array_param<std::string>(P_PROJECTION, 0, 1);
 
     std::vector<std::string> tmp1;
     if (config->get_config_array<std::string>("producers", tmp1))
@@ -781,7 +782,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_stored_qe_download_handler_create(SmartMet::Spine::Reactor* reactor,
-                                      boost::shared_ptr<StoredQueryConfig> config,
+                                      StoredQueryConfig::Ptr config,
                                       PluginImpl& plugin_data,
                                       boost::optional<std::string> template_file_name)
 {

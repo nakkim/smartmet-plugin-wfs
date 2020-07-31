@@ -35,9 +35,9 @@ class SupportsExtraHandlerParams;
  */
 struct ParameterTemplateItem
 {
-  bool optional;
-  bool absent;
-  bool weak;
+  bool optional = false;
+  bool absent = true;
+  bool weak = false;
   boost::shared_ptr<SmartMet::Spine::Value> plain_text;
   boost::optional<std::string> param_ref;
   boost::optional<std::size_t MAY_ALIAS> param_ind;

@@ -39,31 +39,32 @@ const char *P_SHOW_OBSERVING_CAPABILITY = "showObservingCapability";
 
 bw::StoredEnvMonitoringFacilityQueryHandler::StoredEnvMonitoringFacilityQueryHandler(
     SmartMet::Spine::Reactor *reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl &plugin_data,
     boost::optional<std::string> template_file_name)
 
-    : bw::SupportsExtraHandlerParams(config),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config),
       RequiresGeoEngine(reactor),
       RequiresObsEngine(reactor),
-      bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name)
+      StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name)
 {
   try
   {
-    register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config);
-    register_scalar_param<pt::ptime>(P_END_TIME, *config);
-    register_array_param<int64_t>(P_CLASS_ID, *config);
-    register_array_param<int64_t>(P_GROUP_ID, *config);
-    register_array_param<int64_t>(P_STATION_ID, *config);
-    register_array_param<std::string>(P_STATION_NAME, *config, false);
-    register_array_param<std::string>(P_AGGREGATE_FUNCTION, *config);
-    register_array_param<std::string>(P_AGGREGATE_PERIOD, *config);
-    register_array_param<std::string>(P_BASE_PHENOMENON, *config);
-    register_array_param<std::string>(P_MEASURAND_CODE, *config);
-    register_array_param<int64_t>(P_STORAGE_ID, *config);
-    register_scalar_param<std::string>(P_INSPIRE_NAMESPACE, *config);
-    register_scalar_param<std::string>(P_AUTHORITY_DOMAIN, *config);
-    register_scalar_param<bool>(P_SHOW_OBSERVING_CAPABILITY, *config, false);
+    register_scalar_param<pt::ptime>(P_BEGIN_TIME);
+    register_scalar_param<pt::ptime>(P_END_TIME);
+    register_array_param<int64_t>(P_CLASS_ID);
+    register_array_param<int64_t>(P_GROUP_ID);
+    register_array_param<int64_t>(P_STATION_ID);
+    register_array_param<std::string>(P_STATION_NAME, false);
+    register_array_param<std::string>(P_AGGREGATE_FUNCTION);
+    register_array_param<std::string>(P_AGGREGATE_PERIOD);
+    register_array_param<std::string>(P_BASE_PHENOMENON);
+    register_array_param<std::string>(P_MEASURAND_CODE);
+    register_array_param<int64_t>(P_STORAGE_ID);
+    register_scalar_param<std::string>(P_INSPIRE_NAMESPACE);
+    register_scalar_param<std::string>(P_AUTHORITY_DOMAIN);
+    register_scalar_param<bool>(P_SHOW_OBSERVING_CAPABILITY, false);
     m_missingText = config->get_optional_config_param<std::string>(P_MISSING_TEXT, "NaN");
     m_debugLevel = config->get_debug_level();
   }
@@ -895,7 +896,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_stored_env_monitoring_facility_handler_create(SmartMet::Spine::Reactor *reactor,
-                                                  boost::shared_ptr<StoredQueryConfig> config,
+                                                  StoredQueryConfig::Ptr config,
                                                   PluginImpl &plugin_data,
                                                   boost::optional<std::string> template_file_name)
 {

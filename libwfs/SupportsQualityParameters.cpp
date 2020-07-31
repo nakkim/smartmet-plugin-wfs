@@ -7,12 +7,14 @@ namespace bw = SmartMet::Plugin::WFS;
 const char* bw::SupportsQualityParameters::P_QUALITY_INFO = "qualityInfo";
 
 bw::SupportsQualityParameters::SupportsQualityParameters(
-    boost::shared_ptr<StoredQueryConfig> config)
-    : bw::SupportsExtraHandlerParams(config, false)
+    StoredQueryConfig::Ptr config)
+
+    : bw::StoredQueryParamRegistry(config)
+    , bw::SupportsExtraHandlerParams(config, false)
 {
   try
   {
-    register_scalar_param<bool>(P_QUALITY_INFO, *config);
+    register_scalar_param<bool>(P_QUALITY_INFO);
   }
   catch (...)
   {

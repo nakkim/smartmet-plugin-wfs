@@ -10,14 +10,15 @@ using SmartMet::Spine::Value;
 
 const char* bw::SupportsBoundingBox::P_BOUNDING_BOX = "boundingBox";
 
-bw::SupportsBoundingBox::SupportsBoundingBox(boost::shared_ptr<StoredQueryConfig> config,
+bw::SupportsBoundingBox::SupportsBoundingBox(StoredQueryConfig::Ptr config,
                                              SmartMet::Spine::CRSRegistry& crs_registry,
                                              bool mandatory)
-    : SupportsExtraHandlerParams(config, false), crs_registry(crs_registry)
+    : StoredQueryParamRegistry(config)
+    , SupportsExtraHandlerParams(config, false), crs_registry(crs_registry)
 {
   try
   {
-    register_scalar_param<BoundingBox>(P_BOUNDING_BOX, *config, mandatory);
+    register_scalar_param<BoundingBox>(P_BOUNDING_BOX, mandatory);
   }
   catch (...)
   {

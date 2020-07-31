@@ -69,10 +69,11 @@ const char* QENGINE_CRS = "EPSG::4326";
 }  // namespace
 
 StoredGridQueryHandler::StoredGridQueryHandler(SmartMet::Spine::Reactor* reactor,
-                                               boost::shared_ptr<StoredQueryConfig> config,
+                                               StoredQueryConfig::Ptr config,
                                                PluginImpl& plugin_data,
                                                boost::optional<std::string> template_file_name)
-    : SupportsExtraHandlerParams(config, false),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
       RequiresGeoEngine(reactor),
       RequiresQEngine(reactor),
       StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -82,16 +83,16 @@ StoredGridQueryHandler::StoredGridQueryHandler(SmartMet::Spine::Reactor* reactor
 {
   try
   {
-    register_scalar_param<std::string>(P_PRODUCER, *config);
-    register_scalar_param<pt::ptime>(P_ORIGIN_TIME, *config, false);
-    register_array_param<std::string>(P_PARAM, *config);
-    register_scalar_param<std::string>(P_LEVEL_TYPE, *config, false);
-    register_array_param<double>(P_LEVEL_VALUE, *config, 0);
-    register_scalar_param<std::string>(P_MISSING_TEXT, *config);
-    register_scalar_param<std::string>(P_DATA_CRS, *config, true);
-    register_scalar_param<unsigned long>(P_SCALE_FACTOR, *config, false);
-    register_scalar_param<unsigned long>(P_PRECISION, *config, false);
-    register_scalar_param<unsigned long>(P_DATASTEP, *config, false);
+    register_scalar_param<std::string>(P_PRODUCER);
+    register_scalar_param<pt::ptime>(P_ORIGIN_TIME, false);
+    register_array_param<std::string>(P_PARAM);
+    register_scalar_param<std::string>(P_LEVEL_TYPE, false);
+    register_array_param<double>(P_LEVEL_VALUE, 0);
+    register_scalar_param<std::string>(P_MISSING_TEXT);
+    register_scalar_param<std::string>(P_DATA_CRS, true);
+    register_scalar_param<unsigned long>(P_SCALE_FACTOR, false);
+    register_scalar_param<unsigned long>(P_PRECISION, false);
+    register_scalar_param<unsigned long>(P_DATASTEP, false);
   }
   catch (...)
   {
@@ -1261,7 +1262,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_stored_grid_handler_create(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 {

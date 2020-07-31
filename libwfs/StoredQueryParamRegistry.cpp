@@ -29,7 +29,8 @@ enum TypeInd
 };
 }
 
-StoredQueryParamRegistry::StoredQueryParamRegistry()
+StoredQueryParamRegistry::StoredQueryParamRegistry(StoredQueryConfig::Ptr config)
+    : bw::StoredQueryConfig::Wrapper(config)
 {
   try
   {

@@ -25,7 +25,6 @@ namespace WFS
  *   @brief Handler for StoredContourQuery stored query
  */
 class StoredContourQueryHandler : public StoredQueryHandlerBase,
-                                  protected virtual SupportsExtraHandlerParams,
                                   protected virtual RequiresContourEngine,
                                   protected virtual RequiresQEngine,
                                   protected virtual RequiresGeoEngine,

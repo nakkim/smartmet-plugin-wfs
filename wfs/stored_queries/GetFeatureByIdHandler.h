@@ -19,7 +19,7 @@ class GetFeatureByIdHandler : public StoredQueryHandlerBase
 {
  public:
   GetFeatureByIdHandler(SmartMet::Spine::Reactor* reactor,
-                        boost::shared_ptr<StoredQueryConfig> config,
+                        StoredQueryConfig::Ptr config,
                         PluginImpl& plugin_impl);
 
   virtual ~GetFeatureByIdHandler();

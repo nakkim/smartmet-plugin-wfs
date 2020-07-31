@@ -13,10 +13,11 @@
 namespace bw = SmartMet::Plugin::WFS;
 
 bw::StoredMastQueryHandler::StoredMastQueryHandler(SmartMet::Spine::Reactor* reactor,
-                                                   boost::shared_ptr<StoredQueryConfig> config,
+                                                   StoredQueryConfig::Ptr config,
                                                    PluginImpl& plugin_data,
                                                    boost::optional<std::string> template_file_name)
-    : bw::SupportsExtraHandlerParams(config),
+    : bw::StoredQueryParamRegistry(config),
+      bw::SupportsExtraHandlerParams(config),
       bw::RequiresGeoEngine(reactor),
       bw::RequiresObsEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -28,16 +29,16 @@ bw::StoredMastQueryHandler::StoredMastQueryHandler(SmartMet::Spine::Reactor* rea
 {
   try
   {
-    register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config);
-    register_scalar_param<pt::ptime>(P_END_TIME, *config);
-    register_array_param<std::string>(P_METEO_PARAMETERS, *config, 1);
-    register_scalar_param<std::string>(P_STATION_TYPE, *config);
-    register_scalar_param<uint64_t>(P_TIME_STEP, *config);
-    register_scalar_param<uint64_t>(P_NUM_OF_STATIONS, *config);
-    register_scalar_param<uint64_t>(P_MAX_EPOCHS, *config);
-    register_scalar_param<std::string>(P_MISSING_TEXT, *config);
-    register_scalar_param<std::string>(P_CRS, *config);
-    register_array_param<uint64_t>(P_PRODUCER_ID, *config);
+    register_scalar_param<pt::ptime>(P_BEGIN_TIME);
+    register_scalar_param<pt::ptime>(P_END_TIME);
+    register_array_param<std::string>(P_METEO_PARAMETERS, 1);
+    register_scalar_param<std::string>(P_STATION_TYPE);
+    register_scalar_param<uint64_t>(P_TIME_STEP);
+    register_scalar_param<uint64_t>(P_NUM_OF_STATIONS);
+    register_scalar_param<uint64_t>(P_MAX_EPOCHS);
+    register_scalar_param<std::string>(P_MISSING_TEXT);
+    register_scalar_param<std::string>(P_CRS);
+    register_array_param<uint64_t>(P_PRODUCER_ID);
 
     m_maxHours = config->get_optional_config_param<double>("maxHours", 7.0 * 24.0);
     m_sqRestrictions = plugin_data.get_config().getSQRestrictions();
@@ -115,8 +116,12 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       // Include valid locations.
       for (const auto& item : locations_list)
       {
-        stationSettings.nearest_station_settings.emplace_back(
-            item.second->longitude, item.second->latitude, maxDistance, 1, item.first);
+        stationSettings.nearest_station_settings.emplace_back(item.second->longitude,
+                                                              item.second->latitude,
+                                                              maxDistance,
+                                                              1,
+                                                              item.first,
+                                                              item.second->fmisid);
       }
 
       // Bounding box search options.
@@ -705,7 +710,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_stored_mast_handler_create(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 {

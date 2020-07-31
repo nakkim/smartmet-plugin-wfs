@@ -22,11 +22,12 @@ const char* P_SMOOTHING_SIZE = "smoothing_size";
 
 bw::StoredContourQueryHandler::StoredContourQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<bw::StoredQueryConfig> config,
+    bw::StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 
-    : SupportsExtraHandlerParams(config, false),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
       RequiresContourEngine(reactor),
       RequiresQEngine(reactor),
       RequiresGeoEngine(reactor),
@@ -37,18 +38,18 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
 {
   try
   {
-    register_scalar_param<std::string>(P_PRODUCER, *config);
-    register_scalar_param<boost::posix_time::ptime>(P_ORIGIN_TIME, *config, false);
-    register_scalar_param<std::string>(P_CRS, *config);
+    register_scalar_param<std::string>(P_PRODUCER);
+    register_scalar_param<boost::posix_time::ptime>(P_ORIGIN_TIME, false);
+    register_scalar_param<std::string>(P_CRS);
 
     if (config->find_setting(config->get_root(), "handler_params.limits", false))
-      register_array_param<double>(P_LIMITS, *config, 0, 999, 2);
+      register_array_param<double>(P_LIMITS, 0, 999, 2);
     if (config->find_setting(config->get_root(), "handler_params.smoothing", false))
-      register_scalar_param<bool>(P_SMOOTHING, *config);
+      register_scalar_param<bool>(P_SMOOTHING);
     if (config->find_setting(config->get_root(), "handler_params.smoothing_degree", false))
-      register_scalar_param<uint64_t>(P_SMOOTHING_DEGREE, *config);
+      register_scalar_param<uint64_t>(P_SMOOTHING_DEGREE);
     if (config->find_setting(config->get_root(), "handler_params.smoothing_size", false))
-      register_scalar_param<uint64_t>(P_SMOOTHING_SIZE, *config);
+      register_scalar_param<uint64_t>(P_SMOOTHING_SIZE);
 
     // read contour parameters from config and check validity
     name = config->get_mandatory_config_param<std::string>("contour_param.name");

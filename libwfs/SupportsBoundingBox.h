@@ -19,7 +19,7 @@ class SupportsBoundingBox : protected virtual SupportsExtraHandlerParams,
                             protected virtual StoredQueryParamRegistry
 {
  public:
-  SupportsBoundingBox(boost::shared_ptr<StoredQueryConfig> config,
+  SupportsBoundingBox(StoredQueryConfig::Ptr config,
                       SmartMet::Spine::CRSRegistry& crs_registry,
                       bool mandatory = false);
 

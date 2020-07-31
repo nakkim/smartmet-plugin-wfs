@@ -29,9 +29,9 @@ libconfig::Setting* ParameterTemplateBase::get_setting_root()
   try
   {
     auto& root = base_path == ""
-                     ? config.get_config().getRoot()
-                     : config.get_mandatory_config_param<libconfig::Setting&>(base_path);
-    return &config.get_mandatory_config_param<libconfig::Setting&>(root, config_path);
+        ? config.get_config().getRoot()
+        : config.get_mandatory_config_param<libconfig::Setting&>(base_path);
+    return config.find_setting(root, config_path, false);
   }
   catch (...)
   {

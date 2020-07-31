@@ -14,12 +14,11 @@ namespace Plugin
 {
 namespace WFS
 {
-class StoredAtomQueryHandlerBase : public StoredQueryHandlerBase,
-                                   virtual public SupportsExtraHandlerParams
+class StoredAtomQueryHandlerBase : public StoredQueryHandlerBase
 {
  public:
   StoredAtomQueryHandlerBase(SmartMet::Spine::Reactor* reactor,
-                             boost::shared_ptr<StoredQueryConfig> config,
+                             StoredQueryConfig::Ptr config,
                              PluginImpl& plugin_impl,
                              boost::optional<std::string> template_file_name);
 
