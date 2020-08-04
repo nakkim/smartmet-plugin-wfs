@@ -53,7 +53,11 @@ class StoredQueryParamRegistry : public StoredQueryConfig::Wrapper
 
   virtual ~StoredQueryParamRegistry();
 
-  boost::shared_ptr<RequestParameterMap> process_parameters(
+  /**
+   *   @brief Resolve provided stored query handler parameters from provided pre-processed
+   *          query parameters and configuration.
+   */
+  boost::shared_ptr<RequestParameterMap> resolve_handler_parameters(
       const RequestParameterMap& src, const SupportsExtraHandlerParams* extra_params = nullptr) const;
 
   std::set<std::string> get_param_names() const;

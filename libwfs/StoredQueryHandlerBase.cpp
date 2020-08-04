@@ -115,7 +115,7 @@ boost::shared_ptr<RequestParameterMap> StoredQueryHandlerBase::process_params(
     }
 
     boost::shared_ptr<RequestParameterMap> result =
-        StoredQueryParamRegistry::process_parameters(*orig_params, this);
+        StoredQueryParamRegistry::resolve_handler_parameters(*orig_params, this);
     result->add("storedquery_id", stored_query_id);
 
     if (debug_level > 1)
