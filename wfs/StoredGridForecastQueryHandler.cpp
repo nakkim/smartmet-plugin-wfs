@@ -7,6 +7,7 @@
 #include <boost/format.hpp>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TimeFormatter.h>
+#include <macgyver/TimeParser.h>
 #include <macgyver/TypeName.h>
 #include <newbase/NFmiPoint.h>
 #include <newbase/NFmiQueryData.h>
@@ -362,7 +363,7 @@ void StoredGridForecastQueryHandler::query(const StoredQuery& stored_query, cons
                 row_data["elev"] = query.result->get(ind_level, i);
               }
 
-              pt::ptime epoch = pt::from_iso_string(query.result->get(ind_epoch, i));
+              pt::ptime epoch = Fmi::TimeParser::parse_iso(query.result->get(ind_epoch, i));
               long long jd = epoch.date().julian_day();
               long seconds = epoch.time_of_day().total_seconds();
               INT_64 s_epoch = 86400LL * (jd - ref_jd) + seconds;
@@ -587,7 +588,7 @@ uint StoredGridForecastQueryHandler::processGridQuery(
           if (row > lastRow)
             lastRow = row;
 
-          boost::local_time::local_date_time queryTime(boost::posix_time::from_iso_string(*ft), tz);
+          boost::local_time::local_date_time queryTime(Fmi::TimeParser::parse_iso(*ft), tz);
           if (additionalParameters.getParameterValueByLocation(gridQuery.mQueryParameterList[p].mParam, tag, loc, country, gridQuery.mQueryParameterList[p].mPrecision,paramValue))
           {
             output->set(col, row, paramValue);
@@ -673,7 +674,7 @@ uint StoredGridForecastQueryHandler::processGridQuery(
 
                 if (info != NULL)
                 {
-                  boost::local_time::local_date_time origTime(boost::posix_time::from_iso_string(info->mAnalysisTime), tz);
+                  boost::local_time::local_date_time origTime(Fmi::TimeParser::parse_iso(info->mAnalysisTime), tz);
                   output->set(col, row, wfsQuery.time_formatter->format(origTime));
                   idx = pLen + 10;
                 }
@@ -740,7 +741,7 @@ uint StoredGridForecastQueryHandler::processGridQuery(
       if (info != NULL)
       {
         //boost::local_time::local_date_time origTime(boost::posix_time::from_iso_string(info->mAnalysisTime), tz);
-        wfsQuery.origin_time.reset(new pt::ptime(boost::posix_time::from_iso_string(info->mAnalysisTime)));
+        wfsQuery.origin_time.reset(new pt::ptime(Fmi::TimeParser::parse_iso(info->mAnalysisTime)));
       }
     }
 

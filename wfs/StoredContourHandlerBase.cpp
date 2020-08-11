@@ -5,6 +5,7 @@
 #include <grid-files/common/ImageFunctions.h>
 #include <grid-files/common/ImagePaint.h>
 #include <macgyver/StringConversion.h>
+#include <macgyver/TimeParser.h>
 #include <newbase/NFmiEnumConverter.h>
 
 #include <boost/algorithm/string/replace.hpp>
@@ -323,7 +324,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
       for (auto val = param->mValueList.begin(); val != param->mValueList.end(); ++val)
       {
         std::vector<OGRGeometryPtr> geoms;
-        boost::posix_time::ptime utcTime = boost::posix_time::from_iso_string(val->mForecastTime);
+        boost::posix_time::ptime utcTime = Fmi::TimeParser::parse_iso(val->mForecastTime);
 
         if (val->mValueData.size() > 0)
         {
@@ -788,11 +789,11 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
 
     if (analysisTimeStr > " ")
       origintime =
-          boost::posix_time::ptime(boost::posix_time::from_iso_string(analysisTimeStr.c_str()));
+          boost::posix_time::ptime(Fmi::TimeParser::parse_iso(analysisTimeStr));
 
     if (modificationTimeStr > " ")
       modificationtime =
-          boost::posix_time::ptime(boost::posix_time::from_iso_string(modificationTimeStr.c_str()));
+          boost::posix_time::ptime(Fmi::TimeParser::parse_iso(modificationTimeStr));
 
     parseQueryResults(query_results,
                       query_param->bbox,
