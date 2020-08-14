@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.8.11
+Version: 20.8.14
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -25,15 +25,15 @@ BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-spine-devel >= 20.8.11
-BuildRequires: smartmet-library-gis-devel >= 20.4.18
+BuildRequires: smartmet-library-gis-devel >= 20.8.12
 BuildRequires: smartmet-library-locus-devel >= 20.6.8
 BuildRequires: smartmet-library-macgyver-devel >= 20.8.7
 BuildRequires: smartmet-engine-contour-devel >= 20.5.13
 BuildRequires: smartmet-engine-geonames-devel >= 20.6.8
 BuildRequires: smartmet-engine-gis-devel >= 20.7.22
-BuildRequires: smartmet-engine-grid-devel >= 20.6.8
-BuildRequires: smartmet-library-grid-content-devel >= 20.8.11
-BuildRequires: smartmet-library-grid-files-devel >= 20.8.11
+BuildRequires: smartmet-engine-grid-devel >= 20.8.14
+BuildRequires: smartmet-library-grid-content-devel >= 20.8.14
+BuildRequires: smartmet-library-grid-files-devel >= 20.8.14
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 20.8.7
 %endif
@@ -48,13 +48,13 @@ Requires: jsoncpp
 Requires: smartmet-library-locus >= 20.6.8
 Requires: smartmet-library-macgyver >= 20.8.7
 Requires: smartmet-library-spine >= 20.8.11
-Requires: smartmet-library-gis >= 20.4.18
+Requires: smartmet-library-gis >= 20.8.12
 Requires: smartmet-engine-contour >= 20.5.13
 Requires: smartmet-engine-geonames >= 20.6.8
 Requires: smartmet-engine-gis >= 20.7.22
-Requires: smartmet-engine-grid >= 20.6.8
-Requires: smartmet-library-grid-content >= 20.8.11
-Requires: smartmet-library-grid-files >= 20.8.11
+Requires: smartmet-engine-grid >= 20.8.14
+Requires: smartmet-library-grid-content >= 20.8.14
+Requires: smartmet-library-grid-files >= 20.8.14
 %if %{with observation}
 Requires: smartmet-engine-observation >= 20.8.7
 %endif
@@ -114,6 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/gribwfs/request/*.h
 
 %changelog
+* Fri Aug 14 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.8.14-1.fmi
+- Repackaged due to grid library ABI changes
+
 * Tue Aug 11 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.8.11-1.fmi
 - Speed improvements
 
