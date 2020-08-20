@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.7.30
+Version: 20.8.20
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -27,7 +27,7 @@ BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-spine-devel >= 20.6.8
 BuildRequires: smartmet-library-gis-devel >= 20.4.18
 BuildRequires: smartmet-library-locus-devel >= 20.6.8
-BuildRequires: smartmet-library-macgyver-devel >= 20.6.8
+BuildRequires: smartmet-library-macgyver-devel >= 20.8.20
 BuildRequires: smartmet-engine-contour-devel >= 20.5.13
 BuildRequires: smartmet-engine-geonames-devel >= 20.6.8
 BuildRequires: smartmet-engine-gis-devel >= 20.5.7
@@ -43,7 +43,7 @@ Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 20.6.8
-Requires: smartmet-library-macgyver >= 20.6.8
+Requires: smartmet-library-macgyver >= 20.8.20
 Requires: smartmet-library-spine >= 20.6.8
 Requires: smartmet-library-gis >= 20.4.18
 Requires: smartmet-engine-contour >= 20.5.13
@@ -108,6 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Thu Aug 20 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.8.20-1.fmi
+- Adapt to smartmet-library-macgyver changes (use Fmi::AsyncTaskGroup)
+
 * Thu Jul 22 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.7.30-1.fmi
 - Stored query configuration support update
 - Refactoring
