@@ -36,6 +36,7 @@ BuildRequires: smartmet-library-grid-content-devel >= 20.8.21
 BuildRequires: smartmet-library-grid-files-devel >= 20.8.21
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 20.8.21
+%endif
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 6.2.1
