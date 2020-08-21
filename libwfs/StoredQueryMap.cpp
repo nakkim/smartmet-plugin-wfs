@@ -43,7 +43,7 @@ void bw::StoredQueryMap::set_background_init(bool value)
 {
   background_init = value;
   if (background_init) {
-    init_tasks.reset(new Fmi::TaskGroup(10));
+    init_tasks.reset(new Fmi::AsyncTaskGroup(10));
   } else {
     init_tasks.reset();
   }

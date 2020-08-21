@@ -14,7 +14,7 @@
 #include <json/json.h>
 #include <spine/Reactor.h>
 #include <macgyver/DirectoryMonitor.h>
-#include <macgyver/TaskGroup.h>
+#include <macgyver/AsyncTaskGroup.h>
 
 namespace SmartMet
 {
@@ -114,7 +114,7 @@ class StoredQueryMap final
   std::condition_variable cond;
   SmartMet::Spine::Reactor* theReactor;
   PluginImpl& plugin_impl;
-  std::unique_ptr<Fmi::TaskGroup> init_tasks;
+  std::unique_ptr<Fmi::AsyncTaskGroup> init_tasks;
   std::map<std::string, boost::shared_ptr<StoredQueryHandlerBase> > handler_map;
   std::set<std::string> duplicate;
 

@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.7.31
+Version: 20.8.21
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -15,7 +15,7 @@ BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: boost169-devel
 BuildRequires: ctpp2-devel
-BuildRequires: fmt-devel >= 5.2.0
+BuildRequires: fmt-devel >= 6.2.1
 BuildRequires: jsoncpp-devel
 BuildRequires: libconfig-devel
 BuildRequires: libcurl-devel
@@ -24,36 +24,36 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.7.31
-BuildRequires: smartmet-library-gis-devel >= 20.7.2
-BuildRequires: smartmet-library-locus-devel >= 20.7.31
-BuildRequires: smartmet-library-macgyver-devel >= 20.7.31
-BuildRequires: smartmet-engine-contour-devel >= 20.7.2
-BuildRequires: smartmet-engine-geonames-devel >= 20.7.31
-BuildRequires: smartmet-engine-gis-devel >= 20.7.2
+BuildRequires: smartmet-library-spine-devel >= 20.8.21
+BuildRequires: smartmet-library-gis-devel >= 20.8.21
+BuildRequires: smartmet-library-locus-devel >= 20.8.21
+BuildRequires: smartmet-library-macgyver-devel >= 20.8.21
+BuildRequires: smartmet-engine-contour-devel >= 20.8.21
+BuildRequires: smartmet-engine-geonames-devel >= 20.8.21
+BuildRequires: smartmet-engine-gis-devel >= 20.8.21
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.7.31
+BuildRequires: smartmet-engine-observation-devel >= 20.8.21
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 20.7.2
+BuildRequires: smartmet-engine-querydata-devel >= 20.8.21
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
-Requires: fmt >= 5.2.0
+Requires: fmt >= 6.2.1
 Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
-Requires: smartmet-library-locus >= 20.7.31
-Requires: smartmet-library-macgyver >= 20.7.31
-Requires: smartmet-library-spine >= 20.7.31
-Requires: smartmet-library-gis >= 20.7.2
-Requires: smartmet-engine-contour >= 20.7.2
-Requires: smartmet-engine-geonames >= 20.7.31
-Requires: smartmet-engine-gis >= 20.7.2
+Requires: smartmet-library-locus >= 20.8.21
+Requires: smartmet-library-macgyver >= 20.8.21
+Requires: smartmet-library-spine >= 20.8.21
+Requires: smartmet-library-gis >= 20.8.21
+Requires: smartmet-engine-contour >= 20.8.21
+Requires: smartmet-engine-geonames >= 20.8.21
+Requires: smartmet-engine-gis >= 20.8.21
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.7.31
+Requires: smartmet-engine-observation >= 20.8.21
 %endif
-Requires: smartmet-engine-querydata >= 20.7.2
-Requires: smartmet-server >= 20.7.31
+Requires: smartmet-engine-querydata >= 20.8.21
+Requires: smartmet-server >= 20.8.21
 Requires: xerces-c
 Requires: xqilla
 Requires: boost169-chrono
@@ -108,6 +108,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Fri Aug 21 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.8.21-1.fmi
+- Upgrade to fmt 6.2
+
+* Thu Aug 20 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.8.20-1.fmi
+- Adapt to smartmet-library-macgyver changes (use Fmi::AsyncTaskGroup)
+
 * Fri Jul 31 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.7.31-1.fmi
 - Repackaged due to libpqxx upgrade
 
