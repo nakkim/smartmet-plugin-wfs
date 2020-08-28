@@ -143,6 +143,11 @@ PluginImpl::PluginImpl(
   }
 }
 
+void PluginImpl::shutdown()
+{
+  stored_query_map->shutdown();
+}
+
 PluginImpl::~PluginImpl()
 {
 }

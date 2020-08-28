@@ -42,6 +42,8 @@ class PluginImpl : public boost::noncopyable
 
   virtual ~PluginImpl();
 
+  void shutdown();
+
   virtual void realRequestHandler(SmartMet::Spine::Reactor& theReactor,
                                   const std::string& language,
                                   const SmartMet::Spine::HTTP::Request& theRequest,
