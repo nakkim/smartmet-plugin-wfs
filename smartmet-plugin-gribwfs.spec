@@ -16,6 +16,7 @@ BuildRequires: make
 BuildRequires: boost169-devel
 BuildRequires: ctpp2-devel
 BuildRequires: fmt-devel >= 6.2.1
+BuildRequires: gdal-devel
 BuildRequires: jsoncpp-devel
 BuildRequires: libconfig-devel
 BuildRequires: libcurl-devel
