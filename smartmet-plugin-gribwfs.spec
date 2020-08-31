@@ -133,7 +133,7 @@ rm -rf $RPM_BUILD_ROOT
 * Tue Aug 11 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.8.11-1.fmi
 - Speed improvements
 
-* Wed Jul 30 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.7.30-1.fmi
+* Thu Jul 30 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.7.30-1.fmi
 - Stored query configuration support update
 - Refaktorointi
 
