@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.8.21
+Version: 20.8.31
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -24,16 +24,16 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.8.21
+BuildRequires: smartmet-library-spine-devel >= 20.8.26
 BuildRequires: smartmet-library-gis-devel >= 20.8.21
 BuildRequires: smartmet-library-locus-devel >= 20.8.21
-BuildRequires: smartmet-library-macgyver-devel >= 20.8.21
+BuildRequires: smartmet-library-macgyver-devel >= 20.8.26
 BuildRequires: smartmet-engine-contour-devel >= 20.8.21
 BuildRequires: smartmet-engine-geonames-devel >= 20.8.21
 BuildRequires: smartmet-engine-gis-devel >= 20.8.21
-BuildRequires: smartmet-engine-grid-devel >= 20.8.21
-BuildRequires: smartmet-library-grid-content-devel >= 20.8.21
-BuildRequires: smartmet-library-grid-files-devel >= 20.8.21
+BuildRequires: smartmet-engine-grid-devel >= 20.8.31
+BuildRequires: smartmet-library-grid-content-devel >= 20.8.31
+BuildRequires: smartmet-library-grid-files-devel >= 20.8.31
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 20.8.21
 %endif
@@ -45,20 +45,20 @@ Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 20.8.21
-Requires: smartmet-library-macgyver >= 20.8.21
-Requires: smartmet-library-spine >= 20.8.21
+Requires: smartmet-library-macgyver >= 20.8.26
+Requires: smartmet-library-spine >= 20.8.26
 Requires: smartmet-library-gis >= 20.8.21
 Requires: smartmet-engine-contour >= 20.8.21
 Requires: smartmet-engine-geonames >= 20.8.21
 Requires: smartmet-engine-gis >= 20.8.21
-Requires: smartmet-engine-grid >= 20.8.21
-Requires: smartmet-library-grid-content >= 20.8.21
-Requires: smartmet-library-grid-files >= 20.8.21
+Requires: smartmet-engine-grid >= 20.8.31
+Requires: smartmet-library-grid-content >= 20.8.31
+Requires: smartmet-library-grid-files >= 20.8.31
 %if %{with observation}
 Requires: smartmet-engine-observation >= 20.8.21
 %endif
 Requires: smartmet-engine-querydata >= 20.8.21
-Requires: smartmet-server >= 20.8.21
+Requires: smartmet-server >= 20.8.25
 Requires: xerces-c
 Requires: xqilla
 Requires: boost169-chrono
@@ -113,6 +113,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/gribwfs/request/*.h
 
 %changelog
+* Mon Aug 31 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.8.31-1.fmi
+- Repackaged due to library ABI changes
+
 * Fri Aug 21 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.8.21-1.fmi
 - Upgrade to fmt 6.2
 
