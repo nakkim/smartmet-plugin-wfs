@@ -33,6 +33,7 @@ BuildRequires: smartmet-engine-contour-devel >= 20.8.21
 BuildRequires: smartmet-engine-geonames-devel >= 20.8.21
 BuildRequires: smartmet-engine-gis-devel >= 20.8.21
 BuildRequires: smartmet-engine-grid-devel >= 20.8.31
+BuildRequires: smartmet-engine-querydata-devel >= 20.8.31
 BuildRequires: smartmet-library-grid-content-devel >= 20.8.31
 BuildRequires: smartmet-library-grid-files-devel >= 20.8.31
 %if %{with observation}
