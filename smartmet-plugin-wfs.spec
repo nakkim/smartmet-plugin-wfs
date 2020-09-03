@@ -4,7 +4,7 @@
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
 Version: 20.9.3
-Release: 1%{?dist}.fmi
+Release: 2%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-wfs
@@ -108,6 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Thu Sep  3 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.3-2.fmi
+- Updated IBPlott icedata schema address
+
 * Thu Sep  3 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.9.3-1.fmi
 - Improve shutdown support
 
@@ -120,7 +123,7 @@ rm -rf $RPM_BUILD_ROOT
 * Thu Aug 20 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.8.20-1.fmi
 - Adapt to smartmet-library-macgyver changes (use Fmi::AsyncTaskGroup)
 
-* Thu Jul 22 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.7.30-1.fmi
+* Wed Jul 22 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.7.22-1.fmi
 - Stored query configuration support update
 - Refactoring
 
