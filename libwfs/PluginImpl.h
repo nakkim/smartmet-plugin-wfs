@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "Config.h"
@@ -120,8 +121,6 @@ class PluginImpl : public boost::noncopyable
   {
     return itsTemplateFactory.get(filename);
   }
-
-  void updateStoredQueryMap();
 
   void dump_xml_schema_cache(std::ostream& os);
 

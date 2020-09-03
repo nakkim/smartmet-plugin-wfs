@@ -152,18 +152,6 @@ PluginImpl::~PluginImpl()
 {
 }
 
-void PluginImpl::updateStoredQueryMap()
-{
-  try
-  {
-    //stored_query_map->update_handlers();
-  }
-  catch (...)
-  {
-    throw Spine::Exception::Trace(BCP, "Stored query handlers update failed!");
-  }
-}
-
 boost::posix_time::ptime PluginImpl::get_time_stamp() const
 {
   try
