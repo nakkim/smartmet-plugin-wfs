@@ -115,7 +115,12 @@ void Plugin::init()
 
 void Plugin::shutdown()
 {
+  // FIXME: do shutdown in thread safe way
   stopUpdateLoop();
+  auto impl = boost::atomic_load(&plugin_impl);
+  if (impl) {
+      impl->shutdown();
+  }
 }
 // ----------------------------------------------------------------------
 /*!
