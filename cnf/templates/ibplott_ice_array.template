@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Products xmlns:xdf="http:/xml.gsfc.nasa.gov/XDF/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="http://knowledge.vtt.fi/schemas/griddedIceData1.1.xsd">
+<Products xmlns:xdf="http:/xml.gsfc.nasa.gov/XDF/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="http://services.weatherproof.fi/schemas/wfs/griddedIceData1.1.xsd">
 <Grid LonMin="<TMPL_var metadata.boundingBox.lowerLeft.lon>" LonMax="<TMPL_var metadata.boundingBox.upperRight.lon>" LatMin="<TMPL_var metadata.boundingBox.lowerLeft.lat>" LatMax="<TMPL_var metadata.boundingBox.upperRight.lat>" GridXDim="<TMPL_var metadata.xDim>" GridYDim="<TMPL_var metadata.yDim>"/>
 <Product ProducingModel="<TMPL_var producerName>"  Length="<TMPL_var timeSteps>" StartAt="<TMPL_var firstTime>" Type="forecast">
 <TMPL_FOREACH returnArray AS level>  <TMPL_FOREACH level as parameter>  <TMPL_FOREACH parameter.timeSteps as timestep>    <Time Time="<TMPL_var timestep.time>">

@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "Config.h"
@@ -41,6 +42,8 @@ class PluginImpl : public boost::noncopyable
       Spine::CRSRegistry& crs_registry);
 
   virtual ~PluginImpl();
+
+  void shutdown();
 
   virtual void realRequestHandler(SmartMet::Spine::Reactor& theReactor,
                                   const std::string& language,
@@ -123,8 +126,6 @@ class PluginImpl : public boost::noncopyable
   {
     return itsTemplateFactory.get(filename);
   }
-
-  void updateStoredQueryMap();
 
   void dump_xml_schema_cache(std::ostream& os);
 

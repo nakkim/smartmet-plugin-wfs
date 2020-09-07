@@ -37,6 +37,8 @@ class StoredQueryMap final
 
   virtual ~StoredQueryMap();
 
+  void shutdown();
+
   void set_background_init(bool value);
 
   void add_config_dir(const boost::filesystem::path& config_dir,
@@ -107,6 +109,7 @@ class StoredQueryMap final
 
  private:
   bool background_init;
+  std::atomic<bool> shutdown_requested;
   std::atomic<bool> reload_required;
   std::atomic<bool> loading_started;
   mutable boost::shared_mutex mutex;

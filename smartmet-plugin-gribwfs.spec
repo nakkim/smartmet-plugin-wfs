@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.9.1
+Version: 20.9.7
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -115,6 +115,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/gribwfs/request/*.h
 
 %changelog
+* Mon Sep  7 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.7-1.fmi
+- Repackaged due to library ABI changes
+
+* Thu Sep  3 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.3-2.fmi
+- Updated IBPlott icedata schema address
+
+* Thu Sep  3 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.9.3-1.fmi
+- Improve shutdown support
+
 * Wed Sep  2 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.1-1.fmi
 - Repackaged since Observation::Settings size changed
 
