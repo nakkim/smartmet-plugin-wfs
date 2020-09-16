@@ -187,7 +187,7 @@ configtest:
 	$$ok
 
 $(LIBFILE): $(OBJS) $(LIBWFS)
-	$(CXX) -shared -rdynamic $(CFLAGS) -o $@ $(OBJS) $(LIBWFS) $(LIBS)
+	$(CC) -shared -rdynamic $(LDFLAGS) -o $@ $(OBJS) $(LIBWFS) $(LIBS)
 
 $(LIBWFS): $(LIBWFS_OBJS)
 	ar rcs $@ $(LIBWFS_OBJS)
