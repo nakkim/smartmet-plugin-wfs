@@ -62,15 +62,15 @@ objdir = obj
 # Boost 1.69
 
 ifneq "$(wildcard /usr/include/boost169)" ""
-  INCLUDES += -I/usr/include/boost169
+  INCLUDES += -isystem /usr/include/boost169
   LIBS += -L/usr/lib64/boost169
 endif
 
-INCLUDES += -I$(includedir) \
+INCLUDES += \
+	-Iinclude \
 	-I$(includedir)/smartmet \
-	-I$(includedir)/mysql \
-	-I$(includedir)/jsoncpp \
-	-Iinclude
+	-isystem $(includedir)/mysql \
+	-isystem $(includedir)/jsoncpp
 
 LIBS += -L$(libdir) \
 	-lsmartmet-gis \

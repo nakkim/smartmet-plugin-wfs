@@ -68,16 +68,15 @@ objdir = obj
 # Boost 1.69
 
 ifneq "$(wildcard /usr/include/boost169)" ""
-  BOOST_INCLUDES = -I/usr/include/boost169
+  BOOST_INCLUDES = -isystem /usr/include/boost169
   BOOST_LIBS = -L/usr/lib64/boost169
   FLAGS += -Wno-overloaded-virtual -Wno-redundant-decls
 endif
 
 INCLUDES = \
 	$(BOOST_INCLUDES) \
-	-I$(includedir) \
 	-I$(includedir)/smartmet \
-	-I$(includedir)/jsoncpp
+	-isystem $(includedir)/jsoncpp
 
 LIBS = \
 	$(BOOST_LIBS) \
@@ -137,7 +136,7 @@ test: $(TEST_TARGETS)
 	$$ok;
 
 PluginTest : obj/PluginTest.o ; @echo "Building $@"
-	@$(CC) -o $@ $(CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) $(LIBS)
+	@$(CXX) -o $@ $(CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) $(LIBS)
 
 
 ifneq ($(wildcard obj/*.d),)

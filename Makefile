@@ -75,20 +75,20 @@ objdir = obj
 # Boost 1.69
 
 ifneq "$(wildcard /usr/include/boost169)" ""
-  INCLUDES += -I/usr/include/boost169
+  INCLUDES += -isystem /usr/include/boost169
   LIBS += -L/usr/lib64/boost169
 endif
 
 ifneq "$(wildcard /usr/gdal30/include)" ""
-  INCLUDES += -I/usr/gdal30/include
+  INCLUDES += -isystem /usr/gdal30/include
   LIBS += -L/usr/gdal30/lib
 else
-  INCLUDES += -I/usr/include/gdal
+  INCLUDES += -isystem /usr/include/gdal
 endif
 
-INCLUDES += -I$(includedir) \
+INCLUDES += \
 	-I$(includedir)/smartmet \
-	-I$(includedir)/jsoncpp
+	-isystem $(includedir)/jsoncpp
 
 LIBS += -L$(libdir) \
 	-lsmartmet-spine \
@@ -187,7 +187,7 @@ configtest:
 	$$ok
 
 $(LIBFILE): $(OBJS) $(LIBWFS)
-	$(CC) -shared -rdynamic $(CFLAGS) -o $@ $(OBJS) $(LIBWFS) $(LIBS)
+	$(CXX) -shared -rdynamic $(CFLAGS) -o $@ $(OBJS) $(LIBWFS) $(LIBS)
 
 $(LIBWFS): $(LIBWFS_OBJS)
 	ar rcs $@ $(LIBWFS_OBJS)
