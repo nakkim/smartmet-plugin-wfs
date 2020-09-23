@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.9.18
+Version: 20.9.23
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -24,17 +24,17 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.9.14
+BuildRequires: smartmet-library-spine-devel >= 20.9.23
 BuildRequires: smartmet-library-gis-devel >= 20.8.21
 BuildRequires: smartmet-library-locus-devel >= 20.8.21
-BuildRequires: smartmet-library-macgyver-devel >= 20.9.15
-BuildRequires: smartmet-engine-contour-devel >= 20.8.21
-BuildRequires: smartmet-engine-geonames-devel >= 20.8.21
-BuildRequires: smartmet-engine-gis-devel >= 20.8.21
+BuildRequires: smartmet-library-macgyver-devel >= 20.9.18
+BuildRequires: smartmet-engine-contour-devel >= 20.8.23
+BuildRequires: smartmet-engine-geonames-devel >= 20.9.23
+BuildRequires: smartmet-engine-gis-devel >= 20.8.23
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.9.18
+BuildRequires: smartmet-engine-observation-devel >= 20.9.23
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 20.9.15
+BuildRequires: smartmet-engine-querydata-devel >= 20.9.23
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 6.2.1
@@ -43,17 +43,17 @@ Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 20.8.21
-Requires: smartmet-library-macgyver >= 20.9.15
-Requires: smartmet-library-spine >= 20.9.14
+Requires: smartmet-library-macgyver >= 20.9.18
+Requires: smartmet-library-spine >= 20.9.23
 Requires: smartmet-library-gis >= 20.8.21
-Requires: smartmet-engine-contour >= 20.8.21
-Requires: smartmet-engine-geonames >= 20.8.21
-Requires: smartmet-engine-gis >= 20.8.21
+Requires: smartmet-engine-contour >= 20.8.23
+Requires: smartmet-engine-geonames >= 20.9.23
+Requires: smartmet-engine-gis >= 20.8.23
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.9.18
+Requires: smartmet-engine-observation >= 20.9.23
 %endif
-Requires: smartmet-engine-querydata >= 20.9.15
-Requires: smartmet-server >= 20.9.14
+Requires: smartmet-engine-querydata >= 20.9.23
+Requires: smartmet-server >= 20.9.23
 Requires: xerces-c
 Requires: xqilla
 Requires: boost169-chrono
@@ -108,6 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Wed Sep 23 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.23-1.fmi
+- Use Fmi::Exception instead of Spine::Exception
+
 * Fri Sep 18 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.18-1.fmi
 - Fixed parsing of stored obs querystring parameters, maxlocations setting was not obeyed
 

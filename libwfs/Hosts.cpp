@@ -1,5 +1,5 @@
 #include "Hosts.h"
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 namespace
 {

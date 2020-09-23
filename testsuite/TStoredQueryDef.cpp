@@ -4,7 +4,7 @@
 
 #include "StoredQueryParamDef.h"
 #include "WfsException.h"
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 using namespace boost::unit_test;
 
@@ -63,8 +63,8 @@ BOOST_AUTO_TEST_CASE(test_scalar_int_def)
   BOOST_REQUIRE_NO_THROW(i1 = value.get_int());
   BOOST_CHECK_EQUAL(i1, (int64_t)(-321));
 
-  BOOST_CHECK_THROW(value = param_def.readValue("1.2"), SmartMet::Spine::Exception);
-  BOOST_CHECK_THROW(value = param_def.readValue("foo"), SmartMet::Spine::Exception);
+  BOOST_CHECK_THROW(value = param_def.readValue("1.2"), Fmi::Exception);
+  BOOST_CHECK_THROW(value = param_def.readValue("foo"), Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(test_scalar_bool_def)
@@ -89,8 +89,8 @@ BOOST_AUTO_TEST_CASE(test_scalar_bool_def)
   BOOST_REQUIRE_NO_THROW(b1 = value.get_bool());
   BOOST_CHECK_EQUAL(b1, false);
 
-  BOOST_CHECK_THROW(value = param_def.readValue("1.2"), SmartMet::Spine::Exception);
-  BOOST_CHECK_THROW(value = param_def.readValue("foo"), SmartMet::Spine::Exception);
+  BOOST_CHECK_THROW(value = param_def.readValue("1.2"), Fmi::Exception);
+  BOOST_CHECK_THROW(value = param_def.readValue("foo"), Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(test_scalar_uint_def)
@@ -111,9 +111,9 @@ BOOST_AUTO_TEST_CASE(test_scalar_uint_def)
   BOOST_CHECK_EQUAL(u1, (uint64_t)123);
 
   // FIXME: Fails to throw due to implementation of boost::lexical_cast<>
-  // BOOST_CHECK_THROW(value = param_def.readValue("-321"), SmartMet::Spine::Exception);
-  BOOST_CHECK_THROW(value = param_def.readValue("1.2"), SmartMet::Spine::Exception);
-  BOOST_REQUIRE_THROW(value = param_def.readValue("foo"), SmartMet::Spine::Exception);
+  // BOOST_CHECK_THROW(value = param_def.readValue("-321"), Fmi::Exception);
+  BOOST_CHECK_THROW(value = param_def.readValue("1.2"), Fmi::Exception);
+  BOOST_REQUIRE_THROW(value = param_def.readValue("foo"), Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(test_scalar_double_def)
@@ -138,7 +138,7 @@ BOOST_AUTO_TEST_CASE(test_scalar_double_def)
   BOOST_REQUIRE_NO_THROW(d1 = value.get_double());
   BOOST_CHECK_CLOSE_FRACTION(d1, (double)(-1.2), 1e-10);
 
-  BOOST_REQUIRE_THROW(value = param_def.readValue("foo"), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(value = param_def.readValue("foo"), Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(test_scalar_time_def)

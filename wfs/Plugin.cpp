@@ -10,7 +10,7 @@
 #include <boost/bind.hpp>
 #include <json/json.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/Reactor.h>
 #include <spine/SmartMet.h>
 #include <sstream>
@@ -47,7 +47,7 @@ void Plugin::init()
         msg << "WFS Plugin and Server SmartMet API version mismatch"
             << " (plugin API version is " << SMARTMET_API_VERSION << ", server requires "
             << itsReactor->getRequiredAPIVersion() << ")";
-        throw SmartMet::Spine::Exception(BCP, msg.str());
+        throw Fmi::Exception(BCP, msg.str());
       }
 
       auto itsGisEngine = itsReactor->getEngine<SmartMet::Engine::Gis::Engine>("Gis");
@@ -69,7 +69,7 @@ void Plugin::init()
         {
           std::ostringstream msg;
           msg << "Failed to register WFS content handler for language '" << language << "'";
-          throw SmartMet::Spine::Exception(BCP, msg.str());
+          throw Fmi::Exception(BCP, msg.str());
         }
       }
 
@@ -78,7 +78,7 @@ void Plugin::init()
     }
     catch (...)
     {
-      throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+      throw Fmi::Exception::Trace(BCP, "Operation failed!");
     }
 
     auto adminCred = plugin_impl->get_config().get_admin_credentials();
@@ -88,7 +88,7 @@ void Plugin::init()
             plugin_impl->get_config().defaultUrl(),
             boost::bind(&Plugin::realRequestHandler, this, _1, "", _2, _3)))
     {
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP, "Failed to register WFS content handler for default language");
     }
 
@@ -103,7 +103,7 @@ void Plugin::init()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Init failed!");
+    throw Fmi::Exception::Trace(BCP, "Init failed!");
   }
 }
 
@@ -166,7 +166,7 @@ bool Plugin::reload(const char* theConfig)
       itsConfig = theConfig;
       init();
     } catch (...) {
-      throw SmartMet::Spine::Exception(BCP, "Reload failed");
+      throw Fmi::Exception(BCP, "Reload failed");
     }
     itsReloading = false;
     return true;
@@ -197,7 +197,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -218,7 +218,7 @@ void Plugin::realRequestHandler(SmartMet::Spine::Reactor& theReactor,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -280,7 +280,7 @@ void Plugin::adminHandler(SmartMet::Spine::Reactor& theReactor,
       throw std::runtime_error("Mandatory parameter request missing");
     }
   } catch (...) {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -321,14 +321,14 @@ void Plugin::updateLoop()
       }
       catch (...)
       {
-        Spine::Exception exception(BCP, "Stored query map update failed!", nullptr);
+        Fmi::Exception exception(BCP, "Stored query map update failed!", nullptr);
         exception.printError();
       }
     }
   }
   catch (...)
   {
-    throw Spine::Exception::Trace(BCP, "Update loop failed!");
+    throw Fmi::Exception::Trace(BCP, "Update loop failed!");
   }
 }
 

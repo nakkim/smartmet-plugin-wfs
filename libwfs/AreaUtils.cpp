@@ -2,7 +2,7 @@
 #include <boost/bind.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <boost/shared_ptr.hpp>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <stdexcept>
 
 namespace SmartMet
@@ -89,7 +89,7 @@ std::vector<NFmiPoint> bbox_exclude_point(const NFmiPoint& p1,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -114,7 +114,7 @@ void get_latlon_boundary(const NFmiArea* area, OGRPolygon* result, int NP, doubl
     bool sp_inside = area_rect.IsInside(sp_xy);
     if (np_inside and sp_inside)
     {
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP, "Area with both north and south pole inside is not supported!");
     }
 
@@ -123,7 +123,7 @@ void get_latlon_boundary(const NFmiArea* area, OGRPolygon* result, int NP, doubl
     const int num_points = orig_points.size();
     if (num_points < 2)
     {
-      throw SmartMet::Spine::Exception(BCP, "INTERNAL ERROR: Not enough points");
+      throw Fmi::Exception(BCP, "INTERNAL ERROR: Not enough points");
     }
 
     std::vector<NFmiPoint> points;
@@ -158,7 +158,7 @@ void get_latlon_boundary(const NFmiArea* area, OGRPolygon* result, int NP, doubl
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace WFS

@@ -6,7 +6,7 @@
 #include <boost/test/unit_test.hpp>
 #include <BStream.h>
 #include <boost/algorithm/hex.hpp>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 using namespace boost::unit_test;
 
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(test_writing_and_reading_bits_1)
   BOOST_CHECK(not in.get_bit());
   BOOST_CHECK(not in.get_bit());
   BOOST_CHECK(not in.get_bit());
-  BOOST_CHECK_THROW(in.get_bit(), SmartMet::Spine::Exception);
+  BOOST_CHECK_THROW(in.get_bit(), Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(test_writing_and_reading_bits_2)

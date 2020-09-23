@@ -57,11 +57,11 @@ class ScalarParameterTemplate : public ParameterTemplateBase
                 return *tmp;
             } else {
                 const std::string name = this->get_config_path();
-                throw SmartMet::Spine::Exception::Trace(BCP, "Mandatory scalar query parameter '"
+                throw Fmi::Exception::Trace(BCP, "Mandatory scalar query parameter '"
                     + name + "' missing").disableStackTrace();
             }
         } catch (...) {
-            throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+            throw Fmi::Exception::Trace(BCP, "Operation failed!");
         }
     }
 
@@ -79,7 +79,7 @@ class ScalarParameterTemplate : public ParameterTemplateBase
                 return false;
             }
         } catch (...) {
-            throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+            throw Fmi::Exception::Trace(BCP, "Operation failed!");
         }
     }
 
@@ -91,7 +91,7 @@ class ScalarParameterTemplate : public ParameterTemplateBase
         try {
             return Getter<ValueType>(*this)(req_param_map, extra_params);
         } catch (...) {
-            throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+            throw Fmi::Exception::Trace(BCP, "Operation failed!");
         }
     }
 

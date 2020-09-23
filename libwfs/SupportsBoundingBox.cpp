@@ -1,7 +1,7 @@
 #include "SupportsBoundingBox.h"
 #include <boost/algorithm/string.hpp>
 #include <gdal/ogr_geometry.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 namespace bw = SmartMet::Plugin::WFS;
 namespace ba = boost::algorithm;
@@ -22,7 +22,7 @@ bw::SupportsBoundingBox::SupportsBoundingBox(StoredQueryConfig::Ptr config,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -60,7 +60,7 @@ bool bw::SupportsBoundingBox::get_bounding_box(const RequestParameterMap& param_
             std::ostringstream msg;
             msg << METHOD_NAME << ": CRS " << bbox->crs << " is not supported"
                 << " for specifying bounding box";
-            SmartMet::Spine::Exception exception(BCP,msg.str());
+            Fmi::Exception exception(BCP,msg.str());
             exception.addParameter(WFS_EXCEPTION_CODE,WFS_OPERATION_PROCESSING_FAILED);
             throw exception;
           }
@@ -74,7 +74,7 @@ bool bw::SupportsBoundingBox::get_bounding_box(const RequestParameterMap& param_
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -107,7 +107,7 @@ void bw::SupportsBoundingBox::bbox2polygon(const SmartMet::Spine::BoundingBox& s
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -137,7 +137,7 @@ SmartMet::Spine::BoundingBox bw::SupportsBoundingBox::transform_bounding_box(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -157,7 +157,7 @@ bool bw::SupportsBoundingBox::isInverseAxisOrderPossible(const std::string& crs)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -178,7 +178,7 @@ SmartMet::Spine::BoundingBox bw::SupportsBoundingBox::swapXYByBoundingBoxCrs(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

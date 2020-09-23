@@ -6,7 +6,7 @@
 #include <boost/test/unit_test.hpp>
 #include <newbase/NFmiPoint.h>
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include "UrlTemplateGenerator.h"
 
 using namespace boost::unit_test;
@@ -256,5 +256,5 @@ BOOST_AUTO_TEST_CASE(test_template_url_generator_8)
   BOOST_REQUIRE_EQUAL(0, (int)pm.size());
 
   BOOST_REQUIRE_THROW(result = test->generate(boost::bind(&get_param, ::_1, &param_map)),
-                      SmartMet::Spine::Exception);
+                      Fmi::Exception);
 }

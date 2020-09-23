@@ -56,7 +56,7 @@ void GetPropertyValue::execute(std::ostream& output) const
   {
     if (spp.get_output_format() == "debug")
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "The 'debug' output format is not supported for the'GetPropertyValue' request!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
@@ -98,7 +98,7 @@ void GetPropertyValue::execute(std::ostream& output) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -122,7 +122,7 @@ void GetPropertyValue::initialize(boost::optional<int>& max_members,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -157,7 +157,7 @@ void GetPropertyValue::finalize(boost::shared_ptr<xercesc::DOMDocument> result,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -198,7 +198,7 @@ void GetPropertyValue::add_responses(boost::shared_ptr<xercesc::DOMDocument> res
       {
         std::cerr << METHOD_NAME << ": DOM exception: code=" << (int)err.code
                   << " message=" << err.getMessage() << std::endl;
-        throw SmartMet::Spine::Exception::Trace(BCP, "DOM exception received!");
+        throw Fmi::Exception::Trace(BCP, "DOM exception received!");
       }
       catch (const bwx::XmlError& err)
       {
@@ -210,13 +210,13 @@ void GetPropertyValue::add_responses(boost::shared_ptr<xercesc::DOMDocument> res
         }
 
         std::cerr << "XML source is:\n" << query_response << std::endl;
-        throw SmartMet::Spine::Exception::Trace(BCP, "XML parsing failed!");
+        throw Fmi::Exception::Trace(BCP, "XML parsing failed!");
       }
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -275,7 +275,7 @@ void GetPropertyValue::filter(boost::shared_ptr<xercesc::DOMDocument> result,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -316,7 +316,7 @@ void GetPropertyValue::extract_property(boost::shared_ptr<xercesc::DOMDocument> 
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -378,7 +378,7 @@ void GetPropertyValue::append_members(boost::shared_ptr<xercesc::DOMDocument> re
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -401,7 +401,7 @@ void GetPropertyValue::calculate_loop_limits(const boost::optional<int>& max_mem
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -422,7 +422,7 @@ bool GetPropertyValue::copy_schema_location(const xercesc::DOMElement* source,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -442,7 +442,7 @@ bool GetPropertyValue::copy_timestamp(const xercesc::DOMElement* source,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -462,7 +462,7 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_kvp(
     if (not request or strcasecmp(request->c_str(), "GetPropertyValue") != 0)
     {
       // Should not happen
-      SmartMet::Spine::Exception exception(BCP, "Operation parsing failed!");
+      Fmi::Exception exception(BCP, "Operation parsing failed!");
       exception.addDetail("Not a GetPropertyValue request.");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
@@ -472,7 +472,7 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_kvp(
     auto value_reference = http_request.getParameter("valuereference");
     if (not value_reference)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation parsing failed!");
+      Fmi::Exception exception(BCP, "Operation parsing failed!");
       exception.addDetail("Mandatory request parameter VALUEREFERENCE missing.");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
@@ -516,7 +516,7 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_kvp(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -583,7 +583,7 @@ boost::shared_ptr<GetPropertyValue> GetPropertyValue::create_from_xml(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -620,7 +620,7 @@ bool GetPropertyValue::collect_query_responses(std::vector<std::string>& query_r
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -635,7 +635,7 @@ void GetPropertyValue::add_query_responses(std::vector<std::string>& query_respo
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -662,7 +662,7 @@ bool GetPropertyValue::get_cached_responses()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -689,6 +689,6 @@ int GetPropertyValue::get_response_expires_seconds() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

@@ -2,7 +2,7 @@
 #include "RequestParameterMap.h"
 #include "SupportsExtraHandlerParams.h"
 #include <macgyver/StringConversion.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <sstream>
 #include <string>
 #include <typeinfo>
@@ -35,7 +35,7 @@ libconfig::Setting* ParameterTemplateBase::get_setting_root()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -51,7 +51,7 @@ const StoredQueryConfig::ParamDesc& ParameterTemplateBase::get_param_desc(
     if (loc == desc_map.end())
     {
       std::ostringstream msg;
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP, "The description of the '" + link_name + "' parameter is not found!");
     }
     else
@@ -62,7 +62,7 @@ const StoredQueryConfig::ParamDesc& ParameterTemplateBase::get_param_desc(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -82,7 +82,7 @@ void ParameterTemplateBase::handle_exceptions(const std::string& location) const
       msg << location << ": error getting data from configuration:"
           << " path='" << config_path << "' exception='" << Fmi::current_exception_type()
           << "' message='" << err.what() << "'";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
     catch (const boost::bad_lexical_cast& err)
     {
@@ -90,14 +90,14 @@ void ParameterTemplateBase::handle_exceptions(const std::string& location) const
       msg << location
           << " [INTERNAL ERROR]: lexical_cast<> failed (configuration error suspected): "
           << err.what();
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

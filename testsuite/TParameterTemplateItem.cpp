@@ -179,7 +179,7 @@ BOOST_AUTO_TEST_CASE(param_templ_item_garbage_after_param_ref)
   BOOST_TEST_MESSAGE("+ [ParameterTemplateItem] Garbage after parameter reference");
   ParameterTemplateItem item;
   std::string s1;
-  BOOST_REQUIRE_THROW(item.parse(std::string("%{foobar}:XXXX"), false), SmartMet::Spine::Exception);
-  BOOST_REQUIRE_THROW(item.parse(std::string("%{} XXXX"), false), SmartMet::Spine::Exception);
-  BOOST_REQUIRE_THROW(item.parse(std::string("%{foo[3] > bar} jfjhf "), false), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(item.parse(std::string("%{foobar}:XXXX"), false), Fmi::Exception);
+  BOOST_REQUIRE_THROW(item.parse(std::string("%{} XXXX"), false), Fmi::Exception);
+  BOOST_REQUIRE_THROW(item.parse(std::string("%{foo[3] > bar} jfjhf "), false), Fmi::Exception);
 }

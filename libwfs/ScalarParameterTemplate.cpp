@@ -1,5 +1,5 @@
 #include "ScalarParameterTemplate.h"
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/Value.h>
 
 namespace
@@ -30,7 +30,7 @@ ScalarParameterTemplate::ScalarParameterTemplate(StoredQueryConfig& config,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -52,7 +52,7 @@ ScalarParameterTemplate::ScalarParameterTemplate(StoredQueryConfig& config,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -75,7 +75,7 @@ SmartMet::Spine::Value ScalarParameterTemplate::get_value(
       } else if (arr.size() == 1) {
         return arr.at(0);
       } else {
-        throw SmartMet::Spine::Exception::Trace(BCP,
+        throw Fmi::Exception::Trace(BCP,
             METHOD_NAME + ": cannot convert array of size > 2 to scalar value")
             .disableStackTrace();
       }
@@ -83,7 +83,7 @@ SmartMet::Spine::Value ScalarParameterTemplate::get_value(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -101,7 +101,7 @@ bool ScalarParameterTemplate::get_value(SmartMet::Spine::Value& result,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -139,7 +139,7 @@ boost::tribool ScalarParameterTemplate::get_value(
 
           default:
           {
-            throw SmartMet::Spine::Exception(
+            throw Fmi::Exception(
                 BCP, "Scalar value expected. Got '" + as_string(vect) + "'!");
           }
         }
@@ -149,7 +149,7 @@ boost::tribool ScalarParameterTemplate::get_value(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -173,7 +173,7 @@ void ScalarParameterTemplate::init()
                     // Do not accept request to copy entire array over scalar value
                     std::ostringstream msg;
                     msg << "Cannot copy entire parameter array '" << *item.param_ref << "' to scalar value";
-                    throw SmartMet::Spine::Exception(BCP, msg.str());
+                    throw Fmi::Exception(BCP, msg.str());
                 }
                 else if (*item.param_ind >= param.getMaxSize())
                 {
@@ -181,7 +181,7 @@ void ScalarParameterTemplate::init()
                     std::ostringstream msg;
                     msg << "The array index " << *item.param_ind << " is out of range 0.."
                         << param.getMaxSize();
-                    throw SmartMet::Spine::Exception(BCP, msg.str());
+                    throw Fmi::Exception(BCP, msg.str());
                 }
             }
         }
@@ -193,7 +193,7 @@ void ScalarParameterTemplate::init()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

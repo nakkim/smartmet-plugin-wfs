@@ -6,7 +6,7 @@
 #include "SupportsLocationParameters.h"
 #include <boost/icl/type_traits/to_string.hpp>
 #include <smartmet/engines/observation/DBRegistry.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <memory>
 
 namespace bw = SmartMet::Plugin::WFS;
@@ -52,7 +52,7 @@ bw::StoredEnvMonitoringNetworkQueryHandler::StoredEnvMonitoringNetworkQueryHandl
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -248,7 +248,7 @@ void bw::StoredEnvMonitoringNetworkQueryHandler::query(const StoredQuery& query,
   }  // In case of some other failures
   catch (...)
   {
-    SmartMet::Spine::Exception exception(BCP, "Operation processing failed!", nullptr);
+    Fmi::Exception exception(BCP, "Operation processing failed!", nullptr);
     if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
     exception.addParameter(WFS_LANGUAGE, language);
@@ -267,7 +267,7 @@ bw::StoredEnvMonitoringNetworkQueryHandler::dbRegistryConfig(const std::string& 
         obs_engine->dbRegistry();
     if (not dbRegistry)
     {
-      SmartMet::Spine::Exception exception(BCP, "Database registry is not available!");
+      Fmi::Exception exception(BCP, "Database registry is not available!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -276,7 +276,7 @@ bw::StoredEnvMonitoringNetworkQueryHandler::dbRegistryConfig(const std::string& 
         dbRegistry->dbRegistryConfig(configName);
     if (not dbrConfig)
     {
-      SmartMet::Spine::Exception exception(BCP,
+      Fmi::Exception exception(BCP,
                                            "Database registry configuration is not available!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       exception.addParameter("Config name", configName);
@@ -287,7 +287,7 @@ bw::StoredEnvMonitoringNetworkQueryHandler::dbRegistryConfig(const std::string& 
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -310,7 +310,7 @@ wfs_stored_env_monitoring_network_handler_create(SmartMet::Spine::Reactor* react
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

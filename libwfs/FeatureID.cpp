@@ -5,7 +5,7 @@
 #include <macgyver/Base64.h>
 #include <macgyver/StringConversion.h>
 #include <openssl/sha.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <cstring>
 #include <sstream>
 
@@ -41,7 +41,7 @@ boost::shared_ptr<FeatureID> FeatureID::create_from_id(const std::string& id)
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::FeatureID::create_feature_id(): invalid feature id '" << id
           << "': must begin WITH '" << prefix << "'";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
 
     std::ostringstream tmp;
@@ -70,7 +70,7 @@ boost::shared_ptr<FeatureID> FeatureID::create_from_id(const std::string& id)
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::FeatureID::create_feature_id(): invalid feature id '" << id
           << "': not enough data";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
 
     const std::string sha = raw_id.substr(0, SHA_DIGEST_LENGTH);
@@ -88,7 +88,7 @@ boost::shared_ptr<FeatureID> FeatureID::create_from_id(const std::string& id)
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::FeatureID::create_feature_id(): invalid feature id '" << id
           << "': hash error";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
 
     bw::IBStream input(reinterpret_cast<const uint8_t*>(raw_id.c_str()), raw_id.length());
@@ -99,7 +99,7 @@ boost::shared_ptr<FeatureID> FeatureID::create_from_id(const std::string& id)
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::FeatureID::create_feature_id(): invalid feature ID '" << id
           << "': incorrect type";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
 
     unsigned revision = input.get_unsigned();
@@ -108,7 +108,7 @@ boost::shared_ptr<FeatureID> FeatureID::create_from_id(const std::string& id)
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::FeatureID::create_feature_id(): invalid feature ID '" << id
           << "': revision mismatch";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
 
     try
@@ -125,14 +125,14 @@ boost::shared_ptr<FeatureID> FeatureID::create_from_id(const std::string& id)
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Failed to parse feature ID!", nullptr);
+      Fmi::Exception exception(BCP, "Failed to parse feature ID!", nullptr);
       exception.addParameter("Feature ID", id);
       throw exception;
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -184,7 +184,7 @@ std::string FeatureID::get_id() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -196,6 +196,6 @@ void FeatureID::erase_param(const std::string& name)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

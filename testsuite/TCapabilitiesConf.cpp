@@ -3,7 +3,7 @@
 #include <iostream>
 #include <boost/test/unit_test.hpp>
 #include <CapabilitiesConf.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 using namespace boost::unit_test;
 using libconfig::Setting;
@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(test_parsing_capabilities_info_1)
   SmartMet::Plugin::WFS::CapabilitiesConf conf;
   try {
     conf.parse("eng", cfg_src.getRoot());
-  } catch (const SmartMet::Spine::Exception& e) {
+  } catch (const Fmi::Exception& e) {
     std::cout << e.getStackTrace() << std::endl;
     BOOST_REQUIRE(false);
   }

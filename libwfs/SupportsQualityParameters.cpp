@@ -1,6 +1,6 @@
 #include "SupportsQualityParameters.h"
 #include <macgyver/StringConversion.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 namespace bw = SmartMet::Plugin::WFS;
 
@@ -18,7 +18,7 @@ bw::SupportsQualityParameters::SupportsQualityParameters(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -36,7 +36,7 @@ bool bw::SupportsQualityParameters::isQCParameter(const std::string& name) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -55,7 +55,7 @@ std::vector<std::string>::const_iterator bw::SupportsQualityParameters::firstQCP
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -67,7 +67,7 @@ bool bw::SupportsQualityParameters::supportQualityInfo(const RequestParameterMap
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

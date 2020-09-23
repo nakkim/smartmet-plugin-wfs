@@ -2,7 +2,7 @@
 
 #include <ctpp2/CDT.hpp>
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/Value.h>
 #include <iterator>
 #include <limits>
@@ -95,7 +95,7 @@ void RequestParameterMap::add(const std::string& name, const ValueType& value, b
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -119,7 +119,7 @@ void RequestParameterMap::add(const std::string& name,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -141,7 +141,7 @@ void RequestParameterMap::extract_to(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -156,7 +156,7 @@ void RequestParameterMap::add_vect(const std::string& name,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -181,7 +181,7 @@ std::size_t RequestParameterMap::get(const std::string& name,
             << params.count(name) << ") values for"
             << " parameter '" << name << "' ("
             << (min_size == max_size ? "exactly " : "no more than ") << max_size << " required)";
-        throw SmartMet::Spine::Exception(BCP, msg.str());
+        throw Fmi::Exception(BCP, msg.str());
       }
       const auto& item = *range.first++;
       const SmartMet::Spine::Value& value = item.second;
@@ -197,7 +197,7 @@ std::size_t RequestParameterMap::get(const std::string& name,
           << params.count(name) << ") values for"
           << " parameter '" << name << "' (" << (min_size == max_size ? "exactly " : "at least ")
           << min_size << " required)";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
 
     if ((step > 1) and (cnt % step != 0))
@@ -207,14 +207,14 @@ std::size_t RequestParameterMap::get(const std::string& name,
           << Fmi::demangle_cpp_type_name(typeid(ValueType).name()) << ">: incorrect number ("
           << params.count(name) << ") values for"
           << " parameter '" << name << "' (full groups of " << step << " values required)";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
 
     return cnt;
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -229,7 +229,7 @@ ResultType RequestParameterMap::get_single(const std::string& name) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -249,7 +249,7 @@ boost::optional<ResultType> RequestParameterMap::get_optional(const std::string&
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -272,7 +272,7 @@ ResultType RequestParameterMap::get_optional(const std::string& name,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -285,7 +285,7 @@ inline std::ostream& operator<<(std::ostream& output, const RequestParameterMap&
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
