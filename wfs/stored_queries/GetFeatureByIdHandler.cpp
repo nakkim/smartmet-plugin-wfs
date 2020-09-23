@@ -3,7 +3,7 @@
 #include "StoredQueryHandlerFactoryDef.h"
 #include "StoredQueryMap.h"
 #include "WfsConvenience.h"
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <smartmet/spine/Value.h>
 #include <sstream>
 

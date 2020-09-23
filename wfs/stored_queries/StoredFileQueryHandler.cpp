@@ -4,7 +4,7 @@
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
 #include <smartmet/spine/Convenience.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <set>
 
 namespace bw = SmartMet::Plugin::WFS;

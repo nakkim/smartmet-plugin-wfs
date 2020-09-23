@@ -6,7 +6,7 @@
 #include <boost/format.hpp>
 #include <engines/observation/DBRegistry.h>
 #include <engines/observation/MastQuery.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <spine/Convenience.h>
 
 namespace bw = SmartMet::Plugin::WFS;

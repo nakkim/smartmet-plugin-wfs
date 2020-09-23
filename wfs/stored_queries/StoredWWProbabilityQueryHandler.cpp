@@ -3,7 +3,7 @@
 #include <gis/OGR.h>
 #include <macgyver/TimeFormatter.h>
 #include <newbase/NFmiEnumConverter.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/range/adaptor/map.hpp>

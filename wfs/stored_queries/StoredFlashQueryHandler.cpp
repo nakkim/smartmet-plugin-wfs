@@ -5,7 +5,7 @@
 #include <fmt/format.h>
 #include <macgyver/StringConversion.h>
 #include <smartmet/spine/Convenience.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <smartmet/spine/ParameterTools.h>
 #include <smartmet/spine/Value.h>
 

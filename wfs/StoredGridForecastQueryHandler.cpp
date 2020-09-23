@@ -13,7 +13,7 @@
 #include <newbase/NFmiQueryData.h>
 #include <smartmet/engines/querydata/MetaQueryOptions.h>
 #include <smartmet/spine/Convenience.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <smartmet/spine/ParameterFactory.h>
 #include <smartmet/spine/Table.h>
 #include <smartmet/spine/TimeSeriesGenerator.h>
