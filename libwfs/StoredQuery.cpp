@@ -6,7 +6,7 @@
 #include <boost/algorithm/string.hpp>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <set>
 #include <sstream>
 
@@ -55,7 +55,7 @@ boost::shared_ptr<bw::StoredQuery> bw::StoredQuery::create_from_kvp(
 
     if (not get_kvp_stored_query_id(http_request, &query_id))
     {
-      SmartMet::Spine::Exception exception(BCP, "Failed to extract 'storedquery_id'!");
+      Fmi::Exception exception(BCP, "Failed to extract 'storedquery_id'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
@@ -86,7 +86,7 @@ boost::shared_ptr<bw::StoredQuery> bw::StoredQuery::create_from_kvp(
         }
         else
         {
-          throw SmartMet::Spine::Exception(
+          throw Fmi::Exception(
               BCP,
               "SmartMet::Plugin::WFS::StoredQuery::create_from_xml: invalid"
               " stored query redirect");
@@ -110,7 +110,7 @@ boost::shared_ptr<bw::StoredQuery> bw::StoredQuery::create_from_kvp(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -129,7 +129,7 @@ boost::shared_ptr<bw::StoredQuery> bw::StoredQuery::create_from_xml(
 
     if (not get_xml_stored_query_id(element, &query_id))
     {
-      SmartMet::Spine::Exception exception(BCP, "Failed to extract stored query ID!");
+      Fmi::Exception exception(BCP, "Failed to extract stored query ID!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
@@ -160,7 +160,7 @@ boost::shared_ptr<bw::StoredQuery> bw::StoredQuery::create_from_xml(
         }
         else
         {
-          throw SmartMet::Spine::Exception(
+          throw Fmi::Exception(
               BCP,
               "SmartMet::Plugin::WFS::StoredQuery::create_from_xml: invalid"
               " stored query redirect");
@@ -183,7 +183,7 @@ boost::shared_ptr<bw::StoredQuery> bw::StoredQuery::create_from_xml(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -220,7 +220,7 @@ boost::shared_ptr<bw::StoredQuery> bw::StoredQuery::create_from_feature_id(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -234,7 +234,7 @@ void bw::StoredQuery::execute(std::ostream& output, const std::string& language,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -245,7 +245,7 @@ const SmartMet::Spine::Value& bw::StoredQuery::get_param(const std::string& name
     auto range = params->get_map().equal_range(name);
     if (range.first == range.second)
     {
-      SmartMet::Spine::Exception exception(BCP, "Mandatory parameter '" + name + "' missing!");
+      Fmi::Exception exception(BCP, "Mandatory parameter '" + name + "' missing!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
@@ -254,7 +254,7 @@ const SmartMet::Spine::Value& bw::StoredQuery::get_param(const std::string& name
 
     if (range.first != range.second)
     {
-      SmartMet::Spine::Exception exception(BCP, "'" + name + "' specified more than once!");
+      Fmi::Exception exception(BCP, "'" + name + "' specified more than once!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
@@ -263,7 +263,7 @@ const SmartMet::Spine::Value& bw::StoredQuery::get_param(const std::string& name
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -276,7 +276,7 @@ std::vector<SmartMet::Spine::Value> bw::StoredQuery::get_param_values(const std:
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -309,7 +309,7 @@ bool bw::StoredQuery::get_kvp_stored_query_id(const SmartMet::Spine::HTTP::Reque
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -332,7 +332,7 @@ bool bw::StoredQuery::get_xml_stored_query_id(const xercesc::DOMElement& query_r
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation failed!", nullptr);
+      Fmi::Exception exception(BCP, "Operation failed!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
@@ -340,7 +340,7 @@ bool bw::StoredQuery::get_xml_stored_query_id(const xercesc::DOMElement& query_r
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -382,7 +382,7 @@ void bw::StoredQuery::extract_kvp_parameters(const SmartMet::Spine::HTTP::Reques
           msg << sep << "'" << *it << "'";
           sep = ", ";
         }
-        SmartMet::Spine::Exception exception(BCP, msg.str());
+        Fmi::Exception exception(BCP, msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
       }
@@ -440,7 +440,7 @@ void bw::StoredQuery::extract_kvp_parameters(const SmartMet::Spine::HTTP::Reques
           std::ostringstream msg;
           msg << "While parsing value '" << value_str << "' of request parameter '" << param_name
               << "'";
-          SmartMet::Spine::Exception exception(BCP, "Operation failed!", nullptr);
+          Fmi::Exception exception(BCP, "Operation failed!", nullptr);
           exception.addDetail(msg.str());
           throw exception;
         }
@@ -458,7 +458,7 @@ void bw::StoredQuery::extract_kvp_parameters(const SmartMet::Spine::HTTP::Reques
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -508,7 +508,7 @@ void bw::StoredQuery::extract_xml_parameters(const xercesc::DOMElement& query_ro
             msg << sep << "'" << *it << "'";
             sep = ", ";
           }
-          SmartMet::Spine::Exception exception(BCP, msg.str());
+          Fmi::Exception exception(BCP, msg.str());
           throw exception;
         }
 
@@ -533,7 +533,7 @@ void bw::StoredQuery::extract_xml_parameters(const xercesc::DOMElement& query_ro
 	    }
 
 	  param_name_set.insert(param_name);
-	} catch (SmartMet::Spine::Exception& e) {
+	} catch (Fmi::Exception& e) {
 	  e.addDetail("Query parameter name '" + param_name + "'");
 	  throw;
 	}
@@ -551,7 +551,7 @@ void bw::StoredQuery::extract_xml_parameters(const xercesc::DOMElement& query_ro
   }
   catch (...)
   {
-    SmartMet::Spine::Exception exception(BCP, "Operation parsing failed!", nullptr);
+    Fmi::Exception exception(BCP, "Operation parsing failed!", nullptr);
     if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
     throw exception;
@@ -600,7 +600,7 @@ void bw::StoredQuery::dump_query_info(std::ostream& output) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -625,14 +625,14 @@ void check_param_max_occurs(int actual_count,
       }
       msg << " (found " << actual_count << " occurances)";
 
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -648,14 +648,14 @@ void check_param_min_occurs(int actual_count,
       std::ostringstream msg;
       msg << location << ": parameter '" << param_name << "' must be specified at least "
           << min_occurs << " times (found " << actual_count << " occurrences).";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -678,6 +678,6 @@ std::ostream& bw::operator<<(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

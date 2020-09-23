@@ -33,7 +33,7 @@ std::string double2string(double d, unsigned int precision)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -63,7 +63,7 @@ std::string bbox2string(const SmartMet::Spine::BoundingBox& bbox, OGRSpatialRefe
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 #endif
@@ -78,7 +78,7 @@ FmiParameterName get_parameter(boost::shared_ptr<SmartMet::Plugin::WFS::StoredQu
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -112,7 +112,7 @@ SmartMet::Engine::Querydata::ParameterOptions get_qengine_parameter(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -147,7 +147,7 @@ void populate_result_vector(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -212,7 +212,7 @@ StoredWWProbabilityQueryHandler::StoredWWProbabilityQueryHandler(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -360,7 +360,7 @@ void StoredWWProbabilityQueryHandler::parseQueryResults(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -395,7 +395,7 @@ WinterWeatherIntensityProbabilities StoredWWProbabilityQueryHandler::getProbabil
              "parameters: '"
           << queryParam.paramLight.name() << "', '" << queryParam.paramModerate.name() << "', '"
           << queryParam.paramHeavy.name() << "'";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -407,7 +407,7 @@ WinterWeatherIntensityProbabilities StoredWWProbabilityQueryHandler::getProbabil
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -429,7 +429,7 @@ void StoredWWProbabilityQueryHandler::query(const StoredQuery& query,
     OGRSpatialReference sr;
     if (sr.importFromURN(targetURN.c_str()) != OGRERR_NONE)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid crs '" + requestedCRS + "'!");
+      Fmi::Exception exception(BCP, "Invalid crs '" + requestedCRS + "'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -574,7 +574,7 @@ void StoredWWProbabilityQueryHandler::query(const StoredQuery& query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -601,7 +601,7 @@ wfs_winterweather_probabilities_query_handler_create(SmartMet::Spine::Reactor* r
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

@@ -2,7 +2,7 @@
 
 #include <boost/variant.hpp>
 #include <ctpp2/CDT.hpp>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/HTTP.h>
 #include <exception>
 
@@ -46,7 +46,7 @@ class ErrorResponseGenerator
       boost::variant<const SmartMet::Spine::HTTP::Request&, StoredQuery&> query_info);
 
  private:
-  CTPP::CDT handle_wfs_exception(SmartMet::Spine::Exception& err);
+  CTPP::CDT handle_wfs_exception(Fmi::Exception& err);
 
   CTPP::CDT handle_std_exception(const std::exception& err, processing_phase_t phase);
 

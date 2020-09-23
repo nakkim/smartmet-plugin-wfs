@@ -96,7 +96,7 @@ StoredGridQueryHandler::StoredGridQueryHandler(SmartMet::Spine::Reactor* reactor
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -121,7 +121,7 @@ StoredGridQueryHandler::Query::Query(boost::shared_ptr<const StoredQueryConfig> 
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -140,7 +140,7 @@ double comparisonDistance(const NFmiPoint& first, const NFmiPoint& second)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -156,7 +156,7 @@ std::string formatToScaledInteger(double input, unsigned long digits, unsigned l
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -187,7 +187,7 @@ ts::TimeSeriesGroupPtr makeSparseGrid(const ts::TimeSeriesGroupPtr& inputGrid,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -260,7 +260,7 @@ void make_rectangle_path(NFmiSvgPath& thePath,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -277,7 +277,7 @@ void make_rectangle_path(NFmiSvgPath& thePath,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -297,7 +297,7 @@ void handle_opt_param(const bw::RequestParameterMap& params,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -318,7 +318,7 @@ void handle_array_param(const bw::RequestParameterMap& params,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -386,7 +386,7 @@ void dump_meta_query_options(const qe::MetaQueryOptions& opt)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 #endif
@@ -407,7 +407,7 @@ std::pair<unsigned int, unsigned int> StoredGridQueryHandler::getDataIndexExtent
     {
       std::ostringstream msg;
       msg << " No data available for producer '" << query.producer_name << "'";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -416,7 +416,7 @@ std::pair<unsigned int, unsigned int> StoredGridQueryHandler::getDataIndexExtent
     {
       std::ostringstream msg;
       msg << " No data available for producer '" << query.producer_name << "'";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -441,7 +441,7 @@ std::pair<unsigned int, unsigned int> StoredGridQueryHandler::getDataIndexExtent
     {
       std::ostringstream msg;
       msg << " Empty result grid, check data extents";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -482,7 +482,7 @@ std::pair<unsigned int, unsigned int> StoredGridQueryHandler::getDataIndexExtent
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -501,7 +501,7 @@ std::pair<unsigned int, unsigned int> StoredGridQueryHandler::getDataIndexExtent
   {
     std::ostringstream msg;
     msg << " No data available for producer '" << query.producer_name << "'";
-    SmartMet::Spine::Exception exception(BCP, msg.str());
+    Fmi::Exception exception(BCP, msg.str());
     exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
     throw exception;
   }
@@ -512,7 +512,7 @@ std::pair<unsigned int, unsigned int> StoredGridQueryHandler::getDataIndexExtent
   {
     std::ostringstream msg;
     msg << " No data available for producer '" << query.producer_name << "'";
-    SmartMet::Spine::Exception exception(BCP, msg.str());
+    Fmi::Exception exception(BCP, msg.str());
     exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
     throw exception;
   }
@@ -537,7 +537,7 @@ std::pair<unsigned int, unsigned int> StoredGridQueryHandler::getDataIndexExtent
   {
     std::ostringstream msg;
     msg << " Empty result grid, check data extents";
-    SmartMet::Spine::Exception exception(BCP, msg.str());
+    Fmi::Exception exception(BCP, msg.str());
     exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
     throw exception;
   }
@@ -598,7 +598,7 @@ StoredGridQueryHandler::Result::Grid StoredGridQueryHandler::rearrangeGrid(
       std::ostringstream os;
       os << "Array width '" << arrayWidth
          << "' is not multiple of data size, data rearrange is impossible";
-      throw SmartMet::Spine::Exception(BCP, os.str());
+      throw Fmi::Exception(BCP, os.str());
     }
 
     while (true)
@@ -623,7 +623,7 @@ StoredGridQueryHandler::Result::Grid StoredGridQueryHandler::rearrangeGrid(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -656,7 +656,7 @@ SmartMet::Plugin::WFS::StoredGridQueryHandler::get_model_parameters(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -677,7 +677,7 @@ void StoredGridQueryHandler::parse_levels(
       int tmp = cast_int_type<int>(level);
       if (!dest.levels.insert(tmp).second)
       {
-        SmartMet::Spine::Exception exception(BCP, "Duplicate level '" + std::to_string(tmp) + "'!");
+        Fmi::Exception exception(BCP, "Duplicate level '" + std::to_string(tmp) + "'!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
       }
@@ -685,7 +685,7 @@ void StoredGridQueryHandler::parse_levels(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -701,7 +701,7 @@ void StoredGridQueryHandler::parse_times(const RequestParameterMap& param, Query
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -725,7 +725,7 @@ void StoredGridQueryHandler::parse_params(const RequestParameterMap& param, Quer
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -770,7 +770,7 @@ StoredGridQueryHandler::Result StoredGridQueryHandler::extract_forecast(
       auto* model_area = grid_info.Area();
       if (!model_area)
       {
-        SmartMet::Spine::Exception exception(
+        Fmi::Exception exception(
             BCP, "Attempted to use producer with no Area specified: " + producer);
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception;
@@ -778,7 +778,7 @@ StoredGridQueryHandler::Result StoredGridQueryHandler::extract_forecast(
     }
     else
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "Attempted to use producer which has no grid specified: " + producer);
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
@@ -858,7 +858,7 @@ StoredGridQueryHandler::Result StoredGridQueryHandler::extract_forecast(
     {
       std::ostringstream msg;
       msg << "Datastep parameter must be > 0";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -944,7 +944,7 @@ StoredGridQueryHandler::Result StoredGridQueryHandler::extract_forecast(
     {
       std::ostringstream msg;
       msg << "Grid sizes of less than 2 are not supported";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -1034,7 +1034,7 @@ StoredGridQueryHandler::Result StoredGridQueryHandler::extract_forecast(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1058,7 +1058,7 @@ SmartMet::Engine::Querydata::Producer StoredGridQueryHandler::select_producer(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1131,7 +1131,7 @@ void StoredGridQueryHandler::query(const StoredQuery& stored_query,
         // Bounding box is mandatory for Grid Stored queries
         std::ostringstream msg;
         msg << "No bounding box specified.";
-        SmartMet::Spine::Exception exception(BCP, msg.str());
+        Fmi::Exception exception(BCP, msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception;
       }
@@ -1143,7 +1143,7 @@ void StoredGridQueryHandler::query(const StoredQuery& stored_query,
       {
         std::ostringstream msg;
         msg << "Bounding box must be given in data CRS: " << dataCrs;
-        SmartMet::Spine::Exception exception(BCP, msg.str());
+        Fmi::Exception exception(BCP, msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception;
       }
@@ -1159,7 +1159,7 @@ void StoredGridQueryHandler::query(const StoredQuery& stored_query,
       query.result = extract_forecast(params, query, dataCrs);
       if (query.result.timesteps.empty())
       {
-        SmartMet::Spine::Exception exception(BCP, "Empty result!");
+        Fmi::Exception exception(BCP, "Empty result!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception;
       }
@@ -1243,7 +1243,7 @@ void StoredGridQueryHandler::query(const StoredQuery& stored_query,
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation processing failed!", nullptr);
+      Fmi::Exception exception(BCP, "Operation processing failed!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       exception.addParameter(WFS_LANGUAGE, language);
@@ -1252,7 +1252,7 @@ void StoredGridQueryHandler::query(const StoredQuery& stored_query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1275,7 +1275,7 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_stored_grid
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

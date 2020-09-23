@@ -70,7 +70,7 @@ void bw::Request::ListStoredQueries::execute(std::ostream& output) const
           }
           else
           {
-            SmartMet::Spine::Exception exception(
+            Fmi::Exception exception(
                 BCP, "INTERNAL ERROR: feature '" + name + "' not found!");
             exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
             throw exception;
@@ -88,7 +88,7 @@ void bw::Request::ListStoredQueries::execute(std::ostream& output) const
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Template formatter exception!", nullptr);
+      Fmi::Exception exception(BCP, "Template formatter exception!", nullptr);
       exception.addDetail(log_messages.str());
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
@@ -97,7 +97,7 @@ void bw::Request::ListStoredQueries::execute(std::ostream& output) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -119,7 +119,7 @@ boost::shared_ptr<bw::Request::ListStoredQueries> bw::Request::ListStoredQueries
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -139,7 +139,7 @@ boost::shared_ptr<bw::Request::ListStoredQueries> bw::Request::ListStoredQueries
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -151,6 +151,6 @@ int bw::Request::ListStoredQueries::get_response_expires_seconds() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

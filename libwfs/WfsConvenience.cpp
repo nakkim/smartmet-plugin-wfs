@@ -6,7 +6,7 @@
 #include <boost/lambda/lambda.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <macgyver/TimeParser.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <cctype>
 #include <sstream>
 
@@ -51,7 +51,7 @@ std::string xml_escape(const std::string& src)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -63,7 +63,7 @@ std::string get_mandatory_header(const SmartMet::Spine::HTTP::Request& request,
     auto value = request.getHeader(name);
     if (not value)
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "Missing the mandatory HTTP request header '" + name + "'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
@@ -73,7 +73,7 @@ std::string get_mandatory_header(const SmartMet::Spine::HTTP::Request& request,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -87,7 +87,7 @@ void check_time_interval(const boost::posix_time::ptime& start,
 
     if (start > end)
     {
-      throw SmartMet::Spine::Exception(BCP, "Invalid time interval!")
+      throw Fmi::Exception(BCP, "Invalid time interval!")
           .addDetail("The start time is later than the end time.")
           .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
           .addParameter("Start time", pt::to_simple_string(start))
@@ -100,7 +100,7 @@ void check_time_interval(const boost::posix_time::ptime& start,
     int mi_sec = static_cast<int>(std::floor(3600.0 * (max_hours - mi_hours)));
     if (interval_length > pt::hours(mi_hours) + pt::seconds(mi_sec))
     {
-      throw SmartMet::Spine::Exception(BCP, "Too long time interval requested!")
+      throw Fmi::Exception(BCP, "Too long time interval requested!")
           .addDetail("No more than " + std::to_string(max_hours) + " hours allowed.")
           .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED)
           .addParameter("Start time", pt::to_simple_string(start))
@@ -110,7 +110,7 @@ void check_time_interval(const boost::posix_time::ptime& start,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -118,7 +118,7 @@ void assert_unreachable(const char* file, int line)
 {
   std::ostringstream msg;
   msg << "INTERNAL ERROR in " << file << " at line " << line << ": not supposed to get here";
-  throw SmartMet::Spine::Exception(BCP, msg.str());
+  throw Fmi::Exception(BCP, msg.str());
 }
 
 std::string as_string(const std::vector<SmartMet::Spine::Value>& src)
@@ -136,7 +136,7 @@ std::string as_string(const std::vector<SmartMet::Spine::Value>& src)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -158,7 +158,7 @@ std::string as_string(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -183,7 +183,7 @@ std::string remove_trailing_0(const std::string& src)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

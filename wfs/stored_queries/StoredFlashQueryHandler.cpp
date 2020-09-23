@@ -66,7 +66,7 @@ bw::StoredFlashQueryHandler::StoredFlashQueryHandler(
 
     if ((time_block_size < 1) or ((86400 % time_block_size) != 0))
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "Invalid time block size '" + std::to_string(time_block_size) + " seconds'!");
       exception.addDetail("Value must be a divisor of 24*60*60 (86400).");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
@@ -75,7 +75,7 @@ bw::StoredFlashQueryHandler::StoredFlashQueryHandler(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -94,7 +94,7 @@ pt::ptime round_time(const pt::ptime& t0, unsigned step, int offset = 0)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace
@@ -120,13 +120,13 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
     bool is_simple_query = false;
 
     if (!template_file)
-      throw SmartMet::Spine::Exception(BCP, "No template name given to stored flash query");
+      throw Fmi::Exception(BCP, "No template name given to stored flash query");
     if (boost::algorithm::ends_with(*template_file, P_SIMPLE_QUERY))
       is_simple_query = true;
     else if (boost::algorithm::ends_with(*template_file, P_MULTIPOINTCOVERAGE_QUERY))
       is_simple_query = false;
     else
-      throw SmartMet::Spine::Exception(BCP, "Unknown template for stored flash query")
+      throw Fmi::Exception(BCP, "Unknown template for stored flash query")
           .addParameter("template", *template_file);
 
     const auto& params = query.get_param_map();
@@ -150,7 +150,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
       crs_registry.get_attribute(crs, "swapCoord", &swap_coord);
       if (show_height)
       {
-        SmartMet::Spine::Exception exception(
+        Fmi::Exception exception(
             BCP, "Projection '" + crs + "' not supported for lightning data!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception.disableStackTrace();
@@ -244,7 +244,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
 
       if (query_params.starttime > query_params.endtime)
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid time interval!");
+        Fmi::Exception exception(BCP, "Invalid time interval!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         exception.addParameter("Start time", pt::to_simple_string(query_params.starttime));
         exception.addParameter("End time", pt::to_simple_string(query_params.endtime));
@@ -255,7 +255,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
 
       if (not have_meteo_param)
       {
-        SmartMet::Spine::Exception exception(BCP, "No meteo parameter found!");
+        Fmi::Exception exception(BCP, "No meteo parameter found!");
         exception.addDetail("At least one meteo parameter must be specified!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception.disableStackTrace();
@@ -496,7 +496,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation failed!", nullptr);
+      Fmi::Exception exception(BCP, "Operation failed!", nullptr);
       // Set language for exception and re-throw it
       exception.addParameter(WFS_LANGUAGE, language);
       throw exception;
@@ -504,7 +504,7 @@ void bw::StoredFlashQueryHandler::query(const StoredQuery& query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -527,7 +527,7 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_flash_handl
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

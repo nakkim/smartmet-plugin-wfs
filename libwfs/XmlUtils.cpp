@@ -2,7 +2,7 @@
 #include "XmlUtils.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <xercesc/dom/DOMImplementation.hpp>
 #include <xercesc/dom/DOMImplementationLS.hpp>
 #include <xercesc/dom/DOMImplementationRegistry.hpp>
@@ -40,7 +40,7 @@ std::pair<std::string, bool> to_opt_string(const XMLCh* src)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -55,13 +55,13 @@ std::string to_string(const XMLCh* src)
     }
     else
     {
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP, "SmartMet::Plugin::WFS::Xml::to_string: XML string expected but got nullptr");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -80,14 +80,14 @@ std::pair<std::string, std::string> get_name_info(const xercesc::DOMNode* node)
     }
     else
     {
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP,
           "SmartMet::Plugin::WFS::Xml::get_name_info(): nullptr is not permitted as the argument");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -102,7 +102,7 @@ void check_name_info(const xercesc::DOMNode* node,
     {
       std::ostringstream msg;
       msg << "No XML DOM node aavailble (nullptr specified)";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
 
     const auto name_info = get_name_info(node);
@@ -113,12 +113,12 @@ void check_name_info(const xercesc::DOMNode* node,
       std::ostringstream msg;
       msg << location << ": invalid element name {" << name_info.second << "}" << name_info.first
           << " ({" << ns << "}" << name << " expected)";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -144,7 +144,7 @@ std::string check_name_info(const xercesc::DOMNode* node,
         d = "|";
       }
       msg << ") expected";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
     else
     {
@@ -153,7 +153,7 @@ std::string check_name_info(const xercesc::DOMNode* node,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -177,7 +177,7 @@ std::pair<std::string, bool> get_attr(const xercesc::DOMElement& elem,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -199,12 +199,12 @@ std::string get_mandatory_attr(const xercesc::DOMElement& elem,
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::Xml::get_mandatory_attr():"
           << " mandatory attribute " << name << " missing";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -220,7 +220,7 @@ std::string get_optional_attr(const xercesc::DOMElement& elem,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -236,7 +236,7 @@ void verify_mandatory_attr_value(const xercesc::DOMElement& elem,
     msg << "SmartMet::Plugin::WFS::Xml::verify_mandatory_attr_value(): incorrect value '" << value
         << "' of mandatory fixed attribute {" << ns << "}" << name << " ('" << exp_value
         << "' expected)";
-    throw SmartMet::Spine::Exception(BCP, msg.str());
+    throw Fmi::Exception(BCP, msg.str());
   }
 }
 
@@ -261,7 +261,7 @@ std::string extract_text(const xercesc::DOMElement& element)
       }
       else
       {
-        throw SmartMet::Spine::Exception(BCP, "Unsupported XML node!");
+        throw Fmi::Exception(BCP, "Unsupported XML node!");
       }
     }
 
@@ -269,7 +269,7 @@ std::string extract_text(const xercesc::DOMElement& element)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -290,7 +290,7 @@ xercesc::DOMLSSerializer* create_dom_serializer()
 
     if (impl == nullptr)
     {
-      throw SmartMet::Spine::Exception(BCP,
+      throw Fmi::Exception(BCP,
                                        "Failed to get instance of xercesc::DOMImplementationLS");
     }
 
@@ -298,7 +298,7 @@ xercesc::DOMLSSerializer* create_dom_serializer()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -321,7 +321,7 @@ std::string xml2string(const xercesc::DOMNode* node)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -353,7 +353,7 @@ std::vector<xercesc::DOMElement*> get_child_elements(const xercesc::DOMElement& 
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -369,7 +369,7 @@ boost::shared_ptr<xercesc::DOMDocument> create_dom_document(const std::string& n
 
     if (impl == nullptr)
     {
-      throw SmartMet::Spine::Exception(BCP, "Failed to get xercesc::DOMImplementation instance");
+      throw Fmi::Exception(BCP, "Failed to get xercesc::DOMImplementation instance");
     }
     else
     {
@@ -380,7 +380,7 @@ boost::shared_ptr<xercesc::DOMDocument> create_dom_document(const std::string& n
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -397,7 +397,7 @@ xercesc::DOMElement* create_element(xercesc::DOMDocument& doc,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -416,7 +416,7 @@ xercesc::DOMElement* append_child_element(xercesc::DOMElement& parent,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -435,7 +435,7 @@ xercesc::DOMElement* append_child_text_element(xercesc::DOMElement& parent,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -449,7 +449,7 @@ void set_attr(xercesc::DOMElement& element, const std::string& name, const std::
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace Xml

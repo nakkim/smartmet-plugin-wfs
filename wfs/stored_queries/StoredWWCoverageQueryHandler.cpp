@@ -28,7 +28,7 @@ bw::StoredWWCoverageQueryHandler::StoredWWCoverageQueryHandler(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -73,7 +73,7 @@ std::vector<bw::ContourQueryResultPtr> bw::StoredWWCoverageQueryHandler::process
     // check number of names
     if (itsLimitNames.size() * 2 != limits.size())
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "Parameter 'contour_params.limitNames' contains wrong number of elements!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       throw exception;
@@ -108,7 +108,7 @@ std::vector<bw::ContourQueryResultPtr> bw::StoredWWCoverageQueryHandler::process
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -126,7 +126,7 @@ void bw::StoredWWCoverageQueryHandler::setResultHashValue(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -149,7 +149,7 @@ wfs_winterweather_coverage_query_handler_create(SmartMet::Spine::Reactor* reacto
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

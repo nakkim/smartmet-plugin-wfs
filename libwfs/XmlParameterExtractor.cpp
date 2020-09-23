@@ -8,7 +8,7 @@
 #include <boost/foreach.hpp>
 #include <macgyver/TimeParser.h>
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <sstream>
 #include <stdexcept>
 #include <stdint.h>
@@ -65,7 +65,7 @@ ParameterExtractor::ParameterExtractor()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -79,12 +79,12 @@ void ParameterExtractor::add_type(const std::string& name,
     auto result = param_extractor_map.insert(std::make_pair(name, extractor));
     if (not result.second)
     {
-      throw SmartMet::Spine::Exception(BCP, "Duplicate parameter handler for type '" + name + "'!");
+      throw Fmi::Exception(BCP, "Duplicate parameter handler for type '" + name + "'!");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -107,7 +107,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_param(
     {
       std::ostringstream msg;
       msg << "No handler found to extract stored query parameter with type '" << xml_type << "'!";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
 
     try
@@ -120,14 +120,14 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_param(
       const std::string& element_str = xml2string(&element);
       msg << "Error while reading " << xml_type << " from '" << element_str << "'";
 
-      SmartMet::Spine::Exception exception(BCP, "Operation failed!", nullptr);
+      Fmi::Exception exception(BCP, "Operation failed!", nullptr);
       exception.addDetail(msg.str());
       throw exception;
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -144,7 +144,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_string(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -158,7 +158,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_boolean(
     result.push_back(SmartMet::Spine::Value(tmp));
     return result;
   } catch (...) {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -181,7 +181,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_integer(
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::ParameterExtractor::extract_integer: value " << int_val
           << " is out of range " << lower_limit << ".." << upper_limit;
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
     SmartMet::Spine::Value value(int_val);
     result.push_back(value);
@@ -189,7 +189,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_integer(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -212,7 +212,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_unsigned_integer
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::ParameterExtractor::extract_integer: value " << uint_val
           << " is out of range " << lower_limit << ".." << upper_limit;
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
     SmartMet::Spine::Value value(uint_val);
     result.push_back(value);
@@ -220,7 +220,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_unsigned_integer
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -238,7 +238,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_double(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -258,7 +258,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_date_time(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -281,7 +281,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_name_list(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -304,7 +304,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_double_list(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -328,7 +328,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_integer_list(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -355,7 +355,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_gml_pos(
         std::ostringstream msg;
         msg << "Unexpected size " << pos.data.size() << " of gml:DirectPositionType"
             << " (only size 2 is supported)";
-        throw SmartMet::Spine::Exception(BCP, msg.str());
+        throw Fmi::Exception(BCP, msg.str());
       }
     }
     else
@@ -363,12 +363,12 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_gml_pos(
       std::ostringstream msg;
       msg << "Exactly one instance of element {" << GML_NAMESPACE_URI << "}pos expected. Got '"
           << xml2string(&elem) << "'";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -408,7 +408,7 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_gml_envelope(
         std::ostringstream msg;
         msg << "Unexpected value " << *envelope.srs_reference.srs_dimension << " of srsDimension"
             << " (2 expected)";
-        throw SmartMet::Spine::Exception(BCP, msg.str());
+        throw Fmi::Exception(BCP, msg.str());
       }
     }
     else
@@ -416,12 +416,12 @@ std::vector<SmartMet::Spine::Value> ParameterExtractor::extract_gml_envelope(
       std::ostringstream msg;
       msg << "Exactly one instance of element {" << GML_NAMESPACE_URI << "}Envelope expected. Got '"
           << xml2string(&elem) << "'";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

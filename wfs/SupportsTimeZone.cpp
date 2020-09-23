@@ -3,7 +3,7 @@
 #include <macgyver/StringConversion.h>
 #include <macgyver/TimeZones.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 namespace bw = SmartMet::Plugin::WFS;
 
@@ -28,7 +28,7 @@ bw::SupportsTimeZone::SupportsTimeZone(SmartMet::Spine::Reactor* reactor, Stored
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -45,7 +45,7 @@ std::string bw::SupportsTimeZone::get_tz_name(const RequestParameterMap& param_v
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -68,7 +68,7 @@ lt::time_zone_ptr bw::SupportsTimeZone::get_tz_for_site(double longitude,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -85,7 +85,7 @@ boost::local_time::time_zone_ptr bw::SupportsTimeZone::get_time_zone(const std::
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -110,7 +110,7 @@ std::string bw::SupportsTimeZone::format_local_time(const pt::ptime& utc_time,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

@@ -1,7 +1,7 @@
 #include "RequestParameterMap.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <algorithm>
 
 namespace bw = SmartMet::Plugin::WFS;
@@ -24,7 +24,7 @@ void bw::RequestParameterMap::clear()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -36,7 +36,7 @@ std::size_t bw::RequestParameterMap::size() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -48,7 +48,7 @@ std::size_t bw::RequestParameterMap::count(const std::string& name) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -61,7 +61,7 @@ void bw::RequestParameterMap::insert_value(const std::string& name,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -78,7 +78,7 @@ std::set<std::string> bw::RequestParameterMap::get_keys() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -98,7 +98,7 @@ std::vector<SmartMet::Spine::Value> bw::RequestParameterMap::get_values(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -121,7 +121,7 @@ void bw::RequestParameterMap::dump_params(CTPP::CDT& hash) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -133,7 +133,7 @@ void bw::RequestParameterMap::remove(const std::string& name)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -159,7 +159,7 @@ std::string bw::RequestParameterMap::as_string() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -178,7 +178,7 @@ std::string bw::RequestParameterMap::subst(const std::string& input) const
       {
         if (not src[1])
         {
-          throw SmartMet::Spine::Exception(BCP, "Unexpected end of source string '" + input + "'!");
+          throw Fmi::Exception(BCP, "Unexpected end of source string '" + input + "'!");
         }
         result << src[1];
         src += 2;
@@ -190,7 +190,7 @@ std::string bw::RequestParameterMap::subst(const std::string& input) const
 
         if (src[1] != '{')
         {
-          throw SmartMet::Spine::Exception(BCP, "Missing '{' after '$' in '" + input + "'!");
+          throw Fmi::Exception(BCP, "Missing '{' after '$' in '" + input + "'!");
         }
 
         src += 2;
@@ -214,7 +214,7 @@ std::string bw::RequestParameterMap::subst(const std::string& input) const
 
         if (*src != '}')
         {
-          throw SmartMet::Spine::Exception(
+          throw Fmi::Exception(
               BCP, "Invalid parameter name after '${' or closing '}' missing in '" + input + "'!");
         }
 
@@ -245,7 +245,7 @@ std::string bw::RequestParameterMap::subst(const std::string& input) const
             std::ostringstream msg;
             msg << "Too many (" << data.size() << ") values of"
                 << " '" << ref_name << "' in '" << input << "'";
-            throw SmartMet::Spine::Exception(BCP, msg.str());
+            throw Fmi::Exception(BCP, msg.str());
           }
 
           if (not is_optional and data.empty())
@@ -253,7 +253,7 @@ std::string bw::RequestParameterMap::subst(const std::string& input) const
             std::ostringstream msg;
             msg << ": mandatory value of '" << ref_name << "' missing"
                 << " in '" << input << "'";
-            throw SmartMet::Spine::Exception(BCP, msg.str());
+            throw Fmi::Exception(BCP, msg.str());
           }
 
           if (not data.empty())
@@ -272,6 +272,6 @@ std::string bw::RequestParameterMap::subst(const std::string& input) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

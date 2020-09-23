@@ -2,7 +2,7 @@
 #include <xercesc/framework/MemBufInputSource.hpp>
 #include <xercesc/framework/LocalFileInputSource.hpp>
 #include <xercesc/util/Janitor.hpp>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/Convenience.h>
 #include "XmlUtils.h"
 
@@ -100,14 +100,14 @@ try
     xercesc::InputSource* source = get_schema(remote_uri);
 
     if (not source) {
-      throw SmartMet::Spine::Exception::Trace(BCP, "Failed to resolve URI '" + remote_uri + "'");
+      throw Fmi::Exception::Trace(BCP, "Failed to resolve URI '" + remote_uri + "'");
     }
 
     return source;
   }
  catch (...)
    {
-     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+     throw Fmi::Exception::Trace(BCP, "Operation failed!");
    }
 
 xercesc::InputSource* EntityResolver::get_schema(const std::string& remote_uri)
@@ -129,7 +129,7 @@ try
   }
  catch (...)
    {
-     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+     throw Fmi::Exception::Trace(BCP, "Operation failed!");
    }
 
 bool EntityResolver::get_schema(const std::string& uri, std::string& result)
@@ -184,7 +184,7 @@ try
     return true;
   }
 } catch (...) {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
 }
 
 std::string EntityResolver::download(const std::string& uri) const
@@ -192,7 +192,7 @@ std::string EntityResolver::download(const std::string& uri) const
   CURL* curl = curl_easy_init();
 
   if (not curl) {
-    throw SmartMet::Spine::Exception::Trace(BCP, "curl_easy_init() call failed");
+    throw Fmi::Exception::Trace(BCP, "curl_easy_init() call failed");
   }
 
   std::ostringstream result;
@@ -233,9 +233,9 @@ std::string EntityResolver::download(const std::string& uri) const
 	      << uri << std::endl;
     return result.str();
   } else {
-    // FIXME: for some reason throwing SmartMet::Spine::Exception causes it to crash instead
+    // FIXME: for some reason throwing Fmi::Exception causes it to crash instead
     //        of postponing exception handling. Throwing std::runtime_error works
-    //throw SmartMet::Spine::Exception::Trace(BCP, "Failed to download " + uri);
+    //throw Fmi::Exception::Trace(BCP, "Failed to download " + uri);
     throw std::runtime_error("Failed to download " + uri + ": " + curl_easy_strerror(ret));
   }
 }

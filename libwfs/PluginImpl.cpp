@@ -19,7 +19,7 @@
 #include <macgyver/TimeParser.h>
 #include <spine/Convenience.h>
 #include <spine/CRSRegistry.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/FmiApiKey.h>
 
 using namespace SmartMet::Plugin::WFS;
@@ -53,7 +53,7 @@ PluginImpl::PluginImpl(
     {
       std::ostringstream msg;
       msg << "ERROR: No configuration provided for WFS plugin";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
 
     query_cache.reset(new QueryResponseCache(
@@ -142,7 +142,7 @@ PluginImpl::PluginImpl(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -170,7 +170,7 @@ boost::posix_time::ptime PluginImpl::get_time_stamp() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -189,7 +189,7 @@ boost::posix_time::ptime PluginImpl::get_local_time_stamp() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -201,7 +201,7 @@ boost::shared_ptr<GeoServerDB> PluginImpl::get_geo_server_database() const
   }
   else
   {
-    SmartMet::Spine::Exception exception(BCP, "GeoServer database is not available");
+    Fmi::Exception exception(BCP, "GeoServer database is not available");
     exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
     throw exception;
   }
@@ -242,7 +242,7 @@ void PluginImpl::create_template_formatters()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -279,7 +279,7 @@ void PluginImpl::create_xml_parser()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -297,14 +297,14 @@ void PluginImpl::init_geo_server_access()
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Failed to connect to GeoServer!", nullptr);
+      Fmi::Exception exception(BCP, "Failed to connect to GeoServer!", nullptr);
       exception.addParameter("Connection string", itsConfig.get_geoserver_conn_string());
       throw exception;
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -321,7 +321,7 @@ void PluginImpl::create_typename_stored_query_map()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -345,7 +345,7 @@ void PluginImpl::create_stored_query_map(SmartMet::Spine::Reactor* theReactor)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -358,7 +358,7 @@ RequestBaseP PluginImpl::parse_kvp_get_capabilities_request(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -374,7 +374,7 @@ RequestBaseP PluginImpl::parse_xml_get_capabilities_request(const std::string& l
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -387,7 +387,7 @@ RequestBaseP PluginImpl::parse_kvp_describe_feature_type_request(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -403,7 +403,7 @@ RequestBaseP PluginImpl::parse_xml_describe_feature_type_request(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -416,7 +416,7 @@ RequestBaseP PluginImpl::parse_kvp_get_feature_request(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -431,7 +431,7 @@ RequestBaseP PluginImpl::parse_xml_get_feature_request(const std::string& langua
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -444,7 +444,7 @@ RequestBaseP PluginImpl::parse_kvp_get_property_value_request(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -459,7 +459,7 @@ RequestBaseP PluginImpl::parse_xml_get_property_value_request(const std::string&
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -472,7 +472,7 @@ RequestBaseP PluginImpl::parse_kvp_list_stored_queries_request(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -487,7 +487,7 @@ RequestBaseP PluginImpl::parse_xml_list_stored_queries_request(const std::string
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -500,7 +500,7 @@ RequestBaseP PluginImpl::parse_kvp_describe_stored_queries_request(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -516,7 +516,7 @@ RequestBaseP PluginImpl::parse_xml_describe_stored_queries_request(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -595,7 +595,7 @@ void PluginImpl::query(const std::string& req_language,
         const std::string& content = req.getContent();
         if (content == "")
         {
-          SmartMet::Spine::Exception exception(BCP, "No request content available!");
+          Fmi::Exception exception(BCP, "No request content available!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
           throw exception;
         }
@@ -617,7 +617,7 @@ void PluginImpl::query(const std::string& req_language,
           {
             if (root_info.attr_map.count("service") == 0)
             {
-              SmartMet::Spine::Exception exception(
+              Fmi::Exception exception(
                   BCP, "Missing the 'service' attribute!", nullptr);
               exception.addDetails(messages);
               if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
@@ -628,7 +628,7 @@ void PluginImpl::query(const std::string& req_language,
             }
             else if (root_info.attr_map.at("service") != "WFS")
             {
-              SmartMet::Spine::Exception exception(
+              Fmi::Exception exception(
                   BCP, "Incorrect value for the 'service' attribute!", nullptr);
               exception.addDetails(messages);
               if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
@@ -642,7 +642,7 @@ void PluginImpl::query(const std::string& req_language,
 
             if (root_info.attr_map.count("version") == 0)
             {
-              SmartMet::Spine::Exception exception(
+              Fmi::Exception exception(
                   BCP, "Missing the 'version' attribute!", nullptr);
               exception.addDetails(messages);
               if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
@@ -653,7 +653,7 @@ void PluginImpl::query(const std::string& req_language,
             }
             else if (root_info.attr_map.at("version") != "2.0.0")
             {
-              SmartMet::Spine::Exception exception(
+              Fmi::Exception exception(
                   BCP, "Incorrect value for the 'version' attribute!", nullptr);
               exception.addDetails(messages);
               if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
@@ -666,7 +666,7 @@ void PluginImpl::query(const std::string& req_language,
             }
           }
 
-          SmartMet::Spine::Exception exception(
+          Fmi::Exception exception(
               BCP, "Parsing of the incoming XML request failed", nullptr);
           exception.addDetails(messages);
           if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
@@ -691,7 +691,7 @@ void PluginImpl::query(const std::string& req_language,
       }
       else
       {
-        SmartMet::Spine::Exception exception(BCP, "Unsupported content type!");
+        Fmi::Exception exception(BCP, "Unsupported content type!");
         if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         exception.addParameter(WFS_LANGUAGE, req_language);
@@ -701,7 +701,7 @@ void PluginImpl::query(const std::string& req_language,
     }
     else
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "HTTP method '" + req.getMethodString() + "' is not supported!");
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
@@ -711,7 +711,7 @@ void PluginImpl::query(const std::string& req_language,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Query failed!");
+    throw Fmi::Exception::Trace(BCP, "Query failed!");
   }
 }
 
@@ -772,7 +772,7 @@ void PluginImpl::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
         std::ostringstream msg;
         msg << "Warning: Empty input for request " << theRequest.getQueryString() << " from "
             << theRequest.getClientIP() << std::endl;
-        SmartMet::Spine::Exception exception(BCP, msg.str());
+        Fmi::Exception exception(BCP, msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception;
       }
@@ -796,7 +796,7 @@ void PluginImpl::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
         }
         catch (...)
         {
-          auto err = SmartMet::Spine::Exception::Trace(BCP, "Response XML validation failed");
+          auto err = Fmi::Exception::Trace(BCP, "Response XML validation failed");
           if (get_config().getFailOnValidateErrors())
           {
             std::ostringstream msg;
@@ -821,7 +821,7 @@ void PluginImpl::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
           }
           else
           {
-            SmartMet::Spine::Exception::Trace(BCP, "Response validation failed!").printError();
+            Fmi::Exception::Trace(BCP, "Response validation failed!").printError();
           }
         }
     }
@@ -829,7 +829,7 @@ void PluginImpl::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
     {
       // Catching all exceptions
 
-      SmartMet::Spine::Exception exception(BCP, "Request processing exception!", nullptr);
+      Fmi::Exception exception(BCP, "Request processing exception!", nullptr);
       exception.addParameter("URI", theRequest.getURI());
       exception.addParameter("ClientIP", theRequest.getClientIP());
       exception.printError();
@@ -849,7 +849,7 @@ void PluginImpl::realRequestHandler(SmartMet::Spine::Reactor& /* theReactor */,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -923,7 +923,7 @@ void PluginImpl::maybe_validate_output(const SmartMet::Spine::HTTP::Request& req
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

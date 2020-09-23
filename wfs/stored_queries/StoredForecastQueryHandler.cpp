@@ -87,7 +87,7 @@ bw::StoredForecastQueryHandler::StoredForecastQueryHandler(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -338,13 +338,13 @@ void bw::StoredForecastQueryHandler::query(const StoredQuery& stored_query,
       }
       catch (...)
       {
-        throw SmartMet::Spine::Exception::Trace(BCP, "Operation parsing failed!")
+        throw Fmi::Exception::Trace(BCP, "Operation parsing failed!")
             .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       }
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation parsing failed!", nullptr);
+      Fmi::Exception exception(BCP, "Operation parsing failed!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       exception.addParameter(WFS_LANGUAGE, query.language);
@@ -353,7 +353,7 @@ void bw::StoredForecastQueryHandler::query(const StoredQuery& stored_query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -415,7 +415,7 @@ boost::shared_ptr<SmartMet::Spine::Table> bw::StoredForecastQueryHandler::extrac
       {
         if (query.keyword.empty())
         {
-          SmartMet::Spine::Exception exception(BCP, "No data available for '" + loc->name + "'!");
+          Fmi::Exception exception(BCP, "No data available for '" + loc->name + "'!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
           throw exception.disableStackTrace();
         }
@@ -428,7 +428,7 @@ boost::shared_ptr<SmartMet::Spine::Table> bw::StoredForecastQueryHandler::extrac
 #ifdef ENABLE_MODEL_PATH
       if (model_path and q->path().string() != *model_path)
       {
-        SmartMet::Spine::Exception exception(BCP, "Weather model mixing is not allowed!");
+        Fmi::Exception exception(BCP, "Weather model mixing is not allowed!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         exception.addParameter("Config name", configName);
         throw exception.disableStackTrace();
@@ -537,7 +537,7 @@ boost::shared_ptr<SmartMet::Spine::Table> bw::StoredForecastQueryHandler::extrac
 
       if (not query.level_heights.empty() and q->levelType() != FmiLevelType::kFmiHybridLevel)
       {
-        Spine::Exception exception(
+        Fmi::Exception exception(
             BCP, "Only hybrid data supports data fetching from an arbitrary height.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception.disableStackTrace();
@@ -545,7 +545,7 @@ boost::shared_ptr<SmartMet::Spine::Table> bw::StoredForecastQueryHandler::extrac
 
       if (not query.levels.empty() and not query.level_heights.empty())
       {
-        Spine::Exception exception(BCP,
+        Fmi::Exception exception(BCP,
                                    "Fetching data from a level and an arbitrary height is not "
                                    "supported in a same request.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
@@ -555,7 +555,7 @@ boost::shared_ptr<SmartMet::Spine::Table> bw::StoredForecastQueryHandler::extrac
       /*
       if (query.levels.empty() and query.level_heights.empty())
       {
-        Spine::Exception exception(BCP, "No level selected.");
+        Fmi::Exception exception(BCP, "No level selected.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception;
       }
@@ -655,7 +655,7 @@ boost::shared_ptr<SmartMet::Spine::Table> bw::StoredForecastQueryHandler::extrac
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -688,7 +688,7 @@ SmartMet::Engine::Querydata::Producer bw::StoredForecastQueryHandler::select_pro
 
     if (producer.empty() && query.keyword.empty())
     {
-      throw SmartMet::Spine::Exception(BCP, "No data available for '" + location.name + "'!")
+      throw Fmi::Exception(BCP, "No data available for '" + location.name + "'!")
           .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED)
           .disableStackTrace();
     }
@@ -697,7 +697,7 @@ SmartMet::Engine::Querydata::Producer bw::StoredForecastQueryHandler::select_pro
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -711,7 +711,7 @@ void bw::StoredForecastQueryHandler::parse_models(const RequestParameterMap& par
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -728,7 +728,7 @@ void bw::StoredForecastQueryHandler::parse_level_heights(const RequestParameterM
       float tmp = static_cast<float>(item);
       if (!dest.level_heights.insert(tmp).second)
       {
-        SmartMet::Spine::Exception exception(
+        Fmi::Exception exception(
             BCP, "Duplicate geometric height '" + std::to_string(tmp) + "'!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
@@ -737,7 +737,7 @@ void bw::StoredForecastQueryHandler::parse_level_heights(const RequestParameterM
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Geometric height parsing failed!");
+    throw Fmi::Exception::Trace(BCP, "Geometric height parsing failed!");
   }
 }
 void bw::StoredForecastQueryHandler::parse_levels(const RequestParameterMap& params,
@@ -756,7 +756,7 @@ void bw::StoredForecastQueryHandler::parse_levels(const RequestParameterMap& par
       int tmp = cast_int_type<int>(level);
       if (!dest.levels.insert(tmp).second)
       {
-        SmartMet::Spine::Exception exception(BCP, "Duplicate level '" + std::to_string(tmp) + "'!");
+        Fmi::Exception exception(BCP, "Duplicate level '" + std::to_string(tmp) + "'!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
       }
@@ -764,7 +764,7 @@ void bw::StoredForecastQueryHandler::parse_levels(const RequestParameterMap& par
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -781,7 +781,7 @@ void bw::StoredForecastQueryHandler::parse_times(const RequestParameterMap& para
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -808,7 +808,7 @@ void bw::StoredForecastQueryHandler::parse_params(const RequestParameterMap& par
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -841,7 +841,7 @@ bw::StoredForecastQueryHandler::get_model_parameters(const std::string& producer
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -867,7 +867,7 @@ bw::StoredForecastQueryHandler::Query::Query(boost::shared_ptr<const StoredQuery
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -883,7 +883,7 @@ void bw::StoredForecastQueryHandler::Query::set_locale(const std::string& locale
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "Failed to set locale '" + locale_name + "'!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
@@ -892,7 +892,7 @@ void bw::StoredForecastQueryHandler::Query::set_locale(const std::string& locale
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -915,7 +915,7 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_forecast_ha
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

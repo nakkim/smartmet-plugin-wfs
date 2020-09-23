@@ -48,7 +48,7 @@ bw::Request::DescribeStoredQueries::DescribeStoredQueries(const std::string& lan
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -132,7 +132,7 @@ void bw::Request::DescribeStoredQueries::execute(std::ostream& output) const
           else
           {
             std::ostringstream msg;
-            SmartMet::Spine::Exception exception(
+            Fmi::Exception exception(
                 BCP, "INTERNAL ERROR: feature '" + name + "' not found!");
             exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
             throw exception;
@@ -167,7 +167,7 @@ void bw::Request::DescribeStoredQueries::execute(std::ostream& output) const
     }
     catch (const std::exception&)
     {
-      SmartMet::Spine::Exception exception(BCP, "Template formater exception!");
+      Fmi::Exception exception(BCP, "Template formater exception!");
       exception.addDetail(log_messages.str());
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
@@ -176,7 +176,7 @@ void bw::Request::DescribeStoredQueries::execute(std::ostream& output) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -214,7 +214,7 @@ bw::Request::DescribeStoredQueries::create_from_kvp(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -246,7 +246,7 @@ bw::Request::DescribeStoredQueries::create_from_xml(const std::string& language,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -258,6 +258,6 @@ int bw::Request::DescribeStoredQueries::get_response_expires_seconds() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

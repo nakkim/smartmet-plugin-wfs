@@ -117,7 +117,7 @@ StoredGridForecastQueryHandler::StoredGridForecastQueryHandler(
   }
   catch (...)
   {
-    throw Spine::Exception(BCP, "Operation failed!", NULL);
+    throw Fmi::Exception(BCP, "Operation failed!", NULL);
   }
 }
 
@@ -141,19 +141,19 @@ void StoredGridForecastQueryHandler::init_handler()
     void* engine;
     engine = reactor->getSingleton("Geonames", NULL);
     if (engine == NULL)
-      throw Spine::Exception(BCP, "No Geonames engine available");
+      throw Fmi::Exception(BCP, "No Geonames engine available");
 
     geo_engine = reinterpret_cast<Engine::Geonames::Engine*>(engine);
 
     engine = reactor->getSingleton("grid", NULL);
     if (engine == NULL)
-      throw Spine::Exception(BCP, "No Grid engine available");
+      throw Fmi::Exception(BCP, "No Grid engine available");
 
     grid_engine = reinterpret_cast<Engine::Grid::Engine*>(engine);
   }
   catch (...)
   {
-    throw Spine::Exception(BCP, "Operation failed!", NULL);
+    throw Fmi::Exception(BCP, "Operation failed!", NULL);
   }
 }
 
@@ -391,14 +391,14 @@ void StoredGridForecastQueryHandler::query(const StoredQuery& stored_query, cons
       }
       catch (...)
       {
-        Spine::Exception exception(BCP, "Operation parsing failed!", NULL);
+        Fmi::Exception exception(BCP, "Operation parsing failed!", NULL);
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
       }
     }
     catch (...)
     {
-      Spine::Exception exception(BCP, "Operation parsing failed!", NULL);
+      Fmi::Exception exception(BCP, "Operation parsing failed!", NULL);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == NULL)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       exception.addParameter(WFS_LANGUAGE, query.language);
@@ -407,7 +407,7 @@ void StoredGridForecastQueryHandler::query(const StoredQuery& stored_query, cons
   }
   catch (...)
   {
-    throw Spine::Exception(BCP, "Operation failed!", NULL);
+    throw Fmi::Exception(BCP, "Operation failed!", NULL);
   }
 }
 
@@ -458,7 +458,7 @@ uint StoredGridForecastQueryHandler::processGridQuery(
     int result = grid_engine->executeQuery(gridQuery);
     if (result != 0)
     {
-      Spine::Exception exception(BCP, "The query server returns an error message!");
+      Fmi::Exception exception(BCP, "The query server returns an error message!");
       exception.addParameter("Result", std::to_string(result));
       exception.addParameter("Message", QueryServer::getResultString(result));
 
@@ -767,7 +767,7 @@ uint StoredGridForecastQueryHandler::processGridQuery(
   }
   catch (...)
   {
-    throw Spine::Exception(BCP, "Operation failed!", NULL);
+    throw Fmi::Exception(BCP, "Operation failed!", NULL);
   }
 }
 
@@ -929,7 +929,7 @@ Table_sptr StoredGridForecastQueryHandler::extract_forecast(Query& wfsQuery) con
   }
   catch (...)
   {
-    throw Spine::Exception(BCP, "Operation failed!", NULL);
+    throw Fmi::Exception(BCP, "Operation failed!", NULL);
   }
 }
 
@@ -946,7 +946,7 @@ void StoredGridForecastQueryHandler::parse_models(const RequestParameterMap& par
   }
   catch (...)
   {
-    throw Spine::Exception(BCP, "Operation failed!", NULL);
+    throw Fmi::Exception(BCP, "Operation failed!", NULL);
   }
 }
 
@@ -966,7 +966,7 @@ void StoredGridForecastQueryHandler::parse_level_heights(const RequestParameterM
       float tmp = static_cast<float>(item);
       if (!dest.level_heights.insert(tmp).second)
       {
-        Spine::Exception exception(BCP, "Duplicate geometric height!");
+        Fmi::Exception exception(BCP, "Duplicate geometric height!");
         exception.addParameter("height",std::to_string(tmp));
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
@@ -975,7 +975,7 @@ void StoredGridForecastQueryHandler::parse_level_heights(const RequestParameterM
   }
   catch (...)
   {
-    throw Spine::Exception(BCP, "Geometric height parsing failed!", NULL);
+    throw Fmi::Exception(BCP, "Geometric height parsing failed!", NULL);
   }
 }
 
@@ -998,7 +998,7 @@ void StoredGridForecastQueryHandler::parse_levels(const RequestParameterMap& par
       int tmp = cast_int_type<int>(*level);
       if (!dest.levels.insert(tmp).second)
       {
-        Spine::Exception exception(BCP, "Duplicate level!");
+        Fmi::Exception exception(BCP, "Duplicate level!");
         exception.addParameter("level",std::to_string(tmp));
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
@@ -1007,7 +1007,7 @@ void StoredGridForecastQueryHandler::parse_levels(const RequestParameterMap& par
   }
   catch (...)
   {
-    throw Spine::Exception(BCP, "Operation failed!", NULL);
+    throw Fmi::Exception(BCP, "Operation failed!", NULL);
   }
 }
 
@@ -1026,7 +1026,7 @@ void StoredGridForecastQueryHandler::parse_times(const RequestParameterMap& para
   }
   catch (...)
   {
-    throw Spine::Exception(BCP, "Operation failed!", NULL);
+    throw Fmi::Exception(BCP, "Operation failed!", NULL);
   }
 }
 
@@ -1059,7 +1059,7 @@ void StoredGridForecastQueryHandler::parse_params(const RequestParameterMap& par
   }
   catch (...)
   {
-    throw Spine::Exception(BCP, "Operation failed!", NULL);
+    throw Fmi::Exception(BCP, "Operation failed!", NULL);
   }
 }
 
@@ -1090,7 +1090,7 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_grid_foreca
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw Fmi::Exception(BCP, "Operation failed!", NULL);
   }
 }
 }  // namespace

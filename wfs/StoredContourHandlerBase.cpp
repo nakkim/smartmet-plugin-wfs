@@ -71,7 +71,7 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
     std::string pname = ec.ToString(cpid);
     if (pname.empty())
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "Invalid contour parameter id '" + std::to_string(cpid) + "'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       throw exception;
@@ -80,7 +80,7 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -106,7 +106,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -142,13 +142,13 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_qEngine(
 
         if (!queryParameter.q->param(options.parameter.number()))
         {
-          throw SmartMet::Spine::Exception(
+          throw Fmi::Exception(
               BCP, "Parameter '" + options.parameter.name() + "' unavailable.");
         }
 
         if (!queryParameter.q->firstLevel())
         {
-          throw SmartMet::Spine::Exception(BCP, "Unable to set first level in querydata.");
+          throw Fmi::Exception(BCP, "Unable to set first level in querydata.");
         }
 
         // Select the level.
@@ -156,7 +156,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_qEngine(
         {
           if (!queryParameter.q->selectLevel(*options.level))
           {
-            throw SmartMet::Spine::Exception(
+            throw Fmi::Exception(
                 BCP, "Level value " + Fmi::to_string(*options.level) + " is not available.");
           }
         }
@@ -232,7 +232,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_qEngine(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -255,7 +255,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
     OGRSpatialReference sr;
     if (sr.importFromURN(targetURN.c_str()) != OGRERR_NONE)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid crs '" + targetURN + "'!");
+      Fmi::Exception exception(BCP, "Invalid crs '" + targetURN + "'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
@@ -299,7 +299,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
     int result = grid_engine->executeQuery(queryParameter.gridQuery);
     if (result != 0)
     {
-      Spine::Exception exception(BCP, "The query server returns an error message!");
+      Fmi::Exception exception(BCP, "The query server returns an error message!");
       exception.addParameter("Result", std::to_string(result));
       exception.addParameter("Message", QueryServer::getResultString(result));
 
@@ -408,7 +408,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -439,7 +439,7 @@ void bw::StoredContourQueryHandler::parsePolygon(OGRPolygon* polygon,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -466,7 +466,7 @@ void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -488,7 +488,7 @@ void bw::StoredContourQueryHandler::query_qEngine(const StoredQuery& stored_quer
     OGRSpatialReference sr;
     if (sr.importFromURN(targetURN.c_str()) != OGRERR_NONE)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid crs '" + requestedCRS + "'!");
+      Fmi::Exception exception(BCP, "Invalid crs '" + requestedCRS + "'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
@@ -516,7 +516,7 @@ void bw::StoredContourQueryHandler::query_qEngine(const StoredQuery& stored_quer
       sq_params.get<double>(P_LIMITS, std::back_inserter(limits), 0, 998, 2);
       if (limits.size() & 1)
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid list of doubles in parameter 'limits'!");
+        Fmi::Exception exception(BCP, "Invalid list of doubles in parameter 'limits'!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
       }
@@ -568,7 +568,7 @@ void bw::StoredContourQueryHandler::query_qEngine(const StoredQuery& stored_quer
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -589,7 +589,7 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
     OGRSpatialReference sr;
     if (sr.importFromURN(targetURN.c_str()) != OGRERR_NONE)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid crs '" + requestedCRS + "'!");
+      Fmi::Exception exception(BCP, "Invalid crs '" + requestedCRS + "'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
@@ -691,7 +691,7 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
       sq_params.get<double>(P_LIMITS, std::back_inserter(limits), 0, 998, 2);
       if (limits.size() & 1)
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid list of doubles in parameter 'limits'!");
+        Fmi::Exception exception(BCP, "Invalid list of doubles in parameter 'limits'!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
       }
@@ -810,7 +810,7 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -963,7 +963,7 @@ void bw::StoredContourQueryHandler::parseGeometry(OGRGeometry* geom,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -996,7 +996,7 @@ void bw::StoredContourQueryHandler::handleGeometryCollection(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1127,6 +1127,6 @@ void bw::StoredContourQueryHandler::parseQueryResults(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

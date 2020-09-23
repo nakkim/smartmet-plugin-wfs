@@ -4,7 +4,7 @@
 #include <boost/algorithm/string.hpp>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/Value.h>
 #include <sstream>
 
@@ -71,7 +71,7 @@ bw::SupportsExtraHandlerParams::SupportsExtraHandlerParams(
         std::ostringstream msg;
         msg << "Incorrect parameter definition: ";
         config->dump_setting(msg, def, 16);
-        SmartMet::Spine::Exception exception(BCP, msg.str());
+        Fmi::Exception exception(BCP, msg.str());
         exception.addDetail("Scalar or array expected.");
         throw exception;
       }
@@ -81,14 +81,14 @@ bw::SupportsExtraHandlerParams::SupportsExtraHandlerParams(
       if (not handler_params.insert(std::make_pair(Fmi::ascii_tolower_copy(name), param_def))
                   .second)
       {
-        throw SmartMet::Spine::Exception(
+        throw Fmi::Exception(
             BCP, "Duplicate stored query handler parameter '" + name + "'!");
       }
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -117,7 +117,7 @@ const bw::ParameterTemplateBase& bw::SupportsExtraHandlerParams::get_param(
           sep = ',';
         }
       }
-      SmartMet::Spine::Exception exception(BCP, "Handler parameter '" + name + "' not found.");
+      Fmi::Exception exception(BCP, "Handler parameter '" + name + "' not found.");
       exception.addDetail(msg.str());
       throw exception;
     }
@@ -128,7 +128,7 @@ const bw::ParameterTemplateBase& bw::SupportsExtraHandlerParams::get_param(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -162,7 +162,7 @@ void bw::SupportsExtraHandlerParams::dump_named_params(const bw::RequestParamete
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

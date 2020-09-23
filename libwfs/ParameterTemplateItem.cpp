@@ -5,7 +5,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/Value.h>
 #include <sstream>
 
@@ -20,7 +20,7 @@ void optional_deprecate_notice(const std::string& item_def)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace
@@ -50,7 +50,7 @@ void ParameterTemplateItem::parse(const SmartMet::Spine::Value& item_def, bool a
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -115,7 +115,7 @@ void ParameterTemplateItem::parse(const std::string& item_def, bool allow_absent
     }
     else if (qi::phrase_parse(src.begin(), src.end(), gen_ref_p, ns::space))
     {
-      throw SmartMet::Spine::Exception(BCP, "Failed to parse parameter template '" + src + "'!");
+      throw Fmi::Exception(BCP, "Failed to parse parameter template '" + src + "'!");
     }
     else
     {
@@ -125,7 +125,7 @@ void ParameterTemplateItem::parse(const std::string& item_def, bool allow_absent
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -142,7 +142,7 @@ void ParameterTemplateItem::reset()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -163,14 +163,14 @@ ParameterTemplateItem::get_value(const RequestParameterMap& req_param_map,
       std::ostringstream msg;
       msg << "CONFIGURATION ERROR: absent parameter specification not"
           << " supported for current parameter!";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
     else
     {
       // Fail with parse error when both
       //   1) the parameter is not found in WFS request
       //   2) no default value is provided
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "Mandatory parameter '" + *param_ref + "' not provided in WFS request!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
@@ -178,7 +178,7 @@ ParameterTemplateItem::get_value(const RequestParameterMap& req_param_map,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -260,7 +260,7 @@ bool ParameterTemplateItem::get_value(
               std::ostringstream msg;
               msg << ": The index " << *param_ind << " for parameter '" << *param_ref
                   << "' is out of range 0.." << (value_vect.size() - 1);
-              SmartMet::Spine::Exception exception(BCP, msg.str());
+              Fmi::Exception exception(BCP, msg.str());
               exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
               throw exception;
             }
@@ -292,7 +292,7 @@ bool ParameterTemplateItem::get_value(
             // Array found, but it is not permitted to return an array
             // NOTE: this error should not normally happen and it most
             //       likely indicates configuration problem
-            SmartMet::Spine::Exception exception(
+            Fmi::Exception exception(
                 BCP, "Cannot return an array (parameter '" + *param_ref + "')");
             exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
             throw exception;
@@ -303,13 +303,13 @@ bool ParameterTemplateItem::get_value(
     else
     {
       // This is not supposed to happen and indicates error in program code
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP, "INTERNAL ERROR: neither of members plain_text and param_ref are set!");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -324,7 +324,7 @@ bool ParameterTemplateItem::handle_redirection(
     // Return failure if no registered handler parameters available
     if (not extra_params)
     {
-      throw SmartMet::Spine::Exception(BCP, "Parameter redirection required but not defined!");
+      throw Fmi::Exception(BCP, "Parameter redirection required but not defined!");
     }
 
     const auto& param_desc = extra_params->get_param(redirect_name);
@@ -336,7 +336,7 @@ bool ParameterTemplateItem::handle_redirection(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace WFS

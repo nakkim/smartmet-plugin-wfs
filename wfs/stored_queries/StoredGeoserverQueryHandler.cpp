@@ -66,7 +66,7 @@ bw::StoredGeoserverQueryHandler::StoredGeoserverQueryHandler(
         config->get_config_array(cfg_item, "alias", aliases, 0);
         if (not layer_map->insert(std::make_pair(name, db_table)).second)
         {
-          throw SmartMet::Spine::Exception(BCP, "Duplicate layer name '" + name + "'!");
+          throw Fmi::Exception(BCP, "Duplicate layer name '" + name + "'!");
         }
 
         BOOST_FOREACH (const auto& alias, aliases)
@@ -74,7 +74,7 @@ bw::StoredGeoserverQueryHandler::StoredGeoserverQueryHandler(
           const std::string alias_name = Fmi::ascii_tolower_copy(alias);
           if (not layer_alias_map.insert(std::make_pair(alias_name, name)).second)
           {
-            throw SmartMet::Spine::Exception(BCP, "Duplicate layer alias '" + alias + "'!");
+            throw Fmi::Exception(BCP, "Duplicate layer alias '" + alias + "'!");
           }
         }
       }
@@ -97,7 +97,7 @@ bw::StoredGeoserverQueryHandler::StoredGeoserverQueryHandler(
           std::ostringstream msg;
           msg << "{" << config->get_file_name() << "}: " << DB_SELECT_PARAMS << ": duplicate name '"
               << name << "' specified";
-          throw SmartMet::Spine::Exception(BCP, msg.str());
+          throw Fmi::Exception(BCP, msg.str());
         }
       }
     }
@@ -116,7 +116,7 @@ bw::StoredGeoserverQueryHandler::StoredGeoserverQueryHandler(
           config->get_mandatory_config_param<std::string>(item, "param");
       if (layer_param_name_map.find(layer_name) != layer_param_name_map.end())
       {
-        throw SmartMet::Spine::Exception(BCP, "Duplicate layer name '" + layer_name + "'!");
+        throw Fmi::Exception(BCP, "Duplicate layer name '" + layer_name + "'!");
       }
       layer_param_name_map.insert(std::make_pair(Fmi::ascii_tolower_copy(layer_name),
                                                  Fmi::ascii_tolower_copy(parameter_name)));
@@ -124,7 +124,7 @@ bw::StoredGeoserverQueryHandler::StoredGeoserverQueryHandler(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -167,7 +167,7 @@ void bw::StoredGeoserverQueryHandler::update_parameters(
       std::map<std::string, std::string>::const_iterator layerIt = layer_param_name_map.find(layer);
       if (layerIt == layer_param_name_map.end() and pos == layer_alias_map.end())
       {
-        SmartMet::Spine::Exception exception(
+        Fmi::Exception exception(
             BCP, "Parameter configuration for layer '" + layer + "' not found!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception.disableStackTrace();
@@ -177,7 +177,7 @@ void bw::StoredGeoserverQueryHandler::update_parameters(
     SmartMet::Spine::BoundingBox requested_bbox;
     if (not get_bounding_box(params, crs_name, &requested_bbox))
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid or missing bounding box!");
+      Fmi::Exception exception(BCP, "Invalid or missing bounding box!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception.disableStackTrace();
     }
@@ -210,7 +210,7 @@ void bw::StoredGeoserverQueryHandler::update_parameters(
 
     if (width < MIN_SIZE or height < MIN_SIZE)
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "Invalid image size : " + std::to_string(width) + "x" + std::to_string(height));
       exception.addDetail("The values must be " + std::to_string(MIN_SIZE) + " or larger.");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
@@ -237,7 +237,7 @@ void bw::StoredGeoserverQueryHandler::update_parameters(
 
     if ((debug_level > 1) and gs_index->size() == 0)
     {
-      SmartMet::Spine::Exception exception(BCP, "No data found!");
+      Fmi::Exception exception(BCP, "No data found!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception.disableStackTrace();
     }
@@ -343,7 +343,7 @@ void bw::StoredGeoserverQueryHandler::update_parameters(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -370,7 +370,7 @@ bool bw::StoredGeoserverQueryHandler::eval_db_select_params(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -393,7 +393,7 @@ wfs_stored_geoserver_handler_create(SmartMet::Spine::Reactor* reactor,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

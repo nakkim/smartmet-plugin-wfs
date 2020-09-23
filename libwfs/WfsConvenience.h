@@ -4,7 +4,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/optional.hpp>
 #include <newbase/NFmiParameterName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/HTTP.h>
 #include <spine/Parameter.h>
 #include <spine/Reactor.h>
@@ -73,7 +73,7 @@ DestIntType cast_int_type(const SourceIntType value)
       std::ostringstream msg;
       msg << "Value " << value << " is out of range " << std::numeric_limits<DestIntType>::min()
           << "..." << std::numeric_limits<DestIntType>::max();
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
     else
     {
@@ -82,7 +82,7 @@ DestIntType cast_int_type(const SourceIntType value)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -107,7 +107,7 @@ ParamType get_param(const SmartMet::Spine::HTTP::Request& request,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

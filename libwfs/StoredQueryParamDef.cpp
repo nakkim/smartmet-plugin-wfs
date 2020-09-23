@@ -8,7 +8,7 @@
 #include <macgyver/TimeParser.h>
 #include <macgyver/TypeName.h>
 #include <macgyver/StringConversion.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <algorithm>
 #include <sstream>
 #include <stdexcept>
@@ -74,18 +74,18 @@ void StoredQueryParamDef::parse_def(const std::string& desc)
     }
     else
     {
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP, "Failed top parse parameter type specification '" + desc + "'!");
     }
 
     if (is_array && (min_size > max_size))
     {
-      throw SmartMet::Spine::Exception(BCP, "Invalid array size specification in '" + desc + "'!");
+      throw Fmi::Exception(BCP, "Invalid array size specification in '" + desc + "'!");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -141,7 +141,7 @@ SmartMet::Spine::Value StoredQueryParamDef::readValue(const std::string& value) 
 
         default:
         {
-          SmartMet::Spine::Exception exception(
+          Fmi::Exception exception(
               BCP, "INTERNAL ERROR: incorrect type code '" + std::to_string(value_type) + "'!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
           throw exception;
@@ -152,7 +152,7 @@ SmartMet::Spine::Value StoredQueryParamDef::readValue(const std::string& value) 
     }
     catch (const boost::bad_lexical_cast& err)
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "Invalid stored query parameter value in '" + value + "'!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
@@ -160,7 +160,7 @@ SmartMet::Spine::Value StoredQueryParamDef::readValue(const std::string& value) 
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation failed!", nullptr);
+      Fmi::Exception exception(BCP, "Operation failed!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception.disableStackTrace();
@@ -168,7 +168,7 @@ SmartMet::Spine::Value StoredQueryParamDef::readValue(const std::string& value) 
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -206,7 +206,7 @@ SmartMet::Spine::Value StoredQueryParamDef::convValue(const SmartMet::Spine::Val
 
       default:
       {
-        SmartMet::Spine::Exception exception(
+        Fmi::Exception exception(
             BCP, "INTERNAL ERROR: incorrect type code '" + std::to_string(value_type) + "'!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
@@ -217,7 +217,7 @@ SmartMet::Spine::Value StoredQueryParamDef::convValue(const SmartMet::Spine::Val
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -242,7 +242,7 @@ std::vector<SmartMet::Spine::Value> StoredQueryParamDef::readValues(
       if (min_size != max_size)
         msg << ".." << max_size;
 
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "Invalid array size '" + std::to_string(values.size()) + "' in parameter!");
       exception.addDetail(msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
@@ -251,7 +251,7 @@ std::vector<SmartMet::Spine::Value> StoredQueryParamDef::readValues(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -295,7 +295,7 @@ void StoredQueryParamDef::dump(std::ostream& stream) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

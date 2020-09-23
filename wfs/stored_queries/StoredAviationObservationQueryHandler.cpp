@@ -7,7 +7,7 @@
 #include <engines/observation/VerifiableMessageQuery.h>
 #include <engines/observation/VerifiableMessageQueryParams.h>
 #include <macgyver/StringConversion.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <algorithm>
 #include <unordered_map>
 #include <utility>
@@ -52,7 +52,7 @@ bw::StoredAviationObservationQueryHandler::StoredAviationObservationQueryHandler
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -154,7 +154,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
         {
           std::ostringstream msg;
           msg << "ICAO code '" << *it << "' not found.";
-          SmartMet::Spine::Exception exception(BCP, msg.str());
+          Fmi::Exception exception(BCP, msg.str());
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
           throw exception.disableStackTrace();
         }
@@ -249,7 +249,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
         }
         catch (...)
         {
-          SmartMet::Spine::Exception exception(BCP, "Operation processing failed!", nullptr);
+          Fmi::Exception exception(BCP, "Operation processing failed!", nullptr);
           if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
             exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
           throw exception;
@@ -350,14 +350,14 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
     }  // In case of some other failures
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation failed!", nullptr);
+      Fmi::Exception exception(BCP, "Operation failed!", nullptr);
       exception.addParameter(WFS_LANGUAGE, language);
       throw exception;
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -387,7 +387,7 @@ wfs_stored_aviation_observation_handler_create(SmartMet::Spine::Reactor* reactor
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

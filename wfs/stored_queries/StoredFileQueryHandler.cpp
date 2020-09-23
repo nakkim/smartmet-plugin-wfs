@@ -64,7 +64,7 @@ bw::StoredFileQueryHandler::StoredFileQueryHandler(SmartMet::Spine::Reactor* rea
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -87,7 +87,7 @@ std::set<ValueType> common_items(const std::set<ValueType>& A, const std::set<Va
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace
@@ -155,7 +155,7 @@ void bw::StoredFileQueryHandler::update_parameters(
         if (bbox.size() != 4)
         {
           // Should really be catched earlier and not be here
-          throw SmartMet::Spine::Exception(
+          throw Fmi::Exception(
               BCP, "INTERNAL ERROR: wrong bbox specification in '" + params.as_string() + "'!")
               .disableStackTrace();
         }
@@ -195,7 +195,7 @@ void bw::StoredFileQueryHandler::update_parameters(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -218,7 +218,7 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_stored_file
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

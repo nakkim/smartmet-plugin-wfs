@@ -80,7 +80,7 @@ BOOST_AUTO_TEST_CASE(test_extract_xml_stored_query_id)
 
   std::string id;
   BOOST_CHECK_THROW(not bw::StoredQuery::get_xml_stored_query_id(*root, &id),
-                    SmartMet::Spine::Exception);
+                    Fmi::Exception);
 
   bwx::set_attr(*root, "id", "foo::bar");
   BOOST_CHECK(bw::StoredQuery::get_xml_stored_query_id(*root, &id));
@@ -217,7 +217,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_missing_mandatory_scalar_parameter)
   request1.addParameter("request", "GetFeature");
   request1.addParameter("storedquery_id", "foo:bar");
   BOOST_CHECK_THROW(bw::StoredQuery::extract_kvp_parameters(request1, *config, Q1),
-                    SmartMet::Spine::Exception);
+                    Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(test_kvp_single_scalar_parameter)
@@ -386,7 +386,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_scalar_parameter_5)
   for (int i = 0; i < 100; i++)
     request2.addParameter("p1", Fmi::to_string(i + 1));
   BOOST_REQUIRE_THROW(bw::StoredQuery::extract_kvp_parameters(request2, *config, Q2),
-                      SmartMet::Spine::Exception);
+                      Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(test_kvp_single_scalar_parameter_too_many_occurrences)
@@ -420,7 +420,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_single_scalar_parameter_too_many_occurrences)
     //          << Fmi::current_exception_type()
     //          << "': message='" << err.what() << "'"
     //          << std::endl;
-    BOOST_REQUIRE_THROW(throw, SmartMet::Spine::Exception);
+    BOOST_REQUIRE_THROW(throw, Fmi::Exception);
   };
 }
 
@@ -583,7 +583,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_mixed_u
   request2.addParameter("p1", "12.5,25.0,1.5");
   request2.addParameter("p1", "2.5");
   BOOST_REQUIRE_THROW(bw::StoredQuery::extract_kvp_parameters(request2, *config, Q2),
-                      SmartMet::Spine::Exception);
+                      Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_mixed_up_2)
@@ -608,7 +608,7 @@ BOOST_AUTO_TEST_CASE(test_kvp_repeatable_array_parameter_of_fixed_length_mixed_u
   request2.addParameter("p1", "1.0,2.0,3.0");
   request2.addParameter("p1", "4.0");
   BOOST_REQUIRE_THROW(bw::StoredQuery::extract_kvp_parameters(request2, *config, Q2),
-                      SmartMet::Spine::Exception);
+                      Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(test_parse_sample_kvp_stored_query_id)

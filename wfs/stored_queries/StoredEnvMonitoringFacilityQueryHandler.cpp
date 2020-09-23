@@ -70,7 +70,7 @@ bw::StoredEnvMonitoringFacilityQueryHandler::StoredEnvMonitoringFacilityQueryHan
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -376,7 +376,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query
   catch (...)
   {
     // Set language for exception and re-throw it
-    SmartMet::Spine::Exception exception(BCP, "Operation processing failed!", nullptr);
+    Fmi::Exception exception(BCP, "Operation processing failed!", nullptr);
     if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
     exception.addParameter(WFS_LANGUAGE, language);
@@ -396,7 +396,7 @@ bw::StoredEnvMonitoringFacilityQueryHandler::dbRegistryConfig(const std::string 
     {
       std::ostringstream msg;
       msg << "Database registry is not available!";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -407,7 +407,7 @@ bw::StoredEnvMonitoringFacilityQueryHandler::dbRegistryConfig(const std::string 
     {
       std::ostringstream msg;
       msg << "Database registry configuration '" << configName << "' is not available!";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -416,7 +416,7 @@ bw::StoredEnvMonitoringFacilityQueryHandler::dbRegistryConfig(const std::string 
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -591,7 +591,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getValidStations(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -716,7 +716,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getStationCapabilities(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -807,7 +807,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getStationGroupData(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -886,7 +886,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getStationNetworkMembershipDat
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -910,7 +910,7 @@ wfs_stored_env_monitoring_facility_handler_create(SmartMet::Spine::Reactor *reac
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

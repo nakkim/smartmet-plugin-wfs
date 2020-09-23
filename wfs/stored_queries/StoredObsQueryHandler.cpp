@@ -101,7 +101,7 @@ StoredObsQueryHandler::StoredObsQueryHandler(SmartMet::Spine::Reactor* reactor,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -207,7 +207,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 
       if (not have_meteo_param)
       {
-        SmartMet::Spine::Exception exception(BCP, "Operation processin failed!");
+        Fmi::Exception exception(BCP, "Operation processin failed!");
         exception.addDetail("At least one meteo parameter must be specified");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         exception.disableStackTrace();
@@ -298,7 +298,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 
       if (query_params.starttime > query_params.endtime)
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid time interval!");
+        Fmi::Exception exception(BCP, "Invalid time interval!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         exception.addParameter("Start time", pt::to_simple_string(query_params.starttime));
         exception.addParameter("End time", pt::to_simple_string(query_params.endtime));
@@ -311,7 +311,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       if (sq_restrictions and
           query_params.starttime + pt::minutes(maxEpochs * ts1) < query_params.endtime)
       {
-        SmartMet::Spine::Exception exception(BCP, "Too many time epochs in the time interval!");
+        Fmi::Exception exception(BCP, "Too many time epochs in the time interval!");
         exception.addDetail("Use shorter time interval or larger time step.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         exception.addParameter("Start time", pt::to_simple_string(query_params.starttime));
@@ -325,7 +325,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
         obs_engine->getStationsByBoundingBox(stations, query_params);
         if (stations.size() > max_station_count)
         {
-          SmartMet::Spine::Exception exception(
+          Fmi::Exception exception(
               BCP,
               "Too many stations (" + std::to_string(stations.size()) + ") in the bounding box!");
           exception.addDetail("No more than " + std::to_string(max_station_count) + " is allowed.");
@@ -485,7 +485,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           if (not lat.empty() and not lon.empty())
             set_2D_coord(transformation, lat, lon, group["obsStationList"][ind]);
           else
-            throw SmartMet::Spine::Exception(BCP, "wfs: Internal LatLon query error.");
+            throw Fmi::Exception(BCP, "wfs: Internal LatLon query error.");
 
           // Region solving
           std::string region;
@@ -698,7 +698,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation processing failed!", nullptr);
+      Fmi::Exception exception(BCP, "Operation processing failed!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       exception.addParameter(WFS_LANGUAGE, language);
@@ -707,7 +707,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -721,7 +721,7 @@ void StoredObsQueryHandler::check_parameter_names(const RequestParameterMap& par
     const std::string l_name = Fmi::ascii_tolower_copy(name);
     if (not lowerCaseParamNames.insert(l_name).second)
     {
-      throw SmartMet::Spine::Exception::Trace(BCP, "Duplicate parameter name '" + name + "'!")
+      throw Fmi::Exception::Trace(BCP, "Duplicate parameter name '" + name + "'!")
           .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
     }
 
@@ -731,7 +731,7 @@ void StoredObsQueryHandler::check_parameter_names(const RequestParameterMap& par
     if ((not m_support_qc_parameters or not support_quality_info) and
         SupportsQualityParameters::isQCParameter(name))
     {
-      throw SmartMet::Spine::Exception::Trace(BCP, "Invalid parameter!")
+      throw Fmi::Exception::Trace(BCP, "Invalid parameter!")
           .addDetail("Quality code parameter '" + name + "' is not allowed in this query.")
           .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
     }
@@ -770,7 +770,7 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
     const bool have_explicit_qc_params = qc_param_name_ref != param_names.end();
     if ((not m_support_qc_parameters or not support_quality_info) and have_explicit_qc_params)
     {
-      throw SmartMet::Spine::Exception::Trace(BCP, "Invalid parameter!")
+      throw Fmi::Exception::Trace(BCP, "Invalid parameter!")
           .addDetail("Quality code parameter '" + *qc_param_name_ref +
                      "' is not allowed in this query.")
           .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
@@ -783,7 +783,7 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
       // Check for duplicates
       if (not lowerCaseParamNames.insert(l_name).second)
       {
-        throw SmartMet::Spine::Exception::Trace(BCP, "Duplicate parameter name '" + name + "'!")
+        throw Fmi::Exception::Trace(BCP, "Duplicate parameter name '" + name + "'!")
             .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       }
 
@@ -845,7 +845,7 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
       }
       else
       {
-        throw SmartMet::Spine::Exception::Trace(BCP, "Unrecognozed parameter '" + name + "'")
+        throw Fmi::Exception::Trace(BCP, "Unrecognozed parameter '" + name + "'")
             .disableStackTrace();
       }
     }
@@ -853,7 +853,7 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation processing failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation processing failed!");
   }
 }
 
@@ -880,7 +880,7 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_obs_handler
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

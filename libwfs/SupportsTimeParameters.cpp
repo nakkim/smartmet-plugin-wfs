@@ -4,7 +4,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
 #include <boost/optional/optional_io.hpp>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <stdint.h>
 
 namespace bw = SmartMet::Plugin::WFS;
@@ -35,7 +35,7 @@ bw::SupportsTimeParameters::SupportsTimeParameters(bw::StoredQueryConfig::Ptr co
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -65,7 +65,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
         }
         else
         {
-          SmartMet::Spine::Exception exception(BCP, "Invalid hour value!");
+          Fmi::Exception exception(BCP, "Invalid hour value!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
           exception.addParameter("Requested hour", std::to_string(hour));
           throw exception;
@@ -88,7 +88,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
         }
         else
         {
-          SmartMet::Spine::Exception exception(BCP, "Invalid time value!");
+          Fmi::Exception exception(BCP, "Invalid time value!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
           exception.addParameter("Requested time", std::to_string(tm));
           throw exception;
@@ -101,7 +101,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
     {
       if (options->mode != SmartMet::Spine::TimeSeriesGeneratorOptions::TimeSteps)
       {
-        SmartMet::Spine::Exception exception(BCP, "Cannot use timestep option in this time mode!");
+        Fmi::Exception exception(BCP, "Cannot use timestep option in this time mode!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
       }
@@ -112,7 +112,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
       }
       else if (1440 % *time_step != 0)
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid time step value!");
+        Fmi::Exception exception(BCP, "Invalid time step value!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         exception.addParameter("Time step", std::to_string(*time_step));
         throw exception;
@@ -136,7 +136,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
       }
       else
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid number of time steps!");
+        Fmi::Exception exception(BCP, "Invalid number of time steps!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         exception.addParameter("Time steps", std::to_string(*num_steps));
         throw exception;
@@ -163,7 +163,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
     {
       if (*start_step > 10000)
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid start step value!");
+        Fmi::Exception exception(BCP, "Invalid start step value!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         exception.addParameter("Start step", std::to_string(*start_step));
         throw exception;
@@ -179,7 +179,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
     {
       if (!!options->timeSteps)
       {
-        SmartMet::Spine::Exception exception(
+        Fmi::Exception exception(
             BCP, "Cannot specify the time steps count and the end time simultaneusly!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
@@ -209,7 +209,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

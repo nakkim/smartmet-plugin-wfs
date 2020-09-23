@@ -7,7 +7,7 @@
 #include <boost/format.hpp>
 #include <macgyver/TypeName.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 using SmartMet::Plugin::WFS::ErrorResponseGenerator;
 
@@ -33,7 +33,7 @@ ErrorResponseGenerator::ErrorResponse ErrorResponseGenerator::create_error_respo
     {
       throw;
     }
-    catch (SmartMet::Spine::Exception& err)
+    catch (Fmi::Exception& err)
     {
       auto hash = handle_wfs_exception(err);
       add_query_info(hash, query_info);
@@ -70,17 +70,17 @@ ErrorResponseGenerator::ErrorResponse ErrorResponseGenerator::create_error_respo
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
-CTPP::CDT ErrorResponseGenerator::handle_wfs_exception(SmartMet::Spine::Exception& err)
+CTPP::CDT ErrorResponseGenerator::handle_wfs_exception(Fmi::Exception& err)
 {
   // std::cerr << err;
 
   CTPP::CDT hash;
 
-  const SmartMet::Spine::Exception* e = err.getExceptionByParameterName(WFS_LANGUAGE);
+  const Fmi::Exception* e = err.getExceptionByParameterName(WFS_LANGUAGE);
   if (e)
   {
     // The language information might be in a different exception
@@ -109,7 +109,7 @@ CTPP::CDT ErrorResponseGenerator::handle_wfs_exception(SmartMet::Spine::Exceptio
     hash["exceptionList"][0]["exceptionCode"] = "InvalidExceptionCode";
   }
 
-  const SmartMet::Spine::Exception* fe = err.getFirstException();
+  const Fmi::Exception* fe = err.getFirstException();
   hash["exceptionList"][0]["textList"][0] = fe->getWhat();
 
   unsigned int cnt = fe->getDetailCount();
@@ -137,7 +137,7 @@ CTPP::CDT ErrorResponseGenerator::handle_std_exception(const std::exception& err
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -156,7 +156,7 @@ CTPP::CDT ErrorResponseGenerator::handle_unknown_exception(processing_phase_t ph
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -176,7 +176,7 @@ std::string ErrorResponseGenerator::get_wfs_err_code(processing_phase_t phase)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -201,7 +201,7 @@ void ErrorResponseGenerator::add_query_info(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -239,7 +239,7 @@ void ErrorResponseGenerator::add_http_request_info(CTPP::CDT& hash,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -270,7 +270,7 @@ void ErrorResponseGenerator::add_stored_query_info(CTPP::CDT& hash, const Stored
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -295,7 +295,7 @@ std::string ErrorResponseGenerator::format_message(CTPP::CDT& hash)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -310,6 +310,6 @@ std::string ErrorResponseGenerator::format_log_message(CTPP::CDT& hash)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

@@ -5,7 +5,7 @@
 #include <macgyver/TimeParser.h>
 #include <macgyver/TypeName.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <stdexcept>
 #include <vector>
 
@@ -28,14 +28,14 @@ std::set<T> vect2set(const std::vector<T>& src)
       {
         std::ostringstream msg;
         msg << "Duplicate item '" << item << "' in value list";
-        throw SmartMet::Spine::Exception(BCP, msg.str());
+        throw Fmi::Exception(BCP, msg.str());
       }
     }
     return result;
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace
@@ -53,12 +53,12 @@ void bw::DataSetQuery::add_name(const std::string& name)
   {
     if (not names.insert(Fmi::ascii_tolower_copy(name)).second)
     {
-      throw SmartMet::Spine::Exception(BCP, "Duplicate name '" + name + "'!");
+      throw Fmi::Exception(BCP, "Duplicate name '" + name + "'!");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -68,12 +68,12 @@ void bw::DataSetQuery::add_level(int level)
   {
     if (not levels.insert(level).second)
     {
-      throw SmartMet::Spine::Exception(BCP, "Duplicate level '" + std::to_string(level) + "'!");
+      throw Fmi::Exception(BCP, "Duplicate level '" + std::to_string(level) + "'!");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -83,12 +83,12 @@ void bw::DataSetQuery::add_parameter(const std::string& parameter)
   {
     if (not parameters.insert(Fmi::ascii_tolower_copy(parameter)).second)
     {
-      throw SmartMet::Spine::Exception(BCP, "Duplicate parameter '" + parameter + "'!");
+      throw Fmi::Exception(BCP, "Duplicate parameter '" + parameter + "'!");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -99,7 +99,7 @@ void bw::DataSetQuery::set_interval(const boost::posix_time::ptime& begin,
   {
     if (begin.is_not_a_date_time() or end.is_not_a_date_time() or end < begin)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid time interval!");
+      Fmi::Exception exception(BCP, "Invalid time interval!");
       exception.addParameter("Start time", pt::to_simple_string(begin));
       exception.addParameter("End time", pt::to_simple_string(end));
       throw exception;
@@ -109,7 +109,7 @@ void bw::DataSetQuery::set_interval(const boost::posix_time::ptime& begin,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -158,17 +158,17 @@ bw::DataSetDefinition::DataSetDefinition(SmartMet::Spine::ConfigBase& config,
 
       if (not fs::exists(dir))
       {
-        throw SmartMet::Spine::Exception(BCP, "Directory '" + dir.string() + "' not found!");
+        throw Fmi::Exception(BCP, "Directory '" + dir.string() + "' not found!");
       }
 
       if (not fs::is_directory(dir))
       {
-        throw SmartMet::Spine::Exception(BCP, "Not a directory: '" + dir.string() + "'!");
+        throw Fmi::Exception(BCP, "Not a directory: '" + dir.string() + "'!");
       }
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Error while processing libconfig::Setting!", nullptr);
+      Fmi::Exception exception(BCP, "Error while processing libconfig::Setting!", nullptr);
 
       std::ostringstream msg;
       msg << exception.getStackTrace();
@@ -179,7 +179,7 @@ bw::DataSetDefinition::DataSetDefinition(SmartMet::Spine::ConfigBase& config,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -192,7 +192,7 @@ boost::shared_ptr<bw::DataSetDefinition> bw::DataSetDefinition::create(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -206,7 +206,7 @@ bool bw::DataSetDefinition::intersects(const bw::DataSetDefinition::box_t& bbox)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -233,7 +233,7 @@ std::vector<boost::filesystem::path> bw::DataSetDefinition::query_files(
         }
         catch (...)
         {
-          SmartMet::Spine::Exception exception(
+          Fmi::Exception exception(
               BCP, "Failed to extract origin time from the file name!", nullptr);
           exception.addDetail("File ignored.");
           exception.addParameter("File name", entry.string());
@@ -245,7 +245,7 @@ std::vector<boost::filesystem::path> bw::DataSetDefinition::query_files(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -263,7 +263,7 @@ pt::ptime bw::DataSetDefinition::extract_origintime(const boost::filesystem::pat
     }
     else
     {
-      throw SmartMet::Spine::Exception(BCP, "Failed to extract time string from '" + fn + "'!");
+      throw Fmi::Exception(BCP, "Failed to extract time string from '" + fn + "'!");
     }
 
     std::string s_tm =
@@ -272,7 +272,7 @@ pt::ptime bw::DataSetDefinition::extract_origintime(const boost::filesystem::pat
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

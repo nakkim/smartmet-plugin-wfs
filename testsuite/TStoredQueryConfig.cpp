@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE(test_single_scalar_parameter_without_default)
   BOOST_REQUIRE_NO_THROW(param.reset(new bw::ScalarParameterTemplate(*config, "p")));
 
   // No mandatory parameter provided
-  BOOST_REQUIRE_THROW(param->get<int64_t>(param_map), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(param->get<int64_t>(param_map), Fmi::Exception);
 
   // Single parameter provided (must succeed)
   std::array<int, 1> i001 = {{123}};
@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE(test_single_scalar_parameter_without_default)
   // Too many parameters provided
   std::array<int, 1> i002 = {{321}};
   Test::add_values<int, 1>(param_map, "foo", i002);
-  BOOST_REQUIRE_THROW(param->get<int64_t>(param_map), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(param->get<int64_t>(param_map), Fmi::Exception);
 }
 
 /****************************************************************************************/
@@ -162,7 +162,7 @@ BOOST_AUTO_TEST_CASE(test_single_scalar_parameter_with_default_value)
   // Too many parameters provided
   std::array<int, 1> i002 = {{321}};
   Test::add_values<int, 1>(param_map, "foo", i002);
-  BOOST_REQUIRE_THROW(param->get<int64_t>(param_map), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(param->get<int64_t>(param_map), Fmi::Exception);
 }
 
 /****************************************************************************************/
@@ -186,7 +186,7 @@ BOOST_AUTO_TEST_CASE(test_single_scalar_parameter_with_lower_limit)
   BOOST_REQUIRE_NO_THROW(param.reset(new bw::ScalarParameterTemplate(*config, "p")));
 
   // No mandatory parameter provided
-  BOOST_CHECK_THROW(val = param->get<pt::ptime>(param_map), SmartMet::Spine::Exception);
+  BOOST_CHECK_THROW(val = param->get<pt::ptime>(param_map), Fmi::Exception);
 
   // Single parameter provided and is in allowed range (must succeed)
   std::array<std::string, 1> s001 = {{"2012-01-02T00:11:22Z"}};
@@ -197,12 +197,12 @@ BOOST_AUTO_TEST_CASE(test_single_scalar_parameter_with_lower_limit)
   // Single parameter provided and is out of allowed range (must succeed)
   std::array<std::string, 1> s002 = {{"2011-12-31T00:11:22Z"}};
   Test::add_values<std::string, 1>(param_map, "foo", s002);
-  BOOST_CHECK_THROW(val = param->get<pt::ptime>(param_map), SmartMet::Spine::Exception);
+  BOOST_CHECK_THROW(val = param->get<pt::ptime>(param_map), Fmi::Exception);
 
   // Too many values provided
   std::array<std::string, 1> s003 = {{"2013-06-23T00:11:22Z"}};
   Test::add_values<std::string, 1>(param_map, "foo", s003);
-  BOOST_CHECK_THROW(param->get<int64_t>(param_map), SmartMet::Spine::Exception);
+  BOOST_CHECK_THROW(param->get<int64_t>(param_map), Fmi::Exception);
 }
 
 /****************************************************************************************/
@@ -229,12 +229,12 @@ BOOST_AUTO_TEST_CASE(test_single_mandatory_array_parameter_with_fixed_length)
   BOOST_REQUIRE_NO_THROW(param.reset(new bw::ArrayParameterTemplate(*config, "p", 2, 2)));
 
   // Mandatory array with 2 elements required not provided at all
-  BOOST_CHECK_THROW(param->get_double_array(param_map), SmartMet::Spine::Exception);
+  BOOST_CHECK_THROW(param->get_double_array(param_map), Fmi::Exception);
 
   // Mandatory array with 2 elements required but only 1 provided
   std::array<int, 1> i001 = {{123}};
   Test::add_values<int, 1>(param_map, "foo", i001);
-  BOOST_CHECK_THROW(param->get_double_array(param_map), SmartMet::Spine::Exception);
+  BOOST_CHECK_THROW(param->get_double_array(param_map), Fmi::Exception);
 
   // Mandatory array with 2 elements required, 2 provided
   std::array<int, 1> i002 = {{321}};
@@ -250,5 +250,5 @@ BOOST_AUTO_TEST_CASE(test_single_mandatory_array_parameter_with_fixed_length)
   // Mandatory array with 2 elements required, too many provided
   std::array<int, 1> i003 = {{999}};
   Test::add_values<int, 1>(param_map, "foo", i003);
-  BOOST_CHECK_THROW(param->get_double_array(param_map), SmartMet::Spine::Exception);
+  BOOST_CHECK_THROW(param->get_double_array(param_map), Fmi::Exception);
 }

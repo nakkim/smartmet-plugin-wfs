@@ -3,7 +3,7 @@
 #include <boost/foreach.hpp>
 #include <macgyver/Base64.h>
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <algorithm>
 #include <cstdio>
 #include <set>
@@ -45,7 +45,7 @@ OBStream::OBStream() : reserved(BLOCK_SIZE), data(new uint8_t[BLOCK_SIZE]), ind(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -60,7 +60,7 @@ std::string OBStream::raw_data() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -72,7 +72,7 @@ OBStream::operator std::string() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -104,7 +104,7 @@ void OBStream::put_bit(bool val)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -121,7 +121,7 @@ void OBStream::put_bits(unsigned value, int num)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -134,7 +134,7 @@ void OBStream::put_int(int64_t value)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -154,7 +154,7 @@ void OBStream::put_unsigned(uint64_t value)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -181,7 +181,7 @@ void OBStream::put_double(double value)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -202,7 +202,7 @@ void OBStream::put_char(char c)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -218,7 +218,7 @@ void OBStream::put_string(const std::string& text)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -239,7 +239,7 @@ void OBStream::put_ptime(const boost::posix_time::ptime& tm)
 	} else if (tm.is_pos_infinity()) {
 	  put_bit(1);
 	} else {
-	  throw SmartMet::Spine::Exception::Trace(BCP, "Not supported special time value '"
+	  throw Fmi::Exception::Trace(BCP, "Not supported special time value '"
 						  + pt::to_simple_string(tm));
 	}
       }
@@ -257,7 +257,7 @@ void OBStream::put_ptime(const boost::posix_time::ptime& tm)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -324,12 +324,12 @@ void OBStream::put_value(const SmartMet::Spine::Value& value)
     {
       std::ostringstream msg;
       msg << "Unsupported type '" << Fmi::demangle_cpp_type_name(type.name()) << "'";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -359,7 +359,7 @@ void OBStream::put_value_map(const std::multimap<std::string, SmartMet::Spine::V
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -372,7 +372,7 @@ IBStream::IBStream(const uint8_t* data, std::size_t length)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -390,7 +390,7 @@ unsigned IBStream::get_bit()
 
     if (pos >= length)
     {
-      throw SmartMet::Spine::Exception(BCP, "Unexpected end of bitstream!");
+      throw Fmi::Exception(BCP, "Unexpected end of bitstream!");
     }
 
     const uint8_t mask = 0x80 >> bit_pos;
@@ -401,7 +401,7 @@ unsigned IBStream::get_bit()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -424,7 +424,7 @@ unsigned IBStream::get_bits(int num)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -444,7 +444,7 @@ uint64_t IBStream::get_unsigned()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -458,7 +458,7 @@ int64_t IBStream::get_int()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -481,7 +481,7 @@ double IBStream::get_double()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -499,7 +499,7 @@ char IBStream::get_char()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -515,7 +515,7 @@ std::string IBStream::get_string()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -550,12 +550,12 @@ boost::posix_time::ptime IBStream::get_ptime()
       } else {
 	return pt::not_a_date_time;
       }
-      throw SmartMet::Spine::Exception(BCP, "Special time values are not yet supported");
+      throw Fmi::Exception(BCP, "Special time values are not yet supported");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -614,12 +614,12 @@ SmartMet::Spine::Value IBStream::get_value()
         return result;
 
       default:
-        throw SmartMet::Spine::Exception(BCP, "Unknown type code in input bitstream!");
+        throw Fmi::Exception(BCP, "Unknown type code in input bitstream!");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -642,7 +642,7 @@ std::multimap<std::string, SmartMet::Spine::Value> IBStream::get_value_map()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

@@ -27,7 +27,7 @@ bw::GetFeatureByIdHandler::GetFeatureByIdHandler(SmartMet::Spine::Reactor* react
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -48,7 +48,7 @@ void bw::GetFeatureByIdHandler::query(const StoredQuery& query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -60,7 +60,7 @@ std::vector<std::string> bw::GetFeatureByIdHandler::get_return_types() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -80,7 +80,7 @@ boost::shared_ptr<bw::StoredQueryHandlerBase> wfs_get_feature_by_id_handler_crea
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

@@ -35,7 +35,7 @@ bw::StoredAtomQueryHandlerBase::StoredAtomQueryHandlerBase(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -73,7 +73,7 @@ void bw::StoredAtomQueryHandlerBase::query(const bw::StoredQuery& query,
     hash["protocol"] = QueryBase::PROTOCOL_SUBST;
 
     if(!hostname)
-      throw Spine::Exception(BCP, "Hostname unknown");
+      throw Fmi::Exception(BCP, "Hostname unknown");
     
     CTPP::CDT h_hosts;
     h_hosts["wms"] = get_config()->get_hosts().getWMSHost(*hostname);
@@ -92,7 +92,7 @@ void bw::StoredAtomQueryHandlerBase::query(const bw::StoredQuery& query,
 
     if ((debug_level > 1) and param_sets.empty())
     {
-      SmartMet::Spine::Exception exception(BCP, "No data available!");
+      Fmi::Exception exception(BCP, "No data available!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception.disableStackTrace();
     }
@@ -126,7 +126,7 @@ void bw::StoredAtomQueryHandlerBase::query(const bw::StoredQuery& query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -144,7 +144,7 @@ void bw::StoredAtomQueryHandlerBase::update_parameters(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -183,7 +183,7 @@ std::vector<std::string> bw::StoredAtomQueryHandlerBase::get_param_callback(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -206,7 +206,7 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_stored_atom
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

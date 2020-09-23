@@ -45,7 +45,7 @@ bw::GetDataSetByIdHandler::GetDataSetByIdHandler(SmartMet::Spine::Reactor* react
           config->get_optional_config_param<std::string>(item, "namespace", "FI");
       if (not data_set_map.insert(std::make_pair(ds_id, sq_id)).second)
       {
-        throw SmartMet::Spine::Exception(BCP, "Duplicate data set ID '" + ds_id + "'!");
+        throw Fmi::Exception(BCP, "Duplicate data set ID '" + ds_id + "'!");
       }
 
       plugin_data.get_capabilities().register_data_set(ds_id, ns);
@@ -53,7 +53,7 @@ bw::GetDataSetByIdHandler::GetDataSetByIdHandler(SmartMet::Spine::Reactor* react
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -72,14 +72,14 @@ void bw::GetDataSetByIdHandler::query(const StoredQuery& query,
     (void)language;
     (void)output;
 
-    SmartMet::Spine::Exception exception(BCP, "Operation processing failed!");
+    Fmi::Exception exception(BCP, "Operation processing failed!");
     exception.addDetail("The method not expected to be called (should have been redirected).");
     exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
     throw exception;
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -102,7 +102,7 @@ bool bw::GetDataSetByIdHandler::redirect(const StoredQuery& query,
         msg << "'" << x.first << "'";
         start = false;
       }
-      SmartMet::Spine::Exception exception(BCP, "Data set ID '" + data_set_id + "' not found!");
+      Fmi::Exception exception(BCP, "Data set ID '" + data_set_id + "' not found!");
       exception.addDetail(msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception.disableStackTrace();
@@ -115,7 +115,7 @@ bool bw::GetDataSetByIdHandler::redirect(const StoredQuery& query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -128,7 +128,7 @@ std::vector<std::string> bw::GetDataSetByIdHandler::get_return_types() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -148,7 +148,7 @@ boost::shared_ptr<bw::StoredQueryHandlerBase> wfs_get_data_set_by_id_handler_cre
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

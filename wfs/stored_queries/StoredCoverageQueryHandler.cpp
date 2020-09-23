@@ -30,7 +30,7 @@ bw::StoredCoverageQueryHandler::StoredCoverageQueryHandler(
     // check number of limits
     if ((itsLimits.size() & 1) != 0)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid parameter value!");
+      Fmi::Exception exception(BCP, "Invalid parameter value!");
       exception.addDetail(
           "Parameter 'contour_params.limits' must contain even amount of decimal numbers.");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
@@ -39,7 +39,7 @@ bw::StoredCoverageQueryHandler::StoredCoverageQueryHandler(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -52,7 +52,7 @@ void bw::StoredCoverageQueryHandler::clipGeometry(OGRGeometryPtr& pGeom, Fmi::Bo
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -124,7 +124,7 @@ std::vector<bw::ContourQueryResultPtr> bw::StoredCoverageQueryHandler::processQu
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -150,7 +150,7 @@ boost::shared_ptr<bw::ContourQueryParameter> bw::StoredCoverageQueryHandler::get
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -170,7 +170,7 @@ void bw::StoredCoverageQueryHandler::setResultHashValue(CTPP::CDT& resultHash,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

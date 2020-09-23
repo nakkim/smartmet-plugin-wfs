@@ -6,7 +6,7 @@
 #include "XmlUtils.h"
 #include <boost/lambda/lambda.hpp>
 #include <macgyver/StringConversion.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 XERCES_CPP_NAMESPACE_USE;
 
@@ -113,7 +113,7 @@ void bw::AdHocQuery::create_from_kvp(const std::string& language,
     // Sanity check: not a request
     if (not request)
     {
-      SmartMet::Spine::Exception exception(BCP, "Not a request!");
+      Fmi::Exception exception(BCP, "Not a request!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception.disableStackTrace();
     }
@@ -121,7 +121,7 @@ void bw::AdHocQuery::create_from_kvp(const std::string& language,
     // Sanity check: not get feature or get property value
     if (not ba::iequals(*request, "getFeature") and not ba::iequals(*request, "getPropertyValue"))
     {
-      SmartMet::Spine::Exception exception(BCP,
+      Fmi::Exception exception(BCP,
                                            "Expected 'getFeature' or 'getPropertyValue' request!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception.disableStackTrace();
@@ -130,7 +130,7 @@ void bw::AdHocQuery::create_from_kvp(const std::string& language,
     // Sanity check: have typenames?
     if (type_names.empty())
     {
-      SmartMet::Spine::Exception exception(BCP, "No 'TYPENAMES' parameter found!");
+      Fmi::Exception exception(BCP, "No 'TYPENAMES' parameter found!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception.disableStackTrace();
     }
@@ -143,7 +143,7 @@ void bw::AdHocQuery::create_from_kvp(const std::string& language,
     // Nothing to do, if no query-ids found
     if (stored_query_ids.empty())
     {
-      SmartMet::Spine::Exception exception(BCP, "Failed to extract 'storedquery_id'!");
+      Fmi::Exception exception(BCP, "Failed to extract 'storedquery_id'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception.disableStackTrace();
     }
@@ -155,7 +155,7 @@ void bw::AdHocQuery::create_from_kvp(const std::string& language,
     }
     else if (resource_id)
     {
-      SmartMet::Spine::Exception exception(BCP, "RESOURCEID not implemented!");
+      Fmi::Exception exception(BCP, "RESOURCEID not implemented!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception.disableStackTrace();
     }
@@ -192,7 +192,7 @@ void bw::AdHocQuery::create_from_kvp(const std::string& language,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -217,7 +217,7 @@ void bw::AdHocQuery::create_filter_query_from_kvp(
       const auto* root = xps.get_document()->getDocumentElement();
       if (root == nullptr)
       {
-        SmartMet::Spine::Exception exception(BCP, "Failed to access filter 'TMP' element!");
+        Fmi::Exception exception(BCP, "Failed to access filter 'TMP' element!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception.disableStackTrace();
       }
@@ -226,7 +226,7 @@ void bw::AdHocQuery::create_filter_query_from_kvp(
 
       if (root_name != "fes:Filter")
       {
-        SmartMet::Spine::Exception exception(BCP, "Failed to parse filter xml!");
+        Fmi::Exception exception(BCP, "Failed to parse filter xml!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception.disableStackTrace();
       }
@@ -254,14 +254,14 @@ void bw::AdHocQuery::create_filter_query_from_kvp(
     }
     else
     {
-      SmartMet::Spine::Exception exception(BCP, "Selected 'FILTER_LANGUAGE' not implemented!");
+      Fmi::Exception exception(BCP, "Selected 'FILTER_LANGUAGE' not implemented!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception.disableStackTrace();
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -293,7 +293,7 @@ void bw::AdHocQuery::create_bbox_query_from_kvp(
         std::ostringstream msg;
         msg << param_name << "="
             << "'" << bbox_string << "'";
-        SmartMet::Spine::Exception exception(BCP, "Stored query does not support BBOX!");
+        Fmi::Exception exception(BCP, "Stored query does not support BBOX!");
         exception.addDetail(msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception.disableStackTrace();
@@ -338,7 +338,7 @@ void bw::AdHocQuery::create_bbox_query_from_kvp(
           msg << "While parsing value '" << bbox_string << "' of request parameter '" << param_name
               << "'";
 
-          SmartMet::Spine::Exception exception(BCP, "Operation parsing failed!", nullptr);
+          Fmi::Exception exception(BCP, "Operation parsing failed!", nullptr);
           exception.addDetail(msg.str());
           if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
             exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
@@ -350,7 +350,7 @@ void bw::AdHocQuery::create_bbox_query_from_kvp(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -376,7 +376,7 @@ void bw::AdHocQuery::create_from_xml(const std::string& language,
     // Sanity check: do we have anything to go on?
     if (stored_query_ids.empty())
     {
-      SmartMet::Spine::Exception exception(BCP, "Failed to get stored query ID!");
+      Fmi::Exception exception(BCP, "Failed to get stored query ID!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception.disableStackTrace();
     }
@@ -427,7 +427,7 @@ void bw::AdHocQuery::create_from_xml(const std::string& language,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -448,7 +448,7 @@ void bw::AdHocQuery::get_xml_typenames(const xercesc::DOMElement& query_root,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -472,7 +472,7 @@ void bw::AdHocQuery::extract_xml_parameters(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -492,7 +492,7 @@ void bw::AdHocQuery::create_query(boost::shared_ptr<const bw::StoredQueryHandler
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -518,7 +518,7 @@ void bw::AdHocQuery::add_projection_clause_from_xml(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -560,7 +560,7 @@ void bw::AdHocQuery::add_projection_clause(const std::vector<std::string>& prope
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -591,7 +591,7 @@ void bw::AdHocQuery::replace_aliases_from_xml(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -609,7 +609,7 @@ void bw::AdHocQuery::replace_aliases(const std::vector<std::string>& aliases,
       {
         std::ostringstream msg;
         msg << "The number of aliases does not match the number of type names.";
-        SmartMet::Spine::Exception exception(BCP, msg.str());
+        Fmi::Exception exception(BCP, msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception.disableStackTrace();
       }
@@ -639,7 +639,7 @@ void bw::AdHocQuery::replace_aliases(const std::vector<std::string>& aliases,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -672,7 +672,7 @@ void bw::AdHocQuery::process_parms(const std::string& language,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -701,7 +701,7 @@ void bw::AdHocQuery::extract_filter_elements(const xercesc::DOMElement& root_ele
       // fes:Not filtering element is not supported.
       if (element_name == "fes:not")
       {
-        SmartMet::Spine::Exception exception(BCP,
+        Fmi::Exception exception(BCP,
                                              "The 'fes:not' filtering element is not supported!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception.disableStackTrace();
@@ -828,7 +828,7 @@ void bw::AdHocQuery::extract_filter_elements(const xercesc::DOMElement& root_ele
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -945,7 +945,7 @@ void bw::AdHocQuery::handle_end_of_and_element(std::vector<boost::shared_ptr<Que
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1126,7 +1126,7 @@ void bw::AdHocQuery::read_comparison_operation(const xercesc::DOMElement& elemen
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1199,7 +1199,7 @@ void bw::AdHocQuery::read_query_parameter(const xercesc::DOMElement& element,
           msg << sep << "'" << *it << "'";
           sep = ", ";
         }
-        SmartMet::Spine::Exception exception(BCP, msg.str());
+        Fmi::Exception exception(BCP, msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception.disableStackTrace();
       }
@@ -1236,7 +1236,7 @@ void bw::AdHocQuery::read_query_parameter(const xercesc::DOMElement& element,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1283,7 +1283,7 @@ void bw::AdHocQuery::copy_params(const AdHocQuery* src_query, AdHocQuery* target
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1303,7 +1303,7 @@ void bw::AdHocQuery::filter(boost::shared_ptr<QueryBase> query, bwx::XPathSnapsh
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1316,7 +1316,7 @@ bool bw::AdHocQuery::is_query_used(const AdHocQuery* query)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1337,7 +1337,7 @@ void bw::AdHocQuery::get_stored_query_ids_from_typenames(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1349,7 +1349,7 @@ bool is_query_parameter(const std::string& element_name)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1384,7 +1384,7 @@ void get_comparison_operation(const std::string& element_name, std::string& oper
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1401,7 +1401,7 @@ bool is_comparison_operation(const std::string& element_name)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1428,7 +1428,7 @@ bool read_value_reference(const SmartMet::Spine::Value& value, std::string& valu
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1453,13 +1453,13 @@ void check_param_max_occurs(int actual_count,
       }
       msg << " (found " << actual_count << " occurances)";
 
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception.disableStackTrace();
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

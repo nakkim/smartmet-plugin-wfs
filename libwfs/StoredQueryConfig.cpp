@@ -6,7 +6,7 @@
 #include <boost/filesystem.hpp>
 #include <macgyver/TypeName.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
@@ -40,7 +40,7 @@ SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(const std::string& c
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -65,7 +65,7 @@ SmartMet::Plugin::WFS::StoredQueryConfig::StoredQueryConfig(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -118,7 +118,7 @@ void SmartMet::Plugin::WFS::StoredQueryConfig::warn_about_unused_params(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -161,7 +161,7 @@ void SmartMet::Plugin::WFS::StoredQueryConfig::parse_config()
         {
           if (format.empty())
           {
-            throw SmartMet::Spine::Exception(
+            throw Fmi::Exception(
                 BCP, "Empty format in the configuration file '" + get_file_name() + "'!");
           }
         }
@@ -221,7 +221,7 @@ void SmartMet::Plugin::WFS::StoredQueryConfig::parse_config()
             msg << "Specifying parameter limits not supported"
                 << " for parameter '" << item.name << "' in:\n";
             dump_setting(msg, c_item, 16);
-            throw SmartMet::Spine::Exception(BCP, msg.str());
+            throw Fmi::Exception(BCP, msg.str());
           }
 
           Fmi::ascii_tolower(item.name);
@@ -231,7 +231,7 @@ void SmartMet::Plugin::WFS::StoredQueryConfig::parse_config()
             std::ostringstream msg;
             msg << "Duplicate description of stored query parameter '" << item.name
                 << " in configuration file '" << get_file_name() << "'";
-            throw SmartMet::Spine::Exception(BCP, msg.str());
+            throw Fmi::Exception(BCP, msg.str());
           }
         }
         catch (const std::exception& err)
@@ -241,7 +241,7 @@ void SmartMet::Plugin::WFS::StoredQueryConfig::parse_config()
           dump_setting(msg, c_item, 16);
           msg << std::endl;
           std::cerr << msg.str();
-          throw SmartMet::Spine::Exception(BCP, msg.str());
+          throw Fmi::Exception(BCP, msg.str());
         }
 
         param_names.push_back(item.name);
@@ -292,7 +292,7 @@ void SmartMet::Plugin::WFS::StoredQueryConfig::parse_config()
 
       if (have_error)
       {
-        throw SmartMet::Spine::Exception(
+        throw Fmi::Exception(
             BCP, "Conflicting parameter specifications found for stored query '" + query_id + "'!");
       }
     }
@@ -305,7 +305,7 @@ void SmartMet::Plugin::WFS::StoredQueryConfig::parse_config()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -322,12 +322,12 @@ std::string SmartMet::Plugin::WFS::StoredQueryConfig::get_template_fn() const
       std::ostringstream msg;
       msg << "Template file name is not available"
           << " for stored request '" << query_id << "'";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -339,7 +339,7 @@ std::string SmartMet::Plugin::WFS::StoredQueryConfig::get_title(const std::strin
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -352,7 +352,7 @@ std::string SmartMet::Plugin::WFS::StoredQueryConfig::get_abstract(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -365,7 +365,7 @@ std::string SmartMet::Plugin::WFS::StoredQueryConfig::get_param_title(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -378,7 +378,7 @@ std::string SmartMet::Plugin::WFS::StoredQueryConfig::get_param_abstract(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -427,7 +427,7 @@ void SmartMet::Plugin::WFS::StoredQueryConfig::ParamDesc::dump(std::ostream& str
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -444,7 +444,7 @@ void SmartMet::Plugin::WFS::StoredQueryConfig::dump_params(std::ostream& stream)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -473,7 +473,7 @@ std::time_t SmartMet::Plugin::WFS::StoredQueryConfig::config_write_time() const
   {
     std::ostringstream msg;
     msg << "Failed to get last write time of '" << get_file_name() << "' file.";
-    throw SmartMet::Spine::Exception::Trace(BCP, msg.str());
+    throw Fmi::Exception::Trace(BCP, msg.str());
   }
 }
 
@@ -486,7 +486,7 @@ bool SmartMet::Plugin::WFS::StoredQueryConfig::last_write_time_changed() const
 
     return true;
   }
-  catch (const SmartMet::Spine::Exception& e)
+  catch (const Fmi::Exception& e)
   {
     throw;
   }
@@ -494,7 +494,7 @@ bool SmartMet::Plugin::WFS::StoredQueryConfig::last_write_time_changed() const
   {
     std::ostringstream msg;
     msg << "Failed to test write time of '" << get_file_name() << "' file.";
-    throw SmartMet::Spine::Exception::Trace(BCP, msg.str());
+    throw Fmi::Exception::Trace(BCP, msg.str());
   }
 }
 
