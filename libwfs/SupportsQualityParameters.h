@@ -45,9 +45,6 @@ class SupportsQualityParameters : protected virtual SupportsExtraHandlerParams,
   std::vector<std::string>::const_iterator firstQCParameter(
       const std::vector<std::string>& parameters) const;
 
- private:
-  bool m_supportQCParameters;
-
  protected:
   static const char* P_QUALITY_INFO;
 };
