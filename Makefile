@@ -97,7 +97,7 @@ configtest:
 	$$ok
 
 $(LIBFILE): $(OBJS) $(LIBWFS)
-	$(CC) -shared -rdynamic $(LDFLAGS) -o $@ $(OBJS) $(LIBWFS) $(LIBS)
+	$(CXX) -shared -rdynamic $(LDFLAGS) -o $@ $(OBJS) $(LIBWFS) $(LIBS)
 
 $(LIBWFS): $(LIBWFS_OBJS)
 	ar rcs $@ $(LIBWFS_OBJS)
@@ -202,7 +202,7 @@ headertest:
 	echo $$hdr; \
 	echo "#include \"$$hdr\"" > /tmp/$(SPEC).cpp; \
 	echo "int main() { return 0; }" >> /tmp/$(SPEC).cpp; \
-	$(CC) $(CFLAGS) $(INCLUDES) -o /dev/null /tmp/$(SPEC).cpp $(LIBS); \
+	$(CXX) $(CFLAGS) $(INCLUDES) -o /dev/null /tmp/$(SPEC).cpp $(LIBS); \
 	done
 
 cnf/templates/%.c2t: cnf/templates/%.template ; ( cd cnf/templates && $(PREFIX)/bin/ctpp2c $(notdir $<) $(notdir $@) )
