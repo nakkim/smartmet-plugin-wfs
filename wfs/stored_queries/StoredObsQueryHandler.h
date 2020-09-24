@@ -108,10 +108,8 @@ class StoredObsQueryHandler : public StoredQueryHandlerBase,
   int lon_ind;
   int lat_ind;
   int height_ind;
-  int time_ind;
   int name_ind;
   int dist_ind;
-  int region_ind;
   int direction_ind;
   int wmo_ind;
 
