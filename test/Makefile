@@ -4,85 +4,16 @@ TOP = $(TEST_TOP)/..
 
 TEST_DIRECTORIES = base real
 
+REQUIRES_GDAL = yes
+
+include ../common.mk
+
 # Compiler options
-
-DEFINES = -DUNIX -D_REENTRANT
-
-FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter -Wno-unknown-pragmas \
-      -Wcast-align \
-      -Wcast-qual \
-      -Wno-inline \
-      -Wno-multichar \
-      -Wno-pmf-conversions \
-      -Woverloaded-virtual  \
-      -Wpointer-arith \
-      -Wredundant-decls \
-      -Wwrite-strings
-
-ifeq ($(TSAN), yes)
-  FLAGS += -fsanitize=thread
-endif
-ifeq ($(ASAN), yes)
-  FLAGS += -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=undefined -fsanitize-address-use-after-scope
-endif
-
-# Compile options in detault, debug and profile modes
-
-CFLAGS_RELEASE = $(DEFINES) $(FLAGS) -DNDEBUG -O2 -g
-CFLAGS_DEBUG   = $(DEFINES) $(FLAGS) -Werror  -O0 -g
 
 ARFLAGS = -r
 DEFINES = -DUNIX -D_REENTRANT
 
-ifneq (,$(findstring debug,$(MAKECMDGOALS)))
-  override CFLAGS += $(CFLAGS_DEBUG)
-else
-  override CFLAGS += $(CFLAGS_RELEASE)
-endif
-
-# Installation directories
-
-processor := $(shell uname -p)
-
-ifeq ($(origin PREFIX), undefined)
-  PREFIX = /usr
-else
-  PREFIX = $(PREFIX)
-endif
-
-ifeq ($(processor), x86_64)
-  libdir = $(PREFIX)/lib64
-else
-  libdir = $(PREFIX)/lib
-endif
-
-bindir = $(PREFIX)/bin
-includedir = $(PREFIX)/include
-datadir = $(PREFIX)/share
-enginedir = $(datadir)/smartmet/engines
-plugindir = $(datadir)/smartmet/plugins
-objdir = obj
-
-#
-
-# Boost 1.69
-
-ifneq "$(wildcard /usr/include/boost169)" ""
-  INCLUDES += -isystem /usr/include/boost169
-  LIBS += -L/usr/lib64/boost169
-  FLAGS += -Wno-overloaded-virtual -Wno-redundant-decls
-endif
-
-ifneq "$(wildcard /usr/gdal30/include)" ""
-  INCLUDES += -isystem /usr/gdal30/include
-  LIBS += -L$(PREFIX)/gdal30/lib
-else
-  INCLUDES += -isystem /usr/include/gdal
-endif
-
-INCLUDES += \
-	-I$(includedir)/smartmet \
-	-isystem $(includedir)/jsoncpp
+INCLUDES += -isystem $(includedir)/jsoncpp
 
 LIBS += \
 	-L$(libdir) \
