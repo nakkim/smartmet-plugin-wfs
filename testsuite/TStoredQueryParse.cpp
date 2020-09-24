@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE(test_extract_xml_stored_query_id)
                 "param_2");
 
   std::string id;
-  BOOST_CHECK_THROW(not bw::StoredQuery::get_xml_stored_query_id(*root, &id),
+  BOOST_CHECK_THROW(bw::StoredQuery::get_xml_stored_query_id(*root, &id),
                     Fmi::Exception);
 
   bwx::set_attr(*root, "id", "foo::bar");

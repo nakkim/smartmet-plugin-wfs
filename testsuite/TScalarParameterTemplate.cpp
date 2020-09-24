@@ -377,6 +377,7 @@ BOOST_AUTO_TEST_CASE(simple_param_from_array_no_default)
   BOOST_CHECK_THROW(pt->get<std::string>(param_map), Fmi::Exception);
 }
 
+#if 0
 namespace
 {
 std::ostream& operator<<(std::ostream& ost, const boost::posix_time::ptime& t)
@@ -385,6 +386,7 @@ std::ostream& operator<<(std::ostream& ost, const boost::posix_time::ptime& t)
   return ost;
 }
 }
+#endif
 
 BOOST_AUTO_TEST_CASE(simple_param_from_array_with_default)
 {
@@ -489,7 +491,7 @@ BOOST_AUTO_TEST_CASE(using_absent_parameters)
   RequestParameterMap param_map;
   add(param_map, "test", 1.0);
   BOOST_CHECK_THROW(pt->get<double>(param_map), Fmi::Exception);
-  BOOST_CHECK_NO_THROW(not pt->get(param_map, &foo));
+  BOOST_CHECK_NO_THROW(pt->get(param_map, &foo));
 }
 
 

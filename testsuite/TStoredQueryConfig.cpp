@@ -23,6 +23,7 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
   return NULL;
 }
 
+#if 0
 namespace
 {
 void log_error()
@@ -44,6 +45,7 @@ void log_error()
   }
 }
 }
+#endif
 
 #define NO_THROW(x)                      \
   try                                    \
