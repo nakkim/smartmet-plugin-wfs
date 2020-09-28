@@ -2,7 +2,7 @@
 #include <boost/foreach.hpp>
 #include <macgyver/TypeName.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
@@ -25,7 +25,7 @@ bool bw::WfsCapabilities::register_operation(const std::string& operation)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -38,7 +38,7 @@ std::set<std::string> bw::WfsCapabilities::get_operations() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -52,7 +52,7 @@ const bw::WfsFeatureDef* bw::WfsCapabilities::find_feature(const std::string& na
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -70,12 +70,12 @@ void bw::WfsCapabilities::register_feature(boost::shared_ptr<WfsFeatureDef>& fea
     }
     else
     {
-      throw SmartMet::Spine::Exception(BCP, "The feature '" + name + "' is already registered!");
+      throw Fmi::Exception(BCP, "The feature '" + name + "' is already registered!");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -89,7 +89,7 @@ std::map<std::string, boost::shared_ptr<bw::WfsFeatureDef> > bw::WfsCapabilities
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -116,14 +116,14 @@ void bw::WfsCapabilities::register_feature_use(const std::string& name)
       if (sep == "")
         msg << " <none>";
 
-      SmartMet::Spine::Exception exception(BCP, "Feature '" + name + "' not found!");
+      Fmi::Exception exception(BCP, "Feature '" + name + "' not found!");
       exception.addDetail(msg.str());
       throw exception;
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -136,7 +136,7 @@ std::set<std::string> bw::WfsCapabilities::get_used_features() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -149,12 +149,12 @@ void bw::WfsCapabilities::register_data_set(const std::string& code, const std::
     {
       std::ostringstream msg;
       msg << "Duplicate data set registration: code='" << code << "' namespace='" << ns << "'";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -167,6 +167,6 @@ std::map<std::string, std::string> bw::WfsCapabilities::get_data_set_map() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

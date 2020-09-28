@@ -6,7 +6,7 @@
 #include <macgyver/TypeName.h>
 #include <newbase/NFmiPoint.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/Value.h>
 #include <sstream>
 #include <stdexcept>
@@ -46,7 +46,7 @@ StoredQueryHandlerBase::StoredQueryHandlerBase(SmartMet::Spine::Reactor* reactor
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -59,7 +59,7 @@ void StoredQueryHandlerBase::perform_init()
     execute_init_actions();
     init_handler();
   } catch (...) {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -73,7 +73,7 @@ std::string StoredQueryHandlerBase::get_query_name() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -85,7 +85,7 @@ std::string StoredQueryHandlerBase::get_title(const std::string& language) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -97,7 +97,7 @@ std::vector<std::string> StoredQueryHandlerBase::get_return_types() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -128,7 +128,7 @@ boost::shared_ptr<RequestParameterMap> StoredQueryHandlerBase::process_params(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -143,7 +143,7 @@ bool StoredQueryHandlerBase::redirect(const StoredQuery& query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -155,7 +155,7 @@ const StoredQueryMap& StoredQueryHandlerBase::get_stored_query_map() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -171,13 +171,13 @@ boost::shared_ptr<Fmi::TemplateFormatter> StoredQueryHandlerBase::get_formatter(
     else
     {
       if (!template_file)
-        throw Spine::Exception(BCP, "Template formatter not set for stored query!");
+        throw Fmi::Exception(BCP, "Template formatter not set for stored query!");
       return plugin_impl.get_stored_query_formatter(*template_file);
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -197,7 +197,7 @@ void StoredQueryHandlerBase::format_output(CTPP::CDT& hash,
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Template formatter exception", nullptr);
+      Fmi::Exception exception(BCP, "Template formatter exception", nullptr);
       exception.addDetail(formatter_log.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
@@ -205,7 +205,7 @@ void StoredQueryHandlerBase::format_output(CTPP::CDT& hash,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -226,7 +226,7 @@ std::pair<std::string, std::string> StoredQueryHandlerBase::get_2D_coord(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -244,7 +244,7 @@ void StoredQueryHandlerBase::set_2D_coord(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }  // namespace WFS
 
@@ -260,7 +260,7 @@ void StoredQueryHandlerBase::set_2D_coord(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

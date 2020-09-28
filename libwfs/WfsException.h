@@ -20,7 +20,7 @@
 #define WFS_INVALID_PARAMETER_VALUE "InvalidParameterValue"
 #define WFS_VERSION_NEGOTIATION_FAILED "VersionNegotiationFailed"
 
-#if 0  // ### REPLACED BY SmartMet::Spine::Exception
+#if 0  // ### REPLACED BY Fmi::Exception
 
 namespace SmartMet
 {

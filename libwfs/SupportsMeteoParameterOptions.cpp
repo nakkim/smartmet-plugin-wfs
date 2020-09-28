@@ -3,7 +3,7 @@
 #include "WfsException.h"
 #include <boost/algorithm/string.hpp>
 #include <macgyver/StringConversion.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <stdint.h>
 
 namespace bw = SmartMet::Plugin::WFS;
@@ -37,7 +37,7 @@ bw::SupportsMeteoParameterOptions::SupportsMeteoParameterOptions(
 
       if (precision > 15)
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid precision value!");
+        Fmi::Exception exception(BCP, "Invalid precision value!");
         exception.addDetail("Allowed precision for a meteo parameter is between 0 and 15.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         exception.addParameter("Requested precision", std::to_string(precision));
@@ -53,7 +53,7 @@ bw::SupportsMeteoParameterOptions::SupportsMeteoParameterOptions(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -73,7 +73,7 @@ bw::SupportsMeteoParameterOptions::get_meteo_parameter_options(const std::string
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -92,12 +92,12 @@ void bw::SupportsMeteoParameterOptions::setDefaultPrecision(const size_t& value)
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::SupportsMeteoParameterOptions::setDefaultPrecision: value "
           << value << " is out of range " << lower_limit << ".." << upper_limit;
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -119,12 +119,12 @@ void bw::SupportsMeteoParameterOptions::setDefaultMissingText(const std::string&
              "text "
              "length "
           << text_length << " is out of range " << lower_limit << ".." << upper_limit;
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -143,12 +143,12 @@ void bw::SupportsMeteoParameterOptions::setDefaultMissingValue(const double& val
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::SupportsMeteoParameterOptions::setDefaultMissingValue: value "
           << value << " is out of range " << lower_limit << ".." << upper_limit;
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

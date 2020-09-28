@@ -17,7 +17,7 @@
 #include <smartmet/engines/querydata/Engine.h>
 #include <smartmet/engines/querydata/MetaQueryOptions.h>
 #include <smartmet/spine/Convenience.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <algorithm>
 #include <cpl_error.h>
 #include <list>
@@ -160,7 +160,7 @@ StoredQEDownloadQueryHandler::StoredQEDownloadQueryHandler(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -184,7 +184,7 @@ void handle_opt_param(const bw::RequestParameterMap& params,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -205,7 +205,7 @@ void handle_array_param(const bw::RequestParameterMap& params,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -272,7 +272,7 @@ void dump_meta_query_options(const qe::MetaQueryOptions& opt)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace
@@ -396,7 +396,7 @@ void StoredQEDownloadQueryHandler::update_parameters(
         }
         else
         {
-          SmartMet::Spine::Exception exception(
+          Fmi::Exception exception(
               BCP, "Both or none of the parameters 'starttime' and 'endtime' must be specified!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
           throw exception;
@@ -594,7 +594,7 @@ void StoredQEDownloadQueryHandler::update_parameters(
         msg << " Supported formats:";
         std::for_each(formats.begin(), formats.end(), bl::var(msg) << " '" << bl::_1 << "'");
 
-        SmartMet::Spine::Exception exception(BCP, "The requeted format is not supported!");
+        Fmi::Exception exception(BCP, "The requeted format is not supported!");
         exception.addDetail(msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
         exception.addParameter("Requested format", req_format);
@@ -617,7 +617,7 @@ void StoredQEDownloadQueryHandler::update_parameters(
       const std::string crs = params.get_single<std::string>(P_PROJECTION);
       if (not crs_registry.get_attribute(crs, "epsg", &epsg))
       {
-        SmartMet::Spine::Exception exception(BCP, "Failed to get EPSG code for CRS '" + crs + "'!");
+        Fmi::Exception exception(BCP, "Failed to get EPSG code for CRS '" + crs + "'!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception.disableStackTrace();
       }
@@ -630,7 +630,7 @@ void StoredQEDownloadQueryHandler::update_parameters(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -658,7 +658,7 @@ boost::shared_ptr<OGRPolygon> StoredQEDownloadQueryHandler::get_model_boundary(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -714,7 +714,7 @@ boost::shared_ptr<OGRGeometry> StoredQEDownloadQueryHandler::bbox_intersection(
       int last_err = CPLGetLastErrorNo();
       if (last_err != CPLE_None)
       {
-        throw SmartMet::Spine::Exception(BCP, str(format("GDAL error: %1%") % (int)last_err));
+        throw Fmi::Exception(BCP, str(format("GDAL error: %1%") % (int)last_err));
       }
     }
 
@@ -722,7 +722,7 @@ boost::shared_ptr<OGRGeometry> StoredQEDownloadQueryHandler::bbox_intersection(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -742,7 +742,7 @@ void StoredQEDownloadQueryHandler::add_bbox_info(RequestParameterMap* param_map,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -772,7 +772,7 @@ void StoredQEDownloadQueryHandler::add_boundary(RequestParameterMap* param_map,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -795,7 +795,7 @@ wfs_stored_qe_download_handler_create(SmartMet::Spine::Reactor* reactor,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

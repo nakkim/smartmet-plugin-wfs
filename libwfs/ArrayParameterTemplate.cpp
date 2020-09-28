@@ -1,5 +1,5 @@
 #include "ArrayParameterTemplate.h"
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <algorithm>
 #include <typeinfo>
 
@@ -30,7 +30,7 @@ ArrayParameterTemplate::ArrayParameterTemplate(StoredQueryConfig& config,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -54,7 +54,7 @@ ArrayParameterTemplate::ArrayParameterTemplate(StoredQueryConfig& config,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -71,7 +71,7 @@ std::vector<SmartMet::Spine::Value> ArrayParameterTemplate::get_value(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -130,7 +130,7 @@ boost::tribool ArrayParameterTemplate::get_value(
       std::ostringstream msg;
       msg << "Result array size " << tmp_result.size() << " exceeds upper limit " << max_size
           << " of array size";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
@@ -140,7 +140,7 @@ boost::tribool ArrayParameterTemplate::get_value(
       std::ostringstream msg;
       msg << "Result array size " << tmp_result.size() << " is smaller than lower limit "
           << min_size << " of array size";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
@@ -162,7 +162,7 @@ boost::tribool ArrayParameterTemplate::get_value(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -188,7 +188,7 @@ std::vector<int64_t> ArrayParameterTemplate::get_int_array(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -214,7 +214,7 @@ std::vector<uint64_t> ArrayParameterTemplate::get_uint_array(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -240,7 +240,7 @@ std::vector<double> ArrayParameterTemplate::get_double_array(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -266,7 +266,7 @@ std::vector<std::string> ArrayParameterTemplate::get_string_array(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -292,7 +292,7 @@ std::vector<boost::posix_time::ptime> ArrayParameterTemplate::get_ptime_array(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -318,7 +318,7 @@ std::vector<SmartMet::Spine::Point> ArrayParameterTemplate::get_point_array(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -344,7 +344,7 @@ std::vector<SmartMet::Spine::BoundingBox> ArrayParameterTemplate::get_bbox_array
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -364,7 +364,7 @@ void ArrayParameterTemplate::init()
             msg << "Definition of array parameter " << get_config_path()
                 << " with minimal size " << min_size
                 << " not provided in stored query configuration";
-            throw SmartMet::Spine::Exception::Trace(BCP, msg.str());
+            throw Fmi::Exception::Trace(BCP, msg.str());
         } else {
             std::cout << "WARNING: Definition of array parameter " << get_config_path()
                       << " with minimal size 0 is not provided in stored query configuration"
@@ -378,7 +378,7 @@ void ArrayParameterTemplate::init()
       std::ostringstream msg;
       msg << "The configuration parameter '" << base_prefix << get_config_path()
           << "' is required to be an array";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
     // One does not know actual size of an array here
     else if ((setting_root->getLength() == 0) and (min_size > 0))
@@ -387,7 +387,7 @@ void ArrayParameterTemplate::init()
       msg << "The length " << setting_root->getLength() << " of configuration parameter '"
           << base_prefix << get_config_path() << "' is out of allowed range " << min_size << ".."
           << max_size;
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
     else
     {
@@ -419,7 +419,7 @@ void ArrayParameterTemplate::init()
               std::ostringstream msg;
               msg << "The array index " << *item.param_ind << " is out of the range 0.."
                   << param.param_def.getMaxSize();
-              throw SmartMet::Spine::Exception(BCP, msg.str());
+              throw Fmi::Exception(BCP, msg.str());
             }
           }
 
@@ -458,7 +458,7 @@ void ArrayParameterTemplate::init()
           msg << "CONFIGURATION ERROR: calculated minimal"
               << " array size " << calc_min_size << " exceeds upper limit " << max_size
               << " of array parameter for config path '" << base_prefix << get_config_path() << "'";
-          throw SmartMet::Spine::Exception(BCP, msg.str());
+          throw Fmi::Exception(BCP, msg.str());
         }
 
         if (calc_max_size < min_size)
@@ -467,14 +467,14 @@ void ArrayParameterTemplate::init()
           msg << "CONFIGURATION ERROR: calculated maximal"
               << " array size " << calc_max_size << " is lower than lower limit " << min_size
               << " of array parameter for config path '" << base_prefix << get_config_path() << "'";
-          throw SmartMet::Spine::Exception(BCP, msg.str());
+          throw Fmi::Exception(BCP, msg.str());
         }
       }
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

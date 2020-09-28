@@ -5,7 +5,7 @@
 #include <boost/chrono.hpp>
 #include <boost/filesystem.hpp>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <queue>
 #include <sstream>
 #include <stdexcept>
@@ -14,16 +14,9 @@ namespace ba = boost::algorithm;
 namespace bw = SmartMet::Plugin::WFS;
 namespace fs = boost::filesystem;
 
-namespace
-{
-  bool is_equal(const std::string& first, const std::string& second)
-  {
-    return first == second;
-  }
-}  // namespace
-
 bw::StoredQueryMap::StoredQueryMap(SmartMet::Spine::Reactor* theReactor, PluginImpl& plugin_impl)
   : background_init(false)
+  , shutdown_requested(false)
   , reload_required(false)
   , loading_started(false)
   , theReactor(theReactor)
@@ -36,6 +29,14 @@ bw::StoredQueryMap::~StoredQueryMap()
   if (directory_monitor_thread.joinable()) {
     directory_monitor.stop();
     directory_monitor_thread.join();
+  }
+}
+
+void bw::StoredQueryMap::shutdown()
+{
+    shutdown_requested = true;
+  if (init_tasks) {
+    init_tasks->stop();
   }
 }
 
@@ -73,10 +74,10 @@ void bw::StoredQueryMap::wait_for_init()
   do {
     std::time_t start = std::time(nullptr);
     std::unique_lock<std::mutex> lock(mutex2);
-    while (not directory_monitor.ready()) {
+    while (not shutdown_requested and not directory_monitor.ready()) {
       cond.wait_for(lock, std::chrono::milliseconds(100));
       if (not loading_started and (std::time(nullptr) - start > 180)) {
-	throw SmartMet::Spine::Exception::Trace(BCP, "Timed out while waiting for stored query configuration loading to start");
+	throw Fmi::Exception::Trace(BCP, "Timed out while waiting for stored query configuration loading to start");
       }
     }
   } while (false);
@@ -121,7 +122,7 @@ void bw::StoredQueryMap::add_handler(boost::shared_ptr<StoredQueryHandlerBase> h
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -135,7 +136,7 @@ boost::shared_ptr<bw::StoredQueryHandlerBase> bw::StoredQueryMap::get_handler_by
     auto loc = handler_map.find(lname);
     if (loc == handler_map.end())
     {
-      SmartMet::Spine::Exception exception(BCP, "No handler for '" + name + "' found!");
+      Fmi::Exception exception(BCP, "No handler for '" + name + "' found!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception.disableStackTrace();
     }
@@ -146,7 +147,7 @@ boost::shared_ptr<bw::StoredQueryHandlerBase> bw::StoredQueryMap::get_handler_by
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -172,7 +173,7 @@ std::vector<std::string> bw::StoredQueryMap::get_return_type_names() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -215,12 +216,12 @@ void bw::StoredQueryMap::add_handler(StoredQueryConfig::Ptr sqh_config,
           << sqh_config->get_file_name() << "\n";
       std::cout << msg.str() << std::flush;
 
-      throw SmartMet::Spine::Exception::Trace(BCP, "Failed to add stored query handler!");
+      throw Fmi::Exception::Trace(BCP, "Failed to add stored query handler!");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -245,7 +246,7 @@ void bw::StoredQueryMap::add_handler_thread_proc(StoredQueryConfig::Ptr config,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -299,7 +300,7 @@ void bw::StoredQueryMap::on_config_change(Fmi::DirectoryMonitor::Watcher watcher
 
 	    default:
 	      if (change & (change - 1)) {
-		throw SmartMet::Spine::Exception::Trace(BCP, "INTERNAL ERROR: Unsupported change type "
+		throw Fmi::Exception::Trace(BCP, "INTERNAL ERROR: Unsupported change type "
 							+ std::to_string(int(change)));
 	      }
 	      break;
@@ -308,9 +309,11 @@ void bw::StoredQueryMap::on_config_change(Fmi::DirectoryMonitor::Watcher watcher
 
 	config_dirs.at(watcher).num_updates++;
       } catch (...) {
-	have_errors++;
-	auto err = SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-	std::cout << err.getStackTrace() << std::endl;
+        if (true || !shutdown_requested) {
+	  have_errors++;
+	  auto err = Fmi::Exception::Trace(BCP, "Operation failed!");
+	  std::cout << err.getStackTrace() << std::endl;
+        }
       }
     }
 
@@ -320,7 +323,7 @@ void bw::StoredQueryMap::on_config_change(Fmi::DirectoryMonitor::Watcher watcher
 	try {
 	  handle_query_add(fn, template_dir, initial_update, true);
 	} catch (...) {
-	  auto err = SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+	  auto err = Fmi::Exception::Trace(BCP, "Operation failed!");
 	  std::cout << err.getStackTrace() << std::endl;
 	}
       }
@@ -329,8 +332,8 @@ void bw::StoredQueryMap::on_config_change(Fmi::DirectoryMonitor::Watcher watcher
     if (have_errors) {
       std::ostringstream msg;
       msg << "Failed to process " << have_errors << " store query configuration files";
-      auto err = SmartMet::Spine::Exception::Trace(BCP, msg.str());
-      if (initial_update) {
+      auto err = Fmi::Exception::Trace(BCP, msg.str());
+      if (initial_update && !shutdown_requested) {
 	throw err;
       } else {
 	std::cout << err.getStackTrace() << std::endl;
@@ -342,7 +345,7 @@ void bw::StoredQueryMap::on_config_change(Fmi::DirectoryMonitor::Watcher watcher
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -358,7 +361,7 @@ std::vector<std::string> bw::StoredQueryMap::get_handler_names() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -387,7 +390,7 @@ bw::StoredQueryMap::get_handler_by_file_name(const std::string& config_file_name
     return result;
   }
   catch (...) {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -402,7 +405,7 @@ bw::StoredQueryMap::get_query_config_by_file_name(const std::string& config_file
     }
     return result;
   }  catch (...) {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -420,7 +423,7 @@ void bw::StoredQueryMap::handle_query_remove(const std::string& config_file_name
       handler_map.erase(Fmi::ascii_tolower_copy(config->get_query_id()));
     }
   } catch (...) {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -491,7 +494,7 @@ void bw::StoredQueryMap::handle_query_add(const std::string& config_file_name,
     }
   } catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -544,7 +547,7 @@ void bw::StoredQueryMap::handle_query_modify(const std::string& config_file_name
     }
   } catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -583,7 +586,7 @@ void bw::StoredQueryMap::handle_query_ignore(const StoredQueryConfig& sqh_config
     }
   } catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -614,7 +617,7 @@ boost::shared_ptr<bw::StoredQueryHandlerBase> bw::StoredQueryMap::get_handler_by
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

@@ -208,7 +208,7 @@ BOOST_AUTO_TEST_CASE(simple_param_no_default_non_root)
 
   boost::shared_ptr<ScalarParameterTemplate> pt;
   BOOST_REQUIRE_THROW(pt.reset(new ScalarParameterTemplate(*config, "fo", "bar")),
-                      SmartMet::Spine::Exception);
+                      Fmi::Exception);
   BOOST_REQUIRE_NO_THROW(pt.reset(new ScalarParameterTemplate(*config, "foo", "bar")));
 
   const ParameterTemplateItem& item = pt->get_item();
@@ -255,7 +255,7 @@ BOOST_AUTO_TEST_CASE(simple_param_with_default)
 
   // Source array size > 1 : must throw exception
   add(param_map, "test", "foo");
-  BOOST_CHECK_THROW(value = pt->get<std::string>(param_map), SmartMet::Spine::Exception);
+  BOOST_CHECK_THROW(value = pt->get<std::string>(param_map), Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(simple_param_weak_ref_with_default)
@@ -331,7 +331,7 @@ BOOST_AUTO_TEST_CASE(simple_param_with_default_containing_space)
 
   // Source array size > 1 : must throw exception
   add(param_map, "test", "foo");
-  BOOST_CHECK_THROW(value = pt->get<std::string>(param_map), SmartMet::Spine::Exception);
+  BOOST_CHECK_THROW(value = pt->get<std::string>(param_map), Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(simple_param_from_array_no_default)
@@ -373,10 +373,11 @@ BOOST_AUTO_TEST_CASE(simple_param_from_array_no_default)
   BOOST_CHECK_NO_THROW(dvalue = pt->get<double>(param_map));
   BOOST_CHECK_CLOSE(dvalue, (double)4, 1e-10);
 
-  BOOST_CHECK_THROW(pt->get<boost::posix_time::ptime>(param_map), SmartMet::Spine::Exception);
-  BOOST_CHECK_THROW(pt->get<std::string>(param_map), SmartMet::Spine::Exception);
+  BOOST_CHECK_THROW(pt->get<boost::posix_time::ptime>(param_map), Fmi::Exception);
+  BOOST_CHECK_THROW(pt->get<std::string>(param_map), Fmi::Exception);
 }
 
+#if 0
 namespace
 {
 std::ostream& operator<<(std::ostream& ost, const boost::posix_time::ptime& t)
@@ -385,6 +386,7 @@ std::ostream& operator<<(std::ostream& ost, const boost::posix_time::ptime& t)
   return ost;
 }
 }
+#endif
 
 BOOST_AUTO_TEST_CASE(simple_param_from_array_with_default)
 {
@@ -445,7 +447,7 @@ BOOST_AUTO_TEST_CASE(reference_to_non_existing_request_parameter)
   unlink(fn.c_str());
 
   boost::shared_ptr<ScalarParameterTemplate> pt;
-  BOOST_REQUIRE_THROW(pt.reset(new ScalarParameterTemplate(*config, "foo")), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(pt.reset(new ScalarParameterTemplate(*config, "foo")), Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(request_of_copying_entire_array_to_scalar)
@@ -461,7 +463,7 @@ BOOST_AUTO_TEST_CASE(request_of_copying_entire_array_to_scalar)
   unlink(fn.c_str());
 
   boost::shared_ptr<ScalarParameterTemplate> pt;
-  BOOST_REQUIRE_THROW(pt.reset(new ScalarParameterTemplate(*config, "foo")), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(pt.reset(new ScalarParameterTemplate(*config, "foo")), Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(using_absent_parameters)
@@ -488,8 +490,8 @@ BOOST_AUTO_TEST_CASE(using_absent_parameters)
   double foo;
   RequestParameterMap param_map;
   add(param_map, "test", 1.0);
-  BOOST_CHECK_THROW(pt->get<double>(param_map), SmartMet::Spine::Exception);
-  BOOST_CHECK_NO_THROW(not pt->get(param_map, &foo));
+  BOOST_CHECK_THROW(pt->get<double>(param_map), Fmi::Exception);
+  BOOST_CHECK_NO_THROW(pt->get(param_map, &foo));
 }
 
 

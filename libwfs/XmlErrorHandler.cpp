@@ -2,7 +2,7 @@
 #include "XmlError.h"
 #include "XmlUtils.h"
 #include <boost/format.hpp>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <sstream>
 
 namespace bwx = SmartMet::Plugin::WFS::Xml;
@@ -15,7 +15,7 @@ bwx::XmlErrorHandler::XmlErrorHandler(bool throw_on_error) : throw_on_error(thro
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -30,7 +30,7 @@ void bwx::XmlErrorHandler::warning(const xercesc::SAXParseException& exc)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -44,7 +44,7 @@ void bwx::XmlErrorHandler::error(const xercesc::SAXParseException& exc)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -58,7 +58,7 @@ void bwx::XmlErrorHandler::fatalError(const xercesc::SAXParseException& exc)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -71,7 +71,7 @@ void bwx::XmlErrorHandler::resetErrors()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -100,7 +100,7 @@ void bwx::XmlErrorHandler::add_message(const std::string& prefix,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -116,6 +116,6 @@ void bwx::XmlErrorHandler::check_terminate(const std::string& prefix,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

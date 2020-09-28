@@ -5,7 +5,7 @@
 #include <boost/foreach.hpp>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <algorithm>
 #include <sstream>
 
@@ -45,7 +45,7 @@ StoredQueryParamRegistry::StoredQueryParamRegistry(StoredQueryConfig::Ptr config
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -61,10 +61,11 @@ boost::shared_ptr<bw::RequestParameterMap> StoredQueryParamRegistry::process_par
     BOOST_FOREACH (const auto& map_item, param_map)
     {
       const std::string& name = map_item.first;
-      int type_ind = supported_type_names.at(map_item.second->type_name);
-      if (typeid(*map_item.second) == typeid(ScalarParameterRec))
+      auto& item_ref = *map_item.second;
+      int type_ind = supported_type_names.at(item_ref.type_name);
+      if (typeid(item_ref) == typeid(ScalarParameterRec))
       {
-        const ScalarParameterRec& rec = dynamic_cast<ScalarParameterRec&>(*map_item.second);
+        const ScalarParameterRec& rec = dynamic_cast<ScalarParameterRec&>(item_ref);
 
         SmartMet::Spine::Value value;
         if (rec.required)
@@ -113,13 +114,13 @@ boost::shared_ptr<bw::RequestParameterMap> StoredQueryParamRegistry::process_par
 
           default:
             // Not supposed to happen
-            throw SmartMet::Spine::Exception(BCP,
+            throw Fmi::Exception(BCP,
                                              "INTERNAL ERROR at line " + Fmi::to_string(__LINE__));
         }
       }
-      else if (typeid(*map_item.second) == typeid(ArrayParameterRec))
+      else if (typeid(item_ref) == typeid(ArrayParameterRec))
       {
-        const ArrayParameterRec& rec = dynamic_cast<ArrayParameterRec&>(*map_item.second);
+        const ArrayParameterRec& rec = dynamic_cast<ArrayParameterRec&>(item_ref);
 
         std::vector<SmartMet::Spine::Value> values = rec.param_def->get_value(src, extra_params);
         if (values.size() < rec.min_size or values.size() > rec.max_size)
@@ -127,7 +128,7 @@ boost::shared_ptr<bw::RequestParameterMap> StoredQueryParamRegistry::process_par
           std::ostringstream msg;
           msg << "Number of the values '" << values.size() << "' for the parameter '" << name
               << "' is out of the range [" << rec.min_size << ".." << rec.max_size << "]!";
-          throw SmartMet::Spine::Exception(BCP, msg.str());
+          throw Fmi::Exception(BCP, msg.str());
         }
         if (rec.step > 1 and ((values.size() - rec.min_size) % rec.step != 0))
         {
@@ -157,7 +158,7 @@ boost::shared_ptr<bw::RequestParameterMap> StoredQueryParamRegistry::process_par
               break;
           }
 
-          throw SmartMet::Spine::Exception(BCP, msg.str());
+          throw Fmi::Exception(BCP, msg.str());
         }
 
         BOOST_FOREACH (const SmartMet::Spine::Value& value, values)
@@ -186,7 +187,7 @@ boost::shared_ptr<bw::RequestParameterMap> StoredQueryParamRegistry::process_par
 
             default:
               // Not supposed to happen
-              throw SmartMet::Spine::Exception(
+              throw Fmi::Exception(
                   BCP, "INTERNAL ERROR at line " + Fmi::to_string(__LINE__));
           }
         }
@@ -194,7 +195,7 @@ boost::shared_ptr<bw::RequestParameterMap> StoredQueryParamRegistry::process_par
       else
       {
         // Not supposed to happen
-        throw SmartMet::Spine::Exception(BCP, "INTERNAL ERROR at line " + Fmi::to_string(__LINE__));
+        throw Fmi::Exception(BCP, "INTERNAL ERROR at line " + Fmi::to_string(__LINE__));
       }
     }
 
@@ -202,7 +203,7 @@ boost::shared_ptr<bw::RequestParameterMap> StoredQueryParamRegistry::process_par
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -220,7 +221,7 @@ std::set<std::string> StoredQueryParamRegistry::get_param_names() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -238,7 +239,7 @@ void StoredQueryParamRegistry::register_scalar_param(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -261,7 +262,7 @@ void SmartMet::Plugin::WFS::StoredQueryParamRegistry::register_array_param(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -287,7 +288,7 @@ void StoredQueryParamRegistry::add_param_rec(boost::shared_ptr<ParamRecBase> rec
         msg2 << sep << '\'' << demangle_cpp_type_name(map_item.first) << '\'';
         sep = ", ";
       }
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addDetail(msg2.str());
       throw exception;
     }
@@ -295,11 +296,11 @@ void StoredQueryParamRegistry::add_param_rec(boost::shared_ptr<ParamRecBase> rec
     const std::string& name = rec->name;
     if (not param_map.insert(std::make_pair(name, rec)).second)
     {
-      throw SmartMet::Spine::Exception(BCP, "Duplicate parameter name '" + name + "'!");
+      throw Fmi::Exception(BCP, "Duplicate parameter name '" + name + "'!");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

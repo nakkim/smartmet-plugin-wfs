@@ -6,7 +6,7 @@
 #include <boost/format.hpp>
 #include <engines/observation/DBRegistry.h>
 #include <engines/observation/MastQuery.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <spine/Convenience.h>
 
 namespace bw = SmartMet::Plugin::WFS;
@@ -45,7 +45,7 @@ bw::StoredAirNuclideQueryHandler::StoredAirNuclideQueryHandler(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -119,7 +119,7 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
       // Only 24 hours allowed
       if (1440 < timestep)
       {
-        SmartMet::Spine::Exception exception(BCP, "Operation processing failed!");
+        Fmi::Exception exception(BCP, "Operation processing failed!");
         exception.addDetail("Invalid time step value. Maximum is 1440 minutes.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
         exception.addParameter("Timestep", std::to_string(timestep));
@@ -235,7 +235,7 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
       const uint64_t paramId = obs_engine->getParameterId(paramName, stationType);
       if (not paramId)
       {
-        SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
+        Fmi::Exception exception(BCP, "Unknown parameter in the query!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
         exception.addParameter("Unknown parameter", paramName);
         throw exception.disableStackTrace();
@@ -573,7 +573,7 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation processing failed!", nullptr);
+      Fmi::Exception exception(BCP, "Operation processing failed!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       exception.addParameter(WFS_LANGUAGE, language);
@@ -582,7 +582,7 @@ void bw::StoredAirNuclideQueryHandler::query(const StoredQuery& query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -596,7 +596,7 @@ std::string bw::StoredAirNuclideQueryHandler::prepare_nuclide(const std::string&
     const size_t size = out.size();
     if (size < 3)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid parameter value!");
+      Fmi::Exception exception(BCP, "Invalid parameter value!");
       exception.addDetail("Too short nuclide code. Minimum length is 3.");
       exception.addParameter(WFS_EXCEPTION_CODE, "WFS_INVALID_PARAMETER_VALUE");
       exception.addParameter("Nuclide code", out);
@@ -605,7 +605,7 @@ std::string bw::StoredAirNuclideQueryHandler::prepare_nuclide(const std::string&
 
     if (size > 8)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid parameter value!");
+      Fmi::Exception exception(BCP, "Invalid parameter value!");
       exception.addDetail("Too long nuclide code. Maximum length is 8.");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       exception.addParameter("Nuclide code", out);
@@ -635,7 +635,7 @@ std::string bw::StoredAirNuclideQueryHandler::prepare_nuclide(const std::string&
     phrase_parse(first, last, upper >> *lower >> char_('-') >> ushort_ >> (upper | eps), space);
     if (first != last)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid parameter value!");
+      Fmi::Exception exception(BCP, "Invalid parameter value!");
       exception.addDetail("Unrecognized nuclide code.");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       exception.addParameter("Nuclide code", out);
@@ -646,7 +646,7 @@ std::string bw::StoredAirNuclideQueryHandler::prepare_nuclide(const std::string&
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -660,7 +660,7 @@ bw::StoredAirNuclideQueryHandler::dbRegistryConfig(const std::string& configName
         obs_engine->dbRegistry();
     if (not dbRegistry)
     {
-      SmartMet::Spine::Exception exception(BCP, "Database registry is not available!");
+      Fmi::Exception exception(BCP, "Database registry is not available!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -669,7 +669,7 @@ bw::StoredAirNuclideQueryHandler::dbRegistryConfig(const std::string& configName
         dbRegistry->dbRegistryConfig(configName);
     if (not dbrConfig)
     {
-      SmartMet::Spine::Exception exception(BCP,
+      Fmi::Exception exception(BCP,
                                            "Database registry configuration is not available!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       exception.addParameter("Configration name", configName);
@@ -680,7 +680,7 @@ bw::StoredAirNuclideQueryHandler::dbRegistryConfig(const std::string& configName
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -703,7 +703,7 @@ wfs_stored_air_nuclide_handler_create(SmartMet::Spine::Reactor* reactor,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

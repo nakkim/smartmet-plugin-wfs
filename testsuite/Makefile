@@ -2,75 +2,35 @@
 INCDIR = smartmet/plugins/$(SUBNAME)
 TOP = $(shell pwd)/..
 
-# Compiler options
+REQUIRES_GDAL = yes
 
--include $(HOME)/.smartmet.mk
-GCC_DIAG_COLOR ?= always
+include ../common.mk
+
+# Compiler options
 
 DEFINES = -DUNIX -D_REENTRANT
 
-BOOST169_WARNING_DISABLE = -Wno-redundant-decls -Wno-overloaded-virtual
-
-FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter -Wno-unknown-pragmas \
-      -Wcast-align \
-      -Wcast-qual \
-      -Wno-inline \
-      -Wno-multichar \
-      -Wno-pmf-conversions \
-      -Woverloaded-virtual  \
-      -Wpointer-arith \
-      -Wredundant-decls \
-      -fdiagnostics-color=$(GCC_DIAG_COLOR) \
-      $(BOOST169_WARNING_DISABLE) \
-      -Wwrite-strings
+#BOOST169_WARNING_DISABLE = -Wno-redundant-decls -Wno-overloaded-virtual
+#
+#FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter -Wno-unknown-pragmas \
+#      -Wcast-align \
+#      -Wcast-qual \
+#      -Wno-inline \
+#      -Wno-multichar \
+#      -Wno-pmf-conversions \
+#      -Woverloaded-virtual  \
+#      -Wpointer-arith \
+#      -Wredundant-decls \
+#      -fdiagnostics-color=$(GCC_DIAG_COLOR) \
+#      $(BOOST169_WARNING_DISABLE) \
+#      -Wwrite-strings
 
 # Compile options in detault, debug and profile modes
 
-CFLAGS_RELEASE = $(DEFINES) $(FLAGS) -DNDEBUG -O2 -g
-CFLAGS_DEBUG   = $(DEFINES) $(FLAGS) -Werror  -O0 -g
-
-ifneq (,$(findstring debug,$(MAKECMDGOALS)))
-  override CFLAGS += $(CFLAGS_DEBUG)
-else
-  override CFLAGS += $(CFLAGS_RELEASE)
-endif
-
-# Installation directories
-
-processor := $(shell uname -p)
-
-ifeq ($(origin PREFIX), undefined)
-  PREFIX = /usr
-else
-  PREFIX = $(PREFIX)
-endif
-
-ifeq ($(processor), x86_64)
-  libdir = $(PREFIX)/lib64
-else
-  libdir = $(PREFIX)/lib
-endif
-
-bindir = $(PREFIX)/bin
-includedir = $(PREFIX)/include
-datadir = $(PREFIX)/share
-enginedir = $(datadir)/smartmet/engines
-plugindir = $(datadir)/smartmet/plugins
-objdir = obj
-
-#
-# Boost 1.69
-
-ifneq "$(wildcard /usr/include/boost169)" ""
-  INCLUDES += -I/usr/include/boost169
-  LIBS += -L/usr/lib64/boost169
-endif
-
-INCLUDES += -I$(includedir) \
-	-I$(includedir)/smartmet \
-	-I$(includedir)/mysql \
-	-I$(includedir)/jsoncpp \
-	-Iinclude
+INCLUDES += \
+	-Iinclude \
+	-isystem $(includedir)/mysql \
+	-isystem $(includedir)/jsoncpp
 
 LIBS += -L$(libdir) \
 	-lsmartmet-gis \

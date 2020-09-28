@@ -1,7 +1,7 @@
 #include "XPathSnapshot.h"
 #include "XmlUtils.h"
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <xercesc/dom/DOMLSParserFilter.hpp>
 #include <xercesc/framework/MemBufInputSource.hpp>
 #include <iostream>
@@ -45,7 +45,7 @@ struct ParserFilter : public DOMLSParserFilter
     }
     catch (...)
     {
-      throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+      throw Fmi::Exception::Trace(BCP, "Operation failed!");
     }
   }
 
@@ -80,7 +80,7 @@ XPathSnapshot::XPathSnapshot()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -104,7 +104,7 @@ void XPathSnapshot::parse_dom_document(const std::string& src, const std::string
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -119,7 +119,7 @@ void XPathSnapshot::parse_dom_document(xercesc::InputSource* input_source)
       document = parser->parse(input.get());
       if (document == nullptr)
       {
-        throw SmartMet::Spine::Exception(BCP, "Failed to parse stored query result");
+        throw Fmi::Exception(BCP, "Failed to parse stored query result");
       }
 
       if (resolver)
@@ -133,7 +133,7 @@ void XPathSnapshot::parse_dom_document(xercesc::InputSource* input_source)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -171,7 +171,7 @@ std::size_t XPathSnapshot::xpath_query(const std::string& xpath_string)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -184,7 +184,7 @@ xercesc::DOMDocument* XPathSnapshot::get_document()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -197,7 +197,7 @@ std::size_t XPathSnapshot::size() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -219,7 +219,7 @@ xercesc::DOMNode* XPathSnapshot::get_item(int ind)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -235,12 +235,12 @@ std::string XPathSnapshot::lookup_prefix(const std::string& uri) const
     }
     else
     {
-      throw SmartMet::Spine::Exception(BCP, ": URI '" + uri + "' not found!");
+      throw Fmi::Exception(BCP, ": URI '" + uri + "' not found!");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -250,12 +250,12 @@ void XPathSnapshot::assert_have_document() const
   {
     if (not document)
     {
-      throw SmartMet::Spine::Exception(BCP, "INTERNAL ERROR: one must parse XML doccument first!");
+      throw Fmi::Exception(BCP, "INTERNAL ERROR: one must parse XML doccument first!");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -265,13 +265,13 @@ void XPathSnapshot::assert_have_result() const
   {
     if (not xpath_result)
     {
-      throw SmartMet::Spine::Exception(BCP,
+      throw Fmi::Exception(BCP,
                                        "INTERNAL ERROR: one must evaluate XPath expression first!");
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -300,18 +300,18 @@ void XPathSnapshot::handle_exceptions(const std::string& location) const
         std::ostringstream msg;
         msg << Fmi::current_exception_type() << ": errorCode=" << err.code << " message='"
             << bwx::to_string(err.msg);
-        throw SmartMet::Spine::Exception::Trace(BCP, msg.str());
+        throw Fmi::Exception::Trace(BCP, msg.str());
       }
       catch (...)
       {
         std::ostringstream msg;
         msg << "Unexpected exception of type '" << Fmi::current_exception_type() << "'!";
-        throw SmartMet::Spine::Exception::Trace(BCP, msg.str());
+        throw Fmi::Exception::Trace(BCP, msg.str());
       }
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

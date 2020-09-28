@@ -52,23 +52,23 @@ class Plugin
   Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig);
   virtual ~Plugin();
 
-  const std::string& getPluginName() const;
-  int getRequiredAPIVersion() const;
+  const std::string& getPluginName() const override;
+  int getRequiredAPIVersion() const override;
 
   bool reload(const char* theConfig);
 
  protected:
-  void init();
-  void shutdown();
+  void init() override;
+  void shutdown() override;
   void requestHandler(SmartMet::Spine::Reactor& theReactor,
                       const SmartMet::Spine::HTTP::Request& theRequest,
-                      SmartMet::Spine::HTTP::Response& theResponse);
+                      SmartMet::Spine::HTTP::Response& theResponse) override;
   std::string getRealm() const override;
 
  private:
   Plugin();
 
-  virtual bool queryIsFast(const SmartMet::Spine::HTTP::Request& theRequest) const;
+  virtual bool queryIsFast(const SmartMet::Spine::HTTP::Request& theRequest) const override;
 
  private:
   void realRequestHandler(SmartMet::Spine::Reactor& theReactor,

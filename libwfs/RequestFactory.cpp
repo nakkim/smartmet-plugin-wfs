@@ -4,7 +4,7 @@
 #include <boost/algorithm/string.hpp>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <sstream>
 #include <stdexcept>
 
@@ -29,13 +29,13 @@ bw::RequestFactory& bw::RequestFactory::register_request_type(const std::string&
 
     if (unimplemented_requests.count(lname) > 0)
     {
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP, "WFS request '" + name + "' already registred as unimplemented!");
     }
 
     if (not type_map.insert(std::make_pair(lname, rec)).second)
     {
-      throw SmartMet::Spine::Exception(BCP, "Duplicate WFS request type '" + name + "'!");
+      throw Fmi::Exception(BCP, "Duplicate WFS request type '" + name + "'!");
     }
 
     request_names.insert(name);
@@ -49,7 +49,7 @@ bw::RequestFactory& bw::RequestFactory::register_request_type(const std::string&
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -60,7 +60,7 @@ bw::RequestFactory& bw::RequestFactory::register_unimplemented_request_type(cons
     const std::string lname = Fmi::ascii_tolower_copy(name);
     if (type_map.count(lname) > 0)
     {
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP, "Implementation of WFS request '" + name + "' is already registred!");
     }
 
@@ -70,7 +70,7 @@ bw::RequestFactory& bw::RequestFactory::register_unimplemented_request_type(cons
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -82,7 +82,7 @@ boost::shared_ptr<bw::RequestBase> bw::RequestFactory::parse_kvp(
     auto service = http_request.getParameter("service");
     if (service and *service != "WFS")
     {
-      SmartMet::Spine::Exception exception(BCP, "Incorrect service '" + *service + "'!");
+      Fmi::Exception exception(BCP, "Incorrect service '" + *service + "'!");
       exception.addDetail("Expected 'WFS'.");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
@@ -91,7 +91,7 @@ boost::shared_ptr<bw::RequestBase> bw::RequestFactory::parse_kvp(
     const auto name = bw::RequestBase::extract_request_name(http_request);
     if (unimplemented_requests.count(Fmi::ascii_tolower_copy(name)))
     {
-      SmartMet::Spine::Exception exception(BCP,
+      Fmi::Exception exception(BCP,
                                            "WFS request '" + name + "' is not yet implemented!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_NOT_SUPPORTED);
       throw exception;
@@ -104,7 +104,7 @@ boost::shared_ptr<bw::RequestBase> bw::RequestFactory::parse_kvp(
     }
     else
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "KVP format not supported for the WFS request '" + name + "'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
@@ -112,7 +112,7 @@ boost::shared_ptr<bw::RequestBase> bw::RequestFactory::parse_kvp(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -124,7 +124,7 @@ boost::shared_ptr<bw::RequestBase> bw::RequestFactory::parse_xml(
     const xercesc::DOMElement* root = document.getDocumentElement();
     if (root == 0)
     {
-      SmartMet::Spine::Exception exception(BCP, "The XML root element missing!");
+      Fmi::Exception exception(BCP, "The XML root element missing!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
@@ -132,7 +132,7 @@ boost::shared_ptr<bw::RequestBase> bw::RequestFactory::parse_xml(
     const auto name = bw::RequestBase::extract_request_name(document);
     if (unimplemented_requests.count(Fmi::ascii_tolower_copy(name)))
     {
-      SmartMet::Spine::Exception exception(BCP, "WFS request '" + name + "' is not implemented!");
+      Fmi::Exception exception(BCP, "WFS request '" + name + "' is not implemented!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_NOT_SUPPORTED);
       throw exception;
     }
@@ -144,7 +144,7 @@ boost::shared_ptr<bw::RequestBase> bw::RequestFactory::parse_xml(
     }
     else
     {
-      SmartMet::Spine::Exception exception(BCP, "Unsupported WFS request!");
+      Fmi::Exception exception(BCP, "Unsupported WFS request!");
       exception.addDetail("The XML format is not (yet) supported for the current WFS request!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       exception.addParameter("WFS request", name);
@@ -153,7 +153,7 @@ boost::shared_ptr<bw::RequestBase> bw::RequestFactory::parse_xml(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -165,7 +165,7 @@ const bw::RequestFactory::TypeRec& bw::RequestFactory::get_type_rec(const std::s
     auto item_it = type_map.find(lname);
     if (item_it == type_map.end())
     {
-      SmartMet::Spine::Exception exception(BCP, "Unrecognized WFS request!");
+      Fmi::Exception exception(BCP, "Unrecognized WFS request!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       exception.addParameter("WFS request", name);
       throw exception;
@@ -174,6 +174,6 @@ const bw::RequestFactory::TypeRec& bw::RequestFactory::get_type_rec(const std::s
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

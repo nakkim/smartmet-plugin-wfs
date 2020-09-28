@@ -1,8 +1,8 @@
 #include "StoredQueryHandlerInitBase.h"
 #include <set>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
-using SmartMet::Spine::Exception;
+using Fmi::Exception;
 using SmartMet::Plugin::WFS::StoredQueryHandlerInitBase;
 
 StoredQueryHandlerInitBase::StoredQueryHandlerInitBase()

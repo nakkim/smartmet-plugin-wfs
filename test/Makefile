@@ -4,32 +4,11 @@ TOP = $(TEST_TOP)/..
 
 TEST_DIRECTORIES = base real
 
+REQUIRES_GDAL = yes
+
+include ../common.mk
+
 # Compiler options
-
-DEFINES = -DUNIX -D_REENTRANT
-
-FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter -Wno-unknown-pragmas \
-      -Wcast-align \
-      -Wcast-qual \
-      -Wno-inline \
-      -Wno-multichar \
-      -Wno-pmf-conversions \
-      -Woverloaded-virtual  \
-      -Wpointer-arith \
-      -Wredundant-decls \
-      -Wwrite-strings
-
-ifeq ($(TSAN), yes)
-  FLAGS += -fsanitize=thread
-endif
-ifeq ($(ASAN), yes)
-  FLAGS += -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=undefined -fsanitize-address-use-after-scope
-endif
-
-# Compile options in detault, debug and profile modes
-
-CFLAGS_RELEASE = $(DEFINES) $(FLAGS) -DNDEBUG -O2 -g
-CFLAGS_DEBUG   = $(DEFINES) $(FLAGS) -Werror  -O0 -g
 
 ARFLAGS = -r
 DEFINES = -DUNIX -D_REENTRANT
@@ -46,8 +25,6 @@ processor := $(shell uname -p)
 
 ifeq ($(origin PREFIX), undefined)
   PREFIX = /usr
-else
-  PREFIX = $(PREFIX)
 endif
 
 ifeq ($(processor), x86_64)
@@ -82,9 +59,8 @@ endif
 
 
 INCLUDES += \
-	-I$(includedir) \
 	-I$(includedir)/smartmet \
-	-I$(includedir)/jsoncpp
+	-isystem $(includedir)/jsoncpp
 
 LIBS += \
 	-L$(libdir) \
@@ -143,7 +119,7 @@ test: $(TEST_TARGETS)
 	$$ok;
 
 PluginTest : obj/PluginTest.o ; @echo "Building $@"
-	$(CC) -o $@ $(CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) $(LIBS)
+	@$(CXX) -o $@ $(CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) $(LIBS)
 
 
 ifneq ($(wildcard obj/*.d),)

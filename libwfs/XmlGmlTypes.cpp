@@ -6,7 +6,7 @@
 #include <boost/foreach.hpp>
 #include <boost/optional/optional_io.hpp>
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/util/Janitor.hpp>
 #include <map>
@@ -48,7 +48,7 @@ boost::optional<GmlSRSInformationGroup> read_gml_srs_info_group(const xercesc::D
     }
     else
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid attribute usage!");
+      Fmi::Exception exception(BCP, "Invalid attribute usage!");
       exception.addDetail(
           "Both attributes 'axisLabels' and 'uomLabels' or non of them must be specified.");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
@@ -58,7 +58,7 @@ boost::optional<GmlSRSInformationGroup> read_gml_srs_info_group(const xercesc::D
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -87,7 +87,7 @@ GmlSRSReferenceGroup read_gml_srs_reference_group(const xercesc::DOMElement& ele
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -113,7 +113,7 @@ GmlDirectPositionType read_gml_direct_position_type(const xercesc::DOMElement& e
           << result.srs_reference.srs_dimension << " of the attribute srsDimension"
           << " in '" << xml2string(&element) << "'";
 
-      SmartMet::Spine::Exception exception(BCP, "Invalid number of values!");
+      Fmi::Exception exception(BCP, "Invalid number of values!");
       exception.addDetail(msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
@@ -123,7 +123,7 @@ GmlDirectPositionType read_gml_direct_position_type(const xercesc::DOMElement& e
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -158,7 +158,7 @@ GmlEnvelopeType read_gml_envelope_type(const xercesc::DOMElement& element)
         v1 = get_child_elements(element, GML_NAMESPACE_URI, "coordinates");
         if (v1.size() == 1)
         {
-          SmartMet::Spine::Exception exception(BCP, "Feature not implemented!");
+          Fmi::Exception exception(BCP, "Feature not implemented!");
           exception.addDetail(
               "Support of deprecated gml::coordinates in gml::EnvelopeType is not yet "
               "implemented.");
@@ -167,7 +167,7 @@ GmlEnvelopeType read_gml_envelope_type(const xercesc::DOMElement& element)
         }
         else
         {
-          SmartMet::Spine::Exception exception(BCP,
+          Fmi::Exception exception(BCP,
                                                "Failed to read 'gml::EnvelopeType' from the XML!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
           exception.addParameter("XML", xml2string(&element));
@@ -189,7 +189,7 @@ GmlEnvelopeType read_gml_envelope_type(const xercesc::DOMElement& element)
     }
     else
     {
-      SmartMet::Spine::Exception exception(BCP, "Conflicting data provided in the XML!");
+      Fmi::Exception exception(BCP, "Conflicting data provided in the XML!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       exception.addParameter("XML", xml2string(&element));
       throw exception;
@@ -197,7 +197,7 @@ GmlEnvelopeType read_gml_envelope_type(const xercesc::DOMElement& element)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

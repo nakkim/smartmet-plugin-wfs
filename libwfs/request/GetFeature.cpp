@@ -61,7 +61,7 @@ void bw::Request::GetFeature::execute(std::ostream& output) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -88,7 +88,7 @@ bool bw::Request::GetFeature::get_cached_responses()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -115,7 +115,7 @@ int bw::Request::GetFeature::get_response_expires_seconds() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -145,7 +145,7 @@ void bw::Request::GetFeature::execute_single_query(std::ostream& ost) const
         msg << "The 'startIndex' and 'count' parameters are supported only with"
             << " the default output format '"
             << StandardPresentationParameters::DEFAULT_OUTPUT_FORMAT << "'!";
-        SmartMet::Spine::Exception exception(BCP, msg.str());
+        Fmi::Exception exception(BCP, msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception;
       }
@@ -220,7 +220,7 @@ void bw::Request::GetFeature::execute_single_query(std::ostream& ost) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -349,7 +349,7 @@ void bw::Request::GetFeature::execute_multiple_queries(std::ostream& ost) const
       {
         std::cerr << METHOD_NAME << ": DOM exception: code=" << (int)err.code
                   << " message=" << err.getMessage() << std::endl;
-        throw SmartMet::Spine::Exception::Trace(BCP, "DOM exception received!");
+        throw Fmi::Exception::Trace(BCP, "DOM exception received!");
       }
       catch (const bwx::XmlError& err)
       {
@@ -359,7 +359,7 @@ void bw::Request::GetFeature::execute_multiple_queries(std::ostream& ost) const
           std::cerr << "XML_PARSE_MSG: " << msg << std::endl;
         }
         std::cerr << "XML source is:\n" << query_response << std::endl;
-        throw SmartMet::Spine::Exception::Trace(BCP, "XML parsing failed!");
+        throw Fmi::Exception::Trace(BCP, "XML parsing failed!");
       }
     }
 
@@ -387,7 +387,7 @@ void bw::Request::GetFeature::execute_multiple_queries(std::ostream& ost) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -407,7 +407,7 @@ boost::shared_ptr<xercesc::DOMDocument> bw::Request::GetFeature::create_hits_onl
       msg << "The 'startIndex' and 'count' paremeters are supported only with"
           << " the default output format '" << StandardPresentationParameters::DEFAULT_OUTPUT_FORMAT
           << "'!";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -456,7 +456,7 @@ boost::shared_ptr<xercesc::DOMDocument> bw::Request::GetFeature::create_hits_onl
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -512,12 +512,12 @@ bool bw::Request::GetFeature::collect_query_responses(std::vector<std::string>& 
             }
             else
             {
-              throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+              throw Fmi::Exception::Trace(BCP, "Operation failed!");
             }
           }
           else
           {
-            throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+            throw Fmi::Exception::Trace(BCP, "Operation failed!");
           }
         }
       }
@@ -527,7 +527,7 @@ bool bw::Request::GetFeature::collect_query_responses(std::vector<std::string>& 
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -544,14 +544,14 @@ void bw::Request::GetFeature::assert_use_default_format() const
       msg << "The 'startIndex' and 'count' parameters are supported only with"
           << " the default output format '" << StandardPresentationParameters::DEFAULT_OUTPUT_FORMAT
           << "'!";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -582,7 +582,7 @@ boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_
     if (not request or strcasecmp(request->c_str(), "getFeature") != 0)
     {
       // Should not happen
-      SmartMet::Spine::Exception exception(BCP, "Operation parsing failed!");
+      Fmi::Exception exception(BCP, "Operation parsing failed!");
       exception.addDetail("Not a GetFeature request.");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
@@ -615,7 +615,7 @@ boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -678,6 +678,6 @@ boost::shared_ptr<bw::Request::GetFeature> bw::Request::GetFeature::create_from_
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
