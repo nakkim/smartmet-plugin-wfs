@@ -77,6 +77,11 @@ bw::SupportsMeteoParameterOptions::get_meteo_parameter_options(const std::string
   }
 }
 
+bool bw::SupportsMeteoParameterOptions::have_meteo_param_options(const std::string& name) const
+{
+    return options_map.count(Fmi::ascii_tolower_copy(name)) > 0;
+}
+
 void bw::SupportsMeteoParameterOptions::setDefaultPrecision(const size_t& value)
 {
   try
