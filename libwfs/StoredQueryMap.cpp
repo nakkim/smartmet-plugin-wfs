@@ -14,14 +14,6 @@ namespace ba = boost::algorithm;
 namespace bw = SmartMet::Plugin::WFS;
 namespace fs = boost::filesystem;
 
-namespace
-{
-  bool is_equal(const std::string& first, const std::string& second)
-  {
-    return first == second;
-  }
-}  // namespace
-
 bw::StoredQueryMap::StoredQueryMap(SmartMet::Spine::Reactor* theReactor, PluginImpl& plugin_impl)
   : background_init(false)
   , shutdown_requested(false)

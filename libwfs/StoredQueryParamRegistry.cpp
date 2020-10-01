@@ -61,10 +61,11 @@ boost::shared_ptr<bw::RequestParameterMap> StoredQueryParamRegistry::process_par
     BOOST_FOREACH (const auto& map_item, param_map)
     {
       const std::string& name = map_item.first;
-      int type_ind = supported_type_names.at(map_item.second->type_name);
-      if (typeid(*map_item.second) == typeid(ScalarParameterRec))
+      auto& item_ref = *map_item.second;
+      int type_ind = supported_type_names.at(item_ref.type_name);
+      if (typeid(item_ref) == typeid(ScalarParameterRec))
       {
-        const ScalarParameterRec& rec = dynamic_cast<ScalarParameterRec&>(*map_item.second);
+        const ScalarParameterRec& rec = dynamic_cast<ScalarParameterRec&>(item_ref);
 
         SmartMet::Spine::Value value;
         if (rec.required)
@@ -117,9 +118,9 @@ boost::shared_ptr<bw::RequestParameterMap> StoredQueryParamRegistry::process_par
                                              "INTERNAL ERROR at line " + Fmi::to_string(__LINE__));
         }
       }
-      else if (typeid(*map_item.second) == typeid(ArrayParameterRec))
+      else if (typeid(item_ref) == typeid(ArrayParameterRec))
       {
-        const ArrayParameterRec& rec = dynamic_cast<ArrayParameterRec&>(*map_item.second);
+        const ArrayParameterRec& rec = dynamic_cast<ArrayParameterRec&>(item_ref);
 
         std::vector<SmartMet::Spine::Value> values = rec.param_def->get_value(src, extra_params);
         if (values.size() < rec.min_size or values.size() > rec.max_size)

@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.9.23
+Version: 20.10.1
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -26,16 +26,16 @@ BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-spine-devel >= 20.9.23
-BuildRequires: smartmet-library-gis-devel >= 20.8.21
+BuildRequires: smartmet-library-gis-devel >= 20.9.29
 BuildRequires: smartmet-library-locus-devel >= 20.8.21
-BuildRequires: smartmet-library-macgyver-devel >= 20.9.18
+BuildRequires: smartmet-library-macgyver-devel >= 20.9.29
 BuildRequires: smartmet-engine-contour-devel >= 20.8.23
 BuildRequires: smartmet-engine-geonames-devel >= 20.9.23
 BuildRequires: smartmet-engine-gis-devel >= 20.8.23
-BuildRequires: smartmet-engine-grid-devel >= 20.9.23
+BuildRequires: smartmet-engine-grid-devel >= 20.10.1
 BuildRequires: smartmet-engine-querydata-devel >= 20.9.23
-BuildRequires: smartmet-library-grid-content-devel >= 20.9.23
-BuildRequires: smartmet-library-grid-files-devel >= 20.9.23
+BuildRequires: smartmet-library-grid-content-devel >= 20.10.1
+BuildRequires: smartmet-library-grid-files-devel >= 20.10.1
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 20.9.23
 %endif
@@ -47,15 +47,15 @@ Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 20.8.21
-Requires: smartmet-library-macgyver >= 20.9.18
+Requires: smartmet-library-macgyver >= 20.9.29
 Requires: smartmet-library-spine >= 20.9.23
-Requires: smartmet-library-gis >= 20.8.21
+Requires: smartmet-library-gis >= 20.9.29
 Requires: smartmet-engine-contour >= 20.8.23
 Requires: smartmet-engine-geonames >= 20.9.23
 Requires: smartmet-engine-gis >= 20.8.23
-Requires: smartmet-engine-grid >= 20.9.23
-Requires: smartmet-library-grid-content >= 20.9.23
-Requires: smartmet-library-grid-files >= 20.9.23
+Requires: smartmet-engine-grid >= 20.10.1
+Requires: smartmet-library-grid-content >= 20.10.1
+Requires: smartmet-library-grid-files >= 20.10.1
 %if %{with observation}
 Requires: smartmet-engine-observation >= 20.9.23
 %endif
@@ -115,8 +115,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/gribwfs/request/*.h
 
 %changelog
+* Thu Oct  1 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.10.1-1.fmi
+- Repackaged due to library ABI changes
+
 * Wed Sep 23 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.23-1.fmi
 - Use Fmi::Exception instead of Spine::Exception
+
+* Fri Sep 18 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.18-1.fmi
+- Fixed parsing of stored obs querystring parameters, maxlocations setting was not obeyed
 
 * Tue Sep 15 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.15-1.fmi
 - Repackaged due to library ABI changes

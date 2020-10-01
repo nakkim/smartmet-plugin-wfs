@@ -169,9 +169,7 @@ bool Plugin::reload(const char* theConfig)
     {
       itsConfig = theConfig;
       init();
-    }
-    catch (...)
-    {
+    } catch (...) {
       throw Fmi::Exception(BCP, "Reload failed");
     }
     itsReloading = false;
@@ -300,9 +298,7 @@ void Plugin::adminHandler(SmartMet::Spine::Reactor& theReactor,
     {
       throw std::runtime_error("Mandatory parameter request missing");
     }
-  }
-  catch (...)
-  {
+  } catch (...) {
     throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

@@ -4,83 +4,18 @@ TOP = $(TEST_TOP)/..
 
 TEST_DIRECTORIES = base real
 
+REQUIRES_GDAL = yes
+
+include ../common.mk
+
 # Compiler options
-
-DEFINES = -DUNIX -D_REENTRANT
-
-FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter -Wno-unknown-pragmas \
-      -Wcast-align \
-      -Wcast-qual \
-      -Wno-inline \
-      -Wno-multichar \
-      -Wno-pmf-conversions \
-      -Woverloaded-virtual  \
-      -Wpointer-arith \
-      -Wredundant-decls \
-      -Wwrite-strings
-
-ifeq ($(TSAN), yes)
-  FLAGS += -fsanitize=thread
-endif
-ifeq ($(ASAN), yes)
-  FLAGS += -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=undefined -fsanitize-address-use-after-scope
-endif
-
-# Compile options in detault, debug and profile modes
-
-CFLAGS_RELEASE = $(DEFINES) $(FLAGS) -DNDEBUG -O2 -g
-CFLAGS_DEBUG   = $(DEFINES) $(FLAGS) -Werror  -O0 -g
 
 ARFLAGS = -r
 DEFINES = -DUNIX -D_REENTRANT
 
-ifneq (,$(findstring debug,$(MAKECMDGOALS)))
-  override CFLAGS += $(CFLAGS_DEBUG)
-else
-  override CFLAGS += $(CFLAGS_RELEASE)
-endif
+INCLUDES += -isystem $(includedir)/jsoncpp
 
-# Installation directories
-
-processor := $(shell uname -p)
-
-ifeq ($(origin PREFIX), undefined)
-  PREFIX = /usr
-else
-  PREFIX = $(PREFIX)
-endif
-
-ifeq ($(processor), x86_64)
-  libdir = $(PREFIX)/lib64
-else
-  libdir = $(PREFIX)/lib
-endif
-
-bindir = $(PREFIX)/bin
-includedir = $(PREFIX)/include
-datadir = $(PREFIX)/share
-enginedir = $(datadir)/smartmet/engines
-plugindir = $(datadir)/smartmet/plugins
-objdir = obj
-
-#
-
-# Boost 1.69
-
-ifneq "$(wildcard /usr/include/boost169)" ""
-  BOOST_INCLUDES = -I/usr/include/boost169
-  BOOST_LIBS = -L/usr/lib64/boost169
-  FLAGS += -Wno-overloaded-virtual -Wno-redundant-decls
-endif
-
-INCLUDES = \
-	$(BOOST_INCLUDES) \
-	-I$(includedir) \
-	-I$(includedir)/smartmet \
-	-I$(includedir)/jsoncpp
-
-LIBS = \
-	$(BOOST_LIBS) \
+LIBS += \
 	-L$(libdir) \
 	-lsmartmet-spine \
         -lsmartmet-grid-files \
@@ -139,7 +74,7 @@ test: $(TEST_TARGETS)
 	$$ok;
 
 PluginTest : obj/PluginTest.o ; @echo "Building $@"
-	@$(CC) -o $@ $(CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) $(LIBS)
+	@$(CXX) -o $@ $(CFLAGS) $(INCLUDES) $< -Ltestsuite -Wl,-rpath=$(libdir) $(LIBS)
 
 
 ifneq ($(wildcard obj/*.d),)
