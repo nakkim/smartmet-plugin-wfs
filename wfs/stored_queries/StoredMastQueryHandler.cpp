@@ -7,7 +7,7 @@
 #include <macgyver/StringConversion.h>
 #include <smartmet/engines/observation/MastQuery.h>
 #include <smartmet/spine/Convenience.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <tuple>
 
 namespace bw = SmartMet::Plugin::WFS;

@@ -7,7 +7,7 @@
 #include <boost/foreach.hpp>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <smartmet/spine/Value.h>
 #include <sstream>
 #include <stdexcept>

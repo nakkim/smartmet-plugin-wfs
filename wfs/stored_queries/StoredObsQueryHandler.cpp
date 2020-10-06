@@ -6,9 +6,9 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
 #include <boost/lambda/lambda.hpp>
+#include <macgyver/Exception.h>
 #include <macgyver/StringConversion.h>
 #include <smartmet/spine/Convenience.h>
-#include <smartmet/spine/Exception.h>
 #include <smartmet/spine/ParameterTools.h>
 #include <smartmet/spine/TimeSeries.h>
 #include <smartmet/spine/TimeSeriesOutput.h>
@@ -177,21 +177,6 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       if (sq_restrictions)
         check_time_interval(query_params.starttime, query_params.endtime, max_hours);
 
-      std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > locations_list;
-      get_location_options(params, language, &locations_list);
-
-      SmartMet::Engine::Observation::StationSettings stationSettings;
-
-      for (const auto& item : locations_list)
-      {
-        stationSettings.nearest_station_settings.emplace_back(item.second->longitude,
-                                                              item.second->latitude,
-                                                              query_params.maxdistance,
-                                                              query_params.numberofstations,
-                                                              item.first,
-                                                              item.second->fmisid);
-      }
-
       std::vector<std::string> param_names;
       bool have_meteo_param =
           params.get<std::string>(P_METEO_PARAMETERS, std::back_inserter(param_names), 1);
@@ -243,11 +228,34 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 
       query_params.starttimeGiven = true;
 
+      params.get<int64_t>(P_HOURS, std::back_inserter(query_params.hours));
+
+      params.get<int64_t>(P_WEEK_DAYS, std::back_inserter(query_params.weekdays));
+
+      const std::string tz_name = get_tz_name(params);
+
+      std::unique_ptr<std::locale> curr_locale;
+
+      SmartMet::Engine::Observation::StationSettings stationSettings;
+
       params.get<int64_t>(P_WMOS, std::back_inserter(stationSettings.wmos));
 
       params.get<int64_t>(P_LPNNS, std::back_inserter(stationSettings.lpnns));
 
       params.get<int64_t>(P_FMISIDS, std::back_inserter(stationSettings.fmisids));
+
+      std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > locations_list;
+      get_location_options(params, language, &locations_list);
+
+      for (const auto& item : locations_list)
+      {
+        stationSettings.nearest_station_settings.emplace_back(item.second->longitude,
+                                                              item.second->latitude,
+                                                              query_params.maxdistance,
+                                                              query_params.numberofstations,
+                                                              item.first,
+                                                              item.second->fmisid);
+      }
 
       params.get<int64_t>(P_GEOIDS, std::back_inserter(stationSettings.geoid_settings.geoids));
       if (stationSettings.geoid_settings.geoids.size() > 0)
@@ -256,14 +264,6 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
         stationSettings.geoid_settings.numberofstations = query_params.numberofstations;
         stationSettings.geoid_settings.language = language;
       }
-
-      params.get<int64_t>(P_HOURS, std::back_inserter(query_params.hours));
-
-      params.get<int64_t>(P_WEEK_DAYS, std::back_inserter(query_params.weekdays));
-
-      const std::string tz_name = get_tz_name(params);
-
-      std::unique_ptr<std::locale> curr_locale;
 
       using SmartMet::Spine::BoundingBox;
       BoundingBox requested_bbox;

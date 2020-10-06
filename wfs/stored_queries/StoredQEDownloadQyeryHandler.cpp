@@ -18,7 +18,7 @@
 #include <smartmet/engines/querydata/Engine.h>
 #include <smartmet/engines/querydata/MetaQueryOptions.h>
 #include <smartmet/spine/Convenience.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <algorithm>
 #include <list>
 #include <string>

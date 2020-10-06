@@ -19,13 +19,13 @@
 #include <newbase/NFmiSvgPath.h>
 #include <newbase/NFmiSvgTools.h>
 
+#include <macgyver/Exception.h>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
 
 #include <smartmet/engines/gis/GdalUtils.h>
 #include <smartmet/engines/querydata/MetaQueryOptions.h>
 #include <smartmet/spine/Convenience.h>
-#include <smartmet/spine/Exception.h>
 #include <smartmet/spine/ParameterFactory.h>
 #include <smartmet/spine/TimeSeriesOutput.h>
 

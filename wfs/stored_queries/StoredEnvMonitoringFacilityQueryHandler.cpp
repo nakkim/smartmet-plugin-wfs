@@ -6,7 +6,7 @@
 #include "StoredQueryHandlerFactoryDef.h"
 #include "SupportsLocationParameters.h"
 #include <smartmet/engines/observation/DBRegistry.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 
 #include <boost/icl/type_traits/to_string.hpp>
 #include <functional>
