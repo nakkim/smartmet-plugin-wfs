@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.9.30
+Version: 20.10.6
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -27,7 +27,7 @@ BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-spine-devel >= 20.9.23
 BuildRequires: smartmet-library-gis-devel >= 20.8.21
 BuildRequires: smartmet-library-locus-devel >= 20.8.21
-BuildRequires: smartmet-library-macgyver-devel >= 20.9.18
+BuildRequires: smartmet-library-macgyver-devel >= 20.10.5
 BuildRequires: smartmet-engine-contour-devel >= 20.8.23
 BuildRequires: smartmet-engine-geonames-devel >= 20.9.23
 BuildRequires: smartmet-engine-gis-devel >= 20.8.23
@@ -43,7 +43,7 @@ Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 20.8.21
-Requires: smartmet-library-macgyver >= 20.9.18
+Requires: smartmet-library-macgyver >= 20.10.5
 Requires: smartmet-library-spine >= 20.9.23
 Requires: smartmet-library-gis >= 20.8.21
 Requires: smartmet-engine-contour >= 20.8.23
@@ -108,6 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Tue Oct  6 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.10.6-1.fmi
+- Build update: use makefile.inc fromsmartmet-library-macgyver
+
 * Wed Sep 30 2020 Andris Pavēnis <andris.pavenis@fmi.fi> - 20.9.30-1.fmi
 - Support overriding meteo parameter output accurracy for forecast queries
 
