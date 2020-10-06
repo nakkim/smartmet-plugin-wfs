@@ -2,35 +2,13 @@
 INCDIR = smartmet/plugins/$(SUBNAME)
 TOP = $(shell pwd)/..
 
-REQUIRES_GDAL = yes
+REQUIRES = gdal jsoncpp
 
-include ../common.mk
-
-# Compiler options
+include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
 DEFINES = -DUNIX -D_REENTRANT
 
-#BOOST169_WARNING_DISABLE = -Wno-redundant-decls -Wno-overloaded-virtual
-#
-#FLAGS = -std=c++11 -fPIC -Wall -W -Wno-unused-parameter -Wno-unknown-pragmas \
-#      -Wcast-align \
-#      -Wcast-qual \
-#      -Wno-inline \
-#      -Wno-multichar \
-#      -Wno-pmf-conversions \
-#      -Woverloaded-virtual  \
-#      -Wpointer-arith \
-#      -Wredundant-decls \
-#      -fdiagnostics-color=$(GCC_DIAG_COLOR) \
-#      $(BOOST169_WARNING_DISABLE) \
-#      -Wwrite-strings
-
-# Compile options in detault, debug and profile modes
-
-INCLUDES += \
-	-Iinclude \
-	-isystem $(includedir)/mysql \
-	-isystem $(includedir)/jsoncpp
+INCLUDES += -Iinclude
 
 LIBS += -L$(libdir) \
 	-lsmartmet-gis \
@@ -48,11 +26,11 @@ LIBS += -L$(libdir) \
 	-lboost_system \
         -lxqilla \
 	-lxerces-c \
-	-lgdal \
+	$(GDAL_LIBS) \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \
-	-ljsoncpp \
+	$(JSONCPP_LIBS) \
 	-lcurl \
 	-lcrypto \
 	-lfmt \
