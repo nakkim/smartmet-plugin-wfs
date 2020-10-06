@@ -114,6 +114,9 @@ StoredGridForecastQueryHandler::StoredGridForecastQueryHandler(
 
     max_np_distance = config->get_optional_config_param<double>("maxNpDistance", -1.0);
     separate_groups = config->get_optional_config_param<bool>("separateGroups", false);
+
+    itsGenerationInfoList.setLockingEnabled(true);
+    itsProducerInfoList.setLockingEnabled(true);
   }
   catch (...)
   {
@@ -626,17 +629,18 @@ uint StoredGridForecastQueryHandler::processGridQuery(
             {
               if (gridQuery.mQueryParameterList[idx].mValueList[t].mProducerId > 0)
               {
-                T::ProducerInfo *info = itsProducerInfoList.getProducerInfoById(gridQuery.mQueryParameterList[idx].mValueList[t].mProducerId);
-                if (info == NULL)
+                T::ProducerInfo info;
+                bool res = itsProducerInfoList.getProducerInfoById(gridQuery.mQueryParameterList[idx].mValueList[t].mProducerId,info);
+                if (!res)
                 {
                   contentServer->getProducerInfoList(0, itsProducerInfoList);
                   itsProducerInfoList_updateTime = time(nullptr);
-                  info = itsProducerInfoList.getProducerInfoById(gridQuery.mQueryParameterList[idx].mValueList[t].mProducerId);
+                  res = itsProducerInfoList.getProducerInfoById(gridQuery.mQueryParameterList[idx].mValueList[t].mProducerId,info);
                 }
 
-                if (info != NULL)
+                if (res)
                 {
-                  output->set(col, row, info->mName);
+                  output->set(col, row, info.mName);
                   idx = pLen + 10;
                 }
               }
@@ -664,17 +668,18 @@ uint StoredGridForecastQueryHandler::processGridQuery(
             {
               if (gridQuery.mQueryParameterList[idx].mValueList[t].mGenerationId > 0)
               {
-                T::GenerationInfo *info = itsGenerationInfoList.getGenerationInfoById(gridQuery.mQueryParameterList[idx].mValueList[t].mGenerationId);
-                if (info == NULL && (itsGenerationInfoList_updateTime + 60) > time(nullptr))
+                T::GenerationInfo info;
+                bool res = itsGenerationInfoList.getGenerationInfoById(gridQuery.mQueryParameterList[idx].mValueList[t].mGenerationId,info);
+                if (!res  && (itsGenerationInfoList_updateTime + 60) > time(nullptr))
                 {
                   contentServer->getGenerationInfoList(0, itsGenerationInfoList);
                   itsGenerationInfoList_updateTime = time(nullptr);
-                  info = itsGenerationInfoList.getGenerationInfoById(gridQuery.mQueryParameterList[idx].mValueList[t].mGenerationId);
+                  res = itsGenerationInfoList.getGenerationInfoById(gridQuery.mQueryParameterList[idx].mValueList[t].mGenerationId,info);
                 }
 
-                if (info != NULL)
+                if (res)
                 {
-                  boost::local_time::local_date_time origTime(Fmi::TimeParser::parse_iso(info->mAnalysisTime), tz);
+                  boost::local_time::local_date_time origTime(Fmi::TimeParser::parse_iso(info.mAnalysisTime), tz);
                   output->set(col, row, wfsQuery.time_formatter->format(origTime));
                   idx = pLen + 10;
                 }
@@ -702,9 +707,10 @@ uint StoredGridForecastQueryHandler::processGridQuery(
               if (gridQuery.mQueryParameterList[p].mValueList[r].mForecastTime == *ft)
               {
                 std::string producerName;
-                T::ProducerInfo *producer = itsProducerInfoList.getProducerInfoById(gridQuery.mQueryParameterList[p].mValueList[r].mProducerId);
-                if (producer != NULL)
-                  producerName = producer->mName;
+                T::ProducerInfo producer;
+                bool res = itsProducerInfoList.getProducerInfoById(gridQuery.mQueryParameterList[p].mValueList[r].mProducerId,producer);
+                if (res)
+                  producerName = producer.mName;
 
                 sprintf(tmp, "%s:%d:%d:%d:%d:%s", gridQuery.mQueryParameterList[p].mValueList[r].mParameterKey.c_str(),
                     (int) gridQuery.mQueryParameterList[p].mValueList[r].mParameterLevelId, (int) gridQuery.mQueryParameterList[p].mValueList[r].mParameterLevel,
@@ -737,11 +743,11 @@ uint StoredGridForecastQueryHandler::processGridQuery(
 
     if (generationId > 0)
     {
-      T::GenerationInfo *info = itsGenerationInfoList.getGenerationInfoById(generationId);
-      if (info != NULL)
+      T::GenerationInfo info;
+      if (itsGenerationInfoList.getGenerationInfoById(generationId,info))
       {
         //boost::local_time::local_date_time origTime(boost::posix_time::from_iso_string(info->mAnalysisTime), tz);
-        wfsQuery.origin_time.reset(new pt::ptime(Fmi::TimeParser::parse_iso(info->mAnalysisTime)));
+        wfsQuery.origin_time.reset(new pt::ptime(Fmi::TimeParser::parse_iso(info.mAnalysisTime)));
       }
     }
 
