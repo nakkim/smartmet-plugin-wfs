@@ -4,16 +4,14 @@ TOP = $(TEST_TOP)/..
 
 TEST_DIRECTORIES = base real
 
-REQUIRES_GDAL = yes
+REQUIRES = gdal jsoncpp
 
-include ../common.mk
+include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
 # Compiler options
 
 ARFLAGS = -r
 DEFINES = -DUNIX -D_REENTRANT
-
-INCLUDES += -isystem $(includedir)/jsoncpp
 
 LIBS += \
 	-L$(libdir) \
@@ -32,11 +30,11 @@ LIBS += \
 	-lboost_system \
         -lxqilla \
 	-lxerces-c \
-	-lgdal \
+	$(GDAL_LIBS) \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \
-	-ljsoncpp \
+	$(JSONCPP_LIBS) \
 	-lcurl \
 	-lcrypto \
 	-lbz2 -lz \

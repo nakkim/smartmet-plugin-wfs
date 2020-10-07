@@ -3,10 +3,9 @@ SPEC = smartmet-plugin-grib$(SUBNAME)
 INCDIR = smartmet/plugins/$(SUBNAME)
 TOP = $(shell pwd)
 
-REQUIRES_GDAL = yes
+REQUIRES = gdal jsoncpp
 
-include common.mk
-
+include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
 DEFINES = -DUNIX -D_REENTRANT
 
@@ -27,13 +26,13 @@ LIBS += -L$(libdir) \
 	-lboost_system \
         -lxqilla \
 	-lxerces-c \
-	-lgdal \
+	$(GDAL_LIBS) \
 	-lpqxx \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \
 	-lcurl \
-	-ljsoncpp \
+	$(JSONCPP_LIBS) \
 	-lcrypto \
 	-lbz2 -lz \
 	-lpthread \
