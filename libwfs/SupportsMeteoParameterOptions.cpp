@@ -34,9 +34,9 @@ bw::SupportsMeteoParameterOptions::SupportsMeteoParameterOptions(
           param_desc, "missing_value", default_option_item.missing_value);
       const std::string missing_text = config->get_optional_config_param<std::string>(
           param_desc, "missing_text", default_option_item.missing_text);
-      const unsigned short sensor_first = config->get_optional_config_param<unsigned short>(param_desc, "sensor_first", default_option_item.sensor_first);
-      const unsigned short sensor_last = config->get_optional_config_param<unsigned short>(param_desc, "sensor_last", default_option_item.sensor_last);
-      const unsigned short sensor_step = config->get_optional_config_param<unsigned short>(param_desc, "sensor_step", default_option_item.sensor_step);
+      const unsigned short sensor_first = config->get_optional_config_param<unsigned int>(param_desc, "sensor_first", default_option_item.sensor_first);
+      const unsigned short sensor_last = config->get_optional_config_param<unsigned int>(param_desc, "sensor_last", default_option_item.sensor_last);
+      const unsigned short sensor_step = config->get_optional_config_param<unsigned int>(param_desc, "sensor_step", default_option_item.sensor_step);
 
       if (precision > 15)
       {
@@ -130,7 +130,7 @@ void bw::SupportsMeteoParameterOptions::setDefaultMissingText(const std::string&
              "text "
              "length "
           << text_length << " is out of range " << lower_limit << ".." << upper_limit;
-      throw Fmi::Exception(BCP, msg.str());
+      throw Fmi::Exception::Trace(BCP, msg.str());
     }
   }
   catch (...)
@@ -154,7 +154,7 @@ void bw::SupportsMeteoParameterOptions::setDefaultMissingValue(const double& val
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::SupportsMeteoParameterOptions::setDefaultMissingValue: value "
           << value << " is out of range " << lower_limit << ".." << upper_limit;
-      throw Fmi::Exception(BCP, msg.str());
+      throw Fmi::Exception::Trace(BCP, msg.str());
     }
   }
   catch (...)
@@ -178,12 +178,12 @@ void bw::SupportsMeteoParameterOptions::setDefaultSensorFirst(const unsigned sho
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::SupportsMeteoParameterOptions::setDefaultSensorFirst: value "
           << value << " is out of range " << lower_limit << ".." << upper_limit;
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception::Trace(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 void bw::SupportsMeteoParameterOptions::setDefaultSensorLast(const unsigned short& value)
@@ -201,12 +201,12 @@ void bw::SupportsMeteoParameterOptions::setDefaultSensorLast(const unsigned shor
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::SupportsMeteoParameterOptions::setDefaultSensorLast: value "
           << value << " is out of range " << lower_limit << ".." << upper_limit;
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception::Trace(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 void bw::SupportsMeteoParameterOptions::setDefaultSensorStep(const unsigned short& value)
@@ -224,12 +224,12 @@ void bw::SupportsMeteoParameterOptions::setDefaultSensorStep(const unsigned shor
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::SupportsMeteoParameterOptions::setDefaultSensorStep: value "
           << value << " is out of range " << lower_limit << ".." << upper_limit;
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception::Trace(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
