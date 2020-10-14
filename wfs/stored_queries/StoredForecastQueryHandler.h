@@ -5,6 +5,7 @@
 #include "StoredQueryHandlerBase.h"
 #include "SupportsExtraHandlerParams.h"
 #include "SupportsLocationParameters.h"
+#include "SupportsMeteoParameterOptions.h"
 #include "SupportsTimeParameters.h"
 #include "SupportsTimeZone.h"
 #include "RequiresGeoEngine.h"
@@ -28,6 +29,7 @@ class StoredForecastQueryHandler : public StoredQueryHandlerBase,
                                    protected virtual RequiresGeoEngine,
                                    protected virtual RequiresQEngine,
                                    protected SupportsLocationParameters,
+                                   protected SupportsMeteoParameterOptions,
                                    protected SupportsTimeParameters,
                                    protected SupportsTimeZone
 {

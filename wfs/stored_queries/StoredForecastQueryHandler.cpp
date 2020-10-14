@@ -53,6 +53,7 @@ bw::StoredForecastQueryHandler::StoredForecastQueryHandler(
       bw::RequiresQEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
       bw::SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
+      bw::SupportsMeteoParameterOptions(config),
       bw::SupportsTimeParameters(config),
       bw::SupportsTimeZone(reactor, config),
       common_params(),
@@ -531,6 +532,10 @@ boost::shared_ptr<SmartMet::Spine::Table> bw::StoredForecastQueryHandler::extrac
         else
         {
           param_precision_map[name] = pos->second.precision;
+        }
+
+        if (have_meteo_param_options(name)) {
+          param_precision_map[name] = get_meteo_parameter_options(name)->precision;
         }
       }
 
