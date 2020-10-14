@@ -7,16 +7,17 @@
 #include <macgyver/StringConversion.h>
 #include <smartmet/engines/observation/MastQuery.h>
 #include <smartmet/spine/Convenience.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <tuple>
 
 namespace bw = SmartMet::Plugin::WFS;
 
 bw::StoredMastQueryHandler::StoredMastQueryHandler(SmartMet::Spine::Reactor* reactor,
-                                                   boost::shared_ptr<StoredQueryConfig> config,
+                                                   StoredQueryConfig::Ptr config,
                                                    PluginImpl& plugin_data,
                                                    boost::optional<std::string> template_file_name)
-    : bw::SupportsExtraHandlerParams(config),
+    : bw::StoredQueryParamRegistry(config),
+      bw::SupportsExtraHandlerParams(config),
       bw::RequiresGeoEngine(reactor),
       bw::RequiresObsEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -28,16 +29,16 @@ bw::StoredMastQueryHandler::StoredMastQueryHandler(SmartMet::Spine::Reactor* rea
 {
   try
   {
-    register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config);
-    register_scalar_param<pt::ptime>(P_END_TIME, *config);
-    register_array_param<std::string>(P_METEO_PARAMETERS, *config, 1);
-    register_scalar_param<std::string>(P_STATION_TYPE, *config);
-    register_scalar_param<uint64_t>(P_TIME_STEP, *config);
-    register_scalar_param<uint64_t>(P_NUM_OF_STATIONS, *config);
-    register_scalar_param<uint64_t>(P_MAX_EPOCHS, *config);
-    register_scalar_param<std::string>(P_MISSING_TEXT, *config);
-    register_scalar_param<std::string>(P_CRS, *config);
-    register_array_param<uint64_t>(P_PRODUCER_ID, *config);
+    register_scalar_param<pt::ptime>(P_BEGIN_TIME);
+    register_scalar_param<pt::ptime>(P_END_TIME);
+    register_array_param<std::string>(P_METEO_PARAMETERS, 1);
+    register_scalar_param<std::string>(P_STATION_TYPE);
+    register_scalar_param<uint64_t>(P_TIME_STEP);
+    register_scalar_param<uint64_t>(P_NUM_OF_STATIONS);
+    register_scalar_param<uint64_t>(P_MAX_EPOCHS);
+    register_scalar_param<std::string>(P_MISSING_TEXT);
+    register_scalar_param<std::string>(P_CRS);
+    register_array_param<uint64_t>(P_PRODUCER_ID);
 
     m_maxHours = config->get_optional_config_param<double>("maxHours", 7.0 * 24.0);
     m_sqRestrictions = plugin_data.get_config().getSQRestrictions();
@@ -45,7 +46,7 @@ bw::StoredMastQueryHandler::StoredMastQueryHandler(SmartMet::Spine::Reactor* rea
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -179,7 +180,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       {
         std::ostringstream msg;
         msg << "At least one producer has to be given.";
-        SmartMet::Spine::Exception exception(BCP, msg.str());
+        Fmi::Exception exception(BCP, msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception.disableStackTrace();
       }
@@ -189,7 +190,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       params.get<std::string>(P_METEO_PARAMETERS, std::back_inserter(meteoParametersVector));
       if (meteoParametersVector.empty())
       {
-        SmartMet::Spine::Exception exception(BCP, "Operation processing failed!");
+        Fmi::Exception exception(BCP, "Operation processing failed!");
         exception.addDetail("At least one meteo parameter has to be given.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception.disableStackTrace();
@@ -199,7 +200,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       auto qc_param_name_ref = SupportsQualityParameters::firstQCParameter(meteoParametersVector);
       if (not m_supportQCParameters && qc_param_name_ref != meteoParametersVector.end())
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid parameter value!");
+        Fmi::Exception exception(BCP, "Invalid parameter value!");
         exception.addDetail("Quality code parameter '" + *qc_param_name_ref +
                             "' is not allowed in this query.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
@@ -227,7 +228,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
         const uint64_t paramId = obs_engine->getParameterId(name, stationType);
         if (paramId == 0)
         {
-          SmartMet::Spine::Exception exception(BCP, "Unknown parameter in the query!");
+          Fmi::Exception exception(BCP, "Unknown parameter in the query!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
           exception.addParameter("Unknown parameter", name);
           throw exception.disableStackTrace();
@@ -253,7 +254,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
             std::ostringstream msg;
             msg << "Parameter '" << name << "' is already given by using '" << errParamName
                 << "' name.";
-            SmartMet::Spine::Exception exception(BCP, msg.str());
+            Fmi::Exception exception(BCP, msg.str());
             exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
             throw exception;
           }
@@ -295,7 +296,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       // Only 24 hours allowed
       if (1440 < timestep)
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid time step value!");
+        Fmi::Exception exception(BCP, "Invalid time step value!");
         exception.addDetail("Maximum timestep value is 1440 minutes.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
         exception.addParameter("Timestep", std::to_string(timestep));
@@ -306,7 +307,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
       uint64_t ts1 = (timestep > 0) ? timestep : 1;
       if (m_sqRestrictions and startTime + pt::minutes(maxEpochs * ts1) < endTime)
       {
-        SmartMet::Spine::Exception exception(BCP, "Too many time epochs in the time interval!");
+        Fmi::Exception exception(BCP, "Too many time epochs in the time interval!");
         exception.addDetail("Use shorter time interval or larger time step.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         exception.addParameter("Start time", pt::to_simple_string(startTime));
@@ -602,7 +603,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
                 std::ostringstream msg;
                 msg << "Cannot solve what to return by using parameter id '" << measurandIdStr
                     << "'";
-                SmartMet::Spine::Exception exception(BCP, msg.str());
+                Fmi::Exception exception(BCP, msg.str());
                 exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
                 throw exception;
               }
@@ -639,7 +640,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation processing failed!", nullptr);
+      Fmi::Exception exception(BCP, "Operation processing failed!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       exception.addParameter(WFS_LANGUAGE, language);
@@ -648,7 +649,7 @@ void bw::StoredMastQueryHandler::query(const StoredQuery& query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -663,7 +664,7 @@ void bw::StoredMastQueryHandler::update_parameters(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -679,7 +680,7 @@ bw::StoredMastQueryHandler::dbRegistryConfig(const std::string& configName) cons
     {
       std::ostringstream msg;
       msg << "Database registry is not available!";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -690,7 +691,7 @@ bw::StoredMastQueryHandler::dbRegistryConfig(const std::string& configName) cons
     {
       std::ostringstream msg;
       msg << "Database registry configuration '" << configName << "' is not available!";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -699,7 +700,7 @@ bw::StoredMastQueryHandler::dbRegistryConfig(const std::string& configName) cons
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -709,7 +710,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_stored_mast_handler_create(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 {
@@ -722,7 +723,7 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_stored_mast
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

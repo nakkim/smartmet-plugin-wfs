@@ -1,7 +1,7 @@
 #include "WfsFeatureDef.h"
 #include <boost/bind.hpp>
 #include <boost/ref.hpp>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <algorithm>
 
 namespace bw = SmartMet::Plugin::WFS;
@@ -56,7 +56,7 @@ bw::WfsFeatureDef::WfsFeatureDef(SmartMet::Spine::CRSRegistry& crs_registry,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -80,7 +80,7 @@ std::string bw::WfsFeatureDef::resolve_crs_url(const std::string& name,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

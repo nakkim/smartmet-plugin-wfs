@@ -20,7 +20,7 @@ class SupportsQualityParameters : protected virtual SupportsExtraHandlerParams,
                                   protected virtual StoredQueryParamRegistry
 {
  public:
-  SupportsQualityParameters(boost::shared_ptr<StoredQueryConfig> config);
+  SupportsQualityParameters(StoredQueryConfig::Ptr config);
   virtual ~SupportsQualityParameters();
 
   /** \brief Test if the input string contains "qc_" prefix (case insensitive).
@@ -44,9 +44,6 @@ class SupportsQualityParameters : protected virtual SupportsExtraHandlerParams,
    */
   std::vector<std::string>::const_iterator firstQCParameter(
       const std::vector<std::string>& parameters) const;
-
- private:
-  bool m_supportQCParameters;
 
  protected:
   static const char* P_QUALITY_INFO;

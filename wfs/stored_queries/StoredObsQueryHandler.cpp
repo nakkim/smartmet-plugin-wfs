@@ -8,7 +8,7 @@
 #include <boost/lambda/lambda.hpp>
 #include <macgyver/StringConversion.h>
 #include <smartmet/spine/Convenience.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <smartmet/spine/ParameterTools.h>
 #include <smartmet/spine/TimeSeries.h>
 #include <smartmet/spine/TimeSeriesOutput.h>
@@ -47,10 +47,11 @@ using boost::format;
 using boost::str;
 
 StoredObsQueryHandler::StoredObsQueryHandler(SmartMet::Spine::Reactor* reactor,
-                                             boost::shared_ptr<StoredQueryConfig> config,
+                                             StoredQueryConfig::Ptr config,
                                              PluginImpl& plugin_data,
                                              boost::optional<std::string> template_file_name)
-    : SupportsExtraHandlerParams(config, false),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
       RequiresGeoEngine(reactor),
       RequiresObsEngine(reactor),
       StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -75,22 +76,22 @@ StoredObsQueryHandler::StoredObsQueryHandler(SmartMet::Spine::Reactor* reactor,
 {
   try
   {
-    register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config);
-    register_scalar_param<pt::ptime>(P_END_TIME, *config);
-    register_scalar_param<bool>(P_LATEST, *config);
-    register_array_param<std::string>(P_METEO_PARAMETERS, *config, 1);
-    register_scalar_param<std::string>(P_STATION_TYPE, *config);
-    register_scalar_param<uint64_t>(P_TIME_STEP, *config);
-    register_array_param<int64_t>(P_LPNNS, *config);
-    register_scalar_param<uint64_t>(P_NUM_OF_STATIONS, *config);
-    register_array_param<int64_t>(P_HOURS, *config);
-    register_array_param<int64_t>(P_WEEK_DAYS, *config);
-    register_scalar_param<std::string>(P_LOCALE, *config);
-    register_scalar_param<std::string>(P_MISSING_TEXT, *config);
-    register_scalar_param<uint64_t>(P_MAX_EPOCHS, *config);
-    register_scalar_param<std::string>(P_CRS, *config);
-    register_array_param<int64_t>(P_FMISIDS, *config);
-    register_array_param<int64_t>(P_WMOS, *config);
+    register_scalar_param<pt::ptime>(P_BEGIN_TIME);
+    register_scalar_param<pt::ptime>(P_END_TIME);
+    register_scalar_param<bool>(P_LATEST);
+    register_array_param<std::string>(P_METEO_PARAMETERS, 1);
+    register_scalar_param<std::string>(P_STATION_TYPE);
+    register_scalar_param<uint64_t>(P_TIME_STEP);
+    register_array_param<int64_t>(P_LPNNS);
+    register_scalar_param<uint64_t>(P_NUM_OF_STATIONS);
+    register_array_param<int64_t>(P_HOURS);
+    register_array_param<int64_t>(P_WEEK_DAYS);
+    register_scalar_param<std::string>(P_LOCALE);
+    register_scalar_param<std::string>(P_MISSING_TEXT);
+    register_scalar_param<uint64_t>(P_MAX_EPOCHS);
+    register_scalar_param<std::string>(P_CRS);
+    register_array_param<int64_t>(P_FMISIDS);
+    register_array_param<int64_t>(P_WMOS);
 
     max_hours = config->get_optional_config_param<double>("maxHours", 7.0 * 24.0);
     max_station_count = config->get_optional_config_param<unsigned>("maxStationCount", 0);
@@ -100,7 +101,7 @@ StoredObsQueryHandler::StoredObsQueryHandler(SmartMet::Spine::Reactor* reactor,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -176,21 +177,6 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       if (sq_restrictions)
         check_time_interval(query_params.starttime, query_params.endtime, max_hours);
 
-      std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > locations_list;
-      get_location_options(params, language, &locations_list);
-
-      SmartMet::Engine::Observation::StationSettings stationSettings;
-
-      for (const auto& item : locations_list)
-      {
-        stationSettings.nearest_station_settings.emplace_back(item.second->longitude,
-                                                              item.second->latitude,
-                                                              query_params.maxdistance,
-                                                              query_params.numberofstations,
-                                                              item.first,
-                                                              item.second->fmisid);
-      }
-
       std::vector<std::string> param_names;
       bool have_meteo_param =
           params.get<std::string>(P_METEO_PARAMETERS, std::back_inserter(param_names), 1);
@@ -206,7 +192,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 
       if (not have_meteo_param)
       {
-        SmartMet::Spine::Exception exception(BCP, "Operation processin failed!");
+        Fmi::Exception exception(BCP, "Operation processin failed!");
         exception.addDetail("At least one meteo parameter must be specified");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         exception.disableStackTrace();
@@ -242,11 +228,34 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 
       query_params.starttimeGiven = true;
 
+      params.get<int64_t>(P_HOURS, std::back_inserter(query_params.hours));
+
+      params.get<int64_t>(P_WEEK_DAYS, std::back_inserter(query_params.weekdays));
+
+      const std::string tz_name = get_tz_name(params);
+
+      std::unique_ptr<std::locale> curr_locale;
+
+      SmartMet::Engine::Observation::StationSettings stationSettings;
+
       params.get<int64_t>(P_WMOS, std::back_inserter(stationSettings.wmos));
 
       params.get<int64_t>(P_LPNNS, std::back_inserter(stationSettings.lpnns));
 
       params.get<int64_t>(P_FMISIDS, std::back_inserter(stationSettings.fmisids));
+
+      std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > locations_list;
+      get_location_options(params, language, &locations_list);
+
+      for (const auto& item : locations_list)
+      {
+        stationSettings.nearest_station_settings.emplace_back(item.second->longitude,
+                                                              item.second->latitude,
+                                                              query_params.maxdistance,
+                                                              query_params.numberofstations,
+                                                              item.first,
+                                                              item.second->fmisid);
+      }
 
       params.get<int64_t>(P_GEOIDS, std::back_inserter(stationSettings.geoid_settings.geoids));
       if (stationSettings.geoid_settings.geoids.size() > 0)
@@ -255,14 +264,6 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
         stationSettings.geoid_settings.numberofstations = query_params.numberofstations;
         stationSettings.geoid_settings.language = language;
       }
-
-      params.get<int64_t>(P_HOURS, std::back_inserter(query_params.hours));
-
-      params.get<int64_t>(P_WEEK_DAYS, std::back_inserter(query_params.weekdays));
-
-      const std::string tz_name = get_tz_name(params);
-
-      std::unique_ptr<std::locale> curr_locale;
 
       using SmartMet::Spine::BoundingBox;
       BoundingBox requested_bbox;
@@ -297,7 +298,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 
       if (query_params.starttime > query_params.endtime)
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid time interval!");
+        Fmi::Exception exception(BCP, "Invalid time interval!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         exception.addParameter("Start time", pt::to_simple_string(query_params.starttime));
         exception.addParameter("End time", pt::to_simple_string(query_params.endtime));
@@ -310,7 +311,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
       if (sq_restrictions and
           query_params.starttime + pt::minutes(maxEpochs * ts1) < query_params.endtime)
       {
-        SmartMet::Spine::Exception exception(BCP, "Too many time epochs in the time interval!");
+        Fmi::Exception exception(BCP, "Too many time epochs in the time interval!");
         exception.addDetail("Use shorter time interval or larger time step.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         exception.addParameter("Start time", pt::to_simple_string(query_params.starttime));
@@ -324,7 +325,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
         obs_engine->getStationsByBoundingBox(stations, query_params);
         if (stations.size() > max_station_count)
         {
-          SmartMet::Spine::Exception exception(
+          Fmi::Exception exception(
               BCP,
               "Too many stations (" + std::to_string(stations.size()) + ") in the bounding box!");
           exception.addDetail("No more than " + std::to_string(max_station_count) + " is allowed.");
@@ -484,7 +485,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           if (not lat.empty() and not lon.empty())
             set_2D_coord(transformation, lat, lon, group["obsStationList"][ind]);
           else
-            throw SmartMet::Spine::Exception(BCP, "wfs: Internal LatLon query error.");
+            throw Fmi::Exception(BCP, "wfs: Internal LatLon query error.");
 
           // Region solving
           std::string region;
@@ -697,7 +698,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation processing failed!", nullptr);
+      Fmi::Exception exception(BCP, "Operation processing failed!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       exception.addParameter(WFS_LANGUAGE, language);
@@ -706,7 +707,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -720,7 +721,7 @@ void StoredObsQueryHandler::check_parameter_names(const RequestParameterMap& par
     const std::string l_name = Fmi::ascii_tolower_copy(name);
     if (not lowerCaseParamNames.insert(l_name).second)
     {
-      throw SmartMet::Spine::Exception::Trace(BCP, "Duplicate parameter name '" + name + "'!")
+      throw Fmi::Exception::Trace(BCP, "Duplicate parameter name '" + name + "'!")
           .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
     }
 
@@ -730,7 +731,7 @@ void StoredObsQueryHandler::check_parameter_names(const RequestParameterMap& par
     if ((not m_support_qc_parameters or not support_quality_info) and
         SupportsQualityParameters::isQCParameter(name))
     {
-      throw SmartMet::Spine::Exception::Trace(BCP, "Invalid parameter!")
+      throw Fmi::Exception::Trace(BCP, "Invalid parameter!")
           .addDetail("Quality code parameter '" + name + "' is not allowed in this query.")
           .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
     }
@@ -769,7 +770,7 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
     const bool have_explicit_qc_params = qc_param_name_ref != param_names.end();
     if ((not m_support_qc_parameters or not support_quality_info) and have_explicit_qc_params)
     {
-      throw SmartMet::Spine::Exception::Trace(BCP, "Invalid parameter!")
+      throw Fmi::Exception::Trace(BCP, "Invalid parameter!")
           .addDetail("Quality code parameter '" + *qc_param_name_ref +
                      "' is not allowed in this query.")
           .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
@@ -782,7 +783,7 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
       // Check for duplicates
       if (not lowerCaseParamNames.insert(l_name).second)
       {
-        throw SmartMet::Spine::Exception::Trace(BCP, "Duplicate parameter name '" + name + "'!")
+        throw Fmi::Exception::Trace(BCP, "Duplicate parameter name '" + name + "'!")
             .addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       }
 
@@ -857,7 +858,7 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
       }
       else
       {
-        throw SmartMet::Spine::Exception::Trace(BCP, "Unrecognozed parameter '" + name + "'")
+        throw Fmi::Exception::Trace(BCP, "Unrecognozed parameter '" + name + "'")
             .disableStackTrace();
       }
     }
@@ -865,7 +866,7 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation processing failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation processing failed!");
   }
 }
 
@@ -879,7 +880,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_obs_handler_create(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 {
@@ -892,7 +893,7 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_obs_handler
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

@@ -11,7 +11,7 @@
 #include <boost/format.hpp>
 #include <spine/ConfigTools.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <locale>
 #include <sstream>
 #include <stdexcept>
@@ -87,12 +87,12 @@ Config::Config(const string& configfile)
 
     if (not xgp_found)
     {
-      throw SmartMet::Spine::Exception(BCP, "No usable XML grammar pool file found!");
+      throw Fmi::Exception(BCP, "No usable XML grammar pool file found!");
     }
 
     if (xml_grammar_pool_dump == "" or not fs::exists(xml_grammar_pool_dump))
     {
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP, "XML grammar pool file '" + xml_grammar_pool_dump + "' not found!");
     }
 
@@ -111,7 +111,7 @@ Config::Config(const string& configfile)
     {
       fs::path sqcd(sq_config_dir);
       if (!fs::exists(sqcd) || !fs::is_directory(sqcd))
-        throw SmartMet::Spine::Exception(BCP,
+        throw Fmi::Exception(BCP,
                                          sq_config_dir +
                                              " provided as stored queries"
                                              " configuration directory is not a directory");
@@ -128,7 +128,7 @@ Config::Config(const string& configfile)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -141,12 +141,12 @@ std::vector<boost::shared_ptr<WfsFeatureDef> > Config::read_features_config(
 
     if (not fs::exists(features_dir))
     {
-      throw SmartMet::Spine::Exception(BCP, "Directory '" + features_dir.string() + "' not found!");
+      throw Fmi::Exception(BCP, "Directory '" + features_dir.string() + "' not found!");
     }
 
     if (not fs::is_directory(features_dir))
     {
-      throw SmartMet::Spine::Exception(BCP, "'" + features_dir.string() + "' is not a directory");
+      throw Fmi::Exception(BCP, "'" + features_dir.string() + "' is not a directory");
     }
 
     std::vector<boost::shared_ptr<WfsFeatureDef> > result;
@@ -172,7 +172,7 @@ std::vector<boost::shared_ptr<WfsFeatureDef> > Config::read_features_config(
           std::cerr << SmartMet::Spine::log_time_str() << ": error reading feature description"
                     << " file '" << entry.string() << "'" << std::endl;
 
-          SmartMet::Spine::Exception exception(
+          Fmi::Exception exception(
               BCP, "Error while reading feature description!", nullptr);
           exception.addParameter("File", entry.string());
           throw exception;
@@ -184,7 +184,7 @@ std::vector<boost::shared_ptr<WfsFeatureDef> > Config::read_features_config(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -225,7 +225,7 @@ void Config::read_typename_config(std::map<std::string, std::string>& typename_s
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -255,14 +255,14 @@ void Config::read_capabilities_config()
       }
       else
       {
-        throw SmartMet::Spine::Exception::Trace(
+        throw Fmi::Exception::Trace(
             BCP, "Incorrect value of configuration entry capabilities_config");
       }
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -281,7 +281,7 @@ void Config::read_admin_cred()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -307,7 +307,7 @@ void Config::read_hosts_info()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

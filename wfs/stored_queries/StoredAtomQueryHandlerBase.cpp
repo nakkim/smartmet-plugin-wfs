@@ -3,7 +3,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/variant.hpp>
 #include <macgyver/StringConversion.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <smartmet/spine/Value.h>
 #include <cassert>
 #include <limits>
@@ -16,11 +16,13 @@ using SmartMet::Spine::Value;
 
 bw::StoredAtomQueryHandlerBase::StoredAtomQueryHandlerBase(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
-    : bw::SupportsExtraHandlerParams(config, true),
-      bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name)
+
+    : bw::StoredQueryParamRegistry(config)
+    , bw::SupportsExtraHandlerParams(config, true)
+    , bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name)
 {
   try
   {
@@ -33,7 +35,7 @@ bw::StoredAtomQueryHandlerBase::StoredAtomQueryHandlerBase(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -71,7 +73,7 @@ void bw::StoredAtomQueryHandlerBase::query(const bw::StoredQuery& query,
     hash["protocol"] = QueryBase::PROTOCOL_SUBST;
 
     if(!hostname)
-      throw Spine::Exception(BCP, "Hostname unknown");
+      throw Fmi::Exception(BCP, "Hostname unknown");
     
     CTPP::CDT h_hosts;
     h_hosts["wms"] = get_config()->get_hosts().getWMSHost(*hostname);
@@ -90,7 +92,7 @@ void bw::StoredAtomQueryHandlerBase::query(const bw::StoredQuery& query,
 
     if ((debug_level > 1) and param_sets.empty())
     {
-      SmartMet::Spine::Exception exception(BCP, "No data available!");
+      Fmi::Exception exception(BCP, "No data available!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception.disableStackTrace();
     }
@@ -124,7 +126,7 @@ void bw::StoredAtomQueryHandlerBase::query(const bw::StoredQuery& query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -142,7 +144,7 @@ void bw::StoredAtomQueryHandlerBase::update_parameters(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -181,7 +183,7 @@ std::vector<std::string> bw::StoredAtomQueryHandlerBase::get_param_callback(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -191,7 +193,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_stored_atom_handler_create(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 {
@@ -204,7 +206,7 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_stored_atom
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

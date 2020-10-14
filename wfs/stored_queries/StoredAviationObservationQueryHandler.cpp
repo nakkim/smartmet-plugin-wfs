@@ -7,7 +7,7 @@
 #include <engines/observation/VerifiableMessageQuery.h>
 #include <engines/observation/VerifiableMessageQueryParams.h>
 #include <macgyver/StringConversion.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <algorithm>
 #include <unordered_map>
 #include <utility>
@@ -28,11 +28,12 @@ const char* P_RETURN_ONLY_LATEST = "returnOnlyLatest";
 
 bw::StoredAviationObservationQueryHandler::StoredAviationObservationQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 
-    : bw::SupportsExtraHandlerParams(config),
+    : bw::StoredQueryParamRegistry(config),
+      bw::SupportsExtraHandlerParams(config),
       bw::RequiresGeoEngine(reactor),
       bw::RequiresObsEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
@@ -41,17 +42,17 @@ bw::StoredAviationObservationQueryHandler::StoredAviationObservationQueryHandler
 {
   try
   {
-    register_array_param<std::string>(P_ICAO_CODE, *config);
-    register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config);
-    register_scalar_param<pt::ptime>(P_END_TIME, *config);
-    register_scalar_param<std::string>(P_STATION_TYPE, *config);
-    register_scalar_param<std::string>(P_RETURN_ONLY_LATEST, *config, "false");
+    register_array_param<std::string>(P_ICAO_CODE);
+    register_scalar_param<pt::ptime>(P_BEGIN_TIME);
+    register_scalar_param<pt::ptime>(P_END_TIME);
+    register_scalar_param<std::string>(P_STATION_TYPE);
+    register_scalar_param<std::string>(P_RETURN_ONLY_LATEST, "false");
     m_sqRestrictions = plugin_data.get_config().getSQRestrictions();
     m_maxHours = config->get_optional_config_param<double>("maxHours", 7.0 * 24.0);
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -153,7 +154,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
         {
           std::ostringstream msg;
           msg << "ICAO code '" << *it << "' not found.";
-          SmartMet::Spine::Exception exception(BCP, msg.str());
+          Fmi::Exception exception(BCP, msg.str());
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
           throw exception.disableStackTrace();
         }
@@ -248,7 +249,7 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
         }
         catch (...)
         {
-          SmartMet::Spine::Exception exception(BCP, "Operation processing failed!", nullptr);
+          Fmi::Exception exception(BCP, "Operation processing failed!", nullptr);
           if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
             exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
           throw exception;
@@ -349,14 +350,14 @@ void bw::StoredAviationObservationQueryHandler::query(const StoredQuery& query,
     }  // In case of some other failures
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation failed!", nullptr);
+      Fmi::Exception exception(BCP, "Operation failed!", nullptr);
       exception.addParameter(WFS_LANGUAGE, language);
       throw exception;
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -373,7 +374,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_stored_aviation_observation_handler_create(SmartMet::Spine::Reactor* reactor,
-                                               boost::shared_ptr<StoredQueryConfig> config,
+                                               StoredQueryConfig::Ptr config,
                                                PluginImpl& plugin_data,
                                                boost::optional<std::string> template_file_name)
 {
@@ -386,7 +387,7 @@ wfs_stored_aviation_observation_handler_create(SmartMet::Spine::Reactor* reactor
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

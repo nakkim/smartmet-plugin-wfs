@@ -9,7 +9,7 @@
 #include <macgyver/TimeParser.h>
 #include <spine/CRSRegistry.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 #include <tuple>
 
@@ -24,11 +24,12 @@ namespace WFS
 {
 StoredSoundingQueryHandler::StoredSoundingQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& pluginData,
     boost::optional<std::string> templateFileName)
 
-    : SupportsExtraHandlerParams(config),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config),
       RequiresGeoEngine(reactor),
       RequiresObsEngine(reactor),
       StoredQueryHandlerBase(reactor, config, pluginData, templateFileName),
@@ -37,18 +38,18 @@ StoredSoundingQueryHandler::StoredSoundingQueryHandler(
       SupportsBoundingBox(config, pluginData.get_crs_registry()),
       SupportsQualityParameters(config)
 {
-  register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config);
-  register_scalar_param<pt::ptime>(P_END_TIME, *config);
-  register_array_param<std::string>(P_METEO_PARAMETERS, *config, 1);
-  register_scalar_param<std::string>(P_STATION_TYPE, *config);
-  register_scalar_param<uint64_t>(P_NUM_OF_STATIONS, *config);
-  register_scalar_param<std::string>(P_MISSING_TEXT, *config);
-  register_scalar_param<std::string>(P_CRS, *config);
-  register_scalar_param<bool>(P_LATEST, *config);
-  register_scalar_param<uint64_t>(P_SOUNDING_TYPE, *config);
-  register_array_param<uint64_t>(P_PUBLICITY, *config, 1);
-  register_array_param<double>(P_ALTITUDE_RANGES, *config, 0, 2, 2);
-  register_array_param<double>(P_PRESSURE_RANGES, *config, 0, 2, 2);
+  register_scalar_param<pt::ptime>(P_BEGIN_TIME);
+  register_scalar_param<pt::ptime>(P_END_TIME);
+  register_array_param<std::string>(P_METEO_PARAMETERS, 1);
+  register_scalar_param<std::string>(P_STATION_TYPE);
+  register_scalar_param<uint64_t>(P_NUM_OF_STATIONS);
+  register_scalar_param<std::string>(P_MISSING_TEXT);
+  register_scalar_param<std::string>(P_CRS);
+  register_scalar_param<bool>(P_LATEST);
+  register_scalar_param<uint64_t>(P_SOUNDING_TYPE);
+  register_array_param<uint64_t>(P_PUBLICITY, 1);
+  register_array_param<double>(P_ALTITUDE_RANGES, 0, 2, 2);
+  register_array_param<double>(P_PRESSURE_RANGES, 0, 2, 2);
 
   mMaxHours = config->get_optional_config_param<double>("maxHours", 7.0 * 24.0);
   mSqRestrictions = pluginData.get_config().getSQRestrictions();
@@ -81,7 +82,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
     crsRegistry.get_attribute(crs, "showHeight", &showHeight);
     if (!showHeight)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid parameter value");
+      Fmi::Exception exception(BCP, "Invalid parameter value");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       exception.addDetail("A crs without z dimension is not allowed in this query.");
       throw exception.disableStackTrace();
@@ -226,7 +227,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
               msg << "Sounding metadata does not found for sounding id '" << currentSoundingId
                   << "'.";
 
-              SmartMet::Spine::Exception exception(BCP, "Operation processsing failed");
+              Fmi::Exception exception(BCP, "Operation processsing failed");
               exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
               exception.addDetail(msg.str());
               throw exception.disableStackTrace();
@@ -297,7 +298,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
                 std::ostringstream msg;
                 msg << METHOD_NAME << ": Cannot find station metadata for fmisid '"
                     << currentStationId << "'\n";
-                SmartMet::Spine::Exception exception(BCP, "Operation processsing failed");
+                Fmi::Exception exception(BCP, "Operation processsing failed");
                 exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
                 exception.addDetail(msg.str());
                 throw exception.disableStackTrace();
@@ -318,7 +319,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
               std::ostringstream msg;
               msg << METHOD_NAME << ": Cannot find parameter name for id '" << measurandIdStr
                   << "'\n";
-              SmartMet::Spine::Exception exception(BCP, "Operation processsing failed");
+              Fmi::Exception exception(BCP, "Operation processsing failed");
               exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
               exception.addDetail(msg.str());
               throw exception.disableStackTrace();
@@ -333,7 +334,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
               std::ostringstream msg;
               msg << METHOD_NAME << ": Cannot solve what to return by using parameter id '"
                   << measurandIdStr << "'\n";
-              SmartMet::Spine::Exception exception(BCP, "Operation processsing failed");
+              Fmi::Exception exception(BCP, "Operation processsing failed");
               exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
               exception.addDetail(msg.str());
               throw exception.disableStackTrace();
@@ -364,7 +365,7 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
           {
             std::ostringstream msg;
             msg << "Invalid parameter count '" << paramcount << "'.\n";
-            SmartMet::Spine::Exception exception(BCP, "Operation processsing failed");
+            Fmi::Exception exception(BCP, "Operation processsing failed");
             exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
             exception.addDetail(msg.str());
             throw exception.disableStackTrace();
@@ -465,9 +466,9 @@ void StoredSoundingQueryHandler::query(const StoredQuery& query,
                 << " seconds\n";
     }
   }
-  catch (const SmartMet::Spine::Exception& e)
+  catch (const Fmi::Exception& e)
   {
-    SmartMet::Spine::Exception exception(e);
+    Fmi::Exception exception(e);
     exception.addParameter(WFS_LANGUAGE, language);
     throw exception;
   }
@@ -489,7 +490,7 @@ StoredSoundingQueryHandler::dbRegistryConfig(const std::string& configName) cons
   {
     std::ostringstream msg;
     msg << "Database registry is not available!";
-    SmartMet::Spine::Exception exception(BCP, "Operation processing failed");
+    Fmi::Exception exception(BCP, "Operation processing failed");
     exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
     exception.addDetail(msg.str());
     throw exception;
@@ -501,7 +502,7 @@ StoredSoundingQueryHandler::dbRegistryConfig(const std::string& configName) cons
   {
     std::ostringstream msg;
     msg << "Database registry configuration '" << configName << "' is not available!";
-    SmartMet::Spine::Exception exception(BCP, "Operation processing failed");
+    Fmi::Exception exception(BCP, "Operation processing failed");
     exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
     exception.addDetail(msg.str());
     throw exception;
@@ -529,7 +530,7 @@ void StoredSoundingQueryHandler::validateAndPopulateMeteoParametersToMap(
   {
     std::ostringstream msg;
     msg << "At least one meteo parameter has to be given.";
-    SmartMet::Spine::Exception exception(BCP, "Operation processing failed");
+    Fmi::Exception exception(BCP, "Operation processing failed");
     exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
     exception.addDetail(msg.str());
     throw exception;
@@ -541,7 +542,7 @@ void StoredSoundingQueryHandler::validateAndPopulateMeteoParametersToMap(
   {
     std::ostringstream msg;
     msg << "Quality code parameter '" << *qcParamNameRef << "' is not allowed in this query.";
-    SmartMet::Spine::Exception exception(BCP, "Invalid parameter value");
+    Fmi::Exception exception(BCP, "Invalid parameter value");
     exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
     exception.addDetail(msg.str());
     throw exception;
@@ -571,7 +572,7 @@ void StoredSoundingQueryHandler::validateAndPopulateMeteoParametersToMap(
       }
       std::ostringstream msg;
       msg << "Unknown parameter '" << name << "' in this query.";
-      SmartMet::Spine::Exception exception(BCP, "Invalid parameter value");
+      Fmi::Exception exception(BCP, "Invalid parameter value");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       exception.addDetail(msg.str());
       throw exception;
@@ -596,7 +597,7 @@ void StoredSoundingQueryHandler::validateAndPopulateMeteoParametersToMap(
         std::ostringstream msg;
         msg << "Parameter '" << name << "' is already given by using '" << errParamName
             << "' name.";
-        SmartMet::Spine::Exception exception(BCP, "Invalid parameter value");
+        Fmi::Exception exception(BCP, "Invalid parameter value");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
         exception.addDetail(msg.str());
         throw exception;
@@ -695,7 +696,7 @@ void StoredSoundingQueryHandler::makeSoundingQuery(const RequestParameterMap& pa
   {
     std::ostringstream msg;
     msg << "Sounding type '" << soundingType << "' is not supported.";
-    SmartMet::Spine::Exception exception(BCP, "Invalid parameter value");
+    Fmi::Exception exception(BCP, "Invalid parameter value");
     exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
     exception.addDetail(msg.str());
     throw exception;
@@ -780,7 +781,7 @@ void StoredSoundingQueryHandler::makeSoundingDataQuery(const RequestParameterMap
   params.get<double>(P_ALTITUDE_RANGES, std::back_inserter(altitudeRanges), 0, 2, 2);
   if (altitudeRanges.size() & 1)
   {
-    SmartMet::Spine::Exception exception(BCP, "Invalid altitudeRange list!");
+    Fmi::Exception exception(BCP, "Invalid altitudeRange list!");
     exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
     throw exception;
   }
@@ -799,7 +800,7 @@ void StoredSoundingQueryHandler::makeSoundingDataQuery(const RequestParameterMap
   params.get<double>(P_PRESSURE_RANGES, std::back_inserter(pressureRanges), 0, 2, 2);
   if (pressureRanges.size() & 1)
   {
-    SmartMet::Spine::Exception exception(BCP, "Invalid pressureRange list!");
+    Fmi::Exception exception(BCP, "Invalid pressureRange list!");
     exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
     throw exception;
   }
@@ -872,7 +873,7 @@ void StoredSoundingQueryHandler::checkMaxSoundings(const pt::ptime startTime,
 {
   if (radioSoundingMap.size() > mMaxSoundings)
   {
-    SmartMet::Spine::Exception exception(BCP,
+    Fmi::Exception exception(BCP,
                                          "Too many sounding observations in the time interval!");
     std::ostringstream msg;
     msg << "The time interval '" << Fmi::to_iso_extended_string(startTime).append("Z") << " - "
@@ -894,7 +895,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfsStoredSoundingHandlerCreate(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& pluginData,
     boost::optional<std::string> templateFileName)
 {
@@ -907,7 +908,7 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfsStoredSoundi
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

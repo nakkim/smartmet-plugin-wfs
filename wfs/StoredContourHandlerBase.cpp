@@ -22,11 +22,12 @@ const char* P_SMOOTHING_SIZE = "smoothing_size";
 
 bw::StoredContourQueryHandler::StoredContourQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<bw::StoredQueryConfig> config,
+    bw::StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 
-    : SupportsExtraHandlerParams(config, false),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
       RequiresContourEngine(reactor),
       RequiresQEngine(reactor),
       RequiresGeoEngine(reactor),
@@ -37,18 +38,18 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
 {
   try
   {
-    register_scalar_param<std::string>(P_PRODUCER, *config);
-    register_scalar_param<boost::posix_time::ptime>(P_ORIGIN_TIME, *config, false);
-    register_scalar_param<std::string>(P_CRS, *config);
+    register_scalar_param<std::string>(P_PRODUCER);
+    register_scalar_param<boost::posix_time::ptime>(P_ORIGIN_TIME, false);
+    register_scalar_param<std::string>(P_CRS);
 
     if (config->find_setting(config->get_root(), "handler_params.limits", false))
-      register_array_param<double>(P_LIMITS, *config, 0, 999, 2);
+      register_array_param<double>(P_LIMITS, 0, 999, 2);
     if (config->find_setting(config->get_root(), "handler_params.smoothing", false))
-      register_scalar_param<bool>(P_SMOOTHING, *config);
+      register_scalar_param<bool>(P_SMOOTHING);
     if (config->find_setting(config->get_root(), "handler_params.smoothing_degree", false))
-      register_scalar_param<uint64_t>(P_SMOOTHING_DEGREE, *config);
+      register_scalar_param<uint64_t>(P_SMOOTHING_DEGREE);
     if (config->find_setting(config->get_root(), "handler_params.smoothing_size", false))
-      register_scalar_param<uint64_t>(P_SMOOTHING_SIZE, *config);
+      register_scalar_param<uint64_t>(P_SMOOTHING_SIZE);
 
     // read contour parameters from config and check validity
     name = config->get_mandatory_config_param<std::string>("contour_param.name");
@@ -59,7 +60,7 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
     std::string pname = ec.ToString(cpid);
     if (pname.empty())
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "Invalid contour parameter id '" + std::to_string(cpid) + "'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       throw exception;
@@ -68,7 +69,7 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -106,13 +107,13 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours(
 
         if (!queryParameter.q->param(options.parameter.number()))
         {
-          throw SmartMet::Spine::Exception(
+          throw Fmi::Exception(
               BCP, "Parameter '" + options.parameter.name() + "' unavailable.");
         }
 
         if (!queryParameter.q->firstLevel())
         {
-          throw SmartMet::Spine::Exception(BCP, "Unable to set first level in querydata.");
+          throw Fmi::Exception(BCP, "Unable to set first level in querydata.");
         }
 
         // Select the level.
@@ -120,7 +121,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours(
         {
           if (!queryParameter.q->selectLevel(*options.level))
           {
-            throw SmartMet::Spine::Exception(
+            throw Fmi::Exception(
                 BCP, "Level value " + Fmi::to_string(*options.level) + " is not available.");
           }
         }
@@ -196,7 +197,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -227,7 +228,7 @@ void bw::StoredContourQueryHandler::parsePolygon(OGRPolygon* polygon,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -250,7 +251,7 @@ void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
     OGRSpatialReference sr;
     if (sr.importFromURN(targetURN.c_str()) != OGRERR_NONE)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid crs '" + requestedCRS + "'!");
+      Fmi::Exception exception(BCP, "Invalid crs '" + requestedCRS + "'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
@@ -278,7 +279,7 @@ void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
       sq_params.get<double>(P_LIMITS, std::back_inserter(limits), 0, 998, 2);
       if (limits.size() & 1)
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid list of doubles in parameter 'limits'!");
+        Fmi::Exception exception(BCP, "Invalid list of doubles in parameter 'limits'!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
       }
@@ -330,7 +331,7 @@ void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -483,7 +484,7 @@ void bw::StoredContourQueryHandler::parseGeometry(OGRGeometry* geom,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -516,7 +517,7 @@ void bw::StoredContourQueryHandler::handleGeometryCollection(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -647,6 +648,6 @@ void bw::StoredContourQueryHandler::parseQueryResults(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

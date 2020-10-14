@@ -6,7 +6,7 @@
 #include <boost/algorithm/string.hpp>
 #include <macgyver/TypeName.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <limits>
 #include <sstream>
 
@@ -55,7 +55,7 @@ void bw::StandardPresentationParameters::read_from_kvp(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -92,7 +92,7 @@ void bw::StandardPresentationParameters::read_from_xml(const xercesc::DOMElement
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -113,7 +113,7 @@ void bw::StandardPresentationParameters::set_output_format(const std::string& st
       }
       else
       {
-        SmartMet::Spine::Exception exception(
+        Fmi::Exception exception(
             BCP, "Incorrect value '" + lstr + "' of request parameter 'outputformat'!");
         exception.addDetail("The following formats are supported: " +
                             boost::algorithm::join(SUPPORTED_FORMATS, ", "));
@@ -128,7 +128,7 @@ void bw::StandardPresentationParameters::set_output_format(const std::string& st
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -147,7 +147,7 @@ void bw::StandardPresentationParameters::set_result_type(const std::string& str)
     }
     else
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "Incorrect value '" + str + "' of parameter 'resultType'!");
       exception.addDetail("Only the values 'results' and 'hits' are supported.");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
@@ -156,6 +156,6 @@ void bw::StandardPresentationParameters::set_result_type(const std::string& str)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

@@ -21,7 +21,7 @@ void prelude(SmartMet::Spine::Reactor& reactor)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Prelude failed!", NULL);
+    throw Fmi::Exception(BCP, "Prelude failed!", NULL);
   }
 }
 
@@ -45,12 +45,12 @@ int main(int argc, char* argv[])
       msg << "Exception '" << Fmi::current_exception_type()
           << "' thrown while parsing configuration file " << options.configfile << "' at line "
           << err.getLine() << ": " << err.getError();
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw Fmi::Exception(BCP, "Operation failed!", NULL);
   }
 
   return 1;

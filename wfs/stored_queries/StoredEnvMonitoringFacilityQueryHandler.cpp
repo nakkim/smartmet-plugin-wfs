@@ -6,7 +6,7 @@
 #include "StoredQueryHandlerFactoryDef.h"
 #include "SupportsLocationParameters.h"
 #include <smartmet/engines/observation/DBRegistry.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 
 #include <boost/icl/type_traits/to_string.hpp>
 #include <functional>
@@ -39,37 +39,38 @@ const char *P_SHOW_OBSERVING_CAPABILITY = "showObservingCapability";
 
 bw::StoredEnvMonitoringFacilityQueryHandler::StoredEnvMonitoringFacilityQueryHandler(
     SmartMet::Spine::Reactor *reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl &plugin_data,
     boost::optional<std::string> template_file_name)
 
-    : bw::SupportsExtraHandlerParams(config),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config),
       RequiresGeoEngine(reactor),
       RequiresObsEngine(reactor),
-      bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name)
+      StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name)
 {
   try
   {
-    register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config);
-    register_scalar_param<pt::ptime>(P_END_TIME, *config);
-    register_array_param<int64_t>(P_CLASS_ID, *config);
-    register_array_param<int64_t>(P_GROUP_ID, *config);
-    register_array_param<int64_t>(P_STATION_ID, *config);
-    register_array_param<std::string>(P_STATION_NAME, *config, false);
-    register_array_param<std::string>(P_AGGREGATE_FUNCTION, *config);
-    register_array_param<std::string>(P_AGGREGATE_PERIOD, *config);
-    register_array_param<std::string>(P_BASE_PHENOMENON, *config);
-    register_array_param<std::string>(P_MEASURAND_CODE, *config);
-    register_array_param<int64_t>(P_STORAGE_ID, *config);
-    register_scalar_param<std::string>(P_INSPIRE_NAMESPACE, *config);
-    register_scalar_param<std::string>(P_AUTHORITY_DOMAIN, *config);
-    register_scalar_param<bool>(P_SHOW_OBSERVING_CAPABILITY, *config, false);
+    register_scalar_param<pt::ptime>(P_BEGIN_TIME);
+    register_scalar_param<pt::ptime>(P_END_TIME);
+    register_array_param<int64_t>(P_CLASS_ID);
+    register_array_param<int64_t>(P_GROUP_ID);
+    register_array_param<int64_t>(P_STATION_ID);
+    register_array_param<std::string>(P_STATION_NAME, false);
+    register_array_param<std::string>(P_AGGREGATE_FUNCTION);
+    register_array_param<std::string>(P_AGGREGATE_PERIOD);
+    register_array_param<std::string>(P_BASE_PHENOMENON);
+    register_array_param<std::string>(P_MEASURAND_CODE);
+    register_array_param<int64_t>(P_STORAGE_ID);
+    register_scalar_param<std::string>(P_INSPIRE_NAMESPACE);
+    register_scalar_param<std::string>(P_AUTHORITY_DOMAIN);
+    register_scalar_param<bool>(P_SHOW_OBSERVING_CAPABILITY, false);
     m_missingText = config->get_optional_config_param<std::string>(P_MISSING_TEXT, "NaN");
     m_debugLevel = config->get_debug_level();
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -375,7 +376,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::query(const StoredQuery &query
   catch (...)
   {
     // Set language for exception and re-throw it
-    SmartMet::Spine::Exception exception(BCP, "Operation processing failed!", nullptr);
+    Fmi::Exception exception(BCP, "Operation processing failed!", nullptr);
     if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
     exception.addParameter(WFS_LANGUAGE, language);
@@ -395,7 +396,7 @@ bw::StoredEnvMonitoringFacilityQueryHandler::dbRegistryConfig(const std::string 
     {
       std::ostringstream msg;
       msg << "Database registry is not available!";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -406,7 +407,7 @@ bw::StoredEnvMonitoringFacilityQueryHandler::dbRegistryConfig(const std::string 
     {
       std::ostringstream msg;
       msg << "Database registry configuration '" << configName << "' is not available!";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -415,7 +416,7 @@ bw::StoredEnvMonitoringFacilityQueryHandler::dbRegistryConfig(const std::string 
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -590,7 +591,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getValidStations(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -715,7 +716,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getStationCapabilities(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -806,7 +807,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getStationGroupData(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -885,7 +886,7 @@ void bw::StoredEnvMonitoringFacilityQueryHandler::getStationNetworkMembershipDat
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -895,7 +896,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_stored_env_monitoring_facility_handler_create(SmartMet::Spine::Reactor *reactor,
-                                                  boost::shared_ptr<StoredQueryConfig> config,
+                                                  StoredQueryConfig::Ptr config,
                                                   PluginImpl &plugin_data,
                                                   boost::optional<std::string> template_file_name)
 {
@@ -909,7 +910,7 @@ wfs_stored_env_monitoring_facility_handler_create(SmartMet::Spine::Reactor *reac
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

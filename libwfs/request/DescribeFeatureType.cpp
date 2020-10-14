@@ -76,7 +76,7 @@ void bw::Request::DescribeFeatureType::execute(std::ostream& output) const
         {
           std::ostringstream msg;
           msg << "Type '{" << ns << "}:" << name << "' not found";
-          SmartMet::Spine::Exception exception(BCP, msg.str());
+          Fmi::Exception exception(BCP, msg.str());
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
           throw exception;
         }
@@ -125,14 +125,14 @@ void bw::Request::DescribeFeatureType::execute(std::ostream& output) const
       std::ostringstream msg;
       msg << "Template formatter exception '" << Fmi::current_exception_type()
           << "' catched: " << log_messages.str();
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -190,7 +190,7 @@ bw::Request::DescribeFeatureType::create_from_kvp(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -236,7 +236,7 @@ bw::Request::DescribeFeatureType::create_from_xml(const std::string& language,
         std::ostringstream msg;
         msg << "bw::Request::DescribeFeatureType::create_from_xml(): failed to get XML namespace"
             << " for '" << item << "'";
-        SmartMet::Spine::Exception exception(BCP, msg.str());
+        Fmi::Exception exception(BCP, msg.str());
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception;
       }
@@ -250,7 +250,7 @@ bw::Request::DescribeFeatureType::create_from_xml(const std::string& language,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -262,6 +262,6 @@ int bw::Request::DescribeFeatureType::get_response_expires_seconds() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

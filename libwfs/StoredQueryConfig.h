@@ -2,6 +2,7 @@
 
 #include "Config.h"
 #include "StoredQueryParamDef.h"
+#include "StoredQueryConfigWrapper.h"
 #include <boost/optional.hpp>
 #include <ctpp2/CDT.hpp>
 #include <spine/ConfigBase.h>
@@ -75,6 +76,9 @@ class StoredQueryHandlerBase;
 class StoredQueryConfig : public SmartMet::Spine::ConfigBase
 {
  public:
+  typedef StoredQueryConfigPtr Ptr;
+  typedef StoredQueryConfigWrapper Wrapper;
+
   struct ParamDesc
   {
     std::string name;

@@ -36,11 +36,10 @@ class StoredQuery;
 class StoredQueryMap;
 
 class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
-                               virtual protected StoredQueryParamRegistry,
                                virtual protected StoredQueryHandlerInitBase
 {
   SmartMet::Spine::Reactor* reactor;
-  boost::shared_ptr<StoredQueryConfig> config;
+  StoredQueryConfig::Ptr config;
   bool hidden;
 
  protected:
@@ -49,7 +48,7 @@ class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
 
  public:
   StoredQueryHandlerBase(SmartMet::Spine::Reactor* reactor,
-                         boost::shared_ptr<StoredQueryConfig> config,
+                         StoredQueryConfig::Ptr config,
                          PluginImpl& plugin_impl,
                          boost::optional<std::string> template_file_name);
 

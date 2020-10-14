@@ -1,5 +1,5 @@
 #include "GeoServerDB.h"
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 namespace bw = SmartMet::Plugin::WFS;
 
@@ -13,7 +13,7 @@ bw::GeoServerDB::GeoServerDB(const std::string& conn_str, std::size_t keep_conn)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -27,7 +27,7 @@ boost::shared_ptr<pqxx::connection> bw::GeoServerDB::get_conn()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -39,7 +39,7 @@ void bw::GeoServerDB::update()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -51,6 +51,6 @@ boost::shared_ptr<pqxx::connection> bw::GeoServerDB::create_new_conn()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

@@ -25,13 +25,12 @@ class StoredObsQueryHandler : public StoredQueryHandlerBase,
                               protected SupportsTimeZone,
                               protected SupportsQualityParameters,
                               protected SupportsMeteoParameterOptions,
-                              protected virtual SupportsExtraHandlerParams,
                               protected virtual RequiresGeoEngine,
                               protected virtual RequiresObsEngine
 {
  public:
   StoredObsQueryHandler(SmartMet::Spine::Reactor* reactor,
-                        boost::shared_ptr<StoredQueryConfig> config,
+                        StoredQueryConfig::Ptr config,
                         PluginImpl& plugin_impl,
                         boost::optional<std::string> template_file_name);
 
@@ -109,10 +108,8 @@ class StoredObsQueryHandler : public StoredQueryHandlerBase,
   int lon_ind;
   int lat_ind;
   int height_ind;
-  int time_ind;
   int name_ind;
   int dist_ind;
-  int region_ind;
   int direction_ind;
   int wmo_ind;
 

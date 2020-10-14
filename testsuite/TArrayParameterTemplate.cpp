@@ -162,7 +162,7 @@ BOOST_AUTO_TEST_CASE(array_param_1_non_root)
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
   BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "baz", "foo")),
-                      SmartMet::Spine::Exception);
+                      Fmi::Exception);
   BOOST_REQUIRE_NO_THROW(pt.reset(new ArrayParameterTemplate(*config, "bar", "foo")));
 
   const std::vector<ParameterTemplateItem>& items = pt->get_items();
@@ -412,7 +412,7 @@ BOOST_AUTO_TEST_CASE(array_parameter_shuffle_out_of_range_index)
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
-  BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo")), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo")), Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(typo_in_parameter_reference)
@@ -433,7 +433,7 @@ BOOST_AUTO_TEST_CASE(typo_in_parameter_reference)
   unlink(fn.c_str());
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
-  BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo")), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo")), Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(array_size_detection_1)
@@ -468,7 +468,7 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_1)
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
   BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo", 1, 3)),
-                      SmartMet::Spine::Exception);
+                      Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(array_size_detection_2)
@@ -503,7 +503,7 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_2)
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
   BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo", 12, 12)),
-                      SmartMet::Spine::Exception);
+                      Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(array_size_detection_3)
@@ -538,7 +538,7 @@ BOOST_AUTO_TEST_CASE(array_size_detection_error_3)
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
   BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "foo", 2, 2)),
-                      SmartMet::Spine::Exception);
+                      Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(array_with_min_len_0_ommitted_in_config)
@@ -576,5 +576,5 @@ BOOST_AUTO_TEST_CASE(array_with_min_len_1_ommitted_in_config)
 
   boost::shared_ptr<ArrayParameterTemplate> pt;
   BOOST_REQUIRE_THROW(pt.reset(new ArrayParameterTemplate(*config, "bar", 1, 10)),
-                      SmartMet::Spine::Exception);
+                      Fmi::Exception);
 }

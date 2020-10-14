@@ -1,7 +1,7 @@
 #include "stored_queries/StoredWWCoverageQueryHandler.h"
 #include <gis/Box.h>
 #include <newbase/NFmiEnumConverter.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 
 #include <boost/algorithm/string/replace.hpp>
 #include <iomanip>
@@ -10,10 +10,12 @@ namespace bw = SmartMet::Plugin::WFS;
 
 bw::StoredWWCoverageQueryHandler::StoredWWCoverageQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<bw::StoredQueryConfig> config,
+    bw::StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
-    : SupportsExtraHandlerParams(config, false),
+
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
       RequiresContourEngine(reactor),
       RequiresQEngine(reactor),
       RequiresGeoEngine(reactor),
@@ -25,7 +27,7 @@ bw::StoredWWCoverageQueryHandler::StoredWWCoverageQueryHandler(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -70,7 +72,7 @@ std::vector<bw::ContourQueryResultPtr> bw::StoredWWCoverageQueryHandler::process
     // check number of names
     if (itsLimitNames.size() * 2 != limits.size())
     {
-      SmartMet::Spine::Exception exception(
+      Fmi::Exception exception(
           BCP, "Parameter 'contour_params.limitNames' contains wrong number of elements!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       throw exception;
@@ -105,7 +107,7 @@ std::vector<bw::ContourQueryResultPtr> bw::StoredWWCoverageQueryHandler::process
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -123,7 +125,7 @@ void bw::StoredWWCoverageQueryHandler::setResultHashValue(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -133,7 +135,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_winterweather_coverage_query_handler_create(SmartMet::Spine::Reactor* reactor,
-                                                boost::shared_ptr<StoredQueryConfig> config,
+                                                StoredQueryConfig::Ptr config,
                                                 PluginImpl& plugin_data,
                                                 boost::optional<std::string> template_file_name)
 {
@@ -146,7 +148,7 @@ wfs_winterweather_coverage_query_handler_create(SmartMet::Spine::Reactor* reacto
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

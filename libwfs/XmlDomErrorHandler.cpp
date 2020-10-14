@@ -1,6 +1,6 @@
 #include "XmlDomErrorHandler.h"
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <xqilla/xqilla-dom3.hpp>
 #include <iostream>
 #include <sstream>
@@ -29,16 +29,16 @@ bool XmlDomErrorHandler::handleError(const xercesc::DOMError &dom_error)
         break;
 
       case xercesc::DOMError::DOM_SEVERITY_ERROR:
-        throw SmartMet::Spine::Exception::Trace(BCP, "DOM ERROR: " + msg.str());
+        throw Fmi::Exception::Trace(BCP, "DOM ERROR: " + msg.str());
 
       case xercesc::DOMError::DOM_SEVERITY_FATAL_ERROR:
-        throw SmartMet::Spine::Exception::Trace(BCP, "FATAL DOM ERROR: " + msg.str());
+        throw Fmi::Exception::Trace(BCP, "FATAL DOM ERROR: " + msg.str());
     }
 
     return true;
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

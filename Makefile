@@ -3,85 +3,11 @@ SPEC = smartmet-plugin-$(SUBNAME)
 INCDIR = smartmet/plugins/$(SUBNAME)
 TOP = $(shell pwd)
 
-# Compiler options
+REQUIRES = gdal jsoncpp
 
--include $(HOME)/.smartmet.mk
-GCC_DIAG_COLOR ?= always
-CXX_STD ?= c++11
+include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
 DEFINES = -DUNIX -D_REENTRANT
-
-FLAGS = -std=$(CXX_STD) -fPIC -Wall -W -Wno-unused-parameter \
-	-fno-omit-frame-pointer \
-	-fdiagnostics-color=$(GCC_DIAG_COLOR) \
-	-Wno-unknown-pragmas \
-	-Wcast-align \
-	-Wcast-qual \
-	-Wno-inline \
-	-Wno-multichar \
-	-Wno-pmf-conversions \
-	-Wpointer-arith \
-	-Wwrite-strings
-
-ifeq ($(TSAN), yes)
-  FLAGS += -fsanitize=thread
-endif
-ifeq ($(ASAN), yes)
-  FLAGS += -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=undefined -fsanitize-address-use-after-scope
-endif
-
-# Compile options in detault, debug and profile modes
-
-CFLAGS_RELEASE = $(DEFINES) $(FLAGS) -DNDEBUG -O2 -g
-CFLAGS_DEBUG   = $(DEFINES) $(FLAGS) -Werror  -O0 -g
-CFLAGS_PROFILE = $(DEFINES)  $(FLAGS)-O2 -g -pg -DNDEBUG
-
-ifneq (,$(findstring debug,$(MAKECMDGOALS)))
-  override CFLAGS += $(CFLAGS_DEBUG)
-else
-  override CFLAGS += $(CFLAGS_RELEASE)
-endif
-
-# Installation directories
-
-processor := $(shell uname -p)
-
-ifeq ($(origin PREFIX), undefined)
-  PREFIX = /usr
-else
-  PREFIX = $(PREFIX)
-endif
-
-ifeq ($(origin SYSCONFDIR), undefined)
-  sysconfdir = /etc
-else
-  sysconfdir = $(SYSCONFDIR)
-endif
-
-ifeq ($(processor), x86_64)
-  libdir = $(PREFIX)/lib64
-else
-  libdir = $(PREFIX)/lib
-endif
-
-bindir = $(PREFIX)/bin
-includedir = $(PREFIX)/include
-datadir = $(PREFIX)/share
-enginedir = $(datadir)/smartmet/engines
-plugindir = $(datadir)/smartmet/plugins
-objdir = obj
-
-#
-# Boost 1.69
-
-ifneq "$(wildcard /usr/include/boost169)" ""
-  INCLUDES += -I/usr/include/boost169
-  LIBS += -L/usr/lib64/boost169
-endif
-
-INCLUDES += -I$(includedir) \
-	-I$(includedir)/smartmet \
-	-I$(includedir)/jsoncpp
 
 LIBS += -L$(libdir) \
 	-lsmartmet-spine \
@@ -96,13 +22,13 @@ LIBS += -L$(libdir) \
 	-lboost_system \
         -lxqilla \
 	-lxerces-c \
-	-lgdal \
+	$(GDAL_LIBS) \
 	-lpqxx \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \
 	-lcurl \
-	-ljsoncpp \
+	$(JSONCPP_LIBS) \
 	-lcrypto \
 	-lbz2 -lz \
 	-lpthread \
@@ -119,21 +45,6 @@ obj/%.o : %.cpp ; @echo Compiling $<
 # What to install
 
 LIBFILE = $(SUBNAME).so
-
-# How to install
-
-INSTALL_PROG = install -p -m 775
-INSTALL_DATA = install -p -m 664
-
-# Compile option overrides
-
-ifneq (,$(findstring debug,$(MAKECMDGOALS)))
-  CFLAGS = $(CFLAGS_DEBUG)
-endif
-
-ifneq (,$(findstring profile,$(MAKECMDGOALS)))
-  CFLAGS = $(CFLAGS_PROFILE)
-endif
 
 # Compilation directories
 
@@ -180,7 +91,7 @@ configtest:
 	$$ok
 
 $(LIBFILE): $(OBJS) $(LIBWFS)
-	$(CC) -shared -rdynamic $(CFLAGS) -o $@ $(OBJS) $(LIBWFS) $(LIBS)
+	$(CXX) -shared -rdynamic $(LDFLAGS) -o $@ $(OBJS) $(LIBWFS) $(LIBS)
 
 $(LIBWFS): $(LIBWFS_OBJS)
 	ar rcs $@ $(LIBWFS_OBJS)
@@ -258,6 +169,7 @@ file-list:
 	echo cnf/templates/template_depend.pl >>files.list.new
 	echo cnf/XMLGrammarPool.dump >>files.list.new
 	echo cnf/XMLSchemas.cache >>files.list.new
+	echo common.mk >>files.list.new
 	find test/base -name '*.conf' >>files.list.new
 	find test/base/output -name '*.get' -o -name '*.kvp.post' -o -name '*.xml.post' >>files.list.new
 	find test/base/kvp -name '*.kvp' >>files.list.new
@@ -284,7 +196,7 @@ headertest:
 	echo $$hdr; \
 	echo "#include \"$$hdr\"" > /tmp/$(SPEC).cpp; \
 	echo "int main() { return 0; }" >> /tmp/$(SPEC).cpp; \
-	$(CC) $(CFLAGS) $(INCLUDES) -o /dev/null /tmp/$(SPEC).cpp $(LIBS); \
+	$(CXX) $(CFLAGS) $(INCLUDES) -o /dev/null /tmp/$(SPEC).cpp $(LIBS); \
 	done
 
 cnf/templates/%.c2t: cnf/templates/%.template ; ( cd cnf/templates && $(PREFIX)/bin/ctpp2c $(notdir $<) $(notdir $@) )

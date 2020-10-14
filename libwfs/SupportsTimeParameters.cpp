@@ -4,7 +4,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
 #include <boost/optional/optional_io.hpp>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <stdint.h>
 
 namespace bw = SmartMet::Plugin::WFS;
@@ -18,22 +18,24 @@ const char *bw::SupportsTimeParameters::P_END_TIME = "endTime";
 const char *bw::SupportsTimeParameters::P_TIME_STEP = "timeStep";
 const char *bw::SupportsTimeParameters::P_NUM_STEPS = "timeSteps";
 
-bw::SupportsTimeParameters::SupportsTimeParameters(boost::shared_ptr<bw::StoredQueryConfig> config)
-    : SupportsExtraHandlerParams(config, false), debug_level(config->get_debug_level())
+bw::SupportsTimeParameters::SupportsTimeParameters(bw::StoredQueryConfig::Ptr config)
+    : bw::StoredQueryParamRegistry(config)
+    , SupportsExtraHandlerParams(config, false)
+    , debug_level(config->get_debug_level())
 {
   try
   {
-    register_array_param<uint64_t>(P_HOURS, *config);
-    register_array_param<uint64_t>(P_TIMES, *config);
-    register_scalar_param<pt::ptime>(P_BEGIN_TIME, *config, false);
-    register_scalar_param<uint64_t>(P_START_STEP, *config, false);
-    register_scalar_param<pt::ptime>(P_END_TIME, *config, false);
-    register_scalar_param<uint64_t>(P_TIME_STEP, *config, false);
-    register_scalar_param<uint64_t>(P_NUM_STEPS, *config, false);
+    register_array_param<uint64_t>(P_HOURS);
+    register_array_param<uint64_t>(P_TIMES);
+    register_scalar_param<pt::ptime>(P_BEGIN_TIME, false);
+    register_scalar_param<uint64_t>(P_START_STEP, false);
+    register_scalar_param<pt::ptime>(P_END_TIME, false);
+    register_scalar_param<uint64_t>(P_TIME_STEP, false);
+    register_scalar_param<uint64_t>(P_NUM_STEPS, false);
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -63,7 +65,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
         }
         else
         {
-          SmartMet::Spine::Exception exception(BCP, "Invalid hour value!");
+          Fmi::Exception exception(BCP, "Invalid hour value!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
           exception.addParameter("Requested hour", std::to_string(hour));
           throw exception;
@@ -86,7 +88,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
         }
         else
         {
-          SmartMet::Spine::Exception exception(BCP, "Invalid time value!");
+          Fmi::Exception exception(BCP, "Invalid time value!");
           exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
           exception.addParameter("Requested time", std::to_string(tm));
           throw exception;
@@ -99,7 +101,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
     {
       if (options->mode != SmartMet::Spine::TimeSeriesGeneratorOptions::TimeSteps)
       {
-        SmartMet::Spine::Exception exception(BCP, "Cannot use timestep option in this time mode!");
+        Fmi::Exception exception(BCP, "Cannot use timestep option in this time mode!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
       }
@@ -110,7 +112,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
       }
       else if (1440 % *time_step != 0)
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid time step value!");
+        Fmi::Exception exception(BCP, "Invalid time step value!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         exception.addParameter("Time step", std::to_string(*time_step));
         throw exception;
@@ -134,7 +136,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
       }
       else
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid number of time steps!");
+        Fmi::Exception exception(BCP, "Invalid number of time steps!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         exception.addParameter("Time steps", std::to_string(*num_steps));
         throw exception;
@@ -161,7 +163,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
     {
       if (*start_step > 10000)
       {
-        SmartMet::Spine::Exception exception(BCP, "Invalid start step value!");
+        Fmi::Exception exception(BCP, "Invalid start step value!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         exception.addParameter("Start step", std::to_string(*start_step));
         throw exception;
@@ -177,7 +179,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
     {
       if (!!options->timeSteps)
       {
-        SmartMet::Spine::Exception exception(
+        Fmi::Exception exception(
             BCP, "Cannot specify the time steps count and the end time simultaneusly!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
@@ -207,7 +209,7 @@ bw::SupportsTimeParameters::get_time_generator_options(const RequestParameterMap
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

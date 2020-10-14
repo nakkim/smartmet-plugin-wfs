@@ -75,6 +75,8 @@ class SupportsMeteoParameterOptions
   std::shared_ptr<MeteoParameterOptionItem> get_meteo_parameter_options(
       const std::string& name) const;
 
+  bool have_meteo_param_options(const std::string& name) const;
+
  private:
   int debug_level;
   MeteoParameterOptions options_map;

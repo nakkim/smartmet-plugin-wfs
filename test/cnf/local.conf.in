@@ -1,10 +1,32 @@
-database:
+database_info:
 {
-	# Enter Your oracle database connection data below
-        service = "database_service_name";
-        username = "database_user_name";
-        password = "database_user_password";
-        nls_lang = "NLS_LANG=.UTF8";
+        connect_info:
+        {
+		# Enter you Oracle database connection data below
+                oracle_fmi_observations:
+                {
+                        # Default server
+                        service = "service_name";
+                        username = "user_name";
+                        password = "user_password";
+                        nls_lang = "NLS_LANG=.UTF8";
+                        poolSize = 5;
+		};
+	};
+
+        common_info:
+        {
+                oracle_fmi_observations:
+                {
+                        loadStations = true;
+                        // size of observation database connection pool, mandatory
+                        poolSize = 5;
+                        // disables all cache updates, optional, default values is false
+                        disableAllCacheUpdates = true;
+                        // connection timeout in seconds
+                        connectionTimeout = 30;
+                };
+	};
 };
 
 geoserver:

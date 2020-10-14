@@ -4,7 +4,7 @@
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
 #include <smartmet/spine/Convenience.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <set>
 
 namespace bw = SmartMet::Plugin::WFS;
@@ -25,20 +25,21 @@ const char* P_END = "endTime";
 }  // namespace
 
 bw::StoredFileQueryHandler::StoredFileQueryHandler(SmartMet::Spine::Reactor* reactor,
-                                                   boost::shared_ptr<StoredQueryConfig> config,
+                                                   StoredQueryConfig::Ptr config,
                                                    PluginImpl& plugin_data,
                                                    boost::optional<std::string> template_file_name)
-    : bw::SupportsExtraHandlerParams(config),
+    : bw::StoredQueryParamRegistry(config),
+      bw::SupportsExtraHandlerParams(config),
       bw::StoredAtomQueryHandlerBase(reactor, config, plugin_data, template_file_name)
 {
   try
   {
-    register_scalar_param<std::string>(P_NAME, *config, false);
-    register_array_param<int64_t>(P_LEVEL, *config);
-    register_array_param<std::string>(P_PARAM, *config);
-    register_array_param<double>(P_BBOX, *config, 0, 4, 4);
-    register_array_param<pt::ptime>(P_BEGIN, *config);
-    register_array_param<pt::ptime>(P_END, *config);
+    register_scalar_param<std::string>(P_NAME, false);
+    register_array_param<int64_t>(P_LEVEL);
+    register_array_param<std::string>(P_PARAM);
+    register_array_param<double>(P_BBOX, 0, 4, 4);
+    register_array_param<pt::ptime>(P_BEGIN);
+    register_array_param<pt::ptime>(P_END);
 
     auto& ds_list_cfg = config->get_mandatory_config_param<libconfig::Setting&>("dataSets");
     config->assert_is_list(ds_list_cfg, 1);
@@ -63,7 +64,7 @@ bw::StoredFileQueryHandler::StoredFileQueryHandler(SmartMet::Spine::Reactor* rea
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -86,7 +87,7 @@ std::set<ValueType> common_items(const std::set<ValueType>& A, const std::set<Va
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace
@@ -154,7 +155,7 @@ void bw::StoredFileQueryHandler::update_parameters(
         if (bbox.size() != 4)
         {
           // Should really be catched earlier and not be here
-          throw SmartMet::Spine::Exception(
+          throw Fmi::Exception(
               BCP, "INTERNAL ERROR: wrong bbox specification in '" + params.as_string() + "'!")
               .disableStackTrace();
         }
@@ -194,7 +195,7 @@ void bw::StoredFileQueryHandler::update_parameters(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -204,7 +205,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_stored_file_handler_create(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 {
@@ -217,7 +218,7 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_stored_file
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

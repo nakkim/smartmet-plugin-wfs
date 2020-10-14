@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.7.22
+Version: 20.10.6
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -15,7 +15,7 @@ BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: boost169-devel
 BuildRequires: ctpp2-devel
-BuildRequires: fmt-devel >= 5.2.0
+BuildRequires: fmt-devel >= 6.2.1
 BuildRequires: jsoncpp-devel
 BuildRequires: libconfig-devel
 BuildRequires: libcurl-devel
@@ -24,36 +24,36 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.6.8
-BuildRequires: smartmet-library-gis-devel >= 20.4.18
-BuildRequires: smartmet-library-locus-devel >= 20.6.8
-BuildRequires: smartmet-library-macgyver-devel >= 20.6.8
-BuildRequires: smartmet-engine-contour-devel >= 20.5.13
-BuildRequires: smartmet-engine-geonames-devel >= 20.6.8
-BuildRequires: smartmet-engine-gis-devel >= 20.5.7
+BuildRequires: smartmet-library-spine-devel >= 20.9.23
+BuildRequires: smartmet-library-gis-devel >= 20.8.21
+BuildRequires: smartmet-library-locus-devel >= 20.8.21
+BuildRequires: smartmet-library-macgyver-devel >= 20.10.5
+BuildRequires: smartmet-engine-contour-devel >= 20.8.23
+BuildRequires: smartmet-engine-geonames-devel >= 20.9.23
+BuildRequires: smartmet-engine-gis-devel >= 20.8.23
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.7.21
+BuildRequires: smartmet-engine-observation-devel >= 20.9.23
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 20.5.13
+BuildRequires: smartmet-engine-querydata-devel >= 20.9.23
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
-Requires: fmt >= 5.2.0
+Requires: fmt >= 6.2.1
 Requires: libconfig
 Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
-Requires: smartmet-library-locus >= 20.6.8
-Requires: smartmet-library-macgyver >= 20.6.8
-Requires: smartmet-library-spine >= 20.6.8
-Requires: smartmet-library-gis >= 20.4.18
-Requires: smartmet-engine-contour >= 20.5.13
-Requires: smartmet-engine-geonames >= 20.6.8
-Requires: smartmet-engine-gis >= 20.5.7
+Requires: smartmet-library-locus >= 20.8.21
+Requires: smartmet-library-macgyver >= 20.10.5
+Requires: smartmet-library-spine >= 20.9.23
+Requires: smartmet-library-gis >= 20.8.21
+Requires: smartmet-engine-contour >= 20.8.23
+Requires: smartmet-engine-geonames >= 20.9.23
+Requires: smartmet-engine-gis >= 20.8.23
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.7.21
+Requires: smartmet-engine-observation >= 20.9.23
 %endif
-Requires: smartmet-engine-querydata >= 20.5.13
-Requires: smartmet-server >= 20.4.18
+Requires: smartmet-engine-querydata >= 20.9.23
+Requires: smartmet-server >= 20.9.23
 Requires: xerces-c
 Requires: xqilla
 Requires: boost169-chrono
@@ -108,8 +108,36 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Tue Oct  6 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.10.6-1.fmi
+- Build update: use makefile.inc fromsmartmet-library-macgyver
+
+* Wed Sep 30 2020 Andris Pavēnis <andris.pavenis@fmi.fi> - 20.9.30-1.fmi
+- Support overriding meteo parameter output accurracy for forecast queries
+
+* Wed Sep 23 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.23-1.fmi
+- Use Fmi::Exception instead of Spine::Exception
+
+* Fri Sep 18 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.18-1.fmi
+- Fixed parsing of stored obs querystring parameters, maxlocations setting was not obeyed
+
+* Thu Sep  3 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.3-2.fmi
+- Updated IBPlott icedata schema address
+
+* Thu Sep  3 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.9.3-1.fmi
+- Improve shutdown support
+
+* Wed Sep  2 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.1-1.fmi
+- Repackaged since Observation::Settings size changed
+
+* Fri Aug 21 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.8.21-1.fmi
+- Upgrade to fmt 6.2
+
+* Thu Aug 20 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.8.20-1.fmi
+- Adapt to smartmet-library-macgyver changes (use Fmi::AsyncTaskGroup)
+
 * Wed Jul 22 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.7.22-1.fmi
 - Stored query configuration support update
+- Refactoring
 
 * Tue Jul 21 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.21-1.fmi
 - Improved handling of locations with fmisid information available

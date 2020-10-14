@@ -9,7 +9,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
 #include <macgyver/StringConversion.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <sstream>
 #include <stdexcept>
 
@@ -36,7 +36,7 @@ void bw::TypeNameStoredQueryMap::init(const std::map<std::string, std::string>& 
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -50,7 +50,7 @@ const std::vector<std::string>& bw::TypeNameStoredQueryMap::get_stored_queries_b
     auto loc = typename_qry_map.find(lname);
     if (loc == typename_qry_map.end())
     {
-      SmartMet::Spine::Exception exception(BCP, "Cannot find a stored query by its name!");
+      Fmi::Exception exception(BCP, "Cannot find a stored query by its name!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       exception.addParameter("Stored query name", name);
       throw exception;
@@ -62,6 +62,6 @@ const std::vector<std::string>& bw::TypeNameStoredQueryMap::get_stored_queries_b
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

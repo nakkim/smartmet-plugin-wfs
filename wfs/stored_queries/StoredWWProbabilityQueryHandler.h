@@ -111,7 +111,6 @@ typedef std::map<SmartMet::Spine::LocationPtr, WinterWeatherTypeProbabilities>
  *   @brief Handler for StoredWWProbabilityQuery stored query
  */
 class StoredWWProbabilityQueryHandler : public StoredQueryHandlerBase,
-                                        protected virtual SupportsExtraHandlerParams,
                                         protected virtual RequiresGeoEngine,
                                         protected virtual RequiresQEngine,
                                         protected SupportsLocationParameters,
@@ -121,7 +120,7 @@ class StoredWWProbabilityQueryHandler : public StoredQueryHandlerBase,
 {
  public:
   StoredWWProbabilityQueryHandler(SmartMet::Spine::Reactor* reactor,
-                                  boost::shared_ptr<StoredQueryConfig> config,
+                                  StoredQueryConfig::Ptr config,
                                   PluginImpl& plugin_impl,
                                   boost::optional<std::string> templateFileileName);
 

@@ -3,7 +3,7 @@
 #include <gis/OGR.h>
 #include <macgyver/TimeFormatter.h>
 #include <newbase/NFmiEnumConverter.h>
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/range/adaptor/map.hpp>
@@ -33,7 +33,7 @@ std::string double2string(double d, unsigned int precision)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -63,7 +63,7 @@ std::string bbox2string(const SmartMet::Spine::BoundingBox& bbox, OGRSpatialRefe
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 #endif
@@ -78,7 +78,7 @@ FmiParameterName get_parameter(boost::shared_ptr<SmartMet::Plugin::WFS::StoredQu
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -112,7 +112,7 @@ SmartMet::Engine::Querydata::ParameterOptions get_qengine_parameter(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -147,7 +147,7 @@ void populate_result_vector(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -161,11 +161,12 @@ namespace WFS
 {
 StoredWWProbabilityQueryHandler::StoredWWProbabilityQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& pluginData,
     boost::optional<std::string> templateFileName)
 
-    : SupportsExtraHandlerParams(config, false),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
       RequiresGeoEngine(reactor),
       RequiresQEngine(reactor),
       StoredQueryHandlerBase(reactor, config, pluginData, templateFileName),
@@ -176,13 +177,13 @@ StoredWWProbabilityQueryHandler::StoredWWProbabilityQueryHandler(
 {
   try
   {
-    register_scalar_param<int64_t>(P_FIND_NEAREST_VALID, *config);
-    register_scalar_param<std::string>(P_LOCALE, *config);
-    register_scalar_param<std::string>(P_MISSING_TEXT, *config);
-    register_scalar_param<std::string>(P_PRODUCER, *config);
-    register_scalar_param<boost::posix_time::ptime>(P_ORIGIN_TIME, *config, false);
-    register_scalar_param<std::string>(P_CRS, *config);
-    register_array_param<std::string>(P_ICAO_CODE, *config);
+    register_scalar_param<int64_t>(P_FIND_NEAREST_VALID);
+    register_scalar_param<std::string>(P_LOCALE);
+    register_scalar_param<std::string>(P_MISSING_TEXT);
+    register_scalar_param<std::string>(P_PRODUCER);
+    register_scalar_param<boost::posix_time::ptime>(P_ORIGIN_TIME, false);
+    register_scalar_param<std::string>(P_CRS);
+    register_array_param<std::string>(P_ICAO_CODE);
 
     itsProbabilityConfigParams.probabilityUnit =
         config->get_mandatory_config_param<std::string>("probability_params.probabilityUnit");
@@ -211,7 +212,7 @@ StoredWWProbabilityQueryHandler::StoredWWProbabilityQueryHandler(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -359,7 +360,7 @@ void StoredWWProbabilityQueryHandler::parseQueryResults(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -394,7 +395,7 @@ WinterWeatherIntensityProbabilities StoredWWProbabilityQueryHandler::getProbabil
              "parameters: '"
           << queryParam.paramLight.name() << "', '" << queryParam.paramModerate.name() << "', '"
           << queryParam.paramHeavy.name() << "'";
-      SmartMet::Spine::Exception exception(BCP, msg.str());
+      Fmi::Exception exception(BCP, msg.str());
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -406,7 +407,7 @@ WinterWeatherIntensityProbabilities StoredWWProbabilityQueryHandler::getProbabil
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -428,7 +429,7 @@ void StoredWWProbabilityQueryHandler::query(const StoredQuery& query,
     OGRSpatialReference sr;
     if (sr.importFromURN(targetURN.c_str()) != OGRERR_NONE)
     {
-      SmartMet::Spine::Exception exception(BCP, "Invalid crs '" + requestedCRS + "'!");
+      Fmi::Exception exception(BCP, "Invalid crs '" + requestedCRS + "'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception;
     }
@@ -573,7 +574,7 @@ void StoredWWProbabilityQueryHandler::query(const StoredQuery& query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -587,7 +588,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase>
 wfs_winterweather_probabilities_query_handler_create(SmartMet::Spine::Reactor* reactor,
-                                                     boost::shared_ptr<StoredQueryConfig> config,
+                                                     StoredQueryConfig::Ptr config,
                                                      PluginImpl& pluginData,
                                                      boost::optional<std::string> templateFileName)
 {
@@ -600,7 +601,7 @@ wfs_winterweather_probabilities_query_handler_create(SmartMet::Spine::Reactor* r
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

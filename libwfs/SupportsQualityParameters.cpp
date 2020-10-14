@@ -1,22 +1,24 @@
 #include "SupportsQualityParameters.h"
 #include <macgyver/StringConversion.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 namespace bw = SmartMet::Plugin::WFS;
 
 const char* bw::SupportsQualityParameters::P_QUALITY_INFO = "qualityInfo";
 
 bw::SupportsQualityParameters::SupportsQualityParameters(
-    boost::shared_ptr<StoredQueryConfig> config)
-    : bw::SupportsExtraHandlerParams(config, false)
+    StoredQueryConfig::Ptr config)
+
+    : bw::StoredQueryParamRegistry(config)
+    , bw::SupportsExtraHandlerParams(config, false)
 {
   try
   {
-    register_scalar_param<bool>(P_QUALITY_INFO, *config);
+    register_scalar_param<bool>(P_QUALITY_INFO);
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -34,7 +36,7 @@ bool bw::SupportsQualityParameters::isQCParameter(const std::string& name) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -53,7 +55,7 @@ std::vector<std::string>::const_iterator bw::SupportsQualityParameters::firstQCP
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -65,7 +67,7 @@ bool bw::SupportsQualityParameters::supportQualityInfo(const RequestParameterMap
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

@@ -5,7 +5,7 @@
 #include <macgyver/CharsetTools.h>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <cassert>
 #include <sstream>
 
@@ -35,16 +35,17 @@ void bw::SupportsLocationParameters::engOrFinToEnOrFi(std::string &language)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
 bw::SupportsLocationParameters::SupportsLocationParameters(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<bw::StoredQueryConfig> config,
+    bw::StoredQueryConfig::Ptr config,
     unsigned options)
 
-    : SupportsExtraHandlerParams(config, false),
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
       RequiresGeoEngine(reactor),
       support_keywords((options & SUPPORT_KEYWORDS) != 0),
       include_fmisids((options & INCLUDE_FMISIDS) != 0),
@@ -53,23 +54,23 @@ bw::SupportsLocationParameters::SupportsLocationParameters(
 {
   try
   {
-    register_array_param<std::string>(P_PLACES, *config);
-    register_array_param<double>(P_LATLONS, *config, 0, 999, 2);
+    register_array_param<std::string>(P_PLACES);
+    register_array_param<double>(P_LATLONS, 0, 999, 2);
     if (include_fmisids)
-      register_array_param<int64_t>(P_FMISIDS, *config);
-    register_array_param<int64_t>(P_GEOIDS, *config);
+      register_array_param<int64_t>(P_FMISIDS);
+    register_array_param<int64_t>(P_GEOIDS);
     if (include_wmos)
-      register_array_param<int64_t>(P_WMOS, *config);
-    register_scalar_param<double>(P_MAX_DISTANCE, *config);
+      register_array_param<int64_t>(P_WMOS);
+    register_scalar_param<double>(P_MAX_DISTANCE);
     if (support_keywords)
     {
-      register_scalar_param<std::string>(P_KEYWORD, *config);
-      register_scalar_param<bool>(P_KEYWORD_OVERWRITABLE, *config);
+      register_scalar_param<std::string>(P_KEYWORD);
+      register_scalar_param<bool>(P_KEYWORD_OVERWRITABLE);
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -98,7 +99,7 @@ void bw::SupportsLocationParameters::get_location_options(
     param.get<double>(P_LATLONS, std::back_inserter(values), 0, 998, 2);
     if (values.size() & 1)
     {
-      throw SmartMet::Spine::Exception(BCP, "Invalid location list in parameter 'latlon'!")
+      throw Fmi::Exception(BCP, "Invalid location list in parameter 'latlon'!")
           .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
           .disableStackTrace();
     }
@@ -139,7 +140,7 @@ void bw::SupportsLocationParameters::get_location_options(
       SmartMet::Spine::LocationList ptrs = geo_engine->nameSearch(opts, utfname);
       if (ptrs.empty())
       {
-        throw SmartMet::Spine::Exception(
+        throw Fmi::Exception(
             BCP, "No locations found for the place with the requested language!")
             .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
             .addParameter("Place", name)
@@ -166,7 +167,7 @@ void bw::SupportsLocationParameters::get_location_options(
             geo_engine->keywordSearch(opts, ba::trim_copy(keyword));
         if (places.empty())
         {
-          throw SmartMet::Spine::Exception(BCP, "No locations found for the keyword!")
+          throw Fmi::Exception(BCP, "No locations found for the keyword!")
               .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
               .addParameter("Keyword", keyword)
               .disableStackTrace();
@@ -183,7 +184,7 @@ void bw::SupportsLocationParameters::get_location_options(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -202,7 +203,7 @@ void bw::SupportsLocationParameters::get_geoids(
       {
         if (id < std::numeric_limits<long>::min() || id > std::numeric_limits<long>::max())
         {
-          throw SmartMet::Spine::Exception(BCP, "The 'geoid' value is out of the range!")
+          throw Fmi::Exception(BCP, "The 'geoid' value is out of the range!")
               .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
               .addParameter("SmartMet::Spine::GeoId", std::to_string(id))
               .disableStackTrace();
@@ -217,7 +218,7 @@ void bw::SupportsLocationParameters::get_geoids(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -241,7 +242,7 @@ void bw::SupportsLocationParameters::get_fmisids(
     {
       if (id < std::numeric_limits<long>::min() || id > std::numeric_limits<long>::max())
       {
-        throw SmartMet::Spine::Exception(BCP, "The 'fmisid' value is out of the range!")
+        throw Fmi::Exception(BCP, "The 'fmisid' value is out of the range!")
             .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
             .addParameter("Fmsid", std::to_string(id))
             .disableStackTrace();
@@ -252,7 +253,7 @@ void bw::SupportsLocationParameters::get_fmisids(
         SmartMet::Spine::LocationList locList = geo_engine->nameSearch(opts, id_s);
         if (include_fmisids and locList.empty())
         {
-          throw SmartMet::Spine::Exception(BCP, "Unknown 'fmisid' value!")
+          throw Fmi::Exception(BCP, "Unknown 'fmisid' value!")
               .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
               .addParameter("Fmsid", std::to_string(id))
               .disableStackTrace();
@@ -265,7 +266,7 @@ void bw::SupportsLocationParameters::get_fmisids(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -289,7 +290,7 @@ void bw::SupportsLocationParameters::get_wmos(
     {
       if (id < std::numeric_limits<long>::min() || id > std::numeric_limits<long>::max())
       {
-        throw SmartMet::Spine::Exception(BCP, "The 'wmoid' value is out of the range!")
+        throw Fmi::Exception(BCP, "The 'wmoid' value is out of the range!")
             .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
             .addParameter("WmoId", std::to_string(id))
             .disableStackTrace();
@@ -300,7 +301,7 @@ void bw::SupportsLocationParameters::get_wmos(
         SmartMet::Spine::LocationList locList = geo_engine->nameSearch(opts, id_s);
         if (include_wmos and locList.empty())
         {
-          throw SmartMet::Spine::Exception(BCP, "Unknown 'wmoid' value!")
+          throw Fmi::Exception(BCP, "Unknown 'wmoid' value!")
               .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
               .addParameter("WmoId", id_s)
               .disableStackTrace();
@@ -313,7 +314,7 @@ void bw::SupportsLocationParameters::get_wmos(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 /**

@@ -2,7 +2,7 @@
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <macgyver/StringConversion.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/TimeSeries.h>
 
 namespace SmartMet
@@ -71,12 +71,12 @@ class TimeSeriesValue
       {
         std::ostringstream msg;
         msg << "TimeSeriesValue::toString : unknown valuetype";
-        throw SmartMet::Spine::Exception(BCP, msg.str());
+        throw Fmi::Exception(BCP, msg.str());
       }
     }
     catch (...)
     {
-      throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+      throw Fmi::Exception::Trace(BCP, "Operation failed!");
     }
   }
 

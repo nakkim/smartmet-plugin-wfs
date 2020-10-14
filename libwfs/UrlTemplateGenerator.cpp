@@ -7,7 +7,7 @@
 #include <boost/lambda/lambda.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <algorithm>
 #include <cassert>
 #include <cstdio>
@@ -47,7 +47,7 @@ void encode(std::ostream& stream, const std::string& text)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace
@@ -64,7 +64,7 @@ bw::UrlTemplateGenerator::UrlTemplateGenerator(const std::string& url,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -120,7 +120,7 @@ std::string bw::UrlTemplateGenerator::generate(
             {
               if (std::strchr(item.c_str(), ',') != nullptr)
               {
-                SmartMet::Spine::Exception exception(
+                Fmi::Exception exception(
                     BCP, "List items are not permitted to contain ',' characters!");
                 exception.addParameter("Item", item.c_str());
                 throw exception;
@@ -148,7 +148,7 @@ std::string bw::UrlTemplateGenerator::generate(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -210,12 +210,12 @@ void bw::UrlTemplateGenerator::parse_param_def(const std::string& str)
     {
       std::ostringstream msg;
       msg << "Failed to parse parameter definition '" << src << "'!";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -241,7 +241,7 @@ std::string bw::UrlTemplateGenerator::eval_string_param(
           std::ostringstream msg;
           msg << "bw::UrlTemplateGenerator::eval_string_param"
               << ": unexpected end of source string '" << param_str << "'";
-          throw SmartMet::Spine::Exception(BCP, msg.str());
+          throw Fmi::Exception(BCP, msg.str());
         }
         result << src[1];
         src += 2;
@@ -253,7 +253,7 @@ std::string bw::UrlTemplateGenerator::eval_string_param(
           std::ostringstream msg;
           msg << "bw::UrlTemplateGenerator::eval_string_param"
               << ": missing '{' after '$' in '" << param_str << "'";
-          throw SmartMet::Spine::Exception(BCP, msg.str());
+          throw Fmi::Exception(BCP, msg.str());
         }
 
         src += 2;
@@ -269,7 +269,7 @@ std::string bw::UrlTemplateGenerator::eval_string_param(
           msg << "bw::UrlTemplateGenerator::eval_string_param"
               << ": invalid parameter name after '${' or closing '}' missing in '" << param_str
               << "'";
-          throw SmartMet::Spine::Exception(BCP, msg.str());
+          throw Fmi::Exception(BCP, msg.str());
         }
 
         const std::string ref_name(name, src);
@@ -286,7 +286,7 @@ std::string bw::UrlTemplateGenerator::eval_string_param(
           for (int i = 0; i < N; i++)
             msg << " '" << values[i] << "'";
           msg << ")";
-          throw SmartMet::Spine::Exception(BCP, msg.str());
+          throw Fmi::Exception(BCP, msg.str());
         }
 
         for (int i = 0; i < N; i++)
@@ -306,7 +306,7 @@ std::string bw::UrlTemplateGenerator::eval_string_param(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

@@ -9,10 +9,12 @@ namespace bw = SmartMet::Plugin::WFS;
 
 bw::StoredIsolineQueryHandler::StoredIsolineQueryHandler(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<bw::StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
-    : SupportsExtraHandlerParams(config, false),
+
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
       RequiresContourEngine(reactor),
       RequiresQEngine(reactor),
       RequiresGeoEngine(reactor),
@@ -26,7 +28,7 @@ bw::StoredIsolineQueryHandler::StoredIsolineQueryHandler(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -39,7 +41,7 @@ void bw::StoredIsolineQueryHandler::clipGeometry(OGRGeometryPtr& pGeom, Fmi::Box
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -81,7 +83,7 @@ std::vector<bw::ContourQueryResultPtr> bw::StoredIsolineQueryHandler::processQue
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -97,7 +99,7 @@ SmartMet::Engine::Contour::Options bw::StoredIsolineQueryHandler::getContourEngi
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -114,7 +116,7 @@ boost::shared_ptr<bw::ContourQueryParameter> bw::StoredIsolineQueryHandler::getQ
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -133,7 +135,7 @@ void bw::StoredIsolineQueryHandler::setResultHashValue(CTPP::CDT& resultHash,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -143,7 +145,7 @@ using namespace SmartMet::Plugin::WFS;
 
 boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_isoline_query_handler_create(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl& plugin_data,
     boost::optional<std::string> template_file_name)
 {
@@ -156,7 +158,7 @@ boost::shared_ptr<SmartMet::Plugin::WFS::StoredQueryHandlerBase> wfs_isoline_que
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

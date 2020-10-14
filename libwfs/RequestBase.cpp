@@ -7,7 +7,7 @@
 #include <boost/algorithm/string.hpp>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <sstream>
 
 namespace bw = SmartMet::Plugin::WFS;
@@ -43,7 +43,7 @@ std::string bw::RequestBase::extract_request_name(const xercesc::DOMDocument& do
     {
       std::ostringstream msg;
       msg << FN << ": HTTP/SOAP requests are not yet supported";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
     else if (name_info.second == WFS_NAMESPACE_URI)
     {
@@ -56,7 +56,7 @@ std::string bw::RequestBase::extract_request_name(const xercesc::DOMDocument& do
         std::ostringstream msg;
         msg << "SmartMet::Plugin::WFS::Xml::RequestBase::extractRequestName():"
             << " no namespace provided but " << WFS_NAMESPACE_URI << " expected";
-        throw SmartMet::Spine::Exception(BCP, msg.str());
+        throw Fmi::Exception(BCP, msg.str());
       }
       else
       {
@@ -64,7 +64,7 @@ std::string bw::RequestBase::extract_request_name(const xercesc::DOMDocument& do
         msg << "SmartMet::Plugin::WFS::Xml::RequestBase::extractRequestName():"
             << " unexpected XML namespace " << name_info.second << " when " << WFS_NAMESPACE_URI
             << " expected";
-        throw SmartMet::Spine::Exception(BCP, msg.str());
+        throw Fmi::Exception(BCP, msg.str());
       }
     }
 
@@ -72,7 +72,7 @@ std::string bw::RequestBase::extract_request_name(const xercesc::DOMDocument& do
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -84,7 +84,7 @@ std::string bw::RequestBase::extract_request_name(
     auto req_name = http_request.getParameter("request");
     if (not req_name)
     {
-      SmartMet::Spine::Exception exception(BCP, "The 'request' parameter is missing!");
+      Fmi::Exception exception(BCP, "The 'request' parameter is missing!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
@@ -93,7 +93,7 @@ std::string bw::RequestBase::extract_request_name(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -167,7 +167,7 @@ void bw::RequestBase::substitute_all(const std::string& src, std::ostream& outpu
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -188,12 +188,12 @@ void bw::RequestBase::check_request_name(const SmartMet::Spine::HTTP::Request& h
       msg << "SmartMet::Plugin::WFS::RequestBase::check_request_name(): [INTERNAL ERROR]:"
           << " conflicting reqest name '" << actual_name << "' in HTTP request ('" << name
           << "' expected)";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -209,12 +209,12 @@ void bw::RequestBase::check_request_name(const xercesc::DOMDocument& document,
       msg << "SmartMet::Plugin::WFS::RequestBase::check_request_name(): [INTERNAL ERROR]:"
           << " conflicting reqest name '" << actual_name << "' in XML document ('" << name
           << "' expected)";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -238,7 +238,7 @@ void bw::RequestBase::check_mandatory_attributes(const xercesc::DOMDocument& doc
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -257,7 +257,7 @@ void bw::RequestBase::check_output_format_attribute(const std::string& value, co
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -279,7 +279,7 @@ void bw::RequestBase::check_output_format_attribute(const xercesc::DOMElement* r
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -297,7 +297,7 @@ void bw::RequestBase::report_incorrect_output_format(const std::string& value,
   }
   msg << " expected)";
   std::cout << msg.str();
-  SmartMet::Spine::Exception exception(BCP, msg.str());
+  Fmi::Exception exception(BCP, msg.str());
   exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
   throw exception;
 }
@@ -309,7 +309,7 @@ const xercesc::DOMElement* bw::RequestBase::get_xml_root(const xercesc::DOMDocum
     xercesc::DOMElement* root = document.getDocumentElement();
     if (root == nullptr)
     {
-      SmartMet::Spine::Exception exception(BCP, "The XML root element is missing!");
+      Fmi::Exception exception(BCP, "The XML root element is missing!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
@@ -317,7 +317,7 @@ const xercesc::DOMElement* bw::RequestBase::get_xml_root(const xercesc::DOMDocum
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -328,7 +328,7 @@ void bw::RequestBase::check_wfs_version(const SmartMet::Spine::HTTP::Request& re
     auto version = request.getParameter("version");
     if (version and *version != "2.0.0")
     {
-      SmartMet::Spine::Exception exception(BCP, "Unsupported WFS version!");
+      Fmi::Exception exception(BCP, "Unsupported WFS version!");
       exception.addDetail("Only version '2.0.0' is supported.");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       exception.addParameter("Requested version", *version);
@@ -337,6 +337,6 @@ void bw::RequestBase::check_wfs_version(const SmartMet::Spine::HTTP::Request& re
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }

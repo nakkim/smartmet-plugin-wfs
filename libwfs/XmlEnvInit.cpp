@@ -1,6 +1,6 @@
 #include "XmlEnvInit.h"
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <xercesc/util/PlatformUtils.hpp>
 #include <xqilla/utils/UTF8Str.hpp>
 #include <xqilla/utils/XQillaPlatformUtils.hpp>
@@ -26,7 +26,7 @@ EnvInit::EnvInit()
     catch (const xercesc::XMLException& err)
     {
       std::string str = UTF8(err.getMessage());
-      SmartMet::Spine::Exception exception(BCP, "Error during Xerces-C initialization!", nullptr);
+      Fmi::Exception exception(BCP, "Error during Xerces-C initialization!", nullptr);
       exception.addDetail(str);
       throw exception;
     }
@@ -36,7 +36,7 @@ EnvInit::EnvInit()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

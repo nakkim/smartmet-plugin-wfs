@@ -1,7 +1,7 @@
 #include "XmlError.h"
 #include <boost/format.hpp>
 #include <macgyver/TypeName.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 namespace SmartMet
 {
@@ -26,7 +26,7 @@ void XmlError::add_messages(const std::list<std::string>& messages)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -43,13 +43,13 @@ const char* XmlError::error_level_name(enum error_level_t error_level)
       case FATAL_ERROR:
         return "FATAL_ERROR";
       default:
-        throw SmartMet::Spine::Exception(
+        throw Fmi::Exception(
             BCP, str(format("XmlError: unknown error level %2%") % (int)error_level));
     }
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace Xml

@@ -3,7 +3,7 @@
 #include <macgyver/StringConversion.h>
 #include <macgyver/TimeZones.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 
 namespace bw = SmartMet::Plugin::WFS;
 
@@ -17,17 +17,18 @@ namespace
 const char* P_TZ = "timeZone";
 }
 
-bw::SupportsTimeZone::SupportsTimeZone(SmartMet::Spine::Reactor* reactor, boost::shared_ptr<StoredQueryConfig> config)
-    : bw::SupportsExtraHandlerParams(config, false)
+bw::SupportsTimeZone::SupportsTimeZone(SmartMet::Spine::Reactor* reactor, StoredQueryConfig::Ptr config)
+    : bw::StoredQueryParamRegistry(config)
+    , bw::SupportsExtraHandlerParams(config, false)
     , bw::RequiresGeoEngine(reactor)
 {
   try
   {
-    register_scalar_param<std::string>(P_TZ, *config);
+    register_scalar_param<std::string>(P_TZ);
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -44,7 +45,7 @@ std::string bw::SupportsTimeZone::get_tz_name(const RequestParameterMap& param_v
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -67,7 +68,7 @@ lt::time_zone_ptr bw::SupportsTimeZone::get_tz_for_site(double longitude,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -84,7 +85,7 @@ boost::local_time::time_zone_ptr bw::SupportsTimeZone::get_time_zone(const std::
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -109,7 +110,7 @@ std::string bw::SupportsTimeZone::format_local_time(const pt::ptime& utc_time,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

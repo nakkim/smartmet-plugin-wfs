@@ -3,7 +3,7 @@
 #include "StoredQueryHandlerFactoryDef.h"
 #include "StoredQueryMap.h"
 #include "WfsConvenience.h"
-#include <smartmet/spine/Exception.h>
+#include <smartmet/macgyver/Exception.h>
 #include <smartmet/spine/Value.h>
 #include <sstream>
 
@@ -15,18 +15,19 @@ const char* P_ID = "feature_id";
 }
 
 bw::GetFeatureByIdHandler::GetFeatureByIdHandler(SmartMet::Spine::Reactor* reactor,
-                                                 boost::shared_ptr<bw::StoredQueryConfig> config,
+                                                 bw::StoredQueryConfig::Ptr config,
                                                  PluginImpl& plugin_data)
-    : bw::SupportsExtraHandlerParams(config),
+    : bw::StoredQueryParamRegistry(config),
+      bw::SupportsExtraHandlerParams(config),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, boost::optional<std::string>())
 {
   try
   {
-    register_scalar_param<std::string>(P_ID, *config);
+    register_scalar_param<std::string>(P_ID);
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -47,7 +48,7 @@ void bw::GetFeatureByIdHandler::query(const StoredQuery& query,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -59,7 +60,7 @@ std::vector<std::string> bw::GetFeatureByIdHandler::get_return_types() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -67,7 +68,7 @@ namespace
 {
 boost::shared_ptr<bw::StoredQueryHandlerBase> wfs_get_feature_by_id_handler_create(
     SmartMet::Spine::Reactor* reactor,
-    boost::shared_ptr<bw::StoredQueryConfig> config,
+    bw::StoredQueryConfig::Ptr config,
     bw::PluginImpl& plugin_data,
     boost::optional<std::string> /* unused template_file_name */)
 {
@@ -79,7 +80,7 @@ boost::shared_ptr<bw::StoredQueryHandlerBase> wfs_get_feature_by_id_handler_crea
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 }  // namespace

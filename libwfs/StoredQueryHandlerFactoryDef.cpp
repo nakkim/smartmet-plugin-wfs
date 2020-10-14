@@ -1,6 +1,6 @@
 #include "StoredQueryHandlerFactoryDef.h"
 #include <openssl/sha.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <dlfcn.h>
 #include <sstream>
 #include <string>
@@ -22,7 +22,7 @@ StoredQueryHandlerFactoryDef::StoredQueryHandlerFactoryDef(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -31,7 +31,7 @@ StoredQueryHandlerFactoryDef::~StoredQueryHandlerFactoryDef() {}
 boost::shared_ptr<StoredQueryHandlerBase> StoredQueryHandlerFactoryDef::construct(
     const std::string &symbol_name,
     SmartMet::Spine::Reactor *reactor,
-    boost::shared_ptr<StoredQueryConfig> config,
+    StoredQueryConfig::Ptr config,
     PluginImpl &plugin_data,
     boost::optional<std::string> template_file_name)
 {
@@ -42,7 +42,7 @@ boost::shared_ptr<StoredQueryHandlerBase> StoredQueryHandlerFactoryDef::construc
     {
       std::ostringstream msg;
       msg << "Symbol '" << symbol_name << "' is not found";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
 
     auto *factory_def = reinterpret_cast<StoredQueryHandlerFactoryDef *>(sym_ptr);
@@ -53,7 +53,7 @@ boost::shared_ptr<StoredQueryHandlerBase> StoredQueryHandlerFactoryDef::construc
     {
       std::ostringstream msg;
       msg << "Signature of the found symbol '" << symbol_name << "' does not match!";
-      throw SmartMet::Spine::Exception(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
 
     auto result = factory_def->factory(reactor, config, plugin_data, template_file_name);
@@ -63,7 +63,7 @@ boost::shared_ptr<StoredQueryHandlerBase> StoredQueryHandlerFactoryDef::construc
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -85,7 +85,7 @@ void StoredQueryHandlerFactoryDef::create_signature(unsigned char *md)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

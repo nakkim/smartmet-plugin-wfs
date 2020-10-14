@@ -2,10 +2,10 @@
 #include <set>
 #include <spine/ConfigBase.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <boost/algorithm/string.hpp>
 
-using SmartMet::Spine::Exception;
+using Fmi::Exception;
 using SmartMet::Plugin::WFS::CapabilitiesConf;
 
 namespace ba = boost::algorithm;
@@ -34,7 +34,7 @@ namespace
 	}
       }
     } else {
-      throw SmartMet::Spine::Exception::Trace(BCP, "Setting is not a group")
+      throw Fmi::Exception::Trace(BCP, "Setting is not a group")
 	.addParameter("name", parent->getName());
     }
   }
@@ -52,7 +52,7 @@ namespace
       }
       return result;
     } catch (...) {
-      throw SmartMet::Spine::Exception(BCP, "Failed to parse SmartMet::Spine::MultiLanguageString")
+      throw Fmi::Exception(BCP, "Failed to parse SmartMet::Spine::MultiLanguageString")
 	.addParameter("name", name);
     }
   }
@@ -70,7 +70,7 @@ namespace
       }
       return result;
     } catch (...) {
-      throw SmartMet::Spine::Exception(BCP, "Failed to parse SmartMet::Spine::MultiLanguageStringArray")
+      throw Fmi::Exception(BCP, "Failed to parse SmartMet::Spine::MultiLanguageStringArray")
 	.addParameter("name", name);
     }
   }
@@ -195,7 +195,7 @@ void CapabilitiesConf::parse(const std::string& default_language, libconfig::Set
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

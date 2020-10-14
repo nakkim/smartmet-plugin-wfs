@@ -1,5 +1,5 @@
 #include "ScalarParameterTemplate.h"
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/Value.h>
 
 namespace
@@ -30,7 +30,7 @@ ScalarParameterTemplate::ScalarParameterTemplate(StoredQueryConfig& config,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -52,7 +52,7 @@ ScalarParameterTemplate::ScalarParameterTemplate(StoredQueryConfig& config,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -75,7 +75,7 @@ SmartMet::Spine::Value ScalarParameterTemplate::get_value(
       } else if (arr.size() == 1) {
         return arr.at(0);
       } else {
-        throw SmartMet::Spine::Exception::Trace(BCP,
+        throw Fmi::Exception::Trace(BCP,
             METHOD_NAME + ": cannot convert array of size > 2 to scalar value")
             .disableStackTrace();
       }
@@ -83,7 +83,7 @@ SmartMet::Spine::Value ScalarParameterTemplate::get_value(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -101,7 +101,7 @@ bool ScalarParameterTemplate::get_value(SmartMet::Spine::Value& result,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -139,7 +139,7 @@ boost::tribool ScalarParameterTemplate::get_value(
 
           default:
           {
-            throw SmartMet::Spine::Exception(
+            throw Fmi::Exception(
                 BCP, "Scalar value expected. Got '" + as_string(vect) + "'!");
           }
         }
@@ -149,301 +149,7 @@ boost::tribool ScalarParameterTemplate::get_value(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-int64_t ScalarParameterTemplate::get_int_value(const RequestParameterMap& req_param_map,
-                                               const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    try
-    {
-      SmartMet::Spine::Value tmp = ScalarParameterTemplate::get_value(req_param_map, extra_params);
-      return tmp.get_int();
-    }
-    catch (...)
-    {
-      handle_exceptions(METHOD_NAME);
-    }
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-uint64_t ScalarParameterTemplate::get_uint_value(
-    const RequestParameterMap& req_param_map, const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    try
-    {
-      SmartMet::Spine::Value tmp = ScalarParameterTemplate::get_value(req_param_map, extra_params);
-      return tmp.get_uint();
-    }
-    catch (...)
-    {
-      handle_exceptions(METHOD_NAME);
-    }
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-double ScalarParameterTemplate::get_double_value(
-    const RequestParameterMap& req_param_map, const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    try
-    {
-      SmartMet::Spine::Value tmp = ScalarParameterTemplate::get_value(req_param_map, extra_params);
-      return tmp.get_double();
-    }
-    catch (...)
-    {
-      handle_exceptions(METHOD_NAME);
-    }
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-std::string ScalarParameterTemplate::get_string_value(
-    const RequestParameterMap& req_param_map, const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    try
-    {
-      SmartMet::Spine::Value tmp = ScalarParameterTemplate::get_value(req_param_map, extra_params);
-      return tmp.get_string();
-    }
-    catch (...)
-    {
-      handle_exceptions(METHOD_NAME);
-    }
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-boost::posix_time::ptime ScalarParameterTemplate::get_ptime_value(
-    const RequestParameterMap& req_param_map, const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    try
-    {
-      SmartMet::Spine::Value tmp = ScalarParameterTemplate::get_value(req_param_map, extra_params);
-      return tmp.get_ptime(true);
-    }
-    catch (...)
-    {
-      handle_exceptions(METHOD_NAME);
-    }
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-SmartMet::Spine::Point ScalarParameterTemplate::get_point_value(
-    const RequestParameterMap& req_param_map, const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    try
-    {
-      SmartMet::Spine::Value tmp = ScalarParameterTemplate::get_value(req_param_map, extra_params);
-      return tmp.get_point();
-    }
-    catch (...)
-    {
-      handle_exceptions(METHOD_NAME);
-    }
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-SmartMet::Spine::BoundingBox ScalarParameterTemplate::get_bbox_value(
-    const RequestParameterMap& req_param_map, const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    try
-    {
-      SmartMet::Spine::Value tmp = ScalarParameterTemplate::get_value(req_param_map, extra_params);
-      return tmp.get_bbox();
-    }
-    catch (...)
-    {
-      handle_exceptions(METHOD_NAME);
-    }
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  int64_t* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map, extra_params);
-    if (found)
-    {
-      *dest = tmp.get_int();
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  uint64_t* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map, extra_params);
-    if (found)
-    {
-      *dest = tmp.get_uint();
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  double* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map, extra_params);
-    if (found)
-    {
-      *dest = tmp.get_double();
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  std::string* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map);
-    if (found)
-    {
-      *dest = tmp.get_string();
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  boost::posix_time::ptime* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map);
-    if (found)
-    {
-      *dest = tmp.get_ptime(true);
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  SmartMet::Spine::Point* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map);
-    if (found)
-    {
-      *dest = tmp.get_point();
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool ScalarParameterTemplate::get(const RequestParameterMap& req_param_map,
-                                  SmartMet::Spine::BoundingBox* dest,
-                                  const SupportsExtraHandlerParams* extra_params) const
-{
-  try
-  {
-    SmartMet::Spine::Value tmp;
-    bool found = get_value(tmp, req_param_map);
-    if (found)
-    {
-      *dest = tmp.get_bbox();
-    }
-
-    return found;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -467,7 +173,7 @@ void ScalarParameterTemplate::init()
                     // Do not accept request to copy entire array over scalar value
                     std::ostringstream msg;
                     msg << "Cannot copy entire parameter array '" << *item.param_ref << "' to scalar value";
-                    throw SmartMet::Spine::Exception(BCP, msg.str());
+                    throw Fmi::Exception(BCP, msg.str());
                 }
                 else if (*item.param_ind >= param.getMaxSize())
                 {
@@ -475,7 +181,7 @@ void ScalarParameterTemplate::init()
                     std::ostringstream msg;
                     msg << "The array index " << *item.param_ind << " is out of range 0.."
                         << param.getMaxSize();
-                    throw SmartMet::Spine::Exception(BCP, msg.str());
+                    throw Fmi::Exception(BCP, msg.str());
                 }
             }
         }
@@ -487,8 +193,15 @@ void ScalarParameterTemplate::init()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
+}
+
+template <>
+boost::posix_time::ptime
+ScalarParameterTemplate::Getter<boost::posix_time::ptime>::extract(const SmartMet::Spine::Value& src) const
+{
+    return src.get_ptime(true);
 }
 
 }  // namespace WFS

@@ -50,15 +50,15 @@ BOOST_AUTO_TEST_CASE(test_1)
 
   s1v.clear();
   BOOST_REQUIRE_THROW(params.get<std::string>("B", std::back_inserter(s1v), 0, 2),
-                      SmartMet::Spine::Exception);
+                      Fmi::Exception);
 
   s1v.clear();
   BOOST_REQUIRE_THROW(params.get<std::string>("B", std::back_inserter(s1v), 4, 4),
-                      SmartMet::Spine::Exception);
+                      Fmi::Exception);
 
   s1v.clear();
   BOOST_REQUIRE_THROW(params.get<std::string>("B", std::back_inserter(s1v), 0, 4, 2),
-                      SmartMet::Spine::Exception);
+                      Fmi::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(test_substitution_into_string)
@@ -80,14 +80,14 @@ BOOST_AUTO_TEST_CASE(test_substitution_into_string)
   BOOST_REQUIRE_NO_THROW(result = params.subst("a=\\$${A} foo"));
   BOOST_CHECK_EQUAL(std::string("a=$123 foo"), result);
 
-  BOOST_REQUIRE_THROW(result = params.subst("a=${A1} foo"), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(result = params.subst("a=${A1} foo"), Fmi::Exception);
 
   BOOST_REQUIRE_NO_THROW(result = params.subst("a=${?A1} foo"));
   BOOST_CHECK_EQUAL(std::string("a= foo"), result);
 
-  BOOST_REQUIRE_THROW(result = params.subst("b=${B} foo"), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(result = params.subst("b=${B} foo"), Fmi::Exception);
 
-  BOOST_REQUIRE_THROW(result = params.subst("b=${?B} foo"), SmartMet::Spine::Exception);
+  BOOST_REQUIRE_THROW(result = params.subst("b=${?B} foo"), Fmi::Exception);
 
   BOOST_REQUIRE_NO_THROW(result = params.subst("b=${*B} foo"));
   BOOST_CHECK_EQUAL(std::string("b=foo,bar,baz foo"), result);
