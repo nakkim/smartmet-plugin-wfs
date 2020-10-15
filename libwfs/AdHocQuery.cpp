@@ -8,7 +8,7 @@
 #include <macgyver/StringConversion.h>
 #include <macgyver/Exception.h>
 
-XERCES_CPP_NAMESPACE_USE;
+XERCES_CPP_NAMESPACE_USE
 
 #define FES_NAMESPACE_URI "http://www.opengis.net/fes/2.0"
 
