@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.10.6
+Version: 20.10.20
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -17,14 +17,14 @@ BuildRequires: boost169-devel
 BuildRequires: ctpp2-devel
 BuildRequires: fmt-devel >= 6.2.1
 BuildRequires: jsoncpp-devel
-BuildRequires: libconfig-devel
+BuildRequires: libconfig-devel >= 1.7.2
 BuildRequires: libcurl-devel
 BuildRequires: xerces-c-devel
 BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.9.23
+BuildRequires: smartmet-library-spine-devel >= 20.10.20
 BuildRequires: smartmet-library-gis-devel >= 20.8.21
 BuildRequires: smartmet-library-locus-devel >= 20.8.21
 BuildRequires: smartmet-library-macgyver-devel >= 20.10.5
@@ -38,13 +38,13 @@ BuildRequires: smartmet-engine-querydata-devel >= 20.9.23
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 6.2.1
-Requires: libconfig
+Requires: libconfig >= 1.7.2
 Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 20.8.21
 Requires: smartmet-library-macgyver >= 20.10.5
-Requires: smartmet-library-spine >= 20.9.23
+Requires: smartmet-library-spine >= 20.10.20
 Requires: smartmet-library-gis >= 20.8.21
 Requires: smartmet-engine-contour >= 20.8.23
 Requires: smartmet-engine-geonames >= 20.9.23
@@ -108,8 +108,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Tue Oct 20 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.10.20-1.fmi
+- Rebuild due to libconfig upgrade to version 1.7.2
+
 * Tue Oct  6 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.10.6-1.fmi
-- Build update: use makefile.inc fromsmartmet-library-macgyver
+- Build update: use makefile.inc from smartmet-library-macgyver
 
 * Wed Sep 30 2020 Andris Pavēnis <andris.pavenis@fmi.fi> - 20.9.30-1.fmi
 - Support overriding meteo parameter output accurracy for forecast queries
