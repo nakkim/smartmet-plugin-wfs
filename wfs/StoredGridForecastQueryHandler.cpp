@@ -490,7 +490,7 @@ uint StoredGridForecastQueryHandler::processGridQuery(
         uint timestepCount = gridQuery.mQueryParameterList[p].mValueList.size();
         for (uint x = 0; x < timestepCount; x++)
         {
-          uint vv = (uint) gridQuery.mQueryParameterList[p].mValueList[x].mValueList.getLength();
+          uint vv = (uint) gridQuery.mQueryParameterList[p].mValueList[x]->mValueList.getLength();
           if (vv > vLen)
             vLen = vv;
         }
@@ -511,7 +511,7 @@ uint StoredGridForecastQueryHandler::processGridQuery(
           for (uint t = 0; t < tLen; t++)
           {
             if (generationId == 0)
-              generationId = gridQuery.mQueryParameterList[p].mValueList[t].mGenerationId;
+              generationId = gridQuery.mQueryParameterList[p].mValueList[t]->mGenerationId;
 
             uint row = rows + t;
             if (row > lastRow)
@@ -519,12 +519,12 @@ uint StoredGridForecastQueryHandler::processGridQuery(
 
             if (!wfsQuery.have_model_area)
             {
-              if (geometryId == 0  &&  gridQuery.mQueryParameterList[p].mValueList[t].mGeometryId != 0)
-                geometryId = gridQuery.mQueryParameterList[p].mValueList[t].mGeometryId;
+              if (geometryId == 0  &&  gridQuery.mQueryParameterList[p].mValueList[t]->mGeometryId != 0)
+                geometryId = gridQuery.mQueryParameterList[p].mValueList[t]->mGeometryId;
             }
 
             T::GridValue val;
-            if (gridQuery.mQueryParameterList[p].mValueList[t].mValueList.getGridValueByIndex(v,val) && (val.mValue != ParamValueMissing || val.mValueString.length() > 0))
+            if (gridQuery.mQueryParameterList[p].mValueList[t]->mValueList.getGridValueByIndex(v,val) && (val.mValue != ParamValueMissing || val.mValueString.length() > 0))
             {
               if (val.mValueString.length() > 0)
               {
@@ -609,11 +609,11 @@ uint StoredGridForecastQueryHandler::processGridQuery(
             int levelValue = 0;
             while (idx < pLen && levelValue == 0)
             {
-              if (gridQuery.mQueryParameterList[idx].mValueList[t].mParameterLevel > 0)
+              if (gridQuery.mQueryParameterList[idx].mValueList[t]->mParameterLevel > 0)
               {
-                levelValue = gridQuery.mQueryParameterList[idx].mValueList[t].mParameterLevel;
-                if (gridQuery.mQueryParameterList[idx].mValueList[t].mParameterLevelIdType == T::ParamLevelIdTypeValue::FMI
-                    && gridQuery.mQueryParameterList[idx].mValueList[t].mParameterLevelId == 2)
+                levelValue = gridQuery.mQueryParameterList[idx].mValueList[t]->mParameterLevel;
+                if (gridQuery.mQueryParameterList[idx].mValueList[t]->mParameterLevelIdType == T::ParamLevelIdTypeValue::FMI
+                    && gridQuery.mQueryParameterList[idx].mValueList[t]->mParameterLevelId == 2)
                   levelValue = levelValue / 100;
               }
 
@@ -627,15 +627,15 @@ uint StoredGridForecastQueryHandler::processGridQuery(
             int idx = 0;
             while (idx < pLen)
             {
-              if (gridQuery.mQueryParameterList[idx].mValueList[t].mProducerId > 0)
+              if (gridQuery.mQueryParameterList[idx].mValueList[t]->mProducerId > 0)
               {
                 T::ProducerInfo info;
-                bool res = itsProducerInfoList.getProducerInfoById(gridQuery.mQueryParameterList[idx].mValueList[t].mProducerId,info);
+                bool res = itsProducerInfoList.getProducerInfoById(gridQuery.mQueryParameterList[idx].mValueList[t]->mProducerId,info);
                 if (!res)
                 {
                   contentServer->getProducerInfoList(0, itsProducerInfoList);
                   itsProducerInfoList_updateTime = time(nullptr);
-                  res = itsProducerInfoList.getProducerInfoById(gridQuery.mQueryParameterList[idx].mValueList[t].mProducerId,info);
+                  res = itsProducerInfoList.getProducerInfoById(gridQuery.mQueryParameterList[idx].mValueList[t]->mProducerId,info);
                 }
 
                 if (res)
@@ -666,15 +666,15 @@ uint StoredGridForecastQueryHandler::processGridQuery(
             int idx = 0;
             while (idx < pLen)
             {
-              if (gridQuery.mQueryParameterList[idx].mValueList[t].mGenerationId > 0)
+              if (gridQuery.mQueryParameterList[idx].mValueList[t]->mGenerationId > 0)
               {
                 T::GenerationInfo info;
-                bool res = itsGenerationInfoList.getGenerationInfoById(gridQuery.mQueryParameterList[idx].mValueList[t].mGenerationId,info);
+                bool res = itsGenerationInfoList.getGenerationInfoById(gridQuery.mQueryParameterList[idx].mValueList[t]->mGenerationId,info);
                 if (!res  && (itsGenerationInfoList_updateTime + 60) > time(nullptr))
                 {
                   contentServer->getGenerationInfoList(0, itsGenerationInfoList);
                   itsGenerationInfoList_updateTime = time(nullptr);
-                  res = itsGenerationInfoList.getGenerationInfoById(gridQuery.mQueryParameterList[idx].mValueList[t].mGenerationId,info);
+                  res = itsGenerationInfoList.getGenerationInfoById(gridQuery.mQueryParameterList[idx].mValueList[t]->mGenerationId,info);
                 }
 
                 if (res)
@@ -704,17 +704,17 @@ uint StoredGridForecastQueryHandler::processGridQuery(
 
             for (uint r = 0; r < rLen; r++)
             {
-              if (gridQuery.mQueryParameterList[p].mValueList[r].mForecastTime == *ft)
+              if (gridQuery.mQueryParameterList[p].mValueList[r]->mForecastTime == *ft)
               {
                 std::string producerName;
                 T::ProducerInfo producer;
-                bool res = itsProducerInfoList.getProducerInfoById(gridQuery.mQueryParameterList[p].mValueList[r].mProducerId,producer);
+                bool res = itsProducerInfoList.getProducerInfoById(gridQuery.mQueryParameterList[p].mValueList[r]->mProducerId,producer);
                 if (res)
                   producerName = producer.mName;
 
-                sprintf(tmp, "%s:%d:%d:%d:%d:%s", gridQuery.mQueryParameterList[p].mValueList[r].mParameterKey.c_str(),
-                    (int) gridQuery.mQueryParameterList[p].mValueList[r].mParameterLevelId, (int) gridQuery.mQueryParameterList[p].mValueList[r].mParameterLevel,
-                    (int) gridQuery.mQueryParameterList[p].mValueList[r].mForecastType, (int) gridQuery.mQueryParameterList[p].mValueList[r].mForecastNumber,
+                sprintf(tmp, "%s:%d:%d:%d:%d:%s", gridQuery.mQueryParameterList[p].mValueList[r]->mParameterKey.c_str(),
+                    (int) gridQuery.mQueryParameterList[p].mValueList[r]->mParameterLevelId, (int) gridQuery.mQueryParameterList[p].mValueList[r]->mParameterLevel,
+                    (int) gridQuery.mQueryParameterList[p].mValueList[r]->mForecastType, (int) gridQuery.mQueryParameterList[p].mValueList[r]->mForecastNumber,
                     producerName.c_str());
 
                 if (pList.find(std::string(tmp)) == pList.end())

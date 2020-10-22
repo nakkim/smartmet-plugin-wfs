@@ -324,11 +324,11 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
       for (auto val = param->mValueList.begin(); val != param->mValueList.end(); ++val)
       {
         std::vector<OGRGeometryPtr> geoms;
-        boost::posix_time::ptime utcTime = Fmi::TimeParser::parse_iso(val->mForecastTime);
+        boost::posix_time::ptime utcTime = Fmi::TimeParser::parse_iso((*val)->mForecastTime);
 
-        if (val->mValueData.size() > 0)
+        if ((*val)->mValueData.size() > 0)
         {
-          for (auto wkb = val->mValueData.begin(); wkb != val->mValueData.end(); ++wkb)
+          for (auto wkb = (*val)->mValueData.begin(); wkb != (*val)->mValueData.end(); ++wkb)
           {
             unsigned char* cwkb = reinterpret_cast<unsigned char*>(wkb->data());
 
@@ -358,12 +358,12 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
 
               if (param->mType == QueryServer::QueryParameter::Type::Isoband)
               {
-                if (val->mValueData.size() > 0)
+                if ((*val)->mValueData.size() > 0)
                 {
                   uint c = 250;
-                  uint step = 250 / val->mValueData.size();
+                  uint step = 250 / (*val)->mValueData.size();
 
-                  for (auto it = val->mValueData.begin(); it != val->mValueData.end(); ++it)
+                  for (auto it = (*val)->mValueData.begin(); it != (*val)->mValueData.end(); ++it)
                   {
                     uint col = (c << 16) + (c << 8) + c;
                     imagePaint.paintWkb(mp, mp, 180, 90, *it, col);
@@ -373,7 +373,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
               }
               else
               {
-                imagePaint.paintWkb(mp, mp, 180, 90, val->mValueData, 0x00);
+                imagePaint.paintWkb(mp, mp, 180, 90, (*val)->mValueData, 0x00);
               }
 
               // ### Saving the image and releasing the image data:
@@ -775,10 +775,10 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
     {
       for (auto val = param->mValueList.begin(); val != param->mValueList.end(); ++val)
       {
-        if (val->mAnalysisTime > " ")
+        if ((*val)->mAnalysisTime > " ")
         {
-          analysisTimeStr = val->mAnalysisTime;
-          modificationTimeStr = val->mModificationTime;
+          analysisTimeStr = (*val)->mAnalysisTime;
+          modificationTimeStr = (*val)->mModificationTime;
         }
       }
     }
