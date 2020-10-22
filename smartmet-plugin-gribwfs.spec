@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.10.20
+Version: 20.10.22
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -32,10 +32,10 @@ BuildRequires: smartmet-library-macgyver-devel >= 20.10.9
 BuildRequires: smartmet-engine-contour-devel >= 20.10.6
 BuildRequires: smartmet-engine-geonames-devel >= 20.10.6
 BuildRequires: smartmet-engine-gis-devel >= 20.10.6
-BuildRequires: smartmet-engine-grid-devel >= 20.10.20
+BuildRequires: smartmet-engine-grid-devel >= 20.10.22
 BuildRequires: smartmet-engine-querydata-devel >= 20.10.6
-BuildRequires: smartmet-library-grid-content-devel >= 20.10.15
-BuildRequires: smartmet-library-grid-files-devel >= 20.10.15
+BuildRequires: smartmet-library-grid-content-devel >= 20.10.22
+BuildRequires: smartmet-library-grid-files-devel >= 20.10.22
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 20.10.9
 %endif
@@ -53,14 +53,14 @@ Requires: smartmet-library-gis >= 20.10.5
 Requires: smartmet-engine-contour >= 20.10.6
 Requires: smartmet-engine-geonames >= 20.10.6
 Requires: smartmet-engine-gis >= 20.10.6
-Requires: smartmet-engine-grid >= 20.10.20
-Requires: smartmet-library-grid-content >= 20.10.15
-Requires: smartmet-library-grid-files >= 20.10.15
+Requires: smartmet-engine-grid >= 20.10.22
+Requires: smartmet-library-grid-content >= 20.10.22
+Requires: smartmet-library-grid-files >= 20.10.22
 %if %{with observation}
 Requires: smartmet-engine-observation >= 20.10.9
 %endif
 Requires: smartmet-engine-querydata >= 20.10.6
-Requires: smartmet-server >= 20.10.20
+Requires: smartmet-server >= 20.10.21
 Requires: xerces-c
 Requires: xqilla
 Requires: boost169-chrono
@@ -115,6 +115,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/gribwfs/request/*.h
 
 %changelog
+* Thu Oct 22 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.10.22-1.fmi
+- Repackaged due to library ABI changes
+
 * Tue Oct 20 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.10.20-1.fmi
 - Repackaged with the latest libconfig
 
