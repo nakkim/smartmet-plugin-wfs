@@ -34,6 +34,9 @@ bw::SupportsMeteoParameterOptions::SupportsMeteoParameterOptions(
           param_desc, "missing_value", default_option_item.missing_value);
       const std::string missing_text = config->get_optional_config_param<std::string>(
           param_desc, "missing_text", default_option_item.missing_text);
+      const unsigned short sensor_first = config->get_optional_config_param<unsigned int>(param_desc, "sensor_first", default_option_item.sensor_first);
+      const unsigned short sensor_last = config->get_optional_config_param<unsigned int>(param_desc, "sensor_last", default_option_item.sensor_last);
+      const unsigned short sensor_step = config->get_optional_config_param<unsigned int>(param_desc, "sensor_step", default_option_item.sensor_step);
 
       if (precision > 15)
       {
@@ -48,6 +51,9 @@ bw::SupportsMeteoParameterOptions::SupportsMeteoParameterOptions(
       optItem.precision = precision;
       optItem.missing_value = missing_value;
       optItem.missing_text = missing_text;
+      optItem.sensor_first = sensor_first;
+      optItem.sensor_last = sensor_last;
+      optItem.sensor_step = sensor_step;
       options_map.emplace(Fmi::ascii_tolower_copy(name), optItem);
     }
   }
@@ -157,6 +163,76 @@ void bw::SupportsMeteoParameterOptions::setDefaultMissingValue(const double& val
   }
 }
 
+void bw::SupportsMeteoParameterOptions::setDefaultSensorFirst(const unsigned short& value)
+{
+  try
+  {
+    const unsigned short lower_limit = boost::numeric_cast<unsigned short>(std::numeric_limits<uint8_t>::min());
+    const unsigned short upper_limit = boost::numeric_cast<unsigned short>(std::numeric_limits<uint8_t>::max());
+    if (value >= lower_limit and value <= upper_limit)
+    {
+      default_option_item.sensor_first = value;
+    }
+    else
+    {
+      std::ostringstream msg;
+      msg << "SmartMet::Plugin::WFS::SupportsMeteoParameterOptions::setDefaultSensorFirst: value "
+          << value << " is out of range " << lower_limit << ".." << upper_limit;
+      throw Fmi::Exception(BCP, msg.str());
+    }
+  }
+  catch (...)
+  {
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+void bw::SupportsMeteoParameterOptions::setDefaultSensorLast(const unsigned short& value)
+{
+  try
+  {
+    const unsigned short lower_limit = boost::numeric_cast<unsigned short>(std::numeric_limits<uint8_t>::min());
+    const unsigned short upper_limit = boost::numeric_cast<unsigned short>(std::numeric_limits<uint8_t>::max());
+    if (value >= lower_limit and value <= upper_limit)
+    {
+      default_option_item.sensor_last = value;
+    }
+    else
+    {
+      std::ostringstream msg;
+      msg << "SmartMet::Plugin::WFS::SupportsMeteoParameterOptions::setDefaultSensorLast: value "
+          << value << " is out of range " << lower_limit << ".." << upper_limit;
+      throw Fmi::Exception(BCP, msg.str());
+    }
+  }
+  catch (...)
+  {
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+void bw::SupportsMeteoParameterOptions::setDefaultSensorStep(const unsigned short& value)
+{
+  try
+  {
+    const unsigned short lower_limit = boost::numeric_cast<unsigned short>(std::numeric_limits<uint8_t>::min());
+    const unsigned short upper_limit = boost::numeric_cast<unsigned short>(std::numeric_limits<uint8_t>::max());
+    if (value >= lower_limit and value <= upper_limit)
+    {
+      default_option_item.sensor_step = value;
+    }
+    else
+    {
+      std::ostringstream msg;
+      msg << "SmartMet::Plugin::WFS::SupportsMeteoParameterOptions::setDefaultSensorStep: value "
+          << value << " is out of range " << lower_limit << ".." << upper_limit;
+      throw Fmi::Exception(BCP, msg.str());
+    }
+  }
+  catch (...)
+  {
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
 /**
 
 @page WFS_SQ_METEO_PARAM_OPTIONS Additional meteological parameter options.
@@ -203,6 +279,27 @@ parameters for meteorological parameters.
 <td>A text to replace the missing_value</td>
 </tr>
 
+<tr>
+<td>sensor_first</td>
+<td>uint</td>
+<td>optional (default 1)</td>
+<td>The smallest sensor number to be queried, defaults to the sensor number one</td>
+</tr>
+<tr>
+
+<td>sensor_last</td>
+<td>uint</td>
+<td>optional (default 1)</td>
+<td>The largest sensor number to be queried, defaults to sensor number one</td>
+</tr>
+<tr>
+
+<td>sensor_step</td>
+<td>uint</td>
+<td>optional (default 1)</td>
+<td>The step in between sensor numbers to be queried, defaults to one indicating every sensor from sensor_first to sensor_last</td>
+</tr>
+
 </table>
 
 Developer can change the default values by using methods with prefix setDefault. It is recommented
@@ -233,7 +330,7 @@ handler_params:
 };
 
 meteo_parameter_options = (
-     { name = "t2m"; precision = 4; missing_value = -1.0; missing_text = "missing"; }
+     { name = "t2m"; precision = 4; missing_value = -1.0; missing_text = "missing"; sensor_last = 10 }
     ,{ name = "ws_10min"; precision = 3; }
 );
 @endverbatim

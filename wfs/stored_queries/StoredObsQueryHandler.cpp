@@ -798,6 +798,19 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
         if (not SmartMet::Spine::special(param))
         {
           have_meteo_param = true;
+	  auto parameter_option = get_meteo_parameter_options(name);
+	  if ((parameter_option->sensor_first != 1) || (parameter_option->sensor_last != 1))
+	  {
+	    for (unsigned short index = parameter_option->sensor_first; index < parameter_option->sensor_last + 1; index += parameter_option->sensor_step)
+	    {
+	      param.setSensorNumber(index);
+	      if (index < parameter_option->sensor_last + 1)
+	      {
+		param = makeParameter(name);
+		query_params.parameters.push_back(param);
+	      }
+	    }
+	  }
         }
 
         if (not have_explicit_qc_params and support_quality_info)
