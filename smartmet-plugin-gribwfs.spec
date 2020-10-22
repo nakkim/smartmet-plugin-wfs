@@ -18,7 +18,7 @@ BuildRequires: ctpp2-devel
 BuildRequires: fmt-devel >= 6.2.1
 BuildRequires: gdal-devel
 BuildRequires: jsoncpp-devel
-BuildRequires: libconfig-devel
+BuildRequires: libconfig-devel >= 1.7.2
 BuildRequires: libcurl-devel
 BuildRequires: xerces-c-devel
 BuildRequires: xqilla-devel
@@ -42,7 +42,7 @@ BuildRequires: smartmet-engine-observation-devel >= 20.10.9
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 6.2.1
-Requires: libconfig
+Requires: libconfig >= 1.7.2
 Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
@@ -115,8 +115,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/gribwfs/request/*.h
 
 %changelog
-* Thu Oct 22 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.10.22-1.fmi
-- Repackaged due to library ABI changes
+* Thu Oct 22 2020 Pertti Kinnia <pertti.kinnia@fmi.fi> - 20.10.22-1.fmi
+- Added call to setSensorNumber
+- Fix multiple sensor requests
+- Harmonized the use of Fmi::Exception in SupportsMeteoParameterOptions.cpp
+- Rebuild due to libconfig upgrade to version 1.7.2
 
 * Tue Oct 20 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.10.20-1.fmi
 - Repackaged with the latest libconfig
@@ -125,7 +128,7 @@ rm -rf $RPM_BUILD_ROOT
 - Repackaged due to library ABI changes
 
 * Tue Oct  6 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.10.6-1.fmi
-- Build update: use makefile.inc fromsmartmet-library-macgyver
+- Build update: use makefile.inc from smartmet-library-macgyver
 
 * Thu Oct  1 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.10.1-1.fmi
 - Repackaged due to library ABI changes

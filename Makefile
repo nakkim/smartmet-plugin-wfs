@@ -173,7 +173,6 @@ file-list:
 	echo cnf/templates/template_depend.pl >>files.list.new
 	echo cnf/XMLGrammarPool.dump >>files.list.new
 	echo cnf/XMLSchemas.cache >>files.list.new
-	echo common.mk >>files.list.new
 	find test/base -name '*.conf' >>files.list.new
 	find test/base/output -name '*.get' -o -name '*.kvp.post' -o -name '*.xml.post' >>files.list.new
 	find test/base/kvp -name '*.kvp' >>files.list.new
