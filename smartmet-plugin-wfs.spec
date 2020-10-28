@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.10.22
+Version: 20.10.28
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -15,7 +15,7 @@ BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: boost169-devel
 BuildRequires: ctpp2-devel
-BuildRequires: fmt-devel >= 6.2.1
+BuildRequires: fmt-devel >= 7.1.0
 BuildRequires: jsoncpp-devel
 BuildRequires: libconfig-devel >= 1.7.2
 BuildRequires: libcurl-devel
@@ -24,10 +24,10 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.10.20
+BuildRequires: smartmet-library-spine-devel >= 20.10.28
 BuildRequires: smartmet-library-gis-devel >= 20.10.5
 BuildRequires: smartmet-library-locus-devel >= 20.10.7
-BuildRequires: smartmet-library-macgyver-devel >= 20.10.9
+BuildRequires: smartmet-library-macgyver-devel >= 20.10.28
 BuildRequires: smartmet-engine-contour-devel >= 20.10.6
 BuildRequires: smartmet-engine-geonames-devel >= 20.10.6
 BuildRequires: smartmet-engine-gis-devel >= 20.10.6
@@ -37,14 +37,14 @@ BuildRequires: smartmet-engine-observation-devel >= 20.10.9
 BuildRequires: smartmet-engine-querydata-devel >= 20.10.6
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
-Requires: fmt >= 6.2.1
+Requires: fmt >= 7.1.0
 Requires: libconfig >= 1.7.2
 Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 20.10.7
-Requires: smartmet-library-macgyver >= 20.10.9
-Requires: smartmet-library-spine >= 20.10.20
+Requires: smartmet-library-macgyver >= 20.10.28
+Requires: smartmet-library-spine >= 20.10.28
 Requires: smartmet-library-gis >= 20.10.5
 Requires: smartmet-engine-contour >= 20.10.6
 Requires: smartmet-engine-geonames >= 20.10.6
@@ -108,6 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Wed Oct 28 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.10.28-1.fmi
+- Rebuild due to fmt upgrade
+
 * Thu Oct 22 2020 Pertti Kinnia <pertti.kinnia@fmi.fi> - 20.10.22-1.fmi
 - Added call to setSensorNumber
 - Fix multiple sensor requests
