@@ -801,10 +801,10 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
 	  auto parameter_option = get_meteo_parameter_options(name);
 	  if ((parameter_option->sensor_first != 1) || (parameter_option->sensor_last != 1))
 	  {
-	    for (unsigned short index = parameter_option->sensor_first; index < parameter_option->sensor_last + 1; index += parameter_option->sensor_step)
+	    for (unsigned short index = parameter_option->sensor_first; index < (parameter_option->sensor_last + 1); index += parameter_option->sensor_step)
 	    {
 	      param.setSensorNumber(index);
-	      if (index < parameter_option->sensor_last + 1)
+	      if ((index + parameter_option->sensor_step) < (parameter_option->sensor_last + 1))
 	      {
 		param = makeParameter(name);
 		query_params.parameters.push_back(param);
