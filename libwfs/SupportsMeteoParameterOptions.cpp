@@ -130,7 +130,7 @@ void bw::SupportsMeteoParameterOptions::setDefaultMissingText(const std::string&
              "text "
              "length "
           << text_length << " is out of range " << lower_limit << ".." << upper_limit;
-      throw Fmi::Exception::Trace(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
@@ -154,7 +154,7 @@ void bw::SupportsMeteoParameterOptions::setDefaultMissingValue(const double& val
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::SupportsMeteoParameterOptions::setDefaultMissingValue: value "
           << value << " is out of range " << lower_limit << ".." << upper_limit;
-      throw Fmi::Exception::Trace(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
@@ -178,7 +178,7 @@ void bw::SupportsMeteoParameterOptions::setDefaultSensorFirst(const unsigned sho
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::SupportsMeteoParameterOptions::setDefaultSensorFirst: value "
           << value << " is out of range " << lower_limit << ".." << upper_limit;
-      throw Fmi::Exception::Trace(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
@@ -201,7 +201,7 @@ void bw::SupportsMeteoParameterOptions::setDefaultSensorLast(const unsigned shor
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::SupportsMeteoParameterOptions::setDefaultSensorLast: value "
           << value << " is out of range " << lower_limit << ".." << upper_limit;
-      throw Fmi::Exception::Trace(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)
@@ -224,7 +224,7 @@ void bw::SupportsMeteoParameterOptions::setDefaultSensorStep(const unsigned shor
       std::ostringstream msg;
       msg << "SmartMet::Plugin::WFS::SupportsMeteoParameterOptions::setDefaultSensorStep: value "
           << value << " is out of range " << lower_limit << ".." << upper_limit;
-      throw Fmi::Exception::Trace(BCP, msg.str());
+      throw Fmi::Exception(BCP, msg.str());
     }
   }
   catch (...)

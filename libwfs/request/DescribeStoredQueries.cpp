@@ -23,7 +23,7 @@ struct XmlNamespeceDef
   std::string prefix;
   boost::optional<std::string> loc;
 };
-};  // namespace
+}  // namespace
 
 bw::Request::DescribeStoredQueries::DescribeStoredQueries(const std::string& language,
                                                           const std::vector<std::string>& ids,
