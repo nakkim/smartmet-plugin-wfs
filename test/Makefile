@@ -20,6 +20,7 @@ LIBS += \
 	-lsmartmet-gis \
 	-lsmartmet-macgyver \
 	-lboost_date_time \
+	-lboost_program_options \
         -lboost_serialization \
 	-lboost_thread \
 	-lboost_iostreams \

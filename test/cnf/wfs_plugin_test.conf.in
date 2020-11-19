@@ -28,31 +28,31 @@ engines:
 {
 	geonames:
 	{
-		configfile      = "geonames.conf";
+		configfile      = "../../cnf/geonames.conf";
 		libfile         = "/usr/share/smartmet/engines/geonames.so";
 	};
 
 	observation:
 	{
-		configfile      = "observation.conf";
+		configfile      = "../../cnf/observation_@TARGET@.conf";
                 libfile         = "/usr/share/smartmet/engines/observation.so";
 	};
 
 	contour:
 	{
-		configfile      = "contour.conf";
+		configfile      = "../../cnf/contour.conf";
                 libfile         = "/usr/share/smartmet/engines/contour.so";
 	};
 
 	querydata:
 	{
-		configfile      = "querydata.conf";
+		configfile      = "../../cnf/querydata.conf";
                 libfile         = "/usr/share/smartmet/engines/querydata.so";
 	};
 
 	gis:
 	{
-		configfile      = "gis.conf";
+		configfile      = "../../cnf/gis.conf";
                 libfile         = "/usr/share/smartmet/engines/gis.so";
 	};
 };
