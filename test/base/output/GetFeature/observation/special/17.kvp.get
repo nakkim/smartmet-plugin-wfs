@@ -5,35 +5,35 @@ Global data object:
    groups = [
               {
                 'crs' : "EPSG::4326",
-                'featureId' : "WFS-4Sb63Nsk72S7XhuhMcigC0f.YdyJTowqU_Fzo46mXn0haWLLn07qmnbltR_wo1rBVNEY2PlzrUi0Kcd06aM2TZnZd2Spp25bUf8KNa4dUxGdm26eenJzrMYsGDluxdGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51jdGW2s7bvydNO3K1tunnz07s9TL46VjbsO5tbuu2fmp9MPTTv3c5wmtx64dmnp5k7s2.Nrc.mHpp37qnnhlrQ38Mu7Jh6YW5z6b.WXJx65eXm_pyVpT8XOjjqZefRodNO3LT6ZeE_ITQ6aduW1v3ZaxqtSGAA--",
+                'featureId' : "WFS-yRgDM9v6Q5rwglWxCpAN.QK5fKOJTowqU_Fzo46mXn0haWLLn07qmnblte_QqErBJ4Y2PlzrUi0Kcd06aM2TZnZd2Spp25bXv0KhKwTVQmdm26eenJzrMYsGDluxdGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51jdGW2s7bvydNO3K1tunnz07s9TL46VjbsO5tbuu2fmp9MPTTv3c5wmtx64dmnp5k7s2.Nrc.mHpp37qnnhlrQ38Mu7Jh6YW5z6b.WXJx65eXm_pyVpT8XOjjqZefRodNO3LT6ZeE_ITQ6aduW1v3ZaxqtSGA",
                 'groupId' : "1-1",
                 'groupNum' : 1,
                 'obsParamList' : [
                                    {
-                                     'featureId' : "WFS-BVnWDQ5NO1ijfljOgsphlGv6q1WJTowqU_Fzo46mXn0haWLLn07qmnbltR_wo1rBVNEY2PlzrUi0Kcd06aM2TZnZd2Spp25bUf8KNa4dUxGdm26eenJzrMYsGDluxdGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51jdGW1rbdPPnp3Z6mXx0rG3Ydza3dds_NT6Yemnfu5zhNbj1w7NPTzJ3Zt8bW59MPTTv3VPPDLWhv4Zd2TD0wtzn038suTj1y8vN_TkrSn4udHHUy8.jQ6aduWn0y8J.Qmh007ctrfuy1jVakMA-",
+                                     'featureId' : "WFS-UzhvIthx_QMS9mFOAkF9avyE2z.JTowqU_Fzo46mXn0haWLLn07qmnblte_QqErBJ4Y2PlzrUi0Kcd06aM2TZnZd2Spp25bXv0KhKwTVQmdm26eenJzrMYsGDluxdGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51jdGW1rbdPPnp3Z6mXx0rG3Ydza3dds_NT6Yemnfu5zhNbj1w7NPTzJ3Zt8bW59MPTTv3VPPDLWhv4Zd2TD0wtzn038suTj1y8vN_TkrSn4udHHUy8.jQ6aduWn0y8J.Qmh007ctrfuy1jVakMA--",
                                      'name' : "t2m"
                                    },
                                    {
-                                     'featureId' : "WFS-HB1Yj7LLR86UusTtmkEmJyVRNEKJTowqU_Fzo46mXn0haWLLn07qmnbltR_wo1rBVNEY2PlzrUi0Kcd06aM2TZnZd2Spp25bUf8KNa4dUxGdm26eenJzrMYsGDluxdGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51nbd.Tpp25Wtt08.endnqZfHSsbdh3Nrd12z81Pph6ad.7nOE1uPXDs09PMndm3xtbn0w9NO_dU88MtaG_hl3ZMPTC3OfTfyy5OPXLy839OStKfi50cdTLz6NDpp25afTLwn5CaHTTty2t.7LWNVqQw-",
+                                     'featureId' : "WFS-RKbDN5XstPUDQn_8APTcjXZhVWqJTowqU_Fzo46mXn0haWLLn07qmnblte_QqErBJ4Y2PlzrUi0Kcd06aM2TZnZd2Spp25bXv0KhKwTVQmdm26eenJzrMYsGDluxdGvL577.WS_v7ZeXflp6YcWzLEzNmHpl59ImZs348OzLWpm0340ld16ZnDW24fETTz6Yd2PLStXQgNLbh8ReG_Ho5zomN7bl6Zd9DDyw7cvTLy51nbd.Tpp25Wtt08.endnqZfHSsbdh3Nrd12z81Pph6ad.7nOE1uPXDs09PMndm3xtbn0w9NO_dU88MtaG_hl3ZMPTC3OfTfyy5OPXLy839OStKfi50cdTLz6NDpp25afTLwn5CaHTTty2t.7LWNVqQwA-",
                                      'name' : "modtime"
                                    }
                                  ],
-                'obsPhenomenonEndTime' : "2019-03-13T21:00:00Z",
-                'obsPhenomenonStartTime' : "2019-03-13T20:00:00Z",
-                'obsResultTime' : "2019-03-13T21:00:00Z",
+                'obsPhenomenonEndTime' : "2013-08-05T12:00:00Z",
+                'obsPhenomenonStartTime' : "2013-08-05T08:00:00Z",
+                'obsResultTime' : "2013-08-05T12:00:00Z",
                 'obsReturnArray' : [
                                      {
                                        'data' : [
                                                   {
                                                     'qcValue' : "1",
-                                                    'value' : "-1.1"
+                                                    'value' : "20.7"
                                                   },
                                                   {
-                                                    'value' : "nan"
+                                                    'value' : ""
                                                   }
                                                 ],
-                                       'epochTime' : 1552507200,
-                                       'epochTimeStr' : "2019-03-13T20:00:00Z",
+                                       'epochTime' : 1375689600,
+                                       'epochTimeStr' : "2013-08-05T08:00:00Z",
                                        'x' : "60.17523",
                                        'y' : "24.94459"
                                      },
@@ -41,14 +41,59 @@ Global data object:
                                        'data' : [
                                                   {
                                                     'qcValue' : "1",
-                                                    'value' : "-0.9"
+                                                    'value' : "21.3"
                                                   },
                                                   {
-                                                    'value' : "nan"
+                                                    'value' : ""
                                                   }
                                                 ],
-                                       'epochTime' : 1552510800,
-                                       'epochTimeStr' : "2019-03-13T21:00:00Z",
+                                       'epochTime' : 1375693200,
+                                       'epochTimeStr' : "2013-08-05T09:00:00Z",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     },
+                                     {
+                                       'data' : [
+                                                  {
+                                                    'qcValue' : "1",
+                                                    'value' : "21.8"
+                                                  },
+                                                  {
+                                                    'value' : ""
+                                                  }
+                                                ],
+                                       'epochTime' : 1375696800,
+                                       'epochTimeStr' : "2013-08-05T10:00:00Z",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     },
+                                     {
+                                       'data' : [
+                                                  {
+                                                    'qcValue' : "1",
+                                                    'value' : "22.2"
+                                                  },
+                                                  {
+                                                    'value' : ""
+                                                  }
+                                                ],
+                                       'epochTime' : 1375700400,
+                                       'epochTimeStr' : "2013-08-05T11:00:00Z",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     },
+                                     {
+                                       'data' : [
+                                                  {
+                                                    'qcValue' : "1",
+                                                    'value' : "21.4"
+                                                  },
+                                                  {
+                                                    'value' : ""
+                                                  }
+                                                ],
+                                       'epochTime' : 1375704000,
+                                       'epochTimeStr' : "2013-08-05T12:00:00Z",
                                        'x' : "60.17523",
                                        'y' : "24.94459"
                                      }
@@ -93,13 +138,13 @@ Global data object:
    queryNum = 1;
    query_parameters = {
                         'beginTime' : [
-                                        "20190313T200000Z"
+                                        "20130805T080000Z"
                                       ],
                         'crs' : [
                                   "EPSG::4326"
                                 ],
                         'endTime' : [
-                                      "20190313T210000Z"
+                                      "20130805T120000Z"
                                     ],
                         'keyword' : [
                                       ""
