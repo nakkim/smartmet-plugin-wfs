@@ -129,7 +129,7 @@ install:
 # and are always up to time
 depend:
 
-test:
+test test-sqlite test-oracle test-postgresql:
 	$(MAKE) -C test $@
 
 all-templates:

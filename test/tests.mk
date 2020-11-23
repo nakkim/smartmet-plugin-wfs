@@ -44,24 +44,28 @@ test:	all
         $$ok
 
 clean:
-	rm -fv $(shell find input -type f -a -name '*.xml.post')
+	rm -fv $(shell find input -type f -a -name '*.xml.post' -o -name '*.xml.get')
 	rm -rf failures-oracle failures-postgresql failures-sqlite
 	rm -vf cnd/wfs_plugin_test_*.conf
 
-test_oracle:		DB_TYPE=oracle
-test_postgresql:	DB_TYPE=postgresql
-test_sqlite:		DB_TYPE=sqlite
+test-oracle:		DB_TYPE=oracle
+test-postgresql:	DB_TYPE=postgresql
+test-sqlite:		DB_TYPE=sqlite
 
 fminames:
 	sed -i -e 's/"smartmet-test"/"localhost"/g' cnf/*.conf
 	@/usr/share/smartmet/test/db/init-and-start.sh && /usr/share/smartmet/test/db/install-test-db.sh > /dev/null
 
-test_oracle test_postgresql test_sqlite: ../PluginTest s-input-files ../cnf/local.conf
+test-oracle test-postgresql test-sqlite: ../PluginTest s-input-files ../cnf/local.conf
 	rm -rf failures-$(DB_TYPE)
 	mkdir -p failures-$(DB_TYPE)
-	cat $(wildcard input/.testignore-$(DB_TYPE)) $(EXTRA_IGNORE) /dev/null | sort | uniq >input/.testignore;
-	cat $(TOP)/cnf/wfs_plugin_test.conf.in | sed -e 's:@TARGET@:$(DB_TYPE):g' >cnf/wfs_plugin_test_$(DB_TYPE).conf
-	../PluginTest --reactor-config cnf/wfs_plugin_test_$(DB_TYPE).conf --failures-dir failures-$(DB_TYPE)
+	cat $(TOP)/cnf/wfs_plugin_test.conf.in | sed -e 's:@TARGET@:$(DB_TYPE):g' \
+		>cnf/wfs_plugin_test_$(DB_TYPE).conf
+	../PluginTest \
+		--reactor-config cnf/wfs_plugin_test_$(DB_TYPE).conf \
+		--failures-dir failures-$(DB_TYPE) \
+		$(foreach fn, $(EXTRA_IGNORE), --ignore $(fn)) \
+		--ignore input/.ignore-$(DB_TYPE)
 
 s-input-files:
 	rm -f $(shell find input -name '*.xml.post' -o -name '*.kvp.get')

@@ -63,7 +63,7 @@ clean:
 	rm -vf $(TEST_TARGETS)
 	for test_dir in $(TEST_DIRECTORIES) ; do $(MAKE) -C $$test_dir clean; done
 
-test: $(TEST_TARGETS)
+test test-sqlite test-oracle test-postgresql: $(TEST_TARGETS)
 	@ok=true; \
 	for test_dir in $(TEST_DIRECTORIES); do \
 		if ! LD_LIBRARY_PATH=../../../spine:$(libdir) $(MAKE) -C $$test_dir $@ ; then ok=false; fi; \
