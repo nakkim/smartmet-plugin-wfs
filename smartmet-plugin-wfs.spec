@@ -24,7 +24,7 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.10.28
+BuildRequires: smartmet-library-spine-devel >= 20.11.23
 BuildRequires: smartmet-library-gis-devel >= 20.10.5
 BuildRequires: smartmet-library-locus-devel >= 20.10.7
 BuildRequires: smartmet-library-macgyver-devel >= 20.10.28
@@ -44,7 +44,7 @@ Requires: libpqxx
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 20.10.7
 Requires: smartmet-library-macgyver >= 20.10.28
-Requires: smartmet-library-spine >= 20.10.28
+Requires: smartmet-library-spine >= 20.11.23
 Requires: smartmet-library-gis >= 20.10.5
 Requires: smartmet-engine-contour >= 20.10.6
 Requires: smartmet-engine-geonames >= 20.10.6
