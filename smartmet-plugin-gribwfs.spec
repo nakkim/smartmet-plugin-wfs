@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.10.28
+Version: 20.11.24
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -15,7 +15,7 @@ BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: boost169-devel
 BuildRequires: ctpp2-devel
-BuildRequires: fmt-devel >= 6.2.1
+BuildRequires: fmt-devel >= 7.1.0
 BuildRequires: gdal-devel
 BuildRequires: fmt-devel >= 7.1.0
 BuildRequires: jsoncpp-devel
@@ -27,18 +27,18 @@ BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-spine-devel >= 20.11.23
-BuildRequires: smartmet-library-gis-devel >= 20.10.5
+BuildRequires: smartmet-library-gis-devel >= 20.10.28
 BuildRequires: smartmet-library-locus-devel >= 20.10.7
 BuildRequires: smartmet-library-macgyver-devel >= 20.10.28
-BuildRequires: smartmet-engine-contour-devel >= 20.10.6
-BuildRequires: smartmet-engine-geonames-devel >= 20.10.6
+BuildRequires: smartmet-engine-contour-devel >= 20.11.6
+BuildRequires: smartmet-engine-geonames-devel >= 20.10.28
 BuildRequires: smartmet-engine-gis-devel >= 20.10.6
-BuildRequires: smartmet-engine-grid-devel >= 20.10.22
+BuildRequires: smartmet-engine-grid-devel >= 20.11.24
 BuildRequires: smartmet-engine-querydata-devel >= 20.10.6
-BuildRequires: smartmet-library-grid-content-devel >= 20.10.22
-BuildRequires: smartmet-library-grid-files-devel >= 20.10.22
+BuildRequires: smartmet-library-grid-content-devel >= 20.11.24
+BuildRequires: smartmet-library-grid-files-devel >= 20.11.24
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 20.10.9
+BuildRequires: smartmet-engine-observation-devel >= 20.11.23
 %endif
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
@@ -50,18 +50,18 @@ Requires: jsoncpp
 Requires: smartmet-library-locus >= 20.10.7
 Requires: smartmet-library-macgyver >= 20.10.28
 Requires: smartmet-library-spine >= 20.11.23
-Requires: smartmet-library-gis >= 20.10.5
-Requires: smartmet-engine-contour >= 20.10.6
-Requires: smartmet-engine-geonames >= 20.10.6
+Requires: smartmet-library-gis >= 20.10.28
+Requires: smartmet-engine-contour >= 20.11.6
+Requires: smartmet-engine-geonames >= 20.10.28
 Requires: smartmet-engine-gis >= 20.10.6
-Requires: smartmet-engine-grid >= 20.10.22
-Requires: smartmet-library-grid-content >= 20.10.22
-Requires: smartmet-library-grid-files >= 20.10.22
+Requires: smartmet-engine-grid >= 20.11.24
+Requires: smartmet-library-grid-content >= 20.11.24
+Requires: smartmet-library-grid-files >= 20.11.24
 %if %{with observation}
-Requires: smartmet-engine-observation >= 20.10.9
+Requires: smartmet-engine-observation >= 20.11.23
 %endif
 Requires: smartmet-engine-querydata >= 20.10.6
-Requires: smartmet-server >= 20.10.21
+Requires: smartmet-server >= 20.10.28
 Requires: xerces-c
 Requires: xqilla
 Requires: boost169-chrono
@@ -116,6 +116,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/gribwfs/request/*.h
 
 %changelog
+* Tue Nov 24 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.11.24-1.fmi
+- Repackaged due to library ABI changes
+
 * Wed Oct 28 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.10.28-1.fmi
 - Rebuild due to fmt upgrade
 
