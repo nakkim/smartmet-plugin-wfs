@@ -59,7 +59,7 @@ fminames:
 	sed -i -e 's/"smartmet-test"/"localhost"/g' cnf/*.conf
 	@/usr/share/smartmet/test/db/init-and-start.sh && /usr/share/smartmet/test/db/install-test-db.sh > /dev/null
 
-test-oracle test-postgresql test-sqlite: ../PluginTest s-input-files ../cnf/local.conf $(TEST_DEPEND)
+test-oracle test-postgresql test-sqlite: ../PluginTest s-input-files $(TEST_DEPEND)
 	rm -rf failures-$(DB_TYPE)
 	mkdir -p failures-$(DB_TYPE)
 	cat $(TOP)/cnf/wfs_plugin_test.conf.in | sed -e 's:@TARGET@:$(DB_TYPE):g' \
@@ -80,13 +80,6 @@ input/%.xml.post : xml/%.xml ; @mkdir -p $(shell dirname $@)
 
 input/%.kvp.get : kvp/%.kvp ; @mkdir -p $(shell dirname $@)
 	@perl ../MakeKVPGET.pl $< $@ /wfs
-
-../cnf/local.conf:
-	@echo "***************************************************************************************************"
-	@echo "* Please copy file $(shell cd ..; pwd)/cnf/local.conf.in to"
-	@echo "* $(shell cd ..; pwd)/cnf/local.conf and edit required names in it"
-	@echo "***************************************************************************************************"
-	@false
 
 ../PluginTest:
 	$(MAKE) -C .. PluginTest
