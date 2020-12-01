@@ -67,6 +67,7 @@ Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-wfs < 16.11.1
 Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 
+#TestRequires: jsoncpp-devel
 #TestRequires: libconfig-devel
 #TestRequires: gcc-c++
 #TestRequires: xerces-c
