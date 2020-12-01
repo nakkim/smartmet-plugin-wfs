@@ -23,11 +23,14 @@ foo:
 
 all:
 
+TEST_DEPEND :=
+
 ifdef CI
-TEST_TARGETS := fminames test_sqlite
+test-sqlite: TEST_DEPEND := fminames
+TEST_TARGETS := test-sqlite
 EXTRA_IGNORE := .testignore-ci
 else
-TEST_TARGETS := test_sqlite test_oracle test_postgresql
+TEST_TARGETS := test-sqlite test-oracle test-postgresql
 EXTRA_IGNORE :=
 endif
 
@@ -56,7 +59,7 @@ fminames:
 	sed -i -e 's/"smartmet-test"/"localhost"/g' cnf/*.conf
 	@/usr/share/smartmet/test/db/init-and-start.sh && /usr/share/smartmet/test/db/install-test-db.sh > /dev/null
 
-test-oracle test-postgresql test-sqlite: ../PluginTest s-input-files ../cnf/local.conf
+test-oracle test-postgresql test-sqlite: ../PluginTest s-input-files ../cnf/local.conf $(TEST_DEPEND)
 	rm -rf failures-$(DB_TYPE)
 	mkdir -p failures-$(DB_TYPE)
 	cat $(TOP)/cnf/wfs_plugin_test.conf.in | sed -e 's:@TARGET@:$(DB_TYPE):g' \
