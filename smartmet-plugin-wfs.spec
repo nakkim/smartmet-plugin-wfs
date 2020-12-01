@@ -67,6 +67,30 @@ Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-wfs < 16.11.1
 Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 
+#TestRequires: libconfig-devel
+#TestRequires: gcc-c++
+#TestRequires: Requires: xerces-c
+#TestRequires: Requires: xqilla
+#TestRequires: smartmet-test-db >= 20.6.9
+#TestRequires: smartmet-test-data >= 20.6.30
+#TestRequires: smartmet-library-gis-devel >= 20.10.28
+#TestRequires: smartmet-library-newbase-devel >= 20.10.28
+#TestRequires: smartmet-library-spine-devel >= 20.11.23
+#TestRequires: smartmet-engine-geonames-devel >= 20.8.23
+#TestRequires: smartmet-engine-gis-devel >= 20.10.6
+#TestRequires: smartmet-engine-querydata-devel >= 20.10.6
+%if %{with observation}
+#TestRequires: smartmet-engine-observation-devel >= 20.10.29
+%endif
+#TestRequires: gdal-devel
+#TestRequires: boost169-devel
+#TestRequires: boost169-date-time
+#TestRequires: boost169-filesystem
+#TestRequires: boost169-iostreams
+#TestRequires: boost169-serialization
+#TestRequires: boost169-system
+#TestRequires: boost169-thread
+
 %description
 SmartMet WFS plugin
 
