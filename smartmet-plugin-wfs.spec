@@ -69,8 +69,8 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 
 #TestRequires: libconfig-devel
 #TestRequires: gcc-c++
-#TestRequires: Requires: xerces-c
-#TestRequires: Requires: xqilla
+#TestRequires: xerces-c
+#TestRequires: xqilla
 #TestRequires: smartmet-test-db >= 20.6.9
 #TestRequires: smartmet-test-data >= 20.6.30
 #TestRequires: smartmet-library-gis-devel >= 20.10.28
@@ -90,6 +90,7 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: boost169-serialization
 #TestRequires: boost169-system
 #TestRequires: boost169-thread
+#TestRequires: boost169-program-options
 
 %description
 SmartMet WFS plugin
