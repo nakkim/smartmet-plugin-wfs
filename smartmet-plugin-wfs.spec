@@ -67,8 +67,12 @@ Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-wfs < 16.11.1
 Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 
+#TestRequires: libcurl-devel
+#TestRequires: openssl-devel
 #TestRequires: jsoncpp-devel
 #TestRequires: libconfig-devel
+#TestRequires: bzip2-devel
+#TestRequires: zlib-devel
 #TestRequires: gcc-c++
 #TestRequires: xerces-c-devel
 #TestRequires: xqilla-devel
