@@ -5,76 +5,90 @@ Global data object:
    groups = [
               {
                 'crs' : "EPSG::4326",
-                'featureId' : "WFS-J.K0WctKiGRsDsnOr_u3mWOpEAKJTowp0_FzqZefSFpYsufTuqaduW1_9CrYjGx8udakWhTjunTRmybM7LuyVNO3La_.hVsXDGozs23Tz05OdZjFgwct2Lo15fPffyyX9_bLy78tPTDi2ZYmZsw9MvPpEzNm_Hh2Za1M2m_GkruvTM4a23D4iaefTDux5aVq6EBpbcPiLw349HOdExvbcvTLvoYeWHbl6ZeXOsboy21rc9uHl05.duLfsa23Tz56d2epl8dKxt2Hc2t3XbPzU.mHpp37uc4TW49cOzT08yd2bfE1ufTD00791Tzwy1ob.GXdkw9MLc59N_LLk49cvLzf05Kzp.LnUy8.jQ6aduWn0y8J.Qmh007ctrfuy1jVakMA",
+                'featureId' : "WFS-2.L8S1bZfeMaxyUdx8z37ew3EkOJTowp0_FzqZefSFpYsufTuqaduW1J_CoSsEnhjY.XOtSLQpx3TpozZNmdl3ZKmnbltSfwqErBNVCZ2bbp56cnOsxiwYOW7F0a8vnvv5ZL._tl5d.WnphxbMsTM2YemXn0iZmzfjw7MtambTfjSV3XpmcNbbh8RNPPph3Y8tK1dCA0tuHxF4b8ejnOiY3tuXpl30MPLDty9MvLnWN0Zba1ue3Dy6c_O3Fv2Nbbp589O7PUy.OlY27DubW7rtn5qfTD00793OcJrceuHZp6eZO7Nvia3Pph6ad.6p54Za0N_DLuyYemFuc.m_llyceuXl5v6clZ0_FzqZefRodNO3LT6ZeE_ITQ6aduW1v3ZaxqtSGA",
                 'groupId' : "1-1",
                 'groupNum' : 1,
                 'obsParamList' : [
                                    {
-                                     'featureId' : "WFS-fdAD2wn.4NVNf7IZqgUGNP2bGOeJTowp0_FzqZefSFpYsufTuqaduW1_9CrYjGx8udakWhTjunTRmybM7LuyVNO3La_.hVsXDGozs23Tz05OdZjFgwct2Lo15fPffyyX9_bLy78tPTDi2ZYmZsw9MvPpEzNm_Hh2Za1M2m_GkruvTM4a23D4iaefTDux5aVq6EBpbcPiLw349HOdExvbcvTLvoYeWHbl6ZeXOsboy2tbbp589O7PUy.OlY27DubW7rtn5qfTD00793OcJrceuHZp6eZO7Nvia3Pph6ad.6p54Za0N_DLuyYemFuc.m_llyceuXl5v6clZ0_FzqZefRodNO3LT6ZeE_ITQ6aduW1v3ZaxqtSGAA--",
+                                     'featureId' : "WFS-AE8qIa9CxQjSpWcopyHXbLBiAFKJTowp0_FzqZefSFpYsufTuqaduW1J_CoSsEnhjY.XOtSLQpx3TpozZNmdl3ZKmnbltSfwqErBNVCZ2bbp56cnOsxiwYOW7F0a8vnvv5ZL._tl5d.WnphxbMsTM2YemXn0iZmzfjw7MtambTfjSV3XpmcNbbh8RNPPph3Y8tK1dCA0tuHxF4b8ejnOiY3tuXpl30MPLDty9MvLnWN0ZbWtt08.endnqZfHSsbdh3Nrd12z81Pph6ad.7nOE1uPXDs09PMndm3xNbn0w9NO_dU88MtaG_hl3ZMPTC3OfTfyy5OPXLy839OSs6fi51MvPo0Omnblp9MvCfkJodNO3La37stY1WpDAA--",
                                      'name' : "t2m"
                                    },
                                    {
-                                     'featureId' : "WFS-QXXl_ympA3hTVgNumDXcXfiOGECJTowp0_FzqZefSFpYsufTuqaduW1_9CrYjGx8udakWhTjunTRmybM7LuyVNO3La_.hVsXDGozs23Tz05OdZjFgwct2Lo15fPffyyX9_bLy78tPTDi2ZYmZsw9MvPpEzNm_Hh2Za1M2m_GkruvTM4a23D4iaefTDux5aVq6EBpbcPiLw349HOdExvbcvTLvoYeWHbl6ZeXOtbntw8unPztxb9jW26efPTuz1MvjpWNuw7m1u67Z.an0w9NO_dznCa3Hrh2aenmTuzb4mtz6YemnfuqeeGWtDfwy7smHphbnPpv5ZcnHrl5eb.nJWdPxc6mXn0aHTTty0.mXhPyE0Omnbltb92WsarUhgA-",
+                                     'featureId' : "WFS-TqKu9RgPmPA2nvbiIN_RW.JeAN2JTowp0_FzqZefSFpYsufTuqaduW1J_CoSsEnhjY.XOtSLQpx3TpozZNmdl3ZKmnbltSfwqErBNVCZ2bbp56cnOsxiwYOW7F0a8vnvv5ZL._tl5d.WnphxbMsTM2YemXn0iZmzfjw7MtambTfjSV3XpmcNbbh8RNPPph3Y8tK1dCA0tuHxF4b8ejnOiY3tuXpl30MPLDty9MvLnWtz24eXTn524t.xrbdPPnp3Z6mXx0rG3Ydza3dds_NT6Yemnfu5zhNbj1w7NPTzJ3Zt8TW59MPTTv3VPPDLWhv4Zd2TD0wtzn038suTj1y8vN_TkrOn4udTLz6NDpp25afTLwn5CaHTTty2t.7LWNVqQwA-",
                                      'name' : "smartsymbol"
                                    }
                                  ],
-                'obsPhenomenonEndTime' : "2015-11-17T03:00:00Z",
-                'obsPhenomenonStartTime' : "2015-11-17T00:00:00Z",
-                'obsResultTime' : "2015-11-17T03:00:00Z",
+                'obsPhenomenonEndTime' : "2020-08-05T12:00:00Z",
+                'obsPhenomenonStartTime' : "2020-08-05T08:00:00Z",
+                'obsResultTime' : "2020-08-05T12:00:00Z",
                 'obsReturnArray' : [
                                      {
                                        'data' : [
                                                   {
-                                                    'value' : "6.5"
+                                                    'value' : "18.2"
                                                   },
                                                   {
-                                                    'value' : "nan"
+                                                    'value' : "1"
                                                   }
                                                 ],
-                                       'epochTime' : 1447718400,
-                                       'epochTimeStr' : "2015-11-17T00:00:00Z",
+                                       'epochTime' : 1596614400,
+                                       'epochTimeStr' : "2020-08-05T08:00:00Z",
                                        'x' : "60.17523",
                                        'y' : "24.94459"
                                      },
                                      {
                                        'data' : [
                                                   {
-                                                    'value' : "6.6"
+                                                    'value' : "19.0"
                                                   },
                                                   {
-                                                    'value' : "nan"
+                                                    'value' : "1"
                                                   }
                                                 ],
-                                       'epochTime' : 1447722000,
-                                       'epochTimeStr' : "2015-11-17T01:00:00Z",
+                                       'epochTime' : 1596618000,
+                                       'epochTimeStr' : "2020-08-05T09:00:00Z",
                                        'x' : "60.17523",
                                        'y' : "24.94459"
                                      },
                                      {
                                        'data' : [
                                                   {
-                                                    'value' : "6.6"
+                                                    'value' : "19.3"
                                                   },
                                                   {
-                                                    'value' : "nan"
+                                                    'value' : "2"
                                                   }
                                                 ],
-                                       'epochTime' : 1447725600,
-                                       'epochTimeStr' : "2015-11-17T02:00:00Z",
+                                       'epochTime' : 1596621600,
+                                       'epochTimeStr' : "2020-08-05T10:00:00Z",
                                        'x' : "60.17523",
                                        'y' : "24.94459"
                                      },
                                      {
                                        'data' : [
                                                   {
-                                                    'value' : "6.7"
+                                                    'value' : "19.4"
                                                   },
                                                   {
-                                                    'value' : "nan"
+                                                    'value' : "2"
                                                   }
                                                 ],
-                                       'epochTime' : 1447729200,
-                                       'epochTimeStr' : "2015-11-17T03:00:00Z",
+                                       'epochTime' : 1596625200,
+                                       'epochTimeStr' : "2020-08-05T11:00:00Z",
+                                       'x' : "60.17523",
+                                       'y' : "24.94459"
+                                     },
+                                     {
+                                       'data' : [
+                                                  {
+                                                    'value' : "20.0"
+                                                  },
+                                                  {
+                                                    'value' : "4"
+                                                  }
+                                                ],
+                                       'epochTime' : 1596628800,
+                                       'epochTimeStr' : "2020-08-05T12:00:00Z",
                                        'x' : "60.17523",
                                        'y' : "24.94459"
                                      }
@@ -118,13 +132,13 @@ Global data object:
    queryNum = 1;
    query_parameters = {
                         'beginTime' : [
-                                        "20151117T000000Z"
+                                        "20200805T080000Z"
                                       ],
                         'crs' : [
                                   "EPSG::4326"
                                 ],
                         'endTime' : [
-                                      "20151117T030000Z"
+                                      "20200805T120000Z"
                                     ],
                         'keyword' : [
                                       ""

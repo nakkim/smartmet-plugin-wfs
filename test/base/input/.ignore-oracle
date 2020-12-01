@@ -1,7 +1,4 @@
-GetFeature/observation/obs-test-1s.kvp.get
 GetFeature/observation/special/16.kvp.get
 GetFeature/observation/special/17.kvp.get
-GetFeature/observation/special/22.kvp.get
 GetFeature/forecast/simple_latlon_and_height_specified.xml.post
 GetFeature/forecast/simple_place_and_height_specified.xml.post
-g
