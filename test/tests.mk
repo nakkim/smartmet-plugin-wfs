@@ -68,7 +68,7 @@ test-oracle test-postgresql test-sqlite: ../PluginTest s-input-files ../cnf/loca
 		--reactor-config cnf/wfs_plugin_test_$(DB_TYPE).conf \
 		--failures-dir failures-$(DB_TYPE) \
 		$(foreach fn, $(EXTRA_IGNORE), --ignore $(fn)) \
-		--ignore input/.ignore-$(DB_TYPE)
+		--ignore ignore-$(DB_TYPE)
 
 s-input-files:
 	rm -f $(shell find input -name '*.xml.post' -o -name '*.kvp.get')
