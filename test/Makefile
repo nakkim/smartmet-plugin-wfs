@@ -104,7 +104,9 @@ stop-test-db:
 	/usr/share/smartmet/test/db/test-db-ctl.sh $(TEST_DB_DIR) stop
 
 cnf/local.conf: dummy
-	-if ! grep ^geoserverConnStr /smartmet/cnf/smartmetd/dev/plugins/wfs.conf >$@; then \
+	if [ -f /smartmet/cnf/smartmetd/dev/plugins/wfs.conf ] ; then \
+	    grep ^geoserverConnStr /smartmet/cnf/smartmetd/dev/plugins/wfs.conf >$@; \
+	else \
 	    echo 'geoserverConnStr = "";' >$@ ; \
 	fi
 
