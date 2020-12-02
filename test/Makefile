@@ -13,7 +13,7 @@ include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 ARFLAGS = -r
 DEFINES = -DUNIX -D_REENTRANT
 
-TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/local.conf
+TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/local.conf templates
 TEST_FINISH_TARGETS := dummy
 ifdef CI
 GEONAMES_HOST_EDIT := sed -e 's/"smartmet-test"/"localhost"/g'
@@ -109,6 +109,9 @@ cnf/local.conf: dummy
 	else \
 	    echo 'geoserverConnStr = "";' >$@ ; \
 	fi
+
+templates:
+	$(MAKE) -C ../cnf/templates all
 
 dummy:
 	true
