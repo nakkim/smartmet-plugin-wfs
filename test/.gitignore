@@ -3,3 +3,5 @@ PluginTest
 /PluginTest.test
 /obj
 /stations.xml
+/tmp-geonames-db
+/tmp-geonames-db.log

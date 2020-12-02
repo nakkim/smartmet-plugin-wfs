@@ -26,9 +26,8 @@ all:
 TEST_DEPEND :=
 
 ifdef CI
-test-sqlite: TEST_DEPEND := fminames
 TEST_TARGETS := test-sqlite
-EXTRA_IGNORE := .testignore-ci
+EXTRA_IGNORE := ignore-circle-ci
 else
 TEST_TARGETS := test-sqlite test-oracle test-postgresql
 EXTRA_IGNORE :=
@@ -54,10 +53,6 @@ clean:
 test-oracle:		DB_TYPE=oracle
 test-postgresql:	DB_TYPE=postgresql
 test-sqlite:		DB_TYPE=sqlite
-
-fminames:
-	sed -i -e 's/"smartmet-test"/"localhost"/g' cnf/*.conf
-	@/usr/share/smartmet/test/db/init-and-start.sh && /usr/share/smartmet/test/db/install-test-db.sh > /dev/null
 
 test-oracle test-postgresql test-sqlite: ../PluginTest s-input-files $(TEST_DEPEND)
 	rm -rf failures-$(DB_TYPE)
