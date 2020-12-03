@@ -1,3 +1,5 @@
 GetFeature/radar/RadarAllArea.xml.post
 GetFeature/radar/RadarPartOfArea.xml.post
 GetFeature/radar/RadarTest2.xml.post
+GetFeature/radar/prepare-GetFeatureById.xml.post
+GetFeature/radar/GetFeatureById.xml.post
