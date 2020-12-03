@@ -37,7 +37,9 @@ void prelude(SmartMet::Spine::Reactor& reactor)
 
 int main(int argc, char* argv[])
 {
-    Fmi::Exception::force_stack_trace = true;
+  Fmi::Exception::force_stack_trace = true;
+
+  std::setlocale(LC_ALL, "en_US.UTF-8");  // for iconv to work
 
   try
   {
