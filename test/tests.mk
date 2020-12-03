@@ -23,11 +23,13 @@ foo:
 
 all:
 
+TEST_DEPEND :=
+
 ifdef CI
-TEST_TARGETS := fminames test_sqlite
-EXTRA_IGNORE := .testignore-ci
+TEST_TARGETS := test-sqlite
+EXTRA_IGNORE := ignore-circle-ci
 else
-TEST_TARGETS := test_sqlite test_oracle test_postgresql
+TEST_TARGETS := test-sqlite test-oracle test-postgresql
 EXTRA_IGNORE :=
 endif
 
@@ -52,11 +54,7 @@ test-oracle:		DB_TYPE=oracle
 test-postgresql:	DB_TYPE=postgresql
 test-sqlite:		DB_TYPE=sqlite
 
-fminames:
-	sed -i -e 's/"smartmet-test"/"localhost"/g' cnf/*.conf
-	@/usr/share/smartmet/test/db/init-and-start.sh && /usr/share/smartmet/test/db/install-test-db.sh > /dev/null
-
-test-oracle test-postgresql test-sqlite: ../PluginTest s-input-files ../cnf/local.conf
+test-oracle test-postgresql test-sqlite: ../PluginTest s-input-files $(TEST_DEPEND)
 	rm -rf failures-$(DB_TYPE)
 	mkdir -p failures-$(DB_TYPE)
 	cat $(TOP)/cnf/wfs_plugin_test.conf.in | sed -e 's:@TARGET@:$(DB_TYPE):g' \
@@ -65,7 +63,7 @@ test-oracle test-postgresql test-sqlite: ../PluginTest s-input-files ../cnf/loca
 		--reactor-config cnf/wfs_plugin_test_$(DB_TYPE).conf \
 		--failures-dir failures-$(DB_TYPE) \
 		$(foreach fn, $(EXTRA_IGNORE), --ignore $(fn)) \
-		--ignore input/.ignore-$(DB_TYPE)
+		--ignore ignore-$(DB_TYPE)
 
 s-input-files:
 	rm -f $(shell find input -name '*.xml.post' -o -name '*.kvp.get')
@@ -77,13 +75,6 @@ input/%.xml.post : xml/%.xml ; @mkdir -p $(shell dirname $@)
 
 input/%.kvp.get : kvp/%.kvp ; @mkdir -p $(shell dirname $@)
 	@perl ../MakeKVPGET.pl $< $@ /wfs
-
-../cnf/local.conf:
-	@echo "***************************************************************************************************"
-	@echo "* Please copy file $(shell cd ..; pwd)/cnf/local.conf.in to"
-	@echo "* $(shell cd ..; pwd)/cnf/local.conf and edit required names in it"
-	@echo "***************************************************************************************************"
-	@false
 
 ../PluginTest:
 	$(MAKE) -C .. PluginTest

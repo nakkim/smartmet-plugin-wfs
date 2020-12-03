@@ -18,12 +18,12 @@
           <gml:TimePeriod gml:id="TP1">
             <gml:begin>
               <gml:TimeInstant gml:id="TI1">
-                <gml:timePosition>2010-07-29T13:00:00Z</gml:timePosition>
+                <gml:timePosition>2013-08-05T08:00:00Z</gml:timePosition>
               </gml:TimeInstant>
             </gml:begin>
             <gml:end>
               <gml:TimeInstant gml:id="TI2">
-                <gml:timePosition>2010-07-29T14:00:00Z</gml:timePosition>
+                <gml:timePosition>2013-08-05T10:00:00Z</gml:timePosition>
               </gml:TimeInstant>
             </gml:end>
           </gml:TimePeriod>
@@ -31,11 +31,11 @@
         <fes:BBOX>
           <fes:ValueReference></fes:ValueReference>
           <gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
-            <gml:lowerCorner>29.50 62.50</gml:lowerCorner>
-            <gml:upperCorner>29.80 62.80</gml:upperCorner>
+            <gml:lowerCorner>24.90 60.15</gml:lowerCorner>
+            <gml:upperCorner>25.00 60.25</gml:upperCorner>
           </gml:Envelope>
         </fes:BBOX>
-        <fes:PropertyIsLike wildCard='*' singleChar='.' escapeChar='!'>
+        <fes:PropertyIsEqualTo>
           <fes:ValueReference
             xmlns:wfs="http://www.opengis.net/wfs/2.0"
             xmlns:avi="http://xml.fmi.fi/namespace/aviation-weather/2014/02/15"
@@ -45,8 +45,8 @@
             xmlns:saf="http://icao.int/saf/1.0">
             om:observedProperty/@xlink:href
           </fes:ValueReference>
-          <fes:Literal>param=temperature</fes:Literal>
-        </fes:PropertyIsLike>
+          <fes:Literal>http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=t2m&amp;language=eng</fes:Literal>
+        </fes:PropertyIsEqualTo>
       </fes:And>
     </fes:Filter>
   </wfs:Query>

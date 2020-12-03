@@ -7,8 +7,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd">
    <wfs:StoredQuery id="fmi::observations::weather::simple">
-     <wfs:Parameter name="starttime">2019-06-06T120000Z</wfs:Parameter>
-     <wfs:Parameter name="endtime">2019-06-06T121500Z</wfs:Parameter>
+     <wfs:Parameter name="starttime">2013-08-05T08:00:00Z</wfs:Parameter>
+     <wfs:Parameter name="endtime">2013-08-05T09:00:00Z</wfs:Parameter>
      <wfs:Parameter name="parameters">t2m fmisid geoid stationlon stationlat elevation stationname distance direction wmo</wfs:Parameter>
      <wfs:Parameter name="place">Hyvinkää</wfs:Parameter>
    </wfs:StoredQuery>

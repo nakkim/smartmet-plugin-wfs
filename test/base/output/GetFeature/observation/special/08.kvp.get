@@ -29,7 +29,7 @@ Global data object:
                                                     'value' : "20.7"
                                                   },
                                                   {
-                                                    'value' : "100971.0"
+                                                    'value' : "100971"
                                                   }
                                                 ],
                                        'epochTime' : 1375689600,
@@ -44,7 +44,7 @@ Global data object:
                                                     'value' : "21.3"
                                                   },
                                                   {
-                                                    'value' : "100971.0"
+                                                    'value' : "100971"
                                                   }
                                                 ],
                                        'epochTime' : 1375693200,
@@ -59,7 +59,7 @@ Global data object:
                                                     'value' : "21.8"
                                                   },
                                                   {
-                                                    'value' : "100971.0"
+                                                    'value' : "100971"
                                                   }
                                                 ],
                                        'epochTime' : 1375696800,
@@ -74,7 +74,7 @@ Global data object:
                                                     'value' : "22.2"
                                                   },
                                                   {
-                                                    'value' : "100971.0"
+                                                    'value' : "100971"
                                                   }
                                                 ],
                                        'epochTime' : 1375700400,
@@ -89,7 +89,7 @@ Global data object:
                                                     'value' : "21.4"
                                                   },
                                                   {
-                                                    'value' : "100971.0"
+                                                    'value' : "100971"
                                                   }
                                                 ],
                                        'epochTime' : 1375704000,
