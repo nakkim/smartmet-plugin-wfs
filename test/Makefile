@@ -105,7 +105,7 @@ stop-test-db:
 
 cnf/local.conf: dummy
 	if [ -f /smartmet/cnf/smartmetd/dev/plugins/wfs.conf ] ; then \
-	    awk '/^\s*geoserverConnStr\s+=/{print}' /smartmet/cnf/smartmetd/dev/plugins/wfs.conf >$@; \
+	    awk '/^\s*geoserverConnStr\s*=/{print}' /smartmet/cnf/smartmetd/dev/plugins/wfs.conf >$@; \
 	else \
 	    echo 'geoserverConnStr = "";' >$@ ; \
 	fi
