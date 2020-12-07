@@ -54,16 +54,16 @@ test-oracle:		DB_TYPE=oracle
 test-postgresql:	DB_TYPE=postgresql
 test-sqlite:		DB_TYPE=sqlite
 
-test-oracle test-postgresql test-sqlite: ../PluginTest s-input-files $(TEST_DEPEND)
+test-oracle test-postgresql test-sqlite: s-input-files $(TEST_DEPEND)
 	rm -rf failures-$(DB_TYPE)
 	mkdir -p failures-$(DB_TYPE)
 	cat $(TOP)/cnf/wfs_plugin_test.conf.in | sed -e 's:@TARGET@:$(DB_TYPE):g' \
 		>cnf/wfs_plugin_test_$(DB_TYPE).conf
-	../PluginTest \
+	smartmet-plugin-test --handler /wfs \
 		--reactor-config cnf/wfs_plugin_test_$(DB_TYPE).conf \
 		--failures-dir failures-$(DB_TYPE) \
-		$(foreach fn, $(EXTRA_IGNORE), --ignore $(fn)) \
-		--ignore ignore-$(DB_TYPE)
+		$(foreach fn, ignore-$(DB_TYPE) $(EXTRA_IGNORE), --ignore $(fn)) \
+		--timeout 300
 
 s-input-files:
 	rm -f $(shell find input -name '*.xml.post' -o -name '*.kvp.get')
@@ -75,6 +75,3 @@ input/%.xml.post : xml/%.xml ; @mkdir -p $(shell dirname $@)
 
 input/%.kvp.get : kvp/%.kvp ; @mkdir -p $(shell dirname $@)
 	@perl ../MakeKVPGET.pl $< $@ /wfs
-
-../PluginTest:
-	$(MAKE) -C .. PluginTest
