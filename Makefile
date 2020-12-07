@@ -3,7 +3,7 @@ SPEC = smartmet-plugin-$(SUBNAME)
 INCDIR = smartmet/plugins/$(SUBNAME)
 TOP = $(shell pwd)
 
-REQUIRES = gdal jsoncpp
+all debug profile release rpm: REQUIRES = gdal jsoncpp
 
 include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
