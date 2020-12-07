@@ -78,6 +78,10 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: smartmet-engine-observation >= 20.10.29
 %endif
 
+# Required by top level Makefile
+#TestRequires: jsoncpp-devel
+#TestRequires: gdal-devel
+
 %description
 SmartMet WFS plugin
 
