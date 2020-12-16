@@ -67,13 +67,6 @@ class StoredGridForecastQueryHandler: public StoredQueryHandlerBase,
   private:
     Engine::Gis::GeometryStorage  itsGeometryStorage;
     Fmi::TimeZones                itsTimezones;
-    mutable string_vec            itsProducerList;
-    mutable time_t                itsProducerList_updateTime;
-    mutable T::ProducerInfoList   itsProducerInfoList;
-    mutable time_t                itsProducerInfoList_updateTime;
-    mutable T::GenerationInfoList itsGenerationInfoList;
-    mutable time_t                itsGenerationInfoList_updateTime;
-
     std::vector<Spine::Parameter> common_params;
     double                        max_np_distance;
     bool                          separate_groups;
