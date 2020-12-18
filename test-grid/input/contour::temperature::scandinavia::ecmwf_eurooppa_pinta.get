@@ -1,0 +1,1 @@
+GET /wfs?request=getFeature&storedquery_id=contour::temperature&bbox=5,53,35,73&starttime=2008-08-05T03:00:00Z&endtime=2008-08-05T03:00:00Z&source=grid&producer=ecmwf_eurooppa_pinta&imagefile=contour::temperature::scandinavia::ecmwf_eurooppa_pinta.jpg HTTP/1.0
