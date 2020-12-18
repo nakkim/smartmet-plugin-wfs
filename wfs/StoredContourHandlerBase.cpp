@@ -24,6 +24,7 @@ const char* P_CRS = "crs";
 const char* P_SMOOTHING = "smoothing";
 const char* P_SMOOTHING_DEGREE = "smoothing_degree";
 const char* P_SMOOTHING_SIZE = "smoothing_size";
+const char* P_IMAGE_DIR = "imageDir";
 const char* P_IMAGE_FILE = "imageFile";
 }  // anonymous namespace
 
@@ -50,6 +51,8 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
     register_scalar_param<boost::posix_time::ptime>(P_ORIGIN_TIME, false);
     register_scalar_param<std::string>(P_CRS);
 
+    if (config->find_setting(config->get_root(), "handler_params.imageDir", false))
+      register_scalar_param<std::string>(P_IMAGE_DIR);
     if (config->find_setting(config->get_root(), "handler_params.imageFile", false))
       register_scalar_param<std::string>(P_IMAGE_FILE);
 
@@ -315,7 +318,8 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
       throw exception;
     }
 
-    T::Attribute* attr = queryParameter.gridQuery.mAttributeList.getAttribute("contour.imageFile");
+    T::Attribute* imageDir = queryParameter.gridQuery.mAttributeList.getAttribute("contour.imageDir");
+    T::Attribute* imageFile = queryParameter.gridQuery.mAttributeList.getAttribute("contour.imageFile");
 
     for (auto param = queryParameter.gridQuery.mQueryParameterList.begin();
          param != queryParameter.gridQuery.mQueryParameterList.end();
@@ -341,7 +345,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
             }
           }
 
-          if (attr != nullptr && attr->mValue > " ")
+          if (imageDir != nullptr && imageDir->mValue > " " && imageFile != nullptr && imageFile->mValue > " ")
           {
             // Contours can be painted and saved as images. This functionality
             // is usually used for debugging purposes.
@@ -378,7 +382,10 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
 
               // ### Saving the image and releasing the image data:
 
-              imagePaint.saveJpgImage(attr->mValue.c_str());
+
+              std::string filename = imageDir->mValue + "/" + imageFile->mValue;
+
+              imagePaint.saveJpgImage(filename.c_str());
             }
           }
         }
@@ -759,6 +766,10 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
     std::string imageFile = sq_params.get_optional<std::string>(P_IMAGE_FILE, "");
     if (imageFile > " ")
       query_param->gridQuery.mAttributeList.addAttribute("contour.imageFile", imageFile);
+
+    std::string imageDir = sq_params.get_optional<std::string>(P_IMAGE_DIR, "");
+    if (imageDir > " ")
+      query_param->gridQuery.mAttributeList.addAttribute("contour.imageDir", imageDir);
 
     // query_param->gridQuery.print(std::cout,0,0);
 
