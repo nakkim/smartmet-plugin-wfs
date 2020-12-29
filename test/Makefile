@@ -43,11 +43,11 @@ cnf/geonames.conf: cnf/geonames.conf.in dummy
 
 geonames-database:
 	rm -rf tmp-geonames-db
-	if ! /usr/share/smartmet/test/db/create-local-db.sh $(TEST_DB_DIR) >tmp-geonames-db.log 2>&1 ; then \
+	if ! /usr/share/smartmet/test/db/init-and-start.sh $(TEST_DB_DIR) >tmp-geonames-db.log 2>&1 ; then \
 	    cat tmp-geonames-db.log; \
 	    false; \
 	fi
-	/usr/share/smartmet/test/db/test-db-ctl.sh $(TEST_DB_DIR) start -w
+	/usr/share/smartmet/test/db/install-test-db.sh $(TEST_DB_DIR)
 
 stop-test-db:
 	/usr/share/smartmet/test/db/test-db-ctl.sh $(TEST_DB_DIR) stop
