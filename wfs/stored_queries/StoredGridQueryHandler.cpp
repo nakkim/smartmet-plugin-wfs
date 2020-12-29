@@ -10,7 +10,7 @@
 #include <boost/lambda/lambda.hpp>
 #include <boost/shared_array.hpp>
 
-#include <gdal/cpl_error.h>
+#include <cpl_error.h>
 
 #include <newbase/NFmiIndexMask.h>
 #include <newbase/NFmiIndexMaskTools.h>

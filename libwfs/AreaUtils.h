@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gdal/ogr_geometry.h>
+#include <ogr_geometry.h>
 #include <newbase/NFmiArea.h>
 #include <newbase/NFmiPoint.h>
 #include <newbase/NFmiRect.h>

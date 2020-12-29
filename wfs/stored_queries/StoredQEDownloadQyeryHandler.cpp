@@ -9,7 +9,7 @@
 #include <boost/format.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <boost/shared_array.hpp>
-#include <gdal/cpl_error.h>
+#include <cpl_error.h>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
 #include <newbase/NFmiQueryData.h>
