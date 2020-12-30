@@ -21,7 +21,7 @@ BuildRequires: libconfig-devel >= 1.7.2
 BuildRequires: libcurl-devel
 BuildRequires: xerces-c-devel
 BuildRequires: xqilla-devel
-BuildRequires: libpqxx-devel
+BuildRequires: libpqxx-devel < 1:7.0
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-spine-devel >= 20.12.4
@@ -40,7 +40,7 @@ Requires: ctpp2
 Requires: fmt >= 7.1.0
 Requires: libconfig >= 1.7.2
 Requires: libcurl
-Requires: libpqxx
+Requires: libpqxx < 1:7.0
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 20.10.7
 Requires: smartmet-library-macgyver >= 20.10.28
