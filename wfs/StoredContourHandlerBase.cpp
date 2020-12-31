@@ -600,6 +600,7 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
       throw exception;
     }
+    sr.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER);
 
     std::string producer = sq_params.get_single<std::string>(P_PRODUCER);
 
@@ -1028,6 +1029,7 @@ void bw::StoredContourQueryHandler::parseQueryResults(
     OGRSpatialReference targetSRS;
     std::string targetURN("urn:ogc:def:crs:" + requestedCRS);
     targetSRS.importFromURN(targetURN.c_str());
+    targetSRS.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER);
 
     // for geographic projection precision is 6 digits, for other projections 1 digit
     unsigned int precision = ((targetSRS.IsGeographic()) ? 6 : 1);
