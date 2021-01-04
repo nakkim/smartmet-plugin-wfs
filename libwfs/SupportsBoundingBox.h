@@ -4,7 +4,7 @@
 #include "StoredQueryParamRegistry.h"
 #include "SupportsExtraHandlerParams.h"
 #include <spine/CRSRegistry.h>
-#include <gdal/ogr_geometry.h>
+#include <ogr_geometry.h>
 
 namespace SmartMet
 {

@@ -3,7 +3,7 @@
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/geometry/geometry.hpp>
 #include <boost/shared_ptr.hpp>
-#include <gdal/ogr_geometry.h>
+#include <ogr_geometry.h>
 
 #include <engines/geonames/Engine.h>
 #include <engines/querydata/Engine.h>

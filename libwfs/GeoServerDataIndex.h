@@ -5,7 +5,7 @@
 #include <engines/gis/GdalUtils.h>
 #include <spine/Value.h>
 
-#include <gdal/ogr_geometry.h>
+#include <ogr_geometry.h>
 
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/format.hpp>
