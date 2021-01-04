@@ -25,6 +25,11 @@ all:
 
 TEST_DEPEND :=
 
+# Examples (default: run smartmet-plugin-test directly)
+#    TEST_RUNNER="gdb --args"
+#    TEST_RUNNER="valgrind --log-file=valgrind.out --leak-check=full --leak-resolution=high"
+TEST_RUNNER ?=
+
 ifdef CI
 TEST_TARGETS := test-sqlite
 EXTRA_IGNORE := ignore-circle-ci
@@ -59,7 +64,8 @@ test-oracle test-postgresql test-sqlite: s-input-files $(TEST_DEPEND)
 	mkdir -p failures-$(DB_TYPE)
 	cat $(TOP)/cnf/wfs_plugin_test.conf.in | sed -e 's:@TARGET@:$(DB_TYPE):g' \
 		>cnf/wfs_plugin_test_$(DB_TYPE).conf
-	smartmet-plugin-test --handler /wfs \
+	set >env.dat
+	$(TEST_RUNNER) smartmet-plugin-test --handler /wfs \
 		--reactor-config cnf/wfs_plugin_test_$(DB_TYPE).conf \
 		--failures-dir failures-$(DB_TYPE) \
 		$(foreach fn, ignore-$(DB_TYPE) $(EXTRA_IGNORE), --ignore $(fn)) \
