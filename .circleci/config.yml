@@ -45,6 +45,26 @@ jobs:
           command: |
             export PATH=$PATH:~/.local/bin
             aws s3 cp /dist s3://fmi-smartmet-cicd-beta --recursive
+  unit-test-rhel7:
+    docker:
+      - image: fmidev/smartmet-cibase7:latest
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /dist
+      - run:
+          name: Install build dependencies
+          command: ci-build deps
+      - run:
+          name: Installation test
+          command: ci-build dummy ; sudo yum install -y /dist/*.rpm
+      - run:
+          name: Unit tests
+          command: make check-installed
+      - store_artifacts:
+          path: /dist
+          destination: dist/
+
   build-rhel8:
     docker:
       - image: fmidev/smartmet-cibase-8:latest
@@ -78,6 +98,26 @@ jobs:
       - store_artifacts:
           path: /dist
           destination: dist/
+  unit-test-rhel8:
+    docker:
+      - image: fmidev/smartmet-cibase-8:latest
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /dist
+      - run:
+          name: Install build dependencies
+          command: ci-build deps
+      - run:
+          name: Installation test
+          command: ci-build dummy ; sudo yum install -y /dist/*.rpm
+      - run:
+          name: Unit tests
+          command: make check-installed
+      - store_artifacts:
+          path: /dist
+          destination: dist/
+
 
 workflows:
   version: 2.1
@@ -88,6 +128,12 @@ workflows:
       - test-rhel7:
           requires:
             - build-rhel7
+      - unit-test-rhel7:
+          requires:
+            - build-rhel7
       - test-rhel8:
+          requires:
+            - build-rhel8
+      - unit-test-rhel8:
           requires:
             - build-rhel8
