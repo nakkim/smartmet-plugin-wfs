@@ -74,14 +74,14 @@ clean:
 check check-installed:	$(TESTSUITE_TARGETS)
 	@ok=true; \
 	for test in $(TESTSUITE_TARGETS); do \
-		if ! LD_LIBRARY_PATH=$(libdir) ./$$test --log_level=message ; then ok=false; fi; \
+		if ! ./$$test --log_level=message ; then ok=false; fi; \
 	done; \
 	$$ok;
 
 check-valgrind:	$(TESTSUITE_TARGETS)
 	@ok=true; \
 	for test in $(TESTSUITE_TARGETS); do \
-		if ! LD_LIBRARY_PATH=$(libdir) valgrind ./$$test --log_level=message ; then ok=false; fi; \
+		if ! valgrind ./$$test --log_level=message ; then ok=false; fi; \
 	done; \
 	$$ok;
 
