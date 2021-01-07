@@ -20,15 +20,11 @@ TEST_DB_DIR := $(shell pwd)/tmp-geonames-db
 
 all:
 
-clean: 	clean-remove-me-later
+clean:
 	for test_dir in $(TEST_DIRECTORIES) ; do $(MAKE) -C $$test_dir clean; done
 	rm -f cnf/geonames.conf
 	rm -fr tmp-geonames-db
 	rm -f tmp-geonames-db.log
-
-clean-remove-me-later:
-	rm -rf obj/*.o obj/*.d
-	rm -vf PluginTest
 
 test test-sqlite test-oracle test-postgresql: $(TEST_PREPARE_TARGETS)
 	@ok=true; \
