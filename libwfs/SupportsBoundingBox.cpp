@@ -148,6 +148,7 @@ bool bw::SupportsBoundingBox::isInverseAxisOrderPossible(const std::string& crs)
     if (crs_registry.get_attribute(crs, "epsg", &epsg))
     {
       OGRSpatialReference sr;
+      sr.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER);
       sr.importFromEPSGA(epsg);
       if (sr.EPSGTreatsAsLatLong() or sr.EPSGTreatsAsNorthingEasting())
         return true;

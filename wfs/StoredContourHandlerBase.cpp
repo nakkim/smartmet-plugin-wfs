@@ -249,6 +249,7 @@ void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
 
     std::string targetURN("urn:ogc:def:crs:" + requestedCRS);
     OGRSpatialReference sr;
+    sr.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER);
     if (sr.importFromURN(targetURN.c_str()) != OGRERR_NONE)
     {
       Fmi::Exception exception(BCP, "Invalid crs '" + requestedCRS + "'!");
@@ -536,6 +537,7 @@ void bw::StoredContourQueryHandler::parseQueryResults(
   {
     // create targer spatial reference to get precision and coordinate order
     OGRSpatialReference targetSRS;
+    targetSRS.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER);
     std::string targetURN("urn:ogc:def:crs:" + requestedCRS);
     targetSRS.importFromURN(targetURN.c_str());
 
