@@ -60,7 +60,7 @@ jobs:
           command: ci-build dummy ; sudo yum install -y /dist/*.rpm
       - run:
           name: Unit tests
-          command: make check-installed
+          command: make check-installed CXX=clang++
       - store_artifacts:
           path: /dist
           destination: dist/
@@ -113,7 +113,7 @@ jobs:
           command: ci-build dummy ; sudo yum install -y /dist/*.rpm
       - run:
           name: Unit tests
-          command: make check-installed
+          command: make check-installed CXX=clang++
       - store_artifacts:
           path: /dist
           destination: dist/
