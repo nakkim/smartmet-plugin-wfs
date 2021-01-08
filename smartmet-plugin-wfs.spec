@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 20.10.28
+Version: 21.1.8
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -24,10 +24,10 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel < 1:7.0
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 20.12.4
-BuildRequires: smartmet-library-gis-devel >= 20.10.5
-BuildRequires: smartmet-library-locus-devel >= 20.10.7
-BuildRequires: smartmet-library-macgyver-devel >= 20.10.28
+BuildRequires: smartmet-library-spine-devel >= 21.1.5
+BuildRequires: smartmet-library-gis-devel >= 21.1.5
+BuildRequires: smartmet-library-locus-devel >= 21.1.5
+BuildRequires: smartmet-library-macgyver-devel >= 21.1.5
 BuildRequires: smartmet-engine-contour-devel >= 20.10.6
 BuildRequires: smartmet-engine-geonames-devel >= 20.10.6
 BuildRequires: smartmet-engine-gis-devel >= 20.10.6
@@ -42,10 +42,10 @@ Requires: libconfig >= 1.7.2
 Requires: libcurl
 Requires: libpqxx < 1:7.0
 Requires: jsoncpp
-Requires: smartmet-library-locus >= 20.10.7
-Requires: smartmet-library-macgyver >= 20.10.28
-Requires: smartmet-library-spine >= 20.12.4
-Requires: smartmet-library-gis >= 20.10.5
+Requires: smartmet-library-locus >= 21.1.5
+Requires: smartmet-library-macgyver >= 21.1.5
+Requires: smartmet-library-spine >= 21.1.5
+Requires: smartmet-library-gis >= 21.1.5
 Requires: smartmet-engine-contour >= 20.10.6
 Requires: smartmet-engine-geonames >= 20.10.6
 Requires: smartmet-engine-gis >= 20.10.6
@@ -123,6 +123,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Fri Jan  8 2021 Andris Pavenis <andris.pavenis@fmi.fi> - 21.1.8-1.fmi
+- Compatibility with RHEL8 update
+
 * Wed Oct 28 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.10.28-1.fmi
 - Rebuild due to fmt upgrade
 
