@@ -9,6 +9,13 @@ include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
 DEFINES = -DUNIX -D_REENTRANT
 
+ifeq ($(origin sysconfdir), undefined)
+  sysconfdir = /etc
+else
+  sysconfdir = $(sysconfdir)
+endif
+
+
 INCLUDES += \
 	-I$(includedir)/smartmet \
 	-isystem $(includedir)/jsoncpp
