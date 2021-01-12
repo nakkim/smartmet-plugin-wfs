@@ -70,7 +70,7 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: ctpp2
 #TestRequires: smartmet-test-db >= 20.6.9
 #TestRequires: smartmet-test-data >= 20.6.30
-#TestRequires: smartmet-library-spine-devel >= 20.12.4
+#TestRequires: smartmet-library-spine >= 21.1.5
 #TestRequires: smartmet-engine-geonames >= 20.8.23
 #TestRequires: smartmet-engine-gis >= 20.10.6
 #TestRequires: smartmet-engine-querydata >= 20.10.6
