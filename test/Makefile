@@ -34,7 +34,7 @@ test test-sqlite test-oracle test-postgresql: $(TEST_PREPARE_TARGETS)
 	$(MAKE) $(TEST_FINISH_TARGETS); \
 	$$ok;
 
-cnf/geonames.conf: cnf/geonames.conf.in dummy
+cnf/geonames.conf: cnf/geonames.conf.in
 	$(GEONAMES_HOST_EDIT) $< >$@
 
 geonames-database:
@@ -59,4 +59,5 @@ templates:
 	$(MAKE) -C ../cnf/templates all
 
 dummy:
-	true
+
+.PHONY: cnf/geonames.conf dummy
