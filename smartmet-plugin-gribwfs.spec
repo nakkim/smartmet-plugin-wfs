@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 21.1.11
+Version: 21.1.14
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -26,19 +26,19 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 21.1.5
-BuildRequires: smartmet-library-gis-devel >= 21.1.7
-BuildRequires: smartmet-library-locus-devel >= 21.1.5
-BuildRequires: smartmet-library-macgyver-devel >= 21.1.5
-BuildRequires: smartmet-engine-contour-devel >= 21.1.5
-BuildRequires: smartmet-engine-geonames-devel >= 21.1.5
-BuildRequires: smartmet-engine-gis-devel >= 21.1.5
-BuildRequires: smartmet-engine-grid-devel >= 21.1.11
-BuildRequires: smartmet-engine-querydata-devel >= 20.12.30
-BuildRequires: smartmet-library-grid-content-devel >= 21.1.11
-BuildRequires: smartmet-library-grid-files-devel >= 21.1.11
+BuildRequires: smartmet-library-spine-devel >= 21.1.14
+BuildRequires: smartmet-library-gis-devel >= 21.1.14
+BuildRequires: smartmet-library-locus-devel >= 21.1.14
+BuildRequires: smartmet-library-macgyver-devel >= 21.1.14
+BuildRequires: smartmet-engine-contour-devel >= 21.1.14
+BuildRequires: smartmet-engine-geonames-devel >= 21.1.14
+BuildRequires: smartmet-engine-gis-devel >= 21.1.14
+BuildRequires: smartmet-engine-grid-devel >= 21.1.14
+BuildRequires: smartmet-engine-querydata-devel >= 21.1.14
+BuildRequires: smartmet-library-grid-content-devel >= 21.1.14
+BuildRequires: smartmet-library-grid-files-devel >= 21.1.14
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 21.1.5
+BuildRequires: smartmet-engine-observation-devel >= 21.1.14
 %endif
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
@@ -47,21 +47,21 @@ Requires: libconfig >= 1.7.2
 Requires: libcurl
 Requires: libpqxx
 Requires: jsoncpp
-Requires: smartmet-library-locus >= 21.1.5
-Requires: smartmet-library-macgyver >= 21.1.5
-Requires: smartmet-library-spine >= 21.1.5
-Requires: smartmet-library-gis >= 21.1.7
-Requires: smartmet-engine-contour >= 21.1.5
-Requires: smartmet-engine-geonames >= 21.1.5
-Requires: smartmet-engine-gis >= 21.1.5
-Requires: smartmet-engine-grid >= 21.1.11
-Requires: smartmet-library-grid-content >= 21.1.11
-Requires: smartmet-library-grid-files >= 21.1.11
+Requires: smartmet-library-locus >= 21.1.14
+Requires: smartmet-library-macgyver >= 21.1.14
+Requires: smartmet-library-spine >= 21.1.14
+Requires: smartmet-library-gis >= 21.1.14
+Requires: smartmet-engine-contour >= 21.1.14
+Requires: smartmet-engine-geonames >= 21.1.14
+Requires: smartmet-engine-gis >= 21.1.14
+Requires: smartmet-engine-grid >= 21.1.14
+Requires: smartmet-library-grid-content >= 21.1.14
+Requires: smartmet-library-grid-files >= 21.1.14
 %if %{with observation}
-Requires: smartmet-engine-observation >= 21.1.5
+Requires: smartmet-engine-observation >= 21.1.14
 %endif
-Requires: smartmet-engine-querydata >= 20.12.30
-Requires: smartmet-server >= 21.1.5
+Requires: smartmet-engine-querydata >= 21.1.14
+Requires: smartmet-server >= 21.1.14
 Requires: xerces-c
 Requires: xqilla
 Requires: boost169-chrono
@@ -87,12 +87,12 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: ctpp2-devel
 #TestRequires: smartmet-test-db >= 20.6.9
 #TestRequires: smartmet-test-data >= 20.6.30
-#TestRequires: smartmet-library-gis-devel >= 21.1.7
+#TestRequires: smartmet-library-gis-devel >= 21.1.14
 #TestRequires: smartmet-library-newbase-devel >= 20.10.28
-#TestRequires: smartmet-library-spine-devel >= 21.1.5
+#TestRequires: smartmet-library-spine-devel >= 21.1.14
 #TestRequires: smartmet-engine-geonames-devel >= 20.8.23
-#TestRequires: smartmet-engine-gis-devel >= 21.1.5
-#TestRequires: smartmet-engine-querydata-devel >= 20.12.30
+#TestRequires: smartmet-engine-gis-devel >= 21.1.14
+#TestRequires: smartmet-engine-querydata-devel >= 21.1.14
 %if %{with observation}
 #TestRequires: smartmet-engine-observation-devel >= 20.10.29
 %endif
@@ -147,6 +147,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/gribwfs/request/*.h
 
 %changelog
+* Thu Jan 14 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.1.14-1.fmi
+- Repackaged smartmet to resolve debuginfo issues
+
 * Mon Jan 11 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.1.11-1.fmi
 - Repackaged due to grid-files API changes
 
