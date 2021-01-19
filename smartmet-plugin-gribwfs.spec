@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 21.1.14
+Version: 21.1.19
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -33,10 +33,10 @@ BuildRequires: smartmet-library-macgyver-devel >= 21.1.14
 BuildRequires: smartmet-engine-contour-devel >= 21.1.14
 BuildRequires: smartmet-engine-geonames-devel >= 21.1.14
 BuildRequires: smartmet-engine-gis-devel >= 21.1.14
-BuildRequires: smartmet-engine-grid-devel >= 21.1.14
+BuildRequires: smartmet-engine-grid-devel >= 21.1.19
 BuildRequires: smartmet-engine-querydata-devel >= 21.1.14
-BuildRequires: smartmet-library-grid-content-devel >= 21.1.14
-BuildRequires: smartmet-library-grid-files-devel >= 21.1.14
+BuildRequires: smartmet-library-grid-content-devel >= 21.1.19
+BuildRequires: smartmet-library-grid-files-devel >= 21.1.19
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 21.1.14
 %endif
@@ -54,9 +54,9 @@ Requires: smartmet-library-gis >= 21.1.14
 Requires: smartmet-engine-contour >= 21.1.14
 Requires: smartmet-engine-geonames >= 21.1.14
 Requires: smartmet-engine-gis >= 21.1.14
-Requires: smartmet-engine-grid >= 21.1.14
-Requires: smartmet-library-grid-content >= 21.1.14
-Requires: smartmet-library-grid-files >= 21.1.14
+Requires: smartmet-engine-grid >= 21.1.19
+Requires: smartmet-library-grid-content >= 21.1.19
+Requires: smartmet-library-grid-files >= 21.1.19
 %if %{with observation}
 Requires: smartmet-engine-observation >= 21.1.14
 %endif
@@ -147,6 +147,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/gribwfs/request/*.h
 
 %changelog
+* Tue Jan 19 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.1.19-1.fmi
+- Repackaged due to base library ABI changes
+
 * Thu Jan 14 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.1.14-1.fmi
 - Repackaged smartmet to resolve debuginfo issues
 
