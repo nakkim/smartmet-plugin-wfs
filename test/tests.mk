@@ -64,7 +64,6 @@ test-oracle test-postgresql test-sqlite: s-input-files $(TEST_DEPEND)
 	mkdir -p failures-$(DB_TYPE)
 	cat $(TOP)/cnf/wfs_plugin_test.conf.in | sed -e 's:@TARGET@:$(DB_TYPE):g' \
 		>cnf/wfs_plugin_test_$(DB_TYPE).conf
-	set >env.dat
 	$(TEST_RUNNER) smartmet-plugin-test --handler /wfs \
 		--reactor-config cnf/wfs_plugin_test_$(DB_TYPE).conf \
 		--failures-dir failures-$(DB_TYPE) \
