@@ -67,6 +67,7 @@ Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-wfs < 16.11.1
 Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 
+#TestRequires: gcc-c++
 #TestRequires: ctpp2
 #TestRequires: smartmet-test-db >= 20.6.9
 #TestRequires: smartmet-test-data >= 20.6.30
