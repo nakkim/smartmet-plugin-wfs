@@ -576,7 +576,9 @@ uint StoredGridForecastQueryHandler::processGridQuery(
           if (row > lastRow)
             lastRow = row;
 
-          boost::local_time::local_date_time queryTime(Fmi::TimeParser::parse_iso(*ft), tz);
+          boost::posix_time::ptime utcTime = boost::posix_time::from_time_t(*ft);
+          boost::local_time::local_date_time queryTime(utcTime, tz);
+          //boost::local_time::local_date_time queryTime(Fmi::TimeParser::parse_iso(*ft), tz);
           if (additionalParameters.getParameterValueByLocation(gridQuery.mQueryParameterList[p].mParam, tag, loc, country, gridQuery.mQueryParameterList[p].mPrecision,paramValue))
           {
             output->set(col, row, paramValue);
@@ -673,7 +675,7 @@ uint StoredGridForecastQueryHandler::processGridQuery(
 
             for (uint r = 0; r < rLen; r++)
             {
-              if (gridQuery.mQueryParameterList[p].mValueList[r]->mForecastTime == *ft)
+              if (gridQuery.mQueryParameterList[p].mValueList[r]->mForecastTimeUTC == *ft)
               {
                 std::string producerName;
                 T::ProducerInfo producer;
