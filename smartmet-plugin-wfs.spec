@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 21.1.25
+Version: 21.2.3
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -124,6 +124,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Wed Feb 3 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 22.2.3-1.fmi
+- Support for sensors (INSPIRE-874)
+
 * Mon Jan 25 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.1.25-1.fmi
 - Repackaged due to DirectoryMonitor API changes
 

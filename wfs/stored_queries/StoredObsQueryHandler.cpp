@@ -342,6 +342,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
 
       SmartMet::Spine::TimeSeries::TimeSeriesVectorPtr obsengine_result(
           obs_engine->values(query_params));
+
       const bool emptyResult = (!obsengine_result || obsengine_result->size() == 0);
 
       CTPP::CDT hash;
@@ -552,7 +553,7 @@ void StoredObsQueryHandler::query(const StoredQuery& query,
           {
             const auto& entry = param_index[k];
             const std::string& name = entry.p.name;
-            group["obsParamList"][k]["name"] = name;
+            group["obsParamList"][k]["name"] = (entry.p.sensor_name ? *entry.p.sensor_name : entry.p.name);
             group["obsParamList"][k]["featureId"] = group_map.at(group_id).param_ids.at(name);
 
             // Mark QC parameters
@@ -793,38 +794,59 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
         ExtParamIndexEntry entry;
         entry.p.ind = query_params.parameters.size();
         entry.p.name = name;
-        SmartMet::Spine::Parameter param = makeParameter(name);
-        query_params.parameters.push_back(param);
+		SmartMet::Spine::Parameter param = makeParameter(name);
+		bool sensor_parameter_exists = false;
         if (not SmartMet::Spine::special(param))
         {
           have_meteo_param = true;
-	  auto parameter_option = get_meteo_parameter_options(name);
-	  if ((parameter_option->sensor_first != 1) || (parameter_option->sensor_last != 1))
-	  {
-	    for (unsigned short index = parameter_option->sensor_first; index < parameter_option->sensor_last + 1; index += parameter_option->sensor_step)
-	    {
-	      param.setSensorNumber(index);
-	      if (index < parameter_option->sensor_last + 1)
-	      {
-		param = makeParameter(name);
-		query_params.parameters.push_back(param);
-	      }
-	    }
-	  }
+		  auto parameter_option = get_meteo_parameter_options(name);
+		  if ((parameter_option->sensor_first != 1) || (parameter_option->sensor_last != 1))
+			{
+			  for (unsigned short index = parameter_option->sensor_first; index < parameter_option->sensor_last + 1; index += parameter_option->sensor_step)
+				{
+				  if (index < parameter_option->sensor_last + 1)
+					{
+					  param = makeParameter(name);
+					  param.setSensorNumber(index);
+					  entry.p.ind = query_params.parameters.size();
+					  entry.p.sensor_name = (entry.p.name + "(:" + Fmi::to_string(index) + ")");
+					  query_params.parameters.push_back(param);
+					  if (not have_explicit_qc_params and support_quality_info)
+						{
+						  const std::string qc_name = "qc_" + name;
+						  ParamIndexEntry qc_entry;
+						  qc_entry.ind = query_params.parameters.size();
+						  qc_entry.name = qc_name;
+						  entry.qc = qc_entry;
+						  SmartMet::Spine::Parameter param = makeParameter(qc_name);
+						  query_params.parameters.push_back(param);
+						}
+
+					  sensor_parameter_exists = true;
+					  parameter_index.push_back(entry);
+					}
+				}
+			}
         }
 
-        if (not have_explicit_qc_params and support_quality_info)
-        {
-          const std::string qc_name = "qc_" + name;
-          ParamIndexEntry qc_entry;
-          qc_entry.ind = query_params.parameters.size();
-          qc_entry.name = qc_name;
-          entry.qc = qc_entry;
-          SmartMet::Spine::Parameter param = makeParameter(qc_name);
-          query_params.parameters.push_back(param);
-        }
+		// If there is no sensors defined, add default parameter
+		if(!sensor_parameter_exists)
+		  {
+			query_params.parameters.push_back(param);
 
-        parameter_index.push_back(entry);
+			if (not have_explicit_qc_params and support_quality_info)
+			  {
+				const std::string qc_name = "qc_" + name;
+				ParamIndexEntry qc_entry;
+				qc_entry.ind = query_params.parameters.size();
+				qc_entry.name = qc_name;
+				entry.qc = qc_entry;
+				SmartMet::Spine::Parameter param = makeParameter(qc_name);
+				query_params.parameters.push_back(param);
+			  }
+
+			parameter_index.push_back(entry);
+		  }
       }
       else if (is_special_parameter(name))
       {
@@ -862,6 +884,7 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
             .disableStackTrace();
       }
     }
+
     return have_meteo_param;
   }
   catch (...)

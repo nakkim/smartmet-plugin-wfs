@@ -45,11 +45,14 @@ class StoredObsQueryHandler : public StoredQueryHandlerBase,
 
   struct ParamIndexEntry
   {
-      /** Parameter index in obsengine response or -1 for special parameters generated separately */
-      int ind;
-
-      /** Parameter name */
-      std::string name;
+	/** Parameter index in obsengine response or -1 for special parameters generated separately */
+	int ind;
+	
+	/** Parameter name */
+	std::string name;
+	
+	/** Sensor number */
+	boost::optional<std::string> sensor_name;	
   };
 
   struct ExtParamIndexEntry
