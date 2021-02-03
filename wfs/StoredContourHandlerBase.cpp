@@ -791,7 +791,7 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
         if ((*val)->mAnalysisTime > " ")
         {
           analysisTimeStr = (*val)->mAnalysisTime;
-          modificationTimeStr = (*val)->mModificationTime;
+          modificationTimeStr = utcTimeFromTimeT((*val)->mModificationTime);
         }
       }
     }
