@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 21.2.3
+Version: 21.2.11
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -24,17 +24,17 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel < 1:7.0
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 21.1.14
-BuildRequires: smartmet-library-gis-devel >= 21.1.22
-BuildRequires: smartmet-library-locus-devel >= 21.1.14
+BuildRequires: smartmet-library-spine-devel >= 21.2.5
+BuildRequires: smartmet-library-gis-devel >= 21.2.11
+BuildRequires: smartmet-library-locus-devel >= 21.2.2
 BuildRequires: smartmet-library-macgyver-devel >= 21.1.25
-BuildRequires: smartmet-engine-contour-devel >= 21.1.14
+BuildRequires: smartmet-engine-contour-devel >= 21.2.11
 BuildRequires: smartmet-engine-geonames-devel >= 21.1.25
-BuildRequires: smartmet-engine-gis-devel >= 21.1.14
+BuildRequires: smartmet-engine-gis-devel >= 21.2.10
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 21.1.25
+BuildRequires: smartmet-engine-observation-devel >= 21.2.10
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 21.1.25
+BuildRequires: smartmet-engine-querydata-devel >= 21.2.10
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 7.1.3
@@ -42,17 +42,17 @@ Requires: libconfig >= 1.7.2
 Requires: libcurl
 Requires: libpqxx < 1:7.0
 Requires: jsoncpp
-Requires: smartmet-library-locus >= 21.1.14
+Requires: smartmet-library-locus >= 21.2.2
 Requires: smartmet-library-macgyver >= 21.1.25
-Requires: smartmet-library-spine >= 21.1.14
-Requires: smartmet-library-gis >= 21.1.22
-Requires: smartmet-engine-contour >= 21.1.14
+Requires: smartmet-library-spine >= 21.2.5
+Requires: smartmet-library-gis >= 21.2.11
+Requires: smartmet-engine-contour >= 21.2.11
 Requires: smartmet-engine-geonames >= 21.1.25
-Requires: smartmet-engine-gis >= 21.1.14
+Requires: smartmet-engine-gis >= 21.2.10
 %if %{with observation}
-Requires: smartmet-engine-observation >= 21.1.25
+Requires: smartmet-engine-observation >= 21.2.10
 %endif
-Requires: smartmet-engine-querydata >= 21.1.25
+Requires: smartmet-engine-querydata >= 21.2.10
 Requires: smartmet-server >= 21.1.14
 Requires: xerces-c
 Requires: xqilla
@@ -71,10 +71,10 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: ctpp2
 #TestRequires: smartmet-test-db >= 20.6.9
 #TestRequires: smartmet-test-data >= 20.6.30
-#TestRequires: smartmet-library-spine >= 21.1.14
+#TestRequires: smartmet-library-spine >= 21.2.5
 #TestRequires: smartmet-engine-geonames >= 20.8.23
-#TestRequires: smartmet-engine-gis >= 21.1.14
-#TestRequires: smartmet-engine-querydata >= 21.1.25
+#TestRequires: smartmet-engine-gis >= 21.2.10
+#TestRequires: smartmet-engine-querydata >= 21.2.10
 %if %{with observation}
 #TestRequires: smartmet-engine-observation >= 20.10.29
 %endif
@@ -124,6 +124,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Thu Feb 11 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.2.11-1.fmi
+- Merged master and WGS84 branches
+
 * Wed Feb 3 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 22.2.3-1.fmi
 - Support for sensors (INSPIRE-874)
 
