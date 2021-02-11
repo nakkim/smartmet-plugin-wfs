@@ -51,9 +51,9 @@ test:	all
         $$ok
 
 clean:
-	rm -fv $(shell find input -type f -a -name '*.xml.post' -o -name '*.xml.get')
-	rm -rf failures-oracle failures-postgresql failures-sqlite
-	rm -vf cnd/wfs_plugin_test_*.conf
+	@rm -fv $(shell find input -type f -a -name '*.xml.post' -o -name '*.xml.get')
+	@rm -rf failures-oracle failures-postgresql failures-sqlite
+	@rm -vf cnd/wfs_plugin_test_*.conf
 
 test-oracle:		DB_TYPE=oracle
 test-postgresql:	DB_TYPE=postgresql
@@ -71,9 +71,9 @@ test-oracle test-postgresql test-sqlite: s-input-files $(TEST_DEPEND)
 		--timeout 300
 
 s-input-files:
-	rm -f $(shell find input -name '*.xml.post' -o -name '*.kvp.get')
-	$(MAKE) $(XML_POST_TESTS)
-	$(MAKE) $(KVP_GET_TESTS)
+	@rm -f $(shell find input -name '*.xml.post' -o -name '*.kvp.get')
+	@$(MAKE) $(XML_POST_TESTS)
+	@$(MAKE) $(KVP_GET_TESTS)
 
 input/%.xml.post : xml/%.xml ; @mkdir -p $(shell dirname $@)
 	@perl ../MakeXMLPOST.pl $< $@ /wfs
