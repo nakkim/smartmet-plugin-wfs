@@ -101,7 +101,6 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours(
         std::size_t qhash = SmartMet::Engine::Querydata::hash_value(queryParameter.q);
         auto valueshash = qhash;
         boost::hash_combine(valueshash, options.data_hash_value());
-        std::string wkt = queryParameter.q->area().WKT();
 
         // Select the data
 
@@ -127,16 +126,14 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours(
         }
 
         auto matrix = q_engine->getValues(queryParameter.q, valueshash, options.time);
-        CoordinatesPtr coords =
-            q_engine->getWorldCoordinates(queryParameter.q, &queryParameter.sr);
+        CoordinatesPtr coords = q_engine->getWorldCoordinates(queryParameter.q, queryParameter.sr);
 
         geoms = contour_engine->contour(qhash,
-                                        wkt,
+                                        queryParameter.q->SpatialReference(),
+                                        queryParameter.sr,
                                         *matrix,
-                                        coords,
-                                        options,
-                                        queryParameter.q->needsWraparound(),
-                                        &queryParameter.sr);
+                                        *coords,
+                                        options);
       }
       catch (const std::exception& e)
       {
@@ -234,7 +231,7 @@ void bw::StoredContourQueryHandler::parsePolygon(OGRPolygon* polygon,
 
 void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
                                           const std::string& language,
-					  const boost::optional<std::string>& hostname,
+                                          const boost::optional<std::string>& hostname,
                                           std::ostream& output) const
 {
   try

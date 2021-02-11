@@ -47,31 +47,31 @@ Global data object:
    numReturned = 1;
    param_sets = [
                   {
-                    &#39;URL&#39; : &quot;producer=hirlam&amp;param=GeopHeight,Temperature,Pressure,Humidity,DewPoint,WindUMS,WindVMS,TotalCloudCover,LowCloudCover,MediumCloudCover,HighCloudCover,Precipitation1h&amp;bbox=17.9645055517152,55.4114497404559,45.0119232619529,72.6449334049051&amp;origintime=2013-03-18T00:00:00Z&amp;starttime=2013-03-18T00:00:00Z&amp;endtime=2013-03-20T06:00:00Z&amp;format=grib2&amp;projection=epsg:4326&quot;,
+                    &#39;URL&#39; : &quot;producer=hirlam&amp;param=GeopHeight,Temperature,Pressure,Humidity,DewPoint,WindUMS,WindVMS,TotalCloudCover,LowCloudCover,MediumCloudCover,HighCloudCover,Precipitation1h&amp;bbox=17.9645063865565,55.5908777874055,45.0119267281501,72.7539894761177&amp;origintime=2013-03-18T00:00:00Z&amp;starttime=2013-03-18T00:00:00Z&amp;endtime=2013-03-20T06:00:00Z&amp;format=grib2&amp;projection=epsg:4326&quot;,
                     &#39;params&#39; : {
                                  &#39;_WKT&#39; : [
                                             &quot;PROJCS[\&quot;Plate_Carree\&quot;,GEOGCS[\&quot;FMI_Sphere\&quot;,DATUM[\&quot;FMI_2007\&quot;,SPHEROID[\&quot;FMI_Sphere\&quot;,6371220,0]],PRIMEM[\&quot;Greenwich\&quot;,0],UNIT[\&quot;Degree\&quot;,0.017453292519943295]],PROJECTION[\&quot;Plate_Carree\&quot;],EXTENSION[\&quot;PROJ4\&quot;,\&quot;+proj=ob_tran +o_proj=longlat +o_lon_p=-180 +o_lat_p=30 +a=6371220 +k=1 +wktext\&quot;],UNIT[\&quot;Meter\&quot;,1]]&quot;
                                           ],
                                  &#39;_areaHeight&#39; : [
-                                                   &quot;1867.69448268221&quot;
+                                                   &quot;1867.69712099172&quot;
                                                  ],
                                  &#39;_areaWidth&#39; : [
-                                                  &quot;536.852308618362&quot;
+                                                  &quot;536.853066977168&quot;
                                                 ],
                                  &#39;_aspectRatio&#39; : [
-                                                    &quot;0.28744118141174&quot;
+                                                    &quot;0.287441181411741&quot;
                                                   ],
                                  &#39;_bllat&#39; : [
-                                              &quot;56.9847982506964&quot;
+                                              &quot;57.1601653412161&quot;
                                             ],
                                  &#39;_bllon&#39; : [
-                                              &quot;17.9645055517152&quot;
+                                              &quot;17.9645063865565&quot;
                                             ],
                                  &#39;_brlat&#39; : [
-                                              &quot;55.4114497404559&quot;
+                                              &quot;55.5908777874055&quot;
                                             ],
                                  &#39;_brlon&#39; : [
-                                              &quot;26.1717205818894&quot;
+                                              &quot;26.1717217177981&quot;
                                             ],
                                  &#39;_firstTime&#39; : [
                                                   &quot;20130318T000000Z&quot;
@@ -122,34 +122,34 @@ Global data object:
                                                  &quot;60&quot;
                                                ],
                                  &#39;_ullat&#39; : [
-                                              &quot;72.6449334049051&quot;
+                                              &quot;72.7539894761177&quot;
                                             ],
                                  &#39;_ullon&#39; : [
-                                              &quot;32.9673769093995&quot;
+                                              &quot;32.9673800041818&quot;
                                             ],
                                  &#39;_urlat&#39; : [
-                                              &quot;70.0044748537634&quot;
+                                              &quot;70.127592360461&quot;
                                             ],
                                  &#39;_urlon&#39; : [
-                                              &quot;45.0119232619529&quot;
+                                              &quot;45.0119267281501&quot;
                                             ],
                                  &#39;_xNumber&#39; : [
                                                 &quot;72&quot;
                                               ],
                                  &#39;_xResolution&#39; : [
-                                                    &quot;7.45628206414392&quot;
+                                                    &quot;7.45629259690512&quot;
                                                   ],
                                  &#39;_yNumber&#39; : [
                                                 &quot;248&quot;
                                               ],
                                  &#39;_yResolution&#39; : [
-                                                    &quot;7.53102613984762&quot;
+                                                    &quot;7.53103677819243&quot;
                                                   ],
                                  &#39;calcBBox&#39; : [
-                                                &quot;17.9645055517152&quot;,
-                                                &quot;55.4114497404559&quot;,
-                                                &quot;45.0119232619529&quot;,
-                                                &quot;72.6449334049051&quot;
+                                                &quot;17.9645063865565&quot;,
+                                                &quot;55.5908777874055&quot;,
+                                                &quot;45.0119267281501&quot;,
+                                                &quot;72.7539894761177&quot;
                                               ],
                                  &#39;crs&#39; : [
                                            &quot;EPSG:4326&quot;
@@ -164,87 +164,87 @@ Global data object:
                                               &quot;grib2&quot;
                                             ],
                                  &#39;intersection&#39; : [
-                                                    &quot;31.6474 71.9075&quot;,
-                                                    &quot;30.4279 71.1617&quot;,
-                                                    &quot;29.2986 70.4086&quot;,
-                                                    &quot;28.2500 69.6490&quot;,
-                                                    &quot;27.2740 68.8835&quot;,
-                                                    &quot;26.3636 68.1128&quot;,
-                                                    &quot;25.5123 67.3375&quot;,
-                                                    &quot;24.7145 66.5579&quot;,
-                                                    &quot;23.9655 65.7746&quot;,
-                                                    &quot;23.2607 64.9877&quot;,
-                                                    &quot;22.5963 64.1978&quot;,
-                                                    &quot;21.9688 63.4050&quot;,
-                                                    &quot;21.3751 62.6096&quot;,
-                                                    &quot;20.8125 61.8118&quot;,
-                                                    &quot;20.2784 61.0118&quot;,
-                                                    &quot;19.7706 60.2098&quot;,
-                                                    &quot;19.2870 59.4060&quot;,
-                                                    &quot;18.8259 58.6005&quot;,
-                                                    &quot;18.3856 57.7934&quot;,
-                                                    &quot;17.9645 56.9848&quot;,
-                                                    &quot;18.3905 56.9196&quot;,
-                                                    &quot;18.8150 56.8529&quot;,
-                                                    &quot;19.2379 56.7847&quot;,
-                                                    &quot;19.6592 56.7151&quot;,
-                                                    &quot;20.0790 56.6441&quot;,
-                                                    &quot;20.4972 56.5716&quot;,
-                                                    &quot;20.9137 56.4977&quot;,
-                                                    &quot;21.3286 56.4224&quot;,
-                                                    &quot;21.7418 56.3456&quot;,
-                                                    &quot;22.1533 56.2675&quot;,
-                                                    &quot;22.5631 56.1880&quot;,
-                                                    &quot;22.9712 56.1071&quot;,
-                                                    &quot;23.3775 56.0248&quot;,
-                                                    &quot;23.7821 55.9412&quot;,
-                                                    &quot;24.1849 55.8562&quot;,
-                                                    &quot;24.5859 55.7699&quot;,
-                                                    &quot;24.9851 55.6822&quot;,
-                                                    &quot;25.3825 55.5933&quot;,
-                                                    &quot;25.7780 55.5030&quot;,
-                                                    &quot;26.1717 55.4114&quot;,
-                                                    &quot;26.7484 56.1862&quot;,
-                                                    &quot;27.3488 56.9581&quot;,
-                                                    &quot;27.9745 57.7271&quot;,
-                                                    &quot;28.6274 58.4928&quot;,
-                                                    &quot;29.3093 59.2550&quot;,
-                                                    &quot;30.0223 60.0136&quot;,
-                                                    &quot;30.7687 60.7681&quot;,
-                                                    &quot;31.5510 61.5182&quot;,
-                                                    &quot;32.3718 62.2637&quot;,
-                                                    &quot;33.2342 63.0041&quot;,
-                                                    &quot;34.1412 63.7389&quot;,
-                                                    &quot;35.0965 64.4678&quot;,
-                                                    &quot;36.1038 65.1901&quot;,
-                                                    &quot;37.1674 65.9053&quot;,
-                                                    &quot;38.2916 66.6127&quot;,
-                                                    &quot;39.4815 67.3116&quot;,
-                                                    &quot;40.7425 68.0012&quot;,
-                                                    &quot;42.0803 68.6806&quot;,
-                                                    &quot;43.5012 69.3487&quot;,
-                                                    &quot;45.0119 70.0045&quot;,
-                                                    &quot;44.4816 70.1516&quot;,
-                                                    &quot;43.9441 70.2974&quot;,
-                                                    &quot;43.3995 70.4418&quot;,
-                                                    &quot;42.8476 70.5847&quot;,
-                                                    &quot;42.2883 70.7261&quot;,
-                                                    &quot;41.7216 70.8660&quot;,
-                                                    &quot;41.1474 71.0043&quot;,
-                                                    &quot;40.5656 71.1411&quot;,
-                                                    &quot;39.9762 71.2762&quot;,
-                                                    &quot;39.3789 71.4097&quot;,
-                                                    &quot;38.7739 71.5415&quot;,
-                                                    &quot;38.1610 71.6715&quot;,
-                                                    &quot;37.5401 71.7998&quot;,
-                                                    &quot;36.9112 71.9263&quot;,
-                                                    &quot;36.2743 72.0509&quot;,
-                                                    &quot;35.6293 72.1736&quot;,
-                                                    &quot;34.9761 72.2944&quot;,
-                                                    &quot;34.3147 72.4133&quot;,
-                                                    &quot;33.6452 72.5301&quot;,
-                                                    &quot;32.9674 72.6449&quot;,
-                                                    &quot;31.6474 71.9075&quot;
+                                                    &quot;31.6474 72.0206&quot;,
+                                                    &quot;30.4279 71.2788&quot;,
+                                                    &quot;29.2986 70.5296&quot;,
+                                                    &quot;28.2500 69.7739&quot;,
+                                                    &quot;27.2740 69.0123&quot;,
+                                                    &quot;26.3636 68.2454&quot;,
+                                                    &quot;25.5123 67.4738&quot;,
+                                                    &quot;24.7145 66.6978&quot;,
+                                                    &quot;23.9655 65.9180&quot;,
+                                                    &quot;23.2607 65.1346&quot;,
+                                                    &quot;22.5963 64.3480&quot;,
+                                                    &quot;21.9688 63.5585&quot;,
+                                                    &quot;21.3751 62.7662&quot;,
+                                                    &quot;20.8125 61.9715&quot;,
+                                                    &quot;20.2784 61.1744&quot;,
+                                                    &quot;19.7706 60.3752&quot;,
+                                                    &quot;19.2870 59.5741&quot;,
+                                                    &quot;18.8259 58.7711&quot;,
+                                                    &quot;18.3856 57.9664&quot;,
+                                                    &quot;17.9645 57.1602&quot;,
+                                                    &quot;18.3905 57.0951&quot;,
+                                                    &quot;18.8150 57.0286&quot;,
+                                                    &quot;19.2379 56.9607&quot;,
+                                                    &quot;19.6592 56.8912&quot;,
+                                                    &quot;20.0790 56.8204&quot;,
+                                                    &quot;20.4972 56.7481&quot;,
+                                                    &quot;20.9137 56.6744&quot;,
+                                                    &quot;21.3286 56.5992&quot;,
+                                                    &quot;21.7418 56.5227&quot;,
+                                                    &quot;22.1533 56.4448&quot;,
+                                                    &quot;22.5631 56.3654&quot;,
+                                                    &quot;22.9712 56.2848&quot;,
+                                                    &quot;23.3775 56.2027&quot;,
+                                                    &quot;23.7821 56.1193&quot;,
+                                                    &quot;24.1849 56.0345&quot;,
+                                                    &quot;24.5859 55.9484&quot;,
+                                                    &quot;24.9851 55.8610&quot;,
+                                                    &quot;25.3825 55.7723&quot;,
+                                                    &quot;25.7780 55.6822&quot;,
+                                                    &quot;26.1717 55.5909&quot;,
+                                                    &quot;26.7484 56.3637&quot;,
+                                                    &quot;27.3488 57.1336&quot;,
+                                                    &quot;27.9745 57.9003&quot;,
+                                                    &quot;28.6274 58.6638&quot;,
+                                                    &quot;29.3093 59.4236&quot;,
+                                                    &quot;30.0223 60.1796&quot;,
+                                                    &quot;30.7687 60.9315&quot;,
+                                                    &quot;31.5510 61.6790&quot;,
+                                                    &quot;32.3718 62.4217&quot;,
+                                                    &quot;33.2342 63.1592&quot;,
+                                                    &quot;34.1412 63.8911&quot;,
+                                                    &quot;35.0965 64.6169&quot;,
+                                                    &quot;36.1038 65.3361&quot;,
+                                                    &quot;37.1674 66.0482&quot;,
+                                                    &quot;38.2916 66.7524&quot;,
+                                                    &quot;39.4815 67.4480&quot;,
+                                                    &quot;40.7425 68.1343&quot;,
+                                                    &quot;42.0803 68.8104&quot;,
+                                                    &quot;43.5012 69.4752&quot;,
+                                                    &quot;45.0119 70.1276&quot;,
+                                                    &quot;44.4816 70.2740&quot;,
+                                                    &quot;43.9441 70.4190&quot;,
+                                                    &quot;43.3995 70.5626&quot;,
+                                                    &quot;42.8476 70.7048&quot;,
+                                                    &quot;42.2883 70.8455&quot;,
+                                                    &quot;41.7216 70.9846&quot;,
+                                                    &quot;41.1474 71.1223&quot;,
+                                                    &quot;40.5656 71.2583&quot;,
+                                                    &quot;39.9762 71.3927&quot;,
+                                                    &quot;39.3789 71.5255&quot;,
+                                                    &quot;38.7739 71.6565&quot;,
+                                                    &quot;38.1610 71.7859&quot;,
+                                                    &quot;37.5401 71.9135&quot;,
+                                                    &quot;36.9112 72.0393&quot;,
+                                                    &quot;36.2743 72.1632&quot;,
+                                                    &quot;35.6293 72.2853&quot;,
+                                                    &quot;34.9761 72.4054&quot;,
+                                                    &quot;34.3147 72.5236&quot;,
+                                                    &quot;33.6452 72.6398&quot;,
+                                                    &quot;32.9674 72.7540&quot;,
+                                                    &quot;31.6474 72.0206&quot;
                                                   ],
                                  &#39;lastTime&#39; : [
                                                 &quot;2013-03-20T06:00:00Z&quot;
@@ -253,10 +253,10 @@ Global data object:
                                              &quot;0&quot;
                                            ],
                                  &#39;modelBBox&#39; : [
-                                                 &quot;17.9645055517152&quot;,
-                                                 &quot;55.4114497404559&quot;,
-                                                 &quot;45.0119232619529&quot;,
-                                                 &quot;72.6449334049051&quot;
+                                                 &quot;17.9645063865565&quot;,
+                                                 &quot;55.5908777874055&quot;,
+                                                 &quot;45.0119267281501&quot;,
+                                                 &quot;72.7539894761177&quot;
                                                ],
                                  &#39;originTime&#39; : [
                                                   &quot;2013-03-18T00:00:00Z&quot;

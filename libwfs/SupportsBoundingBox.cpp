@@ -12,8 +12,9 @@ const char* bw::SupportsBoundingBox::P_BOUNDING_BOX = "boundingBox";
 bw::SupportsBoundingBox::SupportsBoundingBox(StoredQueryConfig::Ptr config,
                                              SmartMet::Spine::CRSRegistry& crs_registry,
                                              bool mandatory)
-    : StoredQueryParamRegistry(config)
-    , SupportsExtraHandlerParams(config, false), crs_registry(crs_registry)
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
+      crs_registry(crs_registry)
 {
   try
   {

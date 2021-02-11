@@ -10,19 +10,19 @@ Global data object:
                 'metadata' : {
                                'boundingBox' : {
                                                  'lowerLeft' : {
-                                                                 'lat' : 51.3,
+                                                                 'lat' : 51.2998210995,
                                                                  'lon' : 6
                                                                },
                                                  'lowerRight' : {
-                                                                  'lat' : 51.3084759519,
-                                                                  'lon' : 33.9455134391
+                                                                  'lat' : 51.3060598333,
+                                                                  'lon' : 33.9600228962
                                                                 },
                                                  'upperLeft' : {
-                                                                 'lat' : 70.1814203217,
-                                                                 'lon' : -9.09870632718
+                                                                 'lat' : 70.1861462523,
+                                                                 'lon' : -9.07236611476
                                                                },
                                                  'upperRight' : {
-                                                                  'lat' : 70.2,
+                                                                  'lat' : 70.1997694861,
                                                                   'lon' : 49
                                                                 }
                                                }
@@ -67,7 +67,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "19.4"
+                                               "19.5"
                                              ],
                                     'epochTime' : 1217948400,
                                     'epochTimeStr' : "2008-08-05T18:00:00+03:00",
@@ -256,7 +256,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "20.6"
+                                               "20.7"
                                              ],
                                     'epochTime' : 1218024000,
                                     'epochTimeStr' : "2008-08-06T15:00:00+03:00",
@@ -427,7 +427,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "14.7"
+                                               "14.6"
                                              ],
                                     'epochTime' : 1217959200,
                                     'epochTimeStr' : "2008-08-05T21:00:00+03:00",
@@ -481,7 +481,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "11.9"
+                                               "11.8"
                                              ],
                                     'epochTime' : 1217980800,
                                     'epochTimeStr' : "2008-08-06T03:00:00+03:00",
@@ -517,7 +517,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "11.4"
+                                               "11.3"
                                              ],
                                     'epochTime' : 1217995200,
                                     'epochTimeStr' : "2008-08-06T07:00:00+03:00",
@@ -553,7 +553,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "17.5"
+                                               "17.4"
                                              ],
                                     'epochTime' : 1218009600,
                                     'epochTimeStr' : "2008-08-06T11:00:00+03:00",
@@ -652,7 +652,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "16.6"
+                                               "16.7"
                                              ],
                                     'epochTime' : 1218049200,
                                     'epochTimeStr' : "2008-08-06T22:00:00+03:00",
@@ -706,7 +706,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "14.7"
+                                               "14.6"
                                              ],
                                     'epochTime' : 1217937600,
                                     'epochTimeStr' : "2008-08-05T15:00:00+03:00",
@@ -787,7 +787,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "14.2"
+                                               "14.3"
                                              ],
                                     'epochTime' : 1217970000,
                                     'epochTimeStr' : "2008-08-06T00:00:00+03:00",
@@ -796,7 +796,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "14.1"
+                                               "14.2"
                                              ],
                                     'epochTime' : 1217973600,
                                     'epochTimeStr' : "2008-08-06T01:00:00+03:00",
@@ -805,7 +805,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "14.0"
+                                               "14.1"
                                              ],
                                     'epochTime' : 1217977200,
                                     'epochTimeStr' : "2008-08-06T02:00:00+03:00",
@@ -814,7 +814,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "13.9"
+                                               "14.0"
                                              ],
                                     'epochTime' : 1217980800,
                                     'epochTimeStr' : "2008-08-06T03:00:00+03:00",
@@ -823,7 +823,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "13.4"
+                                               "13.5"
                                              ],
                                     'epochTime' : 1217984400,
                                     'epochTimeStr' : "2008-08-06T04:00:00+03:00",
@@ -841,7 +841,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "12.5"
+                                               "12.6"
                                              ],
                                     'epochTime' : 1217991600,
                                     'epochTimeStr' : "2008-08-06T06:00:00+03:00",
@@ -850,7 +850,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "13.1"
+                                               "13.2"
                                              ],
                                     'epochTime' : 1217995200,
                                     'epochTimeStr' : "2008-08-06T07:00:00+03:00",
@@ -859,7 +859,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "13.7"
+                                               "13.8"
                                              ],
                                     'epochTime' : 1217998800,
                                     'epochTimeStr' : "2008-08-06T08:00:00+03:00",
@@ -922,7 +922,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "18.9"
+                                               "18.8"
                                              ],
                                     'epochTime' : 1218024000,
                                     'epochTimeStr' : "2008-08-06T15:00:00+03:00",
@@ -1003,7 +1003,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "15.6"
+                                               "15.7"
                                              ],
                                     'epochTime' : 1218056400,
                                     'epochTimeStr' : "2008-08-07T00:00:00+03:00",
@@ -1012,7 +1012,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "15.1"
+                                               "15.2"
                                              ],
                                     'epochTime' : 1218060000,
                                     'epochTimeStr' : "2008-08-07T01:00:00+03:00",
@@ -1021,7 +1021,7 @@ Global data object:
                                   },
                                   {
                                     'data' : [
-                                               "14.6"
+                                               "14.7"
                                              ],
                                     'epochTime' : 1218063600,
                                     'epochTimeStr' : "2008-08-07T02:00:00+03:00",

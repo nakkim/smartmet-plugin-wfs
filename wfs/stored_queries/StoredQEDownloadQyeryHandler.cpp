@@ -54,6 +54,38 @@ const char* DATA_CRS_NAME = "urn:ogc:def:crs:EPSG::4326";
 
 }  // namespace
 
+class ToXYVisitor : public OGRDefaultGeometryVisitor
+{
+ public:
+  ToXYVisitor(const NFmiArea& area) : m_area(area) {}
+
+  void visit(OGRPoint* point) override
+  {
+    auto tmp = m_area.ToXY(NFmiPoint(point->getX(), point->getY()));
+    point->setX(tmp.X());
+    point->setY(tmp.Y());
+  }
+
+ private:
+  const NFmiArea& m_area;
+};
+
+class ToLatLonVisitor : public OGRDefaultGeometryVisitor
+{
+ public:
+  ToLatLonVisitor(const NFmiArea& area) : m_area(area) {}
+
+  void visit(OGRPoint* point) override
+  {
+    auto tmp = m_area.ToLatLon(NFmiPoint(point->getX(), point->getY()));
+    point->setX(tmp.X());
+    point->setY(tmp.Y());
+  }
+
+ private:
+  const NFmiArea& m_area;
+};
+
 StoredQEDownloadQueryHandler::StoredQEDownloadQueryHandler(
     SmartMet::Spine::Reactor* reactor,
     StoredQueryConfig::Ptr config,
@@ -664,14 +696,8 @@ boost::shared_ptr<OGRGeometry> StoredQEDownloadQueryHandler::bbox_intersection(
               << std::endl;
 #endif
 
-    SmartMet::Engine::Gis::GeometryConv conv1(boost::bind(&NFmiArea::ToXY, &area, ::_1));
-
-#if 0    
-    std::cout << METHOD_NAME << ": query_bbox before ='" << Engine::Gis::WKT(query_bbox) << "'"
-              << std::endl;
-#endif
-
-    query_bbox.transform(&conv1);
+    ToXYVisitor toxy(area);
+    query_bbox.accept(&toxy);
 
 #if 0    
     std::cout << METHOD_NAME << ": query_bbox after ='" << Engine::Gis::WKT(query_bbox) << "'"
@@ -682,8 +708,8 @@ boost::shared_ptr<OGRGeometry> StoredQEDownloadQueryHandler::bbox_intersection(
     if (intersection and not intersection->IsEmpty())
     {
       result.reset(intersection);
-      SmartMet::Engine::Gis::GeometryConv conv2(boost::bind(&NFmiArea::ToLatLon, &area, ::_1));
-      result->transform(&conv2);
+      ToLatLonVisitor tolatlon(area);
+      result->accept(&tolatlon);
 
 #if 0      
       if (result)

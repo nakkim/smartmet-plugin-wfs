@@ -174,6 +174,9 @@ rm -rf $RPM_BUILD_ROOT
 * Thu Aug 20 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.8.20-1.fmi
 - Adapt to smartmet-library-macgyver changes (use Fmi::AsyncTaskGroup)
 
+* Fri Jul 31 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.7.31-1.fmi
+- Repackaged due to libpqxx upgrade
+
 * Wed Jul 22 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.7.22-1.fmi
 - Stored query configuration support update
 - Refactoring
@@ -206,6 +209,9 @@ rm -rf $RPM_BUILD_ROOT
 * Tue May  5 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.5.5-1.fmi
 - Avoid unnecessary stack traces
 - Removed unused members from PluginImpl class
+
+* Tue Apr 28 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.28-1.fmi
+- Use GDAL 3.0
 
 * Sat Apr 18 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.18-1.fmi
 - Upgraded to Boost 1.69
@@ -260,6 +266,9 @@ rm -rf $RPM_BUILD_ROOT
 
 * Tue Jan 21 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.1.21-1.fmi
 - Update support of outputFormat parameter
+
+* Thu Dec 12 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.12.12-1.fmi
+- Upgrade to GDAL 3.0
 
 * Fri Nov 29 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.11.29-1.fmi
 - Update monitoring stored query configuration changes
