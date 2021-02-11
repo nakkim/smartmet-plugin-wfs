@@ -3,25 +3,11 @@ SPEC = smartmet-plugin-$(SUBNAME)
 INCDIR = smartmet/plugins/$(SUBNAME)
 TOP = $(shell pwd)
 
-REQUIRES_GDAL = yes
+REQUIRES = gdal jsoncpp
 
-include common.mk
-
+include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
 DEFINES = -DUNIX -D_REENTRANT
-
-
-ifneq "$(wildcard /usr/gdal30/include)" ""
-  INCLUDES += -I/usr/gdal30/include
-  LIBS += -L/usr/gdal30/lib
-else
-  INCLUDES += -I/usr/include/gdal
-endif
-
-
-INCLUDES += \
-	-I$(includedir)/smartmet \
-	-isystem $(includedir)/jsoncpp
 
 LIBS += -L$(libdir) \
 	-lsmartmet-spine \
@@ -36,13 +22,13 @@ LIBS += -L$(libdir) \
 	-lboost_system \
         -lxqilla \
 	-lxerces-c \
-	-lgdal \
+	$(GDAL_LIBS) \
 	-lpqxx \
 	-lconfig++ \
 	-lconfig \
 	-lctpp2 \
 	-lcurl \
-	-ljsoncpp \
+	$(JSONCPP_LIBS) \
 	-lcrypto \
 	-lbz2 -lz \
 	-lpthread \
@@ -143,7 +129,7 @@ install:
 # and are always up to time
 depend:
 
-test:
+test test-sqlite test-oracle test-postgresql:
 	$(MAKE) -C test $@
 
 all-templates:
@@ -183,7 +169,6 @@ file-list:
 	echo cnf/templates/template_depend.pl >>files.list.new
 	echo cnf/XMLGrammarPool.dump >>files.list.new
 	echo cnf/XMLSchemas.cache >>files.list.new
-	echo common.mk >>files.list.new
 	find test/base -name '*.conf' >>files.list.new
 	find test/base/output -name '*.get' -o -name '*.kvp.post' -o -name '*.xml.post' >>files.list.new
 	find test/base/kvp -name '*.kvp' >>files.list.new

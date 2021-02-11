@@ -11,7 +11,7 @@ sub MakeXMLPost
     my $len = length($data);
     my $output;
     open $output, ">$output_fn" or die "Failed to open output file $output_fn: $!";
-    print "Writing $output_fn\n";
+    # print "Writing $output_fn\n";
     print $output "POST $url_path HTTP/1.1\r\n";
     print $output "Host: beta.fmi.fi\r\n";
     print $output "Content-Type: text/xml\r\n";

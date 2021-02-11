@@ -1,1 +1,1 @@
-request=GetFeature&storedquery_id=ObsTest&place=Kaisaniemi&begin=20151117T000000Z&end=20151117T030000Z&parameter=t2m,smartsymbol
+request=GetFeature&storedquery_id=ObsTest&place=Kaisaniemi&begin=2020-08-05T08:00:00Z&end=2020-08-05T12:00:00Z&parameter=t2m,smartsymbol

@@ -1,1 +1,1 @@
-request=GetFeature&storedquery_id=ObsQcTest&place=Harmaja&begin=2019-03-13T20:00:00Z&end=2019-03-13T21:00:00Z&qualityInfo=1&parameter=t2m,elevation,station_elevation
+request=GetFeature&storedquery_id=ObsQcTest&place=Harmaja&begin=2013-08-05T08:00:00Z&end=2013-08-05T12:00:00Z&qualityInfo=1&parameter=t2m,elevation,station_elevation

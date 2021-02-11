@@ -5,60 +5,49 @@ Global data object:
    groups = [
               {
                 'crs' : "EPSG::4326",
-                'featureId' : "WFS-fdAD2wn.4NVNf7IZqgUGNP2bGOeJTowp0_FzqZefSFpYsufTuqaduW1_9CrYjGx8udakWhTjunTRmybM7LuyVNO3La_.hVsXDGozs23Tz05OdZjFgwct2Lo15fPffyyX9_bLy78tPTDi2ZYmZsw9MvPpEzNm_Hh2Za1M2m_GkruvTM4a23D4iaefTDux5aVq6EBpbcPiLw349HOdExvbcvTLvoYeWHbl6ZeXOsboy2tbbp589O7PUy.OlY27DubW7rtn5qfTD00793OcJrceuHZp6eZO7Nvia3Pph6ad.6p54Za0N_DLuyYemFuc.m_llyceuXl5v6clZ0_FzqZefRodNO3LT6ZeE_ITQ6aduW1v3ZaxqtSGAA--",
+                'featureId' : "WFS-oKSTPS_j_gHOpFYpi8TWJY3qn7WJTowp0_FzqZefSFpYsufTuqaduW179CoSsEnhjY.XOtSLQpx3TpozZNmdl3ZKmnblte_QqErBLHCZ2bbp56cnOsxiwYOW7F0a8vnvv5ZL._tl5d.WnphxbMsTM2YemXn0iZmzfjw7MtambTfjSV3XpmcNbbh8RNPPph3Y8tK1dCA0tuHxF4b8ejnOiY3tuXpl30MPLDty9MvLnWN0ZbWtt08.endnqZfHSsbdh3Nrd12z81Pph6ad.7nOE1uPXDs09PMndm3xNbn0w9NO_dU88MtaG_hl3ZMPTC3OfTfyy5OPXLy839OSs6fi51MvPo0Omnblp9MvCfkJodNO3La37stY1WpDAA--",
                 'groupId' : "1-1",
                 'groupNum' : 1,
                 'obsParamList' : [
                                    {
-                                     'featureId' : "WFS-fdAD2wn.4NVNf7IZqgUGNP2bGOeJTowp0_FzqZefSFpYsufTuqaduW1_9CrYjGx8udakWhTjunTRmybM7LuyVNO3La_.hVsXDGozs23Tz05OdZjFgwct2Lo15fPffyyX9_bLy78tPTDi2ZYmZsw9MvPpEzNm_Hh2Za1M2m_GkruvTM4a23D4iaefTDux5aVq6EBpbcPiLw349HOdExvbcvTLvoYeWHbl6ZeXOsboy2tbbp589O7PUy.OlY27DubW7rtn5qfTD00793OcJrceuHZp6eZO7Nvia3Pph6ad.6p54Za0N_DLuyYemFuc.m_llyceuXl5v6clZ0_FzqZefRodNO3LT6ZeE_ITQ6aduW1v3ZaxqtSGAA--",
+                                     'featureId' : "WFS-oKSTPS_j_gHOpFYpi8TWJY3qn7WJTowp0_FzqZefSFpYsufTuqaduW179CoSsEnhjY.XOtSLQpx3TpozZNmdl3ZKmnblte_QqErBLHCZ2bbp56cnOsxiwYOW7F0a8vnvv5ZL._tl5d.WnphxbMsTM2YemXn0iZmzfjw7MtambTfjSV3XpmcNbbh8RNPPph3Y8tK1dCA0tuHxF4b8ejnOiY3tuXpl30MPLDty9MvLnWN0ZbWtt08.endnqZfHSsbdh3Nrd12z81Pph6ad.7nOE1uPXDs09PMndm3xNbn0w9NO_dU88MtaG_hl3ZMPTC3OfTfyy5OPXLy839OSs6fi51MvPo0Omnblp9MvCfkJodNO3La37stY1WpDAA--",
                                      'name' : "t2m"
                                    }
                                  ],
-                'obsPhenomenonEndTime' : "2015-11-17T03:00:00Z",
-                'obsPhenomenonStartTime' : "2015-11-17T00:00:00Z",
-                'obsResultTime' : "2015-11-17T03:00:00Z",
+                'obsPhenomenonEndTime' : "2013-08-05T10:00:00Z",
+                'obsPhenomenonStartTime' : "2013-08-05T08:00:00Z",
+                'obsResultTime' : "2013-08-05T10:00:00Z",
                 'obsReturnArray' : [
                                      {
                                        'data' : [
                                                   {
-                                                    'value' : "6.5"
+                                                    'value' : "20.7"
                                                   }
                                                 ],
-                                       'epochTime' : 1447718400,
-                                       'epochTimeStr' : "2015-11-17T00:00:00Z",
+                                       'epochTime' : 1375689600,
+                                       'epochTimeStr' : "2013-08-05T08:00:00Z",
                                        'x' : "60.17523",
                                        'y' : "24.94459"
                                      },
                                      {
                                        'data' : [
                                                   {
-                                                    'value' : "6.6"
+                                                    'value' : "21.3"
                                                   }
                                                 ],
-                                       'epochTime' : 1447722000,
-                                       'epochTimeStr' : "2015-11-17T01:00:00Z",
+                                       'epochTime' : 1375693200,
+                                       'epochTimeStr' : "2013-08-05T09:00:00Z",
                                        'x' : "60.17523",
                                        'y' : "24.94459"
                                      },
                                      {
                                        'data' : [
                                                   {
-                                                    'value' : "6.6"
+                                                    'value' : "21.8"
                                                   }
                                                 ],
-                                       'epochTime' : 1447725600,
-                                       'epochTimeStr' : "2015-11-17T02:00:00Z",
-                                       'x' : "60.17523",
-                                       'y' : "24.94459"
-                                     },
-                                     {
-                                       'data' : [
-                                                  {
-                                                    'value' : "6.7"
-                                                  }
-                                                ],
-                                       'epochTime' : 1447729200,
-                                       'epochTimeStr' : "2015-11-17T03:00:00Z",
+                                       'epochTime' : 1375696800,
+                                       'epochTimeStr' : "2013-08-05T10:00:00Z",
                                        'x' : "60.17523",
                                        'y' : "24.94459"
                                      }
@@ -102,13 +91,13 @@ Global data object:
    queryNum = 1;
    query_parameters = {
                         'beginTime' : [
-                                        "20151117T000000Z"
+                                        "20130805T080000Z"
                                       ],
                         'crs' : [
                                   "EPSG::4326"
                                 ],
                         'endTime' : [
-                                      "20151117T030000Z"
+                                      "20130805T100000Z"
                                     ],
                         'fmisids' : [
                                       "100971"

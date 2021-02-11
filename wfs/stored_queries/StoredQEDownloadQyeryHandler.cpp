@@ -16,8 +16,8 @@
 #include <smartmet/engines/gis/GdalUtils.h>
 #include <smartmet/engines/querydata/Engine.h>
 #include <smartmet/engines/querydata/MetaQueryOptions.h>
-#include <smartmet/spine/Convenience.h>
 #include <smartmet/macgyver/Exception.h>
+#include <smartmet/spine/Convenience.h>
 #include <algorithm>
 #include <cpl_error.h>
 #include <list>
@@ -51,6 +51,7 @@ const char* P_FORMAT = "format";
 const char* P_PROJECTION = "projection";
 
 const char* DATA_CRS_NAME = "urn:ogc:def:crs:EPSG::4326";
+
 }  // namespace
 
 class ToXYVisitor : public OGRDefaultGeometryVisitor
@@ -688,14 +689,20 @@ boost::shared_ptr<OGRGeometry> StoredQEDownloadQueryHandler::bbox_intersection(
 
     auto model_area = SmartMet::Engine::Gis::bbox2polygon(rect);
 
-    // std::cout << METHOD_NAME << ": " << meta_info.producer << "["
-    //          << pt::to_simple_string(meta_info.originTime) << "]" << std::endl;
-    // std::cout << METHOD_NAME << ": model_area='" << WKT(*model_area) << "'" << std::endl;
+#if 0    
+    std::cout << METHOD_NAME << ": " << meta_info.producer << "["
+              << pt::to_simple_string(meta_info.originTime) << "]" << std::endl;
+    std::cout << METHOD_NAME << ": model_area='" << Engine::Gis::WKT(*model_area) << "'"
+              << std::endl;
+#endif
 
     ToXYVisitor toxy(area);
     query_bbox.accept(&toxy);
 
-    // std::cout << METHOD_NAME << ": query_bbox='" << WKT(*query_bbox) << "'" << std::endl;
+#if 0    
+    std::cout << METHOD_NAME << ": query_bbox after ='" << Engine::Gis::WKT(query_bbox) << "'"
+              << std::endl;
+#endif
 
     OGRGeometry* intersection = model_area->Intersection(&query_bbox);
     if (intersection and not intersection->IsEmpty())
@@ -704,7 +711,11 @@ boost::shared_ptr<OGRGeometry> StoredQEDownloadQueryHandler::bbox_intersection(
       ToLatLonVisitor tolatlon(area);
       result->accept(&tolatlon);
 
-      // std::cout << METHOD_NAME <<": INTERSECTION='" << WKT(*result) << "'" << std::endl;
+#if 0      
+      if (result)
+        std::cout << METHOD_NAME << ": INTERSECTION='" << Engine::Gis::WKT(*result) << "'"
+                  << std::endl;
+#endif
     }
     else if (intersection)
     {

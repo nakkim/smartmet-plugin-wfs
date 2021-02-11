@@ -416,6 +416,7 @@ void bw::GeoServerDataIndex::process_sql_result(pqxx::result& result, const std:
         // Change EPSG axis order if needed.
         // Axis order in the data returned from PostGis is always Long,Lat or Easting,Northing.
         OGRSpatialReference orig_ogr_sr;
+	orig_ogr_sr.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER);
         orig_ogr_sr.importFromEPSGA(rec.orig_srs);
         if (orig_ogr_sr.EPSGTreatsAsLatLong() or orig_ogr_sr.EPSGTreatsAsNorthingEasting())
         {
@@ -431,6 +432,7 @@ void bw::GeoServerDataIndex::process_sql_result(pqxx::result& result, const std:
         // Change EPSG axis order if needed.
         // Axis order in the data returned from PostGis is always Long,Lat or Easting,Northing.
         OGRSpatialReference dest_ogr_sr;
+	dest_ogr_sr.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER);
         dest_ogr_sr.importFromEPSGA(rec.dest_srs);
         if (dest_ogr_sr.EPSGTreatsAsLatLong() or dest_ogr_sr.EPSGTreatsAsNorthingEasting())
         {

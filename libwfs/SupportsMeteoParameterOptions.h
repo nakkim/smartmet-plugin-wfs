@@ -19,7 +19,10 @@ struct MeteoParameterOptionItem
                      // point.
   double missing_value;
   std::string missing_text;
-  MeteoParameterOptionItem() : precision(1), missing_value(32700.0), missing_text("NaN") {}
+  unsigned short sensor_first;
+  unsigned short sensor_last;
+  unsigned short sensor_step;
+  MeteoParameterOptionItem() : precision(1), missing_value(32700.0), missing_text("NaN"), sensor_first(1), sensor_last(1), sensor_step(1) {}
 };
 
 typedef std::map<std::string, MeteoParameterOptionItem> MeteoParameterOptions;
@@ -50,12 +53,29 @@ class SupportsMeteoParameterOptions
   void setDefaultMissingValue(const double& value);
 
   /**
+   * @brief Change the default sensor first number.
+   */
+  void setDefaultSensorFirst(const unsigned short& value);
+
+  /**
+   * @brief Change the default sensor last number.
+   */
+  void setDefaultSensorLast(const unsigned short& value);
+
+  /**
+   * @brief Change the default sensor step number.
+   */
+  void setDefaultSensorStep(const unsigned short& value);
+
+  /**
    * @brief Get meteoparameter options.
    * @param[in] name Meteorological parameter name (case insensitive)
    * @return Meteorological parameter option item.
    */
   std::shared_ptr<MeteoParameterOptionItem> get_meteo_parameter_options(
       const std::string& name) const;
+
+  bool have_meteo_param_options(const std::string& name) const;
 
  private:
   int debug_level;

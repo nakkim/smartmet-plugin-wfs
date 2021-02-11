@@ -119,7 +119,7 @@
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="outputFormat">
-        <ows:AllowedValues><TMPL_foreach supportedFormts as fmt>
+        <ows:AllowedValues><TMPL_foreach supportedFormats as fmt>
           <ows:Value><TMPL_var fmt></ows:Value></TMPL_foreach>
         </ows:AllowedValues>
       </ows:Parameter>

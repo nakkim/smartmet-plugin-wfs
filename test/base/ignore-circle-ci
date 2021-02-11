@@ -1,0 +1,6 @@
+;  No Geoserver available when testing on Circle-CI (required for radar tests)
+GetFeature/radar/RadarAllArea.xml.post			no Geoserver available
+GetFeature/radar/RadarPartOfArea.xml.post
+GetFeature/radar/RadarTest2.xml.post
+GetFeature/radar/prepare-GetFeatureById.xml.post
+GetFeature/radar/GetFeatureById.xml.post
