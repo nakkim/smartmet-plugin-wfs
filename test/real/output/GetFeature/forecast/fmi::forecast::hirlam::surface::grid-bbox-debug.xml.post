@@ -164,7 +164,6 @@ Global data object:
                                               &quot;grib2&quot;
                                             ],
                                  &#39;intersection&#39; : [
-                                                    &quot;24.0000 60.0000&quot;,
                                                     &quot;24.1111 60.0000&quot;,
                                                     &quot;24.2222 60.0000&quot;,
                                                     &quot;24.3333 60.0000&quot;,
@@ -200,7 +199,8 @@ Global data object:
                                                     &quot;24.0000 60.3333&quot;,
                                                     &quot;24.0000 60.2222&quot;,
                                                     &quot;24.0000 60.1111&quot;,
-                                                    &quot;24.0000 60.0000&quot;
+                                                    &quot;24.0000 60.0000&quot;,
+                                                    &quot;24.1111 60.0000&quot;
                                                   ],
                                  &#39;lastTime&#39; : [
                                                 &quot;2013-03-20T06:00:00Z&quot;
