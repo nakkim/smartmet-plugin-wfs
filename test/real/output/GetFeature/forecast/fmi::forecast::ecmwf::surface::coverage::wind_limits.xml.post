@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wfs:FeatureCollection timeStamp="2012-12-12T12:12:12Z" numberMatched="47" numberReturned="47"
+<wfs:FeatureCollection timeStamp="2012-12-12T12:12:12Z" numberMatched="44" numberReturned="44"
   xmlns:wfs="http://www.opengis.net/wfs/2.0" 
   xmlns:gml="http://www.opengis.net/gml/3.2"
   xmlns:om="http://www.opengis.net/om/2.0"
@@ -72,7 +72,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.102944 24.000000,61.000000 24.000000,61.000000 25.000000,60.230737 25.000000,60.185027 24.826781,60.137548 24.587960,60.130488 24.482206,60.108793 24.252078,60.098794 24.055184,60.102944 24.000000</gml:coordinates>
+		    <gml:coordinates>60.047958 24.000000,61.000000 24.000000,61.000000 25.000000,60.203993 25.000000,60.133159 24.733227,60.085352 24.494524,60.078170 24.388791,60.056198 24.158729,60.047958 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -141,7 +141,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.132170 24.000000,61.000000 24.000000,61.000000 25.000000,60.277629 25.000000,60.272456 24.977545,60.215595 24.791251,60.174888 24.607516,60.162835 24.444134,60.128174 24.099931,60.126942 24.069213,60.127889 24.058818,60.132170 24.000000</gml:coordinates>
+		    <gml:coordinates>60.075181 24.000000,61.000000 24.000000,61.000000 25.000000,60.247836 25.000000,60.220885 24.883785,60.163738 24.697626,60.122772 24.513992,60.110528 24.350646,60.075451 24.006546,60.075181 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -210,7 +210,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.159466 24.000000,61.000000 24.000000,61.000000 25.000000,60.306681 25.000000,60.283732 24.892327,60.243117 24.759260,60.211322 24.626597,60.190552 24.411511,60.163622 24.178520,60.153136 24.082444,60.159466 24.000000</gml:coordinates>
+		    <gml:coordinates>60.101649 24.000000,61.000000 24.000000,61.000000 25.000000,60.272427 25.000000,60.271451 24.981916,60.232089 24.798543,60.191270 24.665572,60.159284 24.532988,60.138255 24.317960,60.111038 24.085048,60.101649 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -279,7 +279,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.196295 24.000000,61.000000 24.000000,61.000000 25.000000,60.329259 25.000000,60.291840 24.831052,60.264328 24.734606,60.245526 24.644511,60.219431 24.377520,60.217250 24.358556,60.189103 24.100666,60.196295 24.000000</gml:coordinates>
+		    <gml:coordinates>60.136982 24.000000,61.000000 24.000000,61.000000 25.000000,60.292379 25.000000,60.289941 24.960530,60.240146 24.737250,60.212489 24.640869,60.193562 24.550821,60.167145 24.283904,60.164941 24.264947,60.136479 24.007137,60.136982 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -348,7 +348,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.229973 24.000000,61.000000 24.000000,61.000000 25.000000,60.366489 25.000000,60.300305 24.767084,60.284808 24.710801,60.274778 24.659830,60.263963 24.516731,60.252361 24.338447,60.232626 24.122716,60.229973 24.000000</gml:coordinates>
+		    <gml:coordinates>60.179435 24.000000,61.000000 24.000000,61.000000 25.000000,60.324646 25.000000,60.320555 24.925124,60.248557 24.673264,60.232976 24.617017,60.222876 24.566072,60.211894 24.423005,60.200088 24.244755,60.180095 24.029083,60.179435 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -417,7 +417,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.220214 24.000000,61.000000 24.000000,61.000000 25.000000,60.360142 25.000000,60.295948 24.800009,60.275423 24.721710,60.259107 24.651623,60.243872 24.448635,60.238073 24.355411,60.215239 24.113907,60.220214 24.000000</gml:coordinates>
+		    <gml:coordinates>60.163538 24.000000,61.000000 24.000000,61.000000 25.000000,60.320952 25.000000,60.316437 24.929887,60.244228 24.706198,60.223587 24.627948,60.207172 24.557902,60.191700 24.354958,60.185794 24.261753,60.162670 24.020316,60.163538 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -486,7 +486,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.174924 24.000000,61.000000 24.000000,61.000000 25.000000,60.291020 25.000000,60.276140 24.949707,60.241336 24.761331,60.212506 24.627217,60.202236 24.397759,60.183334 24.244694,60.169016 24.090489,60.174111 24.020738,60.174924 24.000000</gml:coordinates>
+		    <gml:coordinates>60.116629 24.000000,61.000000 24.000000,61.000000 25.000000,60.264948 25.000000,60.264448 24.990015,60.224545 24.855939,60.189488 24.667648,60.160470 24.533605,60.149944 24.304181,60.130851 24.151171,60.116629 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -555,7 +555,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.086235 24.000000,61.000000 24.000000,61.000000 25.000000,60.262948 25.000000,60.212608 24.794723,60.162797 24.601183,60.145518 24.464515,60.105128 24.280846,60.087235 24.124383,60.085262 24.048439,60.086235 24.000000</gml:coordinates>
+		    <gml:coordinates>60.033631 24.000000,61.000000 24.000000,61.000000 25.000000,60.240156 25.000000,60.215656 24.923564,60.160750 24.701105,60.110655 24.507688,60.093206 24.371067,60.052558 24.187504,60.034473 24.031092,60.033631 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -624,7 +624,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.137314 25.000000,60.112894 24.910157,60.055138 24.668986,60.010152 24.521751,60.000000 24.417010,60.000000 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.111107 25.000000,60.060999 24.816765,60.002896 24.575737,60.000000 24.566314,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -693,7 +693,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.074241 25.000000,60.065389 24.964895,60.031389 24.848763,60.000000 24.756174,60.000000 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.042648 25.000000,60.042410 24.985630,60.013476 24.871611,60.000000 24.825852,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -762,7 +762,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.022557 25.000000,60.014635 24.975590,60.000000 24.924286,60.000000 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -1797,7 +1797,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.030082 24.000000,61.000000 24.000000,61.000000 25.000000,60.039143 25.000000,60.038412 24.995979,60.026663 24.884535,60.000000 24.566801,60.000000 24.450340,60.029646 24.020720,60.030082 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -1866,7 +1866,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.161659 25.000000,60.120932 24.900894,60.056097 24.661726,60.006977 24.520115,60.000000 24.474622,60.000000 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.148557 25.000000,60.069040 24.807485,60.003849 24.568476,60.000000 24.557441,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -1935,7 +1935,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.076476 25.000000,60.067152 24.962863,60.031389 24.848763,60.000000 24.799039,60.000000 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,61.000000 24.000000,61.000000 25.000000,60.044362 25.000000,60.044900 24.986967,60.015240 24.869575,60.000000 24.821229,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -2211,7 +2211,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,60.102944 24.000000,60.098794 24.055184,60.108793 24.252078,60.130488 24.482206,60.137548 24.587960,60.185027 24.826781,60.230737 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,60.047958 24.000000,60.056198 24.158729,60.078170 24.388791,60.085352 24.494524,60.133159 24.733227,60.203993 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -2280,7 +2280,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,60.132170 24.000000,60.127889 24.058818,60.126942 24.069213,60.128174 24.099931,60.162835 24.444134,60.174888 24.607516,60.215595 24.791251,60.272456 24.977545,60.277629 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,60.075181 24.000000,60.075451 24.006546,60.110528 24.350646,60.122772 24.513992,60.163738 24.697626,60.220885 24.883785,60.247836 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -2349,7 +2349,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,60.159466 24.000000,60.153136 24.082444,60.163622 24.178520,60.190552 24.411511,60.211322 24.626597,60.243117 24.759260,60.283732 24.892327,60.306681 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,60.101649 24.000000,60.111038 24.085048,60.138255 24.317960,60.159284 24.532988,60.191270 24.665572,60.232089 24.798543,60.271451 24.981916,60.272427 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -2418,7 +2418,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,60.196295 24.000000,60.189103 24.100666,60.217250 24.358556,60.219431 24.377520,60.245526 24.644511,60.264328 24.734606,60.291840 24.831052,60.329259 25.000000,60.031259 25.000000,60.019360 24.939818,60.000000 24.946494,60.000000 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,60.136982 24.000000,60.136479 24.007137,60.164941 24.264947,60.167145 24.283904,60.193562 24.550821,60.212489 24.640869,60.240146 24.737250,60.289941 24.960530,60.292379 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -2487,7 +2487,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,60.229973 24.000000,60.232626 24.122716,60.252361 24.338447,60.263963 24.516731,60.274778 24.659830,60.284808 24.710801,60.300305 24.767084,60.366489 25.000000,60.046353 25.000000,60.043616 24.989983,60.025649 24.892213,60.000000 24.904475,60.000000 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,60.179435 24.000000,60.180095 24.029083,60.200088 24.244755,60.211894 24.423005,60.222876 24.566072,60.232976 24.617017,60.248557 24.673264,60.320555 24.925124,60.324646 25.000000,60.008459 25.000000,60.011571 24.969060,60.000000 24.926962,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -2556,7 +2556,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,60.220214 24.000000,60.215239 24.113907,60.238073 24.355411,60.243872 24.448635,60.259107 24.651623,60.275423 24.721710,60.295948 24.800009,60.360142 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,60.163538 24.000000,60.162670 24.020316,60.185794 24.261753,60.191700 24.354958,60.207172 24.557902,60.223587 24.627948,60.244228 24.706198,60.316437 24.929887,60.320952 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -2625,7 +2625,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,60.174924 24.000000,60.174111 24.020738,60.169016 24.090489,60.183334 24.244694,60.202236 24.397759,60.212506 24.627217,60.241336 24.761331,60.276140 24.949707,60.291020 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,60.116629 24.000000,60.130851 24.151171,60.149944 24.304181,60.160470 24.533605,60.189488 24.667648,60.224545 24.855939,60.264448 24.990015,60.264948 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -2694,7 +2694,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,60.086235 24.000000,60.085262 24.048439,60.087235 24.124383,60.105128 24.280846,60.145518 24.464515,60.162797 24.601183,60.212608 24.794723,60.262948 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
+		    <gml:coordinates>60.000000 24.000000,60.033631 24.000000,60.034473 24.031092,60.052558 24.187504,60.093206 24.371067,60.110655 24.507688,60.160750 24.701105,60.215656 24.923564,60.240156 25.000000,60.000000 25.000000,60.000000 24.000000</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -2763,7 +2763,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.417010,60.010152 24.521751,60.055138 24.668986,60.112894 24.910157,60.137314 25.000000,60.000000 25.000000,60.000000 24.417010</gml:coordinates>
+		    <gml:coordinates>60.000000 24.566314,60.002896 24.575737,60.060999 24.816765,60.111107 25.000000,60.000000 25.000000,60.000000 24.566314</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -2832,7 +2832,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.756174,60.031389 24.848763,60.065389 24.964895,60.074241 25.000000,60.000000 25.000000,60.000000 24.756174</gml:coordinates>
+		    <gml:coordinates>60.000000 24.825852,60.013476 24.871611,60.042410 24.985630,60.042648 25.000000,60.000000 25.000000,60.000000 24.825852</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -2852,7 +2852,7 @@
 	<!-- Data time stamp -->
 	<om:phenomenonTime>
 	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-42">
-	  <gml:timePosition>2008-08-06T00:00:00Z</gml:timePosition>
+	  <gml:timePosition>2008-08-08T00:00:00Z</gml:timePosition>
 	</gml:TimeInstant>
       </om:phenomenonTime>
       <!-- Model analysis time -->
@@ -2891,7 +2891,7 @@
 </om:featureOfInterest>
   <om:result>
     
-      <fmicov:phenomenonArea dateTime="2008-08-06T00:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      <fmicov:phenomenonArea dateTime="2008-08-08T00:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
       gml:id="fmicov-phenomenon-area-wfs-member-42-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
       
 	<gml:surfaceMember>
@@ -2901,7 +2901,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.924286,60.014635 24.975590,60.022557 25.000000,60.000000 25.000000,60.000000 24.924286</gml:coordinates>
+		    <gml:coordinates>60.000000 24.557441,60.003849 24.568476,60.069040 24.807485,60.148557 25.000000,60.000000 25.000000,60.000000 24.557441</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -2921,7 +2921,7 @@
 	<!-- Data time stamp -->
 	<om:phenomenonTime>
 	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-43">
-	  <gml:timePosition>2008-08-07T21:00:00Z</gml:timePosition>
+	  <gml:timePosition>2008-08-08T03:00:00Z</gml:timePosition>
 	</gml:TimeInstant>
       </om:phenomenonTime>
       <!-- Model analysis time -->
@@ -2960,7 +2960,7 @@
 </om:featureOfInterest>
   <om:result>
     
-      <fmicov:phenomenonArea dateTime="2008-08-07T21:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      <fmicov:phenomenonArea dateTime="2008-08-08T03:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
       gml:id="fmicov-phenomenon-area-wfs-member-43-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
       
 	<gml:surfaceMember>
@@ -2970,23 +2970,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.000000,60.030082 24.000000,60.029646 24.020720,60.000000 24.450340,60.000000 24.000000</gml:coordinates>
-		  </gml:LinearRing>
-		</gml:exterior>
-		
-	      </gml:PolygonPatch>
-	    </gml:patches>
-	  </gml:Surface>
-	</gml:surfaceMember>
-      
-	<gml:surfaceMember>
-	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-43-surface-member-2">
-	    <gml:patches>
-	      <gml:PolygonPatch>
-		<!-- exterior ring -->
-		<gml:exterior>
-		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.566801,60.026663 24.884535,60.038412 24.995979,60.039143 25.000000,60.000000 25.000000,60.000000 24.566801</gml:coordinates>
+		    <gml:coordinates>60.000000 24.821229,60.015240 24.869575,60.044900 24.986967,60.044362 25.000000,60.000000 25.000000,60.000000 24.821229</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
@@ -3006,7 +2990,7 @@
 	<!-- Data time stamp -->
 	<om:phenomenonTime>
 	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-44">
-	  <gml:timePosition>2008-08-08T00:00:00Z</gml:timePosition>
+	  <gml:timePosition>2008-08-05T06:00:00Z</gml:timePosition>
 	</gml:TimeInstant>
       </om:phenomenonTime>
       <!-- Model analysis time -->
@@ -3045,7 +3029,7 @@
 </om:featureOfInterest>
   <om:result>
     
-      <fmicov:phenomenonArea dateTime="2008-08-08T00:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
+      <fmicov:phenomenonArea dateTime="2008-08-05T06:00:00Z" parameter="WindSpeedMS" unit="m/s" low="15" high="25"
       gml:id="fmicov-phenomenon-area-wfs-member-44-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
       
 	<gml:surfaceMember>
@@ -3055,214 +3039,7 @@
 		<!-- exterior ring -->
 		<gml:exterior>
 		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.474622,60.006977 24.520115,60.056097 24.661726,60.120932 24.900894,60.161659 25.000000,60.000000 25.000000,60.000000 24.474622</gml:coordinates>
-		  </gml:LinearRing>
-		</gml:exterior>
-		
-	      </gml:PolygonPatch>
-	    </gml:patches>
-	  </gml:Surface>
-	</gml:surfaceMember>
-      
-    </fmicov:phenomenonArea>
-  
-</om:result>
-</omso:GridSeriesObservation>
-</wfs:member>
-
-    <wfs:member>
-      <omso:GridSeriesObservation gml:id="wfs-member-45">
-	<!-- Data time stamp -->
-	<om:phenomenonTime>
-	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-45">
-	  <gml:timePosition>2008-08-08T03:00:00Z</gml:timePosition>
-	</gml:TimeInstant>
-      </om:phenomenonTime>
-      <!-- Model analysis time -->
-      <om:resultTime>
-	<gml:TimeInstant gml:id="result-time-wfs-member-45">
-	<gml:timePosition>2008-08-04T09:00:00Z</gml:timePosition>
-      </gml:TimeInstant>
-    </om:resultTime>
-    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
-    <om:parameter>
-      <om:NamedValue>
-        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
-        <om:value>
-          <gml:TimeInstant gml:id="analysis-time-wfs-member-45">
-            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
-          </gml:TimeInstant>
-        </om:value>
-      </om:NamedValue>
-    </om:parameter>
-    <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
-    <om:featureOfInterest>
-      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-45">
-      <sam:sampledFeature/>
-      <!-- Sampling feature is actually a requested bbox -->
-      <sams:shape>
-	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-45">
-        <gml:exterior>
-          <gml:LinearRing>
-            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
-          </gml:LinearRing>
-        </gml:exterior>
-      </gml:Polygon>
-    </sams:shape>
-  </sams:SF_SpatialSamplingFeature>
-</om:featureOfInterest>
-  <om:result>
-    
-      <fmicov:phenomenonArea dateTime="2008-08-08T03:00:00Z" parameter="WindSpeedMS" unit="m/s" low="10" high="15"
-      gml:id="fmicov-phenomenon-area-wfs-member-45-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
-      
-	<gml:surfaceMember>
-	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-45-surface-member-1">
-	    <gml:patches>
-	      <gml:PolygonPatch>
-		<!-- exterior ring -->
-		<gml:exterior>
-		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.799039,60.031389 24.848763,60.067152 24.962863,60.076476 25.000000,60.000000 25.000000,60.000000 24.799039</gml:coordinates>
-		  </gml:LinearRing>
-		</gml:exterior>
-		
-	      </gml:PolygonPatch>
-	    </gml:patches>
-	  </gml:Surface>
-	</gml:surfaceMember>
-      
-    </fmicov:phenomenonArea>
-  
-</om:result>
-</omso:GridSeriesObservation>
-</wfs:member>
-
-    <wfs:member>
-      <omso:GridSeriesObservation gml:id="wfs-member-46">
-	<!-- Data time stamp -->
-	<om:phenomenonTime>
-	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-46">
-	  <gml:timePosition>2008-08-05T03:00:00Z</gml:timePosition>
-	</gml:TimeInstant>
-      </om:phenomenonTime>
-      <!-- Model analysis time -->
-      <om:resultTime>
-	<gml:TimeInstant gml:id="result-time-wfs-member-46">
-	<gml:timePosition>2008-08-04T09:00:00Z</gml:timePosition>
-      </gml:TimeInstant>
-    </om:resultTime>
-    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
-    <om:parameter>
-      <om:NamedValue>
-        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
-        <om:value>
-          <gml:TimeInstant gml:id="analysis-time-wfs-member-46">
-            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
-          </gml:TimeInstant>
-        </om:value>
-      </om:NamedValue>
-    </om:parameter>
-    <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
-    <om:featureOfInterest>
-      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-46">
-      <sam:sampledFeature/>
-      <!-- Sampling feature is actually a requested bbox -->
-      <sams:shape>
-	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-46">
-        <gml:exterior>
-          <gml:LinearRing>
-            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
-          </gml:LinearRing>
-        </gml:exterior>
-      </gml:Polygon>
-    </sams:shape>
-  </sams:SF_SpatialSamplingFeature>
-</om:featureOfInterest>
-  <om:result>
-    
-      <fmicov:phenomenonArea dateTime="2008-08-05T03:00:00Z" parameter="WindSpeedMS" unit="m/s" low="15" high="25"
-      gml:id="fmicov-phenomenon-area-wfs-member-46-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
-      
-	<gml:surfaceMember>
-	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-46-surface-member-1">
-	    <gml:patches>
-	      <gml:PolygonPatch>
-		<!-- exterior ring -->
-		<gml:exterior>
-		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.882553,60.019360 24.939818,60.031259 25.000000,60.000000 25.000000,60.000000 24.882553</gml:coordinates>
-		  </gml:LinearRing>
-		</gml:exterior>
-		
-	      </gml:PolygonPatch>
-	    </gml:patches>
-	  </gml:Surface>
-	</gml:surfaceMember>
-      
-    </fmicov:phenomenonArea>
-  
-</om:result>
-</omso:GridSeriesObservation>
-</wfs:member>
-
-    <wfs:member>
-      <omso:GridSeriesObservation gml:id="wfs-member-47">
-	<!-- Data time stamp -->
-	<om:phenomenonTime>
-	  <gml:TimeInstant gml:id="phenomenon-time-wfs-member-47">
-	  <gml:timePosition>2008-08-05T06:00:00Z</gml:timePosition>
-	</gml:TimeInstant>
-      </om:phenomenonTime>
-      <!-- Model analysis time -->
-      <om:resultTime>
-	<gml:TimeInstant gml:id="result-time-wfs-member-47">
-	<gml:timePosition>2008-08-04T09:00:00Z</gml:timePosition>
-      </gml:TimeInstant>
-    </om:resultTime>
-    <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
-    <om:parameter>
-      <om:NamedValue>
-        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
-        <om:value>
-          <gml:TimeInstant gml:id="analysis-time-wfs-member-47">
-            <gml:timePosition>2008-08-04T12:00:00Z</gml:timePosition>
-          </gml:TimeInstant>
-        </om:value>
-      </om:NamedValue>
-    </om:parameter>
-    <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
-    <om:featureOfInterest>
-      <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-47">
-      <sam:sampledFeature/>
-      <!-- Sampling feature is actually a requested bbox -->
-      <sams:shape>
-	<gml:Polygon gml:id="spatial-sampling-feature-requested-bounding-box-wfs-member-47">
-        <gml:exterior>
-          <gml:LinearRing>
-            <gml:coordinates>60.000000,24.000000 61.000000,24.000000 61.000000,25.000000 60.000000,25.000000 60.000000,24.000000</gml:coordinates>
-          </gml:LinearRing>
-        </gml:exterior>
-      </gml:Polygon>
-    </sams:shape>
-  </sams:SF_SpatialSamplingFeature>
-</om:featureOfInterest>
-  <om:result>
-    
-      <fmicov:phenomenonArea dateTime="2008-08-05T06:00:00Z" parameter="WindSpeedMS" unit="m/s" low="15" high="25"
-      gml:id="fmicov-phenomenon-area-wfs-member-47-WindSpeedMS"  srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
-      
-	<gml:surfaceMember>
-	  <gml:Surface gml:id="fmicov-phenomenon-area-WindSpeedMS-wfs-member-47-surface-member-1">
-	    <gml:patches>
-	      <gml:PolygonPatch>
-		<!-- exterior ring -->
-		<gml:exterior>
-		  <gml:LinearRing>
-		    <gml:coordinates>60.000000 24.796687,60.025649 24.892213,60.043616 24.989983,60.046353 25.000000,60.000000 25.000000,60.000000 24.796687</gml:coordinates>
+		    <gml:coordinates>60.000000 24.926962,60.011571 24.969060,60.008459 25.000000,60.000000 25.000000,60.000000 24.926962</gml:coordinates>
 		  </gml:LinearRing>
 		</gml:exterior>
 		
