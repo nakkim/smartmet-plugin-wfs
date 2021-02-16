@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 21.2.3
+Version: 21.2.16
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -17,13 +17,12 @@ BuildRequires: boost169-devel
 BuildRequires: ctpp2-devel
 BuildRequires: fmt-devel >= 7.1.3
 BuildRequires: gdal32-devel
-BuildRequires: fmt-devel >= 7.1.3
 BuildRequires: jsoncpp-devel
 BuildRequires: libconfig-devel >= 1.7.2
 BuildRequires: libcurl-devel
 BuildRequires: xerces-c-devel
 BuildRequires: xqilla-devel
-BuildRequires: libpqxx-devel
+BuildRequires: libpqxx-devel < 1:7.0
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-spine-devel >= 21.1.29
@@ -45,7 +44,7 @@ Requires: ctpp2
 Requires: fmt >= 7.1.3
 Requires: libconfig >= 1.7.2
 Requires: libcurl
-Requires: libpqxx
+Requires: libpqxx < 1:7.0
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 21.2.2
 Requires: smartmet-library-macgyver >= 21.1.25
@@ -75,16 +74,8 @@ Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-wfs < 16.11.1
 Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 
-#TestRequires: libcurl-devel
-#TestRequires: openssl-devel
-#TestRequires: jsoncpp-devel
-#TestRequires: libconfig-devel
-#TestRequires: bzip2-devel
-#TestRequires: zlib-devel
 #TestRequires: gcc-c++
-#TestRequires: xerces-c-devel
-#TestRequires: xqilla-devel
-#TestRequires: ctpp2-devel
+#TestRequires: ctpp2
 #TestRequires: smartmet-test-db >= 20.6.9
 #TestRequires: smartmet-test-data >= 20.6.30
 #TestRequires: smartmet-library-gis-devel >= 21.1.22
@@ -94,7 +85,7 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: smartmet-engine-gis-devel >= 21.1.14
 #TestRequires: smartmet-engine-querydata-devel >= 21.1.25
 %if %{with observation}
-#TestRequires: smartmet-engine-observation-devel >= 20.10.29
+#TestRequires: smartmet-engine-observation >= 20.10.29
 %endif
 #TestRequires: gdal32-devel
 #TestRequires: boost169-devel
@@ -105,6 +96,8 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: boost169-system
 #TestRequires: boost169-thread
 #TestRequires: boost169-program-options
+# Required by top level Makefile
+#TestRequires: jsoncpp-devel
 
 %description
 SmartMet WFS plugin
@@ -147,11 +140,21 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/gribwfs/request/*.h
 
 %changelog
-* Wed Feb  3 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.2.3-1.fmi
+* Tue Feb 16 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.2.16-1.fmi
+- Repackaged due to NFmiArea ABI changes
+
+* Thu Feb 11 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.2.11-1.fmi
+- Merged master and WGS84 branches
+
+* Wed Feb 3 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.2.3-1.fmi
+- Support for sensors (INSPIRE-874)
 - Base library API changes
 
 * Wed Jan 27 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.1.27-1.fmi
 - Repackaged due to base library ABI changes
+
+* Mon Jan 25 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.1.25-1.fmi
+- Repackaged due to DirectoryMonitor API changes
 
 * Tue Jan 19 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.1.19-1.fmi
 - Repackaged due to base library ABI changes
@@ -161,6 +164,9 @@ rm -rf $RPM_BUILD_ROOT
 
 * Mon Jan 11 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.1.11-1.fmi
 - Repackaged due to grid-files API changes
+
+* Fri Jan  8 2021 Andris Pavenis <andris.pavenis@fmi.fi> - 21.1.8-1.fmi
+- Compatibility with RHEL8 update
 
 * Mon Jan  4 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.1.4-1.fmi
 - Ported to GDAL 3.2
@@ -240,7 +246,10 @@ rm -rf $RPM_BUILD_ROOT
 * Tue Aug 11 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.8.11-1.fmi
 - Speed improvements
 
-* Thu Jul 30 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.7.30-1.fmi
+* Fri Jul 31 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.7.31-1.fmi
+- Repackaged due to libpqxx upgrade
+
+* Wed Jul 22 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.7.22-1.fmi
 - Stored query configuration support update
 - Refaktorointi
 
@@ -279,6 +288,9 @@ rm -rf $RPM_BUILD_ROOT
 
 * Thu Apr 30 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.30-1.fmi
 - Repackaged due to base library API changes
+
+* Tue Apr 28 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.28-1.fmi
+- Use GDAL 3.0
 
 * Sat Apr 18 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.18-1.fmi
 - Upgraded to Boost 1.69
@@ -349,11 +361,17 @@ rm -rf $RPM_BUILD_ROOT
 * Thu Jan 16 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.1.16-1.fmi
 - Repackaged due to base library API changes
 
+* Thu Dec 12 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.12.12-1.fmi
+- Upgrade to GDAL 3.0
+
 * Wed Dec 11 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.12.11-1.fmi
 - Fixed handling of "{name}.raw" parameters
 
 * Wed Dec  4 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.12.4-1.fmi
 - Repackaged due to base library changes
+
+* Fri Nov 29 2019 Andris Pavenis <andris.pavenis@fmi.fi> - 19.11.29-1.fmi
+- Update monitoring stored query configuration changes
 
 * Fri Nov 22 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.11.22-1.fmi
 - Repackaged due to API changes in grid-content library

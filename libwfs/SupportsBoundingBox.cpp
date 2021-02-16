@@ -1,7 +1,7 @@
 #include "SupportsBoundingBox.h"
 #include <boost/algorithm/string.hpp>
-#include <ogr_geometry.h>
 #include <macgyver/Exception.h>
+#include <ogr_geometry.h>
 
 namespace bw = SmartMet::Plugin::WFS;
 namespace ba = boost::algorithm;
@@ -13,8 +13,9 @@ const char* bw::SupportsBoundingBox::P_BOUNDING_BOX = "boundingBox";
 bw::SupportsBoundingBox::SupportsBoundingBox(StoredQueryConfig::Ptr config,
                                              SmartMet::Spine::CRSRegistry& crs_registry,
                                              bool mandatory)
-    : StoredQueryParamRegistry(config)
-    , SupportsExtraHandlerParams(config, false), crs_registry(crs_registry)
+    : StoredQueryParamRegistry(config),
+      SupportsExtraHandlerParams(config, false),
+      crs_registry(crs_registry)
 {
   try
   {
@@ -149,6 +150,7 @@ bool bw::SupportsBoundingBox::isInverseAxisOrderPossible(const std::string& crs)
     if (crs_registry.get_attribute(crs, "epsg", &epsg))
     {
       OGRSpatialReference sr;
+      sr.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER);
       sr.importFromEPSGA(epsg);
       if (sr.EPSGTreatsAsLatLong() or sr.EPSGTreatsAsNorthingEasting())
         return true;

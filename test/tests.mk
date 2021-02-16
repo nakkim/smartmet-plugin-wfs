@@ -25,6 +25,11 @@ all:
 
 TEST_DEPEND :=
 
+# Examples (default: run smartmet-plugin-test directly)
+#    TEST_RUNNER="gdb --args"
+#    TEST_RUNNER="valgrind --log-file=valgrind.out --leak-check=full --leak-resolution=high"
+TEST_RUNNER ?=
+
 ifdef CI
 TEST_TARGETS := test-sqlite
 EXTRA_IGNORE := ignore-circle-ci
@@ -46,35 +51,32 @@ test:	all
         $$ok
 
 clean:
-	rm -fv $(shell find input -type f -a -name '*.xml.post' -o -name '*.xml.get')
-	rm -rf failures-oracle failures-postgresql failures-sqlite
-	rm -vf cnd/wfs_plugin_test_*.conf
+	@rm -fv $(shell find input -type f -a -name '*.xml.post' -o -name '*.xml.get')
+	@rm -rf failures-oracle failures-postgresql failures-sqlite
+	@rm -vf cnd/wfs_plugin_test_*.conf
 
 test-oracle:		DB_TYPE=oracle
 test-postgresql:	DB_TYPE=postgresql
 test-sqlite:		DB_TYPE=sqlite
 
-test-oracle test-postgresql test-sqlite: ../PluginTest s-input-files $(TEST_DEPEND)
+test-oracle test-postgresql test-sqlite: s-input-files $(TEST_DEPEND)
 	rm -rf failures-$(DB_TYPE)
 	mkdir -p failures-$(DB_TYPE)
 	cat $(TOP)/cnf/wfs_plugin_test.conf.in | sed -e 's:@TARGET@:$(DB_TYPE):g' \
 		>cnf/wfs_plugin_test_$(DB_TYPE).conf
-	../PluginTest \
+	$(TEST_RUNNER) smartmet-plugin-test --handler /wfs \
 		--reactor-config cnf/wfs_plugin_test_$(DB_TYPE).conf \
 		--failures-dir failures-$(DB_TYPE) \
-		$(foreach fn, $(EXTRA_IGNORE), --ignore $(fn)) \
-		--ignore ignore-$(DB_TYPE)
+		$(foreach fn, ignore-$(DB_TYPE) $(EXTRA_IGNORE), --ignore $(fn)) \
+		--timeout 300
 
 s-input-files:
-	rm -f $(shell find input -name '*.xml.post' -o -name '*.kvp.get')
-	$(MAKE) $(XML_POST_TESTS)
-	$(MAKE) $(KVP_GET_TESTS)
+	@rm -f $(shell find input -name '*.xml.post' -o -name '*.kvp.get')
+	@$(MAKE) $(XML_POST_TESTS)
+	@$(MAKE) $(KVP_GET_TESTS)
 
 input/%.xml.post : xml/%.xml ; @mkdir -p $(shell dirname $@)
 	@perl ../MakeXMLPOST.pl $< $@ /wfs
 
 input/%.kvp.get : kvp/%.kvp ; @mkdir -p $(shell dirname $@)
 	@perl ../MakeKVPGET.pl $< $@ /wfs
-
-../PluginTest:
-	$(MAKE) -C .. PluginTest

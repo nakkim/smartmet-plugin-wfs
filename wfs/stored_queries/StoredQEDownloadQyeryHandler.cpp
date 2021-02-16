@@ -9,7 +9,6 @@
 #include <boost/format.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <boost/shared_array.hpp>
-#include <cpl_error.h>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
 #include <newbase/NFmiQueryData.h>
@@ -17,9 +16,10 @@
 #include <smartmet/engines/gis/GdalUtils.h>
 #include <smartmet/engines/querydata/Engine.h>
 #include <smartmet/engines/querydata/MetaQueryOptions.h>
-#include <smartmet/spine/Convenience.h>
 #include <smartmet/macgyver/Exception.h>
+#include <smartmet/spine/Convenience.h>
 #include <algorithm>
+#include <cpl_error.h>
 #include <list>
 #include <string>
 
@@ -51,7 +51,40 @@ const char* P_FORMAT = "format";
 const char* P_PROJECTION = "projection";
 
 const char* DATA_CRS_NAME = "urn:ogc:def:crs:EPSG::4326";
+
 }  // namespace
+
+class ToXYVisitor : public OGRDefaultGeometryVisitor
+{
+ public:
+  ToXYVisitor(const NFmiArea& area) : m_area(area) {}
+
+  void visit(OGRPoint* point) override
+  {
+    auto tmp = m_area.ToXY(NFmiPoint(point->getX(), point->getY()));
+    point->setX(tmp.X());
+    point->setY(tmp.Y());
+  }
+
+ private:
+  const NFmiArea& m_area;
+};
+
+class ToLatLonVisitor : public OGRDefaultGeometryVisitor
+{
+ public:
+  ToLatLonVisitor(const NFmiArea& area) : m_area(area) {}
+
+  void visit(OGRPoint* point) override
+  {
+    auto tmp = m_area.ToLatLon(NFmiPoint(point->getX(), point->getY()));
+    point->setX(tmp.X());
+    point->setY(tmp.Y());
+  }
+
+ private:
+  const NFmiArea& m_area;
+};
 
 StoredQEDownloadQueryHandler::StoredQEDownloadQueryHandler(
     SmartMet::Spine::Reactor* reactor,
@@ -656,23 +689,33 @@ boost::shared_ptr<OGRGeometry> StoredQEDownloadQueryHandler::bbox_intersection(
 
     auto model_area = SmartMet::Engine::Gis::bbox2polygon(rect);
 
-    // std::cout << METHOD_NAME << ": " << meta_info.producer << "["
-    //          << pt::to_simple_string(meta_info.originTime) << "]" << std::endl;
-    // std::cout << METHOD_NAME << ": model_area='" << WKT(*model_area) << "'" << std::endl;
+#if 0    
+    std::cout << METHOD_NAME << ": " << meta_info.producer << "["
+              << pt::to_simple_string(meta_info.originTime) << "]" << std::endl;
+    std::cout << METHOD_NAME << ": model_area='" << Engine::Gis::WKT(*model_area) << "'"
+              << std::endl;
+#endif
 
-    SmartMet::Engine::Gis::GeometryConv conv1(boost::bind(&NFmiArea::ToXY, &area, ::_1));
-    query_bbox.transform(&conv1);
+    ToXYVisitor toxy(area);
+    query_bbox.accept(&toxy);
 
-    // std::cout << METHOD_NAME << ": query_bbox='" << WKT(*query_bbox) << "'" << std::endl;
+#if 0    
+    std::cout << METHOD_NAME << ": query_bbox after ='" << Engine::Gis::WKT(query_bbox) << "'"
+              << std::endl;
+#endif
 
     OGRGeometry* intersection = model_area->Intersection(&query_bbox);
     if (intersection and not intersection->IsEmpty())
     {
       result.reset(intersection);
-      SmartMet::Engine::Gis::GeometryConv conv2(boost::bind(&NFmiArea::ToLatLon, &area, ::_1));
-      result->transform(&conv2);
+      ToLatLonVisitor tolatlon(area);
+      result->accept(&tolatlon);
 
-      // std::cout << METHOD_NAME <<": INTERSECTION='" << WKT(*result) << "'" << std::endl;
+#if 0      
+      if (result)
+        std::cout << METHOD_NAME << ": INTERSECTION='" << Engine::Gis::WKT(*result) << "'"
+                  << std::endl;
+#endif
     }
     else if (intersection)
     {

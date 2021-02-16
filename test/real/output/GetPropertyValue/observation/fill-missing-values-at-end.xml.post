@@ -6,9 +6,16 @@
       <gml:DataBlock>
         <gml:rangeParameters/>
         <gml:doubleOrNilReasonTupleList>
-                -16000063 Helsinki-Vantaa Airport 19.8 
-                -16000150 Kaisaniemi 20.7 
-                -16000138 Kumpula 20.7 
+                20130805T084000 19.7 
+                20130805T084200 NaN 
+                20130805T084400 NaN 
+                20130805T084600 NaN 
+                20130805T084800 NaN 
+                20130805T085000 20.0 
+                20130805T085200 NaN 
+                20130805T085400 NaN 
+                20130805T085600 NaN 
+                20130805T085800 NaN 
                 </gml:doubleOrNilReasonTupleList>
       </gml:DataBlock>
     </gml:rangeSet>

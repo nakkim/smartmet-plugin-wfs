@@ -1,6 +1,6 @@
 #include "Plugin.h"
-#include <spine/PluginTest.h>
 #include <macgyver/Exception.h>
+#include <spine/PluginTest.h>
 
 using namespace std;
 
@@ -31,14 +31,14 @@ int main(int argc, char* argv[])
     options.defaultlogging = false;
     options.configfile = "cnf/reactor.conf";
 
-    if(!options.parse(argc, argv))
+    if (!options.parse(argc, argv))
       exit(1);
 
-    return SmartMet::Spine::PluginTest::test(options, prelude, false, 10);
+    return SmartMet::Spine::PluginTest::test(options, prelude, 10);
   }
   catch (...)
   {
-    Fmi::Exception exception(BCP,"Service call failed!",nullptr);
+    Fmi::Exception exception(BCP, "Service call failed!", nullptr);
     exception.printError();
     return -1;
   }

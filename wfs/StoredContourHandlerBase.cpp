@@ -139,7 +139,6 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_qEngine(
         std::size_t qhash = SmartMet::Engine::Querydata::hash_value(queryParameter.q);
         auto valueshash = qhash;
         boost::hash_combine(valueshash, options.data_hash_value());
-        std::string wkt = queryParameter.q->area().WKT();
 
         // Select the data
 
@@ -165,16 +164,14 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_qEngine(
         }
 
         auto matrix = q_engine->getValues(queryParameter.q, valueshash, options.time);
-        CoordinatesPtr coords =
-            q_engine->getWorldCoordinates(queryParameter.q, &queryParameter.sr);
+        CoordinatesPtr coords = q_engine->getWorldCoordinates(queryParameter.q, queryParameter.sr);
 
         geoms = contour_engine->contour(qhash,
-                                        wkt,
+                                        queryParameter.q->SpatialReference(),
+                                        queryParameter.sr,
                                         *matrix,
-                                        coords,
-                                        options,
-                                        queryParameter.q->needsWraparound(),
-                                        &queryParameter.sr);
+                                        *coords,
+                                        options);
       }
       catch (const std::exception& e)
       {
@@ -453,7 +450,7 @@ void bw::StoredContourQueryHandler::parsePolygon(OGRPolygon* polygon,
 
 void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
                                           const std::string& language,
-					  const boost::optional<std::string>& hostname,
+                                          const boost::optional<std::string>& hostname,
                                           std::ostream& output) const
 {
   try
@@ -494,6 +491,7 @@ void bw::StoredContourQueryHandler::query_qEngine(const StoredQuery& stored_quer
 
     std::string targetURN("urn:ogc:def:crs:" + requestedCRS);
     OGRSpatialReference sr;
+    sr.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER);
     if (sr.importFromURN(targetURN.c_str()) != OGRERR_NONE)
     {
       Fmi::Exception exception(BCP, "Invalid crs '" + requestedCRS + "'!");
@@ -1028,6 +1026,7 @@ void bw::StoredContourQueryHandler::parseQueryResults(
   {
     // create targer spatial reference to get precision and coordinate order
     OGRSpatialReference targetSRS;
+    targetSRS.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER);
     std::string targetURN("urn:ogc:def:crs:" + requestedCRS);
     targetSRS.importFromURN(targetURN.c_str());
     targetSRS.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER);
