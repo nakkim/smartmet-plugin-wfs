@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 21.2.11
+Version: 21.2.16
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -32,9 +32,9 @@ BuildRequires: smartmet-engine-contour-devel >= 21.2.11
 BuildRequires: smartmet-engine-geonames-devel >= 21.1.25
 BuildRequires: smartmet-engine-gis-devel >= 21.2.10
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 21.2.10
+BuildRequires: smartmet-engine-observation-devel >= 21.2.11
 %endif
-BuildRequires: smartmet-engine-querydata-devel >= 21.2.10
+BuildRequires: smartmet-engine-querydata-devel >= 21.2.15
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
 Requires: fmt >= 7.1.3
@@ -50,9 +50,9 @@ Requires: smartmet-engine-contour >= 21.2.11
 Requires: smartmet-engine-geonames >= 21.1.25
 Requires: smartmet-engine-gis >= 21.2.10
 %if %{with observation}
-Requires: smartmet-engine-observation >= 21.2.10
+Requires: smartmet-engine-observation >= 21.2.11
 %endif
-Requires: smartmet-engine-querydata >= 21.2.10
+Requires: smartmet-engine-querydata >= 21.2.15
 Requires: smartmet-server >= 21.1.14
 Requires: xerces-c
 Requires: xqilla
@@ -74,7 +74,7 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: smartmet-library-spine >= 21.2.5
 #TestRequires: smartmet-engine-geonames >= 20.8.23
 #TestRequires: smartmet-engine-gis >= 21.2.10
-#TestRequires: smartmet-engine-querydata >= 21.2.10
+#TestRequires: smartmet-engine-querydata >= 21.2.15
 %if %{with observation}
 #TestRequires: smartmet-engine-observation >= 20.10.29
 %endif
@@ -124,6 +124,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Tue Feb 16 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.2.16-1.fmi
+- Repackaged due to NFmiArea ABI changes
+
 * Thu Feb 11 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.2.11-1.fmi
 - Merged master and WGS84 branches
 
