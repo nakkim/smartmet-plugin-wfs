@@ -74,6 +74,7 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: smartmet-engine-geonames >= 20.8.23
 #TestRequires: smartmet-engine-gis >= 21.2.10
 #TestRequires: smartmet-engine-querydata >= 21.2.18
+#TestRequires: smartmet-engine-contour >= 21.2.18
 %if %{with observation}
 #TestRequires: smartmet-engine-observation >= 20.10.29
 %endif
