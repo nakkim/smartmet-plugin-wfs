@@ -21,6 +21,7 @@ const char *bw::SupportsLocationParameters::P_MAX_DISTANCE = "maxDistance";
 const char *bw::SupportsLocationParameters::P_KEYWORD = "keyword";
 const char *bw::SupportsLocationParameters::P_FMISIDS = "fmisids";
 const char *bw::SupportsLocationParameters::P_WMOS = "wmos";
+const char *bw::SupportsLocationParameters::P_LPNNS = "lpnns";
 const char *bw::SupportsLocationParameters::P_KEYWORD_OVERWRITABLE = "keyword_overwritable";
 
 void bw::SupportsLocationParameters::engOrFinToEnOrFi(std::string &language)
@@ -50,7 +51,8 @@ bw::SupportsLocationParameters::SupportsLocationParameters(
       support_keywords((options & SUPPORT_KEYWORDS) != 0),
       include_fmisids((options & INCLUDE_FMISIDS) != 0),
       include_geoids((options & INCLUDE_GEOIDS) != 0),
-      include_wmos((options & INCLUDE_WMOS) != 0)
+      include_wmos((options & INCLUDE_WMOS) != 0),
+      include_lpnns((options & INCLUDE_LPNNS) != 0)
 {
   try
   {
@@ -61,6 +63,8 @@ bw::SupportsLocationParameters::SupportsLocationParameters(
     register_array_param<int64_t>(P_GEOIDS);
     if (include_wmos)
       register_array_param<int64_t>(P_WMOS);
+    if (include_lpnns)
+      register_array_param<int64_t>(P_LPNNS);
     register_scalar_param<double>(P_MAX_DISTANCE);
     if (support_keywords)
     {
@@ -117,6 +121,7 @@ void bw::SupportsLocationParameters::get_location_options(
     get_geoids(param, language, locations);
     get_fmisids(param, language, locations);
     get_wmos(param, language, locations);
+    get_lpnns(param, language, locations);
 
     // Handle site names
     SmartMet::Spine::LocationList ptrs;
@@ -232,8 +237,9 @@ void bw::SupportsLocationParameters::get_fmisids(
     Locus::QueryOptions opts;
     opts.SetCountries("all");
     opts.SetSearchVariants(true);
-    opts.SetLanguage("fmisid");
-    opts.SetFeatures("SYNOP,STUK");
+    opts.SetLanguage(language);
+    opts.SetNameType("fmisid");
+    opts.SetFeatures("SYNOP,FINAVIA,STUK");
     opts.SetResultLimit(1);
 
     std::vector<int64_t> ids;
@@ -280,8 +286,9 @@ void bw::SupportsLocationParameters::get_wmos(
     Locus::QueryOptions opts;
     opts.SetCountries("all");
     opts.SetSearchVariants(true);
-    opts.SetLanguage("wmo");
-    opts.SetFeatures("SYNOP,STUK");
+    opts.SetLanguage(language);
+    opts.SetNameType("wmo");
+    opts.SetFeatures("SYNOP,FINAVIA,STUK");
     opts.SetResultLimit(1);
 
     std::vector<int64_t> ids;
@@ -308,6 +315,55 @@ void bw::SupportsLocationParameters::get_wmos(
         }
         // Including location of the current wmo id if enabled.
         if (include_wmos)
+          locations->push_back(std::make_pair(id_s, locList.front()));
+      }
+    }
+  }
+  catch (...)
+  {
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+void bw::SupportsLocationParameters::get_lpnns(
+    const RequestParameterMap &param,
+    const std::string &language,
+    std::list<std::pair<std::string, SmartMet::Spine::LocationPtr> > *locations) const
+{
+  try
+  {
+    Locus::QueryOptions opts;
+    opts.SetCountries("all");
+    opts.SetSearchVariants(true);
+    opts.SetLanguage(language);
+    opts.SetNameType("lpnn");
+    opts.SetFeatures("SYNOP,FINAVIA,STUK");
+    opts.SetResultLimit(1);
+
+    std::vector<int64_t> ids;
+    param.get<int64_t>(P_LPNNS, std::back_inserter(ids));
+    BOOST_FOREACH (int64_t id, ids)
+    {
+      if (id < std::numeric_limits<long>::min() || id > std::numeric_limits<long>::max())
+      {
+        throw Fmi::Exception(BCP, "The 'lpnn' value is out of the range!")
+            .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
+            .addParameter("LPNN", std::to_string(id))
+            .disableStackTrace();
+      }
+      else
+      {
+        std::string id_s = Fmi::to_string(id);
+        SmartMet::Spine::LocationList locList = geo_engine->nameSearch(opts, id_s);
+        if (include_lpnns and locList.empty())
+        {
+          throw Fmi::Exception(BCP, "Unknown 'lpnn' value!")
+              .addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED)
+              .addParameter("LPNN", id_s)
+              .disableStackTrace();
+        }
+        // Including location of the current lpnn id if enabled.
+        if (include_lpnns)
           locations->push_back(std::make_pair(id_s, locList.front()));
       }
     }

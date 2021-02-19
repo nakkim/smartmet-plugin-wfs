@@ -52,7 +52,7 @@ bw::StoredForecastQueryHandler::StoredForecastQueryHandler(
       bw::RequiresGeoEngine(reactor),
       bw::RequiresQEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
-      bw::SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS),
+      bw::SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS | INCLUDE_FMISIDS | INCLUDE_WMOS | INCLUDE_LPNNS),
       bw::SupportsMeteoParameterOptions(config),
       bw::SupportsTimeParameters(config),
       bw::SupportsTimeZone(reactor, config),
