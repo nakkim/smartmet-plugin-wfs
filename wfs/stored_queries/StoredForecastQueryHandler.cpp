@@ -10,8 +10,8 @@
 #include <newbase/NFmiPoint.h>
 #include <newbase/NFmiQueryData.h>
 #include <smartmet/engines/querydata/MetaQueryOptions.h>
-#include <smartmet/spine/Convenience.h>
 #include <smartmet/macgyver/Exception.h>
+#include <smartmet/spine/Convenience.h>
 #include <smartmet/spine/ParameterFactory.h>
 #include <smartmet/spine/Table.h>
 #include <smartmet/spine/TimeSeriesGenerator.h>
@@ -52,22 +52,25 @@ bw::StoredForecastQueryHandler::StoredForecastQueryHandler(
       bw::RequiresGeoEngine(reactor),
       bw::RequiresQEngine(reactor),
       bw::StoredQueryHandlerBase(reactor, config, plugin_data, template_file_name),
-      bw::SupportsLocationParameters(reactor, config, SUPPORT_KEYWORDS | INCLUDE_GEOIDS | INCLUDE_FMISIDS | INCLUDE_WMOS | INCLUDE_LPNNS),
+      bw::SupportsLocationParameters(
+          reactor,
+          config,
+          SUPPORT_KEYWORDS | INCLUDE_GEOIDS | INCLUDE_FMISIDS | INCLUDE_WMOS | INCLUDE_LPNNS),
       bw::SupportsMeteoParameterOptions(config),
       bw::SupportsTimeParameters(config),
       bw::SupportsTimeZone(reactor, config),
       common_params(),
-      ind_geoid(SmartMet::add_param(common_params, "geoid", Parameter::Type::DataIndependent)),
-      ind_epoch(SmartMet::add_param(common_params, "time", Parameter::Type::DataIndependent)),
-      ind_place(SmartMet::add_param(common_params, "name", Parameter::Type::DataIndependent)),
-      ind_lat(SmartMet::add_param(common_params, "latitude", Parameter::Type::DataIndependent)),
-      ind_lon(SmartMet::add_param(common_params, "longitude", Parameter::Type::DataIndependent)),
-      ind_elev(SmartMet::add_param(common_params, "elevation", Parameter::Type::DataIndependent)),
-      ind_level(SmartMet::add_param(common_params, "level", Parameter::Type::DataIndependent)),
-      ind_region(SmartMet::add_param(common_params, "region", Parameter::Type::DataIndependent)),
-      ind_country(SmartMet::add_param(common_params, "country", Parameter::Type::DataIndependent)),
-      ind_country_iso(SmartMet::add_param(common_params, "iso2", Parameter::Type::DataIndependent)),
-      ind_localtz(SmartMet::add_param(common_params, "localtz", Parameter::Type::DataIndependent))
+      ind_geoid(SmartMet::add_param(common_params, "geoid", Parameter::Type::DataIndependent, kFmiGEOID)),
+      ind_epoch(SmartMet::add_param(common_params, "time", Parameter::Type::DataIndependent, kFmiTime)),
+      ind_place(SmartMet::add_param(common_params, "name", Parameter::Type::DataIndependent, kFmiName)),
+      ind_lat(SmartMet::add_param(common_params, "latitude", Parameter::Type::DataIndependent, kFmiLatitude)),
+      ind_lon(SmartMet::add_param(common_params, "longitude", Parameter::Type::DataIndependent, kFmiLongitude)),
+      ind_elev(SmartMet::add_param(common_params, "elevation", Parameter::Type::DataIndependent, kFmiElevation)),
+      ind_level(SmartMet::add_param(common_params, "level", Parameter::Type::DataIndependent, kFmiLevel)),
+      ind_region(SmartMet::add_param(common_params, "region", Parameter::Type::DataIndependent, kFmiRegion)),
+      ind_country(SmartMet::add_param(common_params, "country", Parameter::Type::DataIndependent, kFmiCountry)),
+      ind_country_iso(SmartMet::add_param(common_params, "iso2", Parameter::Type::DataIndependent, kFmiISO2)),
+      ind_localtz(SmartMet::add_param(common_params, "localtz", Parameter::Type::DataIndependent, kFmiLocalTZ))
 {
   try
   {
@@ -95,7 +98,7 @@ bw::StoredForecastQueryHandler::~StoredForecastQueryHandler() {}
 
 void bw::StoredForecastQueryHandler::query(const StoredQuery& stored_query,
                                            const std::string& language,
-					   const boost::optional<std::string> &hostname,
+                                           const boost::optional<std::string>& hostname,
                                            std::ostream& output) const
 {
   try
@@ -534,7 +537,8 @@ boost::shared_ptr<SmartMet::Spine::Table> bw::StoredForecastQueryHandler::extrac
           param_precision_map[name] = pos->second.precision;
         }
 
-        if (have_meteo_param_options(name)) {
+        if (have_meteo_param_options(name))
+        {
           param_precision_map[name] = get_meteo_parameter_options(name)->precision;
         }
       }
@@ -550,8 +554,8 @@ boost::shared_ptr<SmartMet::Spine::Table> bw::StoredForecastQueryHandler::extrac
       if (not query.levels.empty() and not query.level_heights.empty())
       {
         Fmi::Exception exception(BCP,
-                                   "Fetching data from a level and an arbitrary height is not "
-                                   "supported in a same request.");
+                                 "Fetching data from a level and an arbitrary height is not "
+                                 "supported in a same request.");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
         throw exception.disableStackTrace();
       }
@@ -732,8 +736,7 @@ void bw::StoredForecastQueryHandler::parse_level_heights(const RequestParameterM
       float tmp = static_cast<float>(item);
       if (!dest.level_heights.insert(tmp).second)
       {
-        Fmi::Exception exception(
-            BCP, "Duplicate geometric height '" + std::to_string(tmp) + "'!");
+        Fmi::Exception exception(BCP, "Duplicate geometric height '" + std::to_string(tmp) + "'!");
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PARSING_FAILED);
         throw exception;
       }
@@ -804,7 +807,9 @@ void bw::StoredForecastQueryHandler::parse_params(const RequestParameterMap& par
     BOOST_FOREACH (const std::string& name, names)
     {
       std::size_t ind = dest.data_params.size();
-      dest.data_params.push_back(ParameterFactory::instance().parse(name));
+      auto p = ParameterFactory::instance().parse(name);
+      dest.data_params.push_back(p);
+
       if (dest.first_data_ind == 0)
         dest.first_data_ind = ind;
       dest.last_data_ind = ind;
@@ -887,8 +892,7 @@ void bw::StoredForecastQueryHandler::Query::set_locale(const std::string& locale
     }
     catch (...)
     {
-      Fmi::Exception exception(
-          BCP, "Failed to set locale '" + locale_name + "'!", nullptr);
+      Fmi::Exception exception(BCP, "Failed to set locale '" + locale_name + "'!", nullptr);
       if (exception.getExceptionByParameterName(WFS_EXCEPTION_CODE) == nullptr)
         exception.addParameter(WFS_EXCEPTION_CODE, WFS_OPERATION_PROCESSING_FAILED);
       throw exception.disableStackTrace();
