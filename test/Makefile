@@ -8,7 +8,7 @@ include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
 TEST_DB_DIR := $(shell pwd)/tmp-geonames-db
 
-TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/local.conf templates
+TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/gis.conf cnf/local.conf templates
 TEST_FINISH_TARGETS := dummy
 ifdef CI
 GEONAMES_HOST_EDIT := sed -e 's|"smartmet-test"|"$(TEST_DB_DIR)"|g'
@@ -38,6 +38,10 @@ cnf/geonames.conf: cnf/geonames.conf.in
 	echo $(GEONAMES_HOST_EDIT)
 	$(GEONAMES_HOST_EDIT) $< >$@
 
+cnf/gis.conf: cnf/gis.conf.in
+	echo $(GEONAMES_HOST_EDIT)
+	$(GEONAMES_HOST_EDIT) $< >$@
+
 geonames-database:
 	rm -rf tmp-geonames-db
 	if ! /usr/share/smartmet/test/db/create-local-db.sh $(TEST_DB_DIR) >tmp-geonames-db.log 2>&1 ; then \
@@ -61,4 +65,4 @@ templates:
 
 dummy:
 
-.PHONY: cnf/geonames.conf dummy
+.PHONY: cnf/geonames.conf cnf/gis.conf dummy
