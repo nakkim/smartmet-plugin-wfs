@@ -241,6 +241,9 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
 {
   try
   {
+    if (!grid_engine || !grid_engine->isEnabled())
+      throw Fmi::Exception(BCP, "The grid-engine is disabled!");
+
     std::shared_ptr<ContentServer::ServiceInterface> contentServer =
         grid_engine->getContentServer_sptr();
     Spine::TimeSeries::Value missing_value = Spine::TimeSeries::None();
@@ -460,7 +463,7 @@ void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
     std::string dataSource = get_plugin_impl().get_data_source();
     bool gridengine_disabled = get_plugin_impl().is_gridengine_disabled();
 
-    if (!gridengine_disabled && dataSource == P_GRID && grid_engine->isGridProducer(producerName))
+    if (!gridengine_disabled && dataSource == P_GRID && grid_engine->isEnabled() && grid_engine->isGridProducer(producerName))
     {
       query_gridEngine(stored_query, language, output);
     }
@@ -584,6 +587,9 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
 {
   try
   {
+    if (!grid_engine || !grid_engine->isEnabled())
+      throw Fmi::Exception(BCP, "The grid-engine is disabled!");
+
     QueryServer::QueryConfigurator queryConfigurator;
     T::AttributeList attributeList;
 

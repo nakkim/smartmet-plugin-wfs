@@ -426,6 +426,9 @@ uint StoredGridForecastQueryHandler::processGridQuery(
 {
   try
   {
+    if (!grid_engine || !grid_engine->isEnabled())
+      throw Fmi::Exception(BCP, "The grid-engine is disabled!");
+
     std::shared_ptr < ContentServer::ServiceInterface > contentServer = grid_engine->getContentServer_sptr();
     Spine::TimeSeries::Value missing_value = Spine::TimeSeries::None();
     std::string timezoneName = loc->timezone;
@@ -755,6 +758,9 @@ Table_sptr StoredGridForecastQueryHandler::extract_forecast(Query& wfsQuery) con
 {
   try
   {
+    if (!grid_engine || !grid_engine->isEnabled())
+      throw Fmi::Exception(BCP, "The grid-engine is disabled!");
+
     QueryServer::QueryConfigurator queryConfigurator;
 
     int debug_level = get_config()->get_debug_level();
