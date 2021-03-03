@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 21.2.16
+Version: 21.3.3
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -25,19 +25,19 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel < 1:7.0
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 21.2.5
-BuildRequires: smartmet-library-gis-devel >= 21.2.11
-BuildRequires: smartmet-library-locus-devel >= 21.2.2
-BuildRequires: smartmet-library-macgyver-devel >= 21.1.25
-BuildRequires: smartmet-engine-contour-devel >= 21.2.11
-BuildRequires: smartmet-engine-geonames-devel >= 21.1.25
-BuildRequires: smartmet-engine-gis-devel >= 21.2.10
-BuildRequires: smartmet-engine-grid-devel >= 21.2.3
-BuildRequires: smartmet-engine-querydata-devel >= 21.2.15
-BuildRequires: smartmet-library-grid-content-devel >= 21.2.3
-BuildRequires: smartmet-library-grid-files-devel >= 21.2.15
+BuildRequires: smartmet-library-spine-devel >= 21.3.1
+BuildRequires: smartmet-library-gis-devel >= 21.2.26
+BuildRequires: smartmet-library-locus-devel >= 21.2.18
+BuildRequires: smartmet-library-macgyver-devel >= 21.2.25
+BuildRequires: smartmet-engine-contour-devel >= 21.2.18
+BuildRequires: smartmet-engine-geonames-devel >= 21.2.18
+BuildRequires: smartmet-engine-gis-devel >= 21.2.26
+BuildRequires: smartmet-engine-grid-devel >= 21.3.3
+BuildRequires: smartmet-engine-querydata-devel >= 21.3.2
+BuildRequires: smartmet-library-grid-content-devel >= 21.3.3
+BuildRequires: smartmet-library-grid-files-devel >= 21.2.25
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 21.2.11
+BuildRequires: smartmet-engine-observation-devel >= 21.3.2
 %endif
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
@@ -46,20 +46,20 @@ Requires: libconfig >= 1.7.2
 Requires: libcurl
 Requires: libpqxx < 1:7.0
 Requires: jsoncpp
-Requires: smartmet-library-locus >= 21.2.2
-Requires: smartmet-library-macgyver >= 21.1.25
-Requires: smartmet-library-spine >= 21.2.5
-Requires: smartmet-library-gis >= 21.2.11
-Requires: smartmet-engine-contour >= 21.2.11
-Requires: smartmet-engine-geonames >= 21.1.25
-Requires: smartmet-engine-gis >= 21.2.10
-Requires: smartmet-engine-grid >= 21.2.3
-Requires: smartmet-library-grid-content >= 21.2.3
-Requires: smartmet-library-grid-files >= 21.2.15
+Requires: smartmet-library-locus >= 21.2.18
+Requires: smartmet-library-macgyver >= 21.2.25
+Requires: smartmet-library-spine >= 21.3.1
+Requires: smartmet-library-gis >= 21.2.26
+Requires: smartmet-engine-contour >= 21.2.18
+Requires: smartmet-engine-geonames >= 21.2.18
+Requires: smartmet-engine-gis >= 21.2.26
+Requires: smartmet-engine-grid >= 21.3.3
+Requires: smartmet-library-grid-content >= 21.3.3
+Requires: smartmet-library-grid-files >= 21.2.25
 %if %{with observation}
-Requires: smartmet-engine-observation >= 21.2.11
+Requires: smartmet-engine-observation >= 21.3.2
 %endif
-Requires: smartmet-engine-querydata >= 21.2.15
+Requires: smartmet-engine-querydata >= 21.3.2
 Requires: smartmet-server >= 21.1.14
 Requires: xerces-c
 Requires: xqilla
@@ -78,12 +78,12 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: ctpp2
 #TestRequires: smartmet-test-db >= 20.6.9
 #TestRequires: smartmet-test-data >= 20.6.30
-#TestRequires: smartmet-library-gis-devel >= 21.2.11
+#TestRequires: smartmet-library-gis-devel >= 21.2.26
 #TestRequires: smartmet-library-newbase-devel >= 20.10.28
-#TestRequires: smartmet-library-spine-devel >= 21.2.5
+#TestRequires: smartmet-library-spine-devel >= 21.3.1
 #TestRequires: smartmet-engine-geonames-devel >= 20.8.23
-#TestRequires: smartmet-engine-gis-devel >= 21.2.10
-#TestRequires: smartmet-engine-querydata-devel >= 21.2.15
+#TestRequires: smartmet-engine-gis-devel >= 21.2.26
+#TestRequires: smartmet-engine-querydata-devel >= 21.3.2
 %if %{with observation}
 #TestRequires: smartmet-engine-observation >= 20.10.29
 %endif
@@ -140,6 +140,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/gribwfs/request/*.h
 
 %changelog
+* Wed Mar  3 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.3.3-1.fmi
+- Grid-engine may now be disabled
+
 * Tue Feb 16 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.2.16-1.fmi
 - Repackaged due to NFmiArea ABI changes
 
