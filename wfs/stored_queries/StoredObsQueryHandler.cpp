@@ -61,18 +61,18 @@ StoredObsQueryHandler::StoredObsQueryHandler(SmartMet::Spine::Reactor* reactor,
       SupportsQualityParameters(config),
       SupportsMeteoParameterOptions(config),
       initial_bs_param(),
-      fmisid_ind(SmartMet::add_param(initial_bs_param, "fmisid", Parameter::Type::DataIndependent)),
-      geoid_ind(SmartMet::add_param(initial_bs_param, "geoid", Parameter::Type::DataIndependent)),
-      lon_ind(SmartMet::add_param(initial_bs_param, "stationlon", Parameter::Type::DataDerived)),
-      lat_ind(SmartMet::add_param(initial_bs_param, "stationlat", Parameter::Type::DataDerived)),
+      fmisid_ind(SmartMet::add_param(initial_bs_param, "fmisid", Parameter::Type::DataIndependent, kFmiFMISID)),
+      geoid_ind(SmartMet::add_param(initial_bs_param, "geoid", Parameter::Type::DataIndependent, kFmiGEOID)),
+      lon_ind(SmartMet::add_param(initial_bs_param, "stationlon", Parameter::Type::DataDerived, kFmiStationLongitude)),
+      lat_ind(SmartMet::add_param(initial_bs_param, "stationlat", Parameter::Type::DataDerived, kFmiStationLatitude)),
       height_ind(
-          SmartMet::add_param(initial_bs_param, "elevation", Parameter::Type::DataIndependent)),
+          SmartMet::add_param(initial_bs_param, "elevation", Parameter::Type::DataIndependent, kFmiStationElevation)),
       name_ind(
-          SmartMet::add_param(initial_bs_param, "stationname", Parameter::Type::DataIndependent)),
-      dist_ind(SmartMet::add_param(initial_bs_param, "distance", Parameter::Type::DataIndependent)),
+          SmartMet::add_param(initial_bs_param, "stationname", Parameter::Type::DataIndependent, kFmiStationName)),
+      dist_ind(SmartMet::add_param(initial_bs_param, "distance", Parameter::Type::DataIndependent, kFmiDistance)),
       direction_ind(
-          SmartMet::add_param(initial_bs_param, "direction", Parameter::Type::DataIndependent)),
-      wmo_ind(SmartMet::add_param(initial_bs_param, "wmo", Parameter::Type::DataIndependent))
+          SmartMet::add_param(initial_bs_param, "direction", Parameter::Type::DataIndependent, kFmiDirection)),
+      wmo_ind(SmartMet::add_param(initial_bs_param, "wmo", Parameter::Type::DataIndependent, kFmiWmoStationNumber))
 {
   try
   {

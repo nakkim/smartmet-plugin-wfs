@@ -6,17 +6,17 @@ TEST_DIRECTORIES = base real
 
 include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
-TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/local.conf templates
+TEST_DB_DIR := $(shell pwd)/tmp-geonames-db
+
+TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/gis.conf cnf/local.conf templates
 TEST_FINISH_TARGETS := dummy
 ifdef CI
-GEONAMES_HOST_EDIT := sed -e 's/"smartmet-test"/"localhost"/g'
+GEONAMES_HOST_EDIT := sed -e 's|"smartmet-test"|"$(TEST_DB_DIR)"|g'
 TEST_PREPARE_TARGETS += geonames-database
 TEST_FINISH_TARGETS += stop-test-db
 else
 GEONAMES_HOST_EDIT := cat
 endif
-
-TEST_DB_DIR := $(shell pwd)/tmp-geonames-db
 
 all:
 
@@ -35,6 +35,11 @@ test test-sqlite test-oracle test-postgresql: $(TEST_PREPARE_TARGETS)
 	$$ok;
 
 cnf/geonames.conf: cnf/geonames.conf.in
+	echo $(GEONAMES_HOST_EDIT)
+	$(GEONAMES_HOST_EDIT) $< >$@
+
+cnf/gis.conf: cnf/gis.conf.in
+	echo $(GEONAMES_HOST_EDIT)
 	$(GEONAMES_HOST_EDIT) $< >$@
 
 geonames-database:
@@ -60,4 +65,4 @@ templates:
 
 dummy:
 
-.PHONY: cnf/geonames.conf dummy
+.PHONY: cnf/geonames.conf cnf/gis.conf dummy

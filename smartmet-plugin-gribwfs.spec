@@ -76,7 +76,7 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 
 #TestRequires: gcc-c++
 #TestRequires: ctpp2
-#TestRequires: smartmet-test-db >= 20.6.9
+#TestRequires: smartmet-test-db >= 21.3.2
 #TestRequires: smartmet-test-data >= 20.6.30
 #TestRequires: smartmet-library-gis-devel >= 21.2.26
 #TestRequires: smartmet-library-newbase-devel >= 20.10.28
@@ -142,6 +142,15 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Wed Mar  3 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.3.3-1.fmi
 - Grid-engine may now be disabled
+
+* Mon Mar  1 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.3.1-1.fmi
+- Added support for numbered metaparameters
+
+* Fri Feb 19 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.2.19-1.fmi
+- Added support for FMISIDs,WMOs,LPNNs in forecast queries (BRAINSTORM-1848)
+
+* Thu Feb 18 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.2.18-1.fmi
+- Repackaged due to newbase changes
 
 * Tue Feb 16 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.2.16-1.fmi
 - Repackaged due to NFmiArea ABI changes
