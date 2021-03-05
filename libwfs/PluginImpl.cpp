@@ -112,6 +112,9 @@ PluginImpl::PluginImpl(
         itsConfig.get_optional_config_param<std::string>("fallback_hostname", "localhost");
     fallback_protocol =
         itsConfig.get_optional_config_param<std::string>("fallback_protocol", "http");
+    primary_data_source =
+        itsConfig.get_optional_config_param<std::string>("primaryForecastSource", "querydata");
+    gridengine_disabled = itsConfig.get_optional_config_param<bool>("gridengine_disabled", false);
 
     create_template_formatters();
     create_xml_parser();
@@ -258,10 +261,17 @@ void PluginImpl::create_xml_parser()
       xml_parser->load_schema_cache(serialized_xml_schemas);
     }
 
-    if (itsConfig.getValidateXmlOutput()) {
+    if (itsConfig.getValidateXmlOutput())
+    {
       std::cout << "\t\t+ [Enabling XML schema download (";
-      if (itsConfig.getProxy() != "") { std::cout << "proxy='" << itsConfig.getProxy() << '\''; }
-      if (itsConfig.getNoProxy() != "") { std::cout << "no_proxy='" << itsConfig.getNoProxy() << '\''; }
+      if (itsConfig.getProxy() != "")
+      {
+        std::cout << "proxy='" << itsConfig.getProxy() << '\'';
+      }
+      if (itsConfig.getNoProxy() != "")
+      {
+        std::cout << "no_proxy='" << itsConfig.getNoProxy() << '\'';
+      }
       std::cout << ']' << std::endl;
 
       xml_parser->enable_schema_download(itsConfig.getProxy(), itsConfig.getNoProxy());
@@ -537,7 +547,8 @@ void PluginImpl::query(const std::string& req_language,
 
     const std::string fmi_apikey_prefix = "/fmi-apikey/";
 
-    std::string language = req_language == "" ? *get_config().get_languages().begin() : req_language;
+    std::string language =
+        req_language == "" ? *get_config().get_languages().begin() : req_language;
 
     if (method == SmartMet::Spine::HTTP::RequestMethod::GET)
     {

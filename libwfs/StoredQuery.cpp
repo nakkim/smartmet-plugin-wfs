@@ -97,7 +97,9 @@ boost::shared_ptr<bw::StoredQuery> bw::StoredQuery::create_from_kvp(
     query->id = query_id;
     query->debug_format = spp.get_output_format() == "debug";
     // We do not need query sequence number here
+
     bw::FeatureID feature_id(query_id, query->params->get_map(), 0);
+    feature_id.add_param("source", query->handler->get_data_source());
     feature_id.add_param("language", language);
     if (query->debug_format)
       feature_id.add_param("debugFormat", 1);
@@ -170,6 +172,7 @@ boost::shared_ptr<bw::StoredQuery> bw::StoredQuery::create_from_xml(
     query->debug_format = spp.get_output_format() == "debug";
 
     bw::FeatureID feature_id(query_id, query->params->get_map(), 0);
+    feature_id.add_param("source", query->handler->get_data_source());
     feature_id.add_param("language", language);
     if (query->debug_format)
       feature_id.add_param("debugFormat", 1);
@@ -206,6 +209,7 @@ boost::shared_ptr<bw::StoredQuery> bw::StoredQuery::create_from_feature_id(
     query->debug_format = orig_query.debug_format;
 
     bw::FeatureID cache_feature_id(query_id, query->params->get_map(), 0);
+    cache_feature_id.add_param("source", query->handler->get_data_source());
     cache_feature_id.add_param("language", query->language);
     if (query->debug_format)
       cache_feature_id.add_param("debugFormat", 1);

@@ -15,6 +15,7 @@ bw::StoredIsolineQueryHandler::StoredIsolineQueryHandler(
 
     : StoredQueryParamRegistry(config),
       SupportsExtraHandlerParams(config, false),
+      RequiresGridEngine(reactor),
       RequiresContourEngine(reactor),
       RequiresQEngine(reactor),
       RequiresGeoEngine(reactor),

@@ -9,6 +9,7 @@
 #include "SupportsExtraHandlerParams.h"
 #include "SupportsTimeParameters.h"
 #include "SupportsTimeZone.h"
+#include "RequiresGridEngine.h"
 #include "RequiresContourEngine.h"
 #include "RequiresQEngine.h"
 #include "RequiresGeoEngine.h"
@@ -25,6 +26,7 @@ namespace WFS
  *   @brief Handler for StoredContourQuery stored query
  */
 class StoredContourQueryHandler : public StoredQueryHandlerBase,
+                                  protected virtual RequiresGridEngine,
                                   protected virtual RequiresContourEngine,
                                   protected virtual RequiresQEngine,
                                   protected virtual RequiresGeoEngine,
@@ -44,6 +46,17 @@ class StoredContourQueryHandler : public StoredQueryHandlerBase,
                      std::ostream& output) const;
 
  protected:
+
+  virtual void  query_qEngine(
+                    const StoredQuery& query,
+                    const std::string& language,
+                    std::ostream& output) const;
+
+  virtual void  query_gridEngine(
+                    const StoredQuery& query,
+                    const std::string& language,
+                    std::ostream& output) const;
+
   virtual void clipGeometry(OGRGeometryPtr& geom, Fmi::Box& bbox) const = 0;
   virtual std::vector<ContourQueryResultPtr> processQuery(
       ContourQueryParameter& queryParameter) const = 0;
@@ -57,6 +70,8 @@ class StoredContourQueryHandler : public StoredQueryHandlerBase,
                                   const ContourQueryResult& resultItem) const = 0;
 
   ContourQueryResultSet getContours(const ContourQueryParameter& queryParameter) const;
+  ContourQueryResultSet getContours_qEngine(const ContourQueryParameter& queryParameter) const;
+  ContourQueryResultSet getContours_gridEngine(const ContourQueryParameter& queryParameter) const;
 
   std::string name;
   FmiParameterName id;

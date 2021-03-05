@@ -1,6 +1,7 @@
 #include "SupportsBoundingBox.h"
 #include <boost/algorithm/string.hpp>
 #include <macgyver/Exception.h>
+#include <ogr_geometry.h>
 
 namespace bw = SmartMet::Plugin::WFS;
 namespace ba = boost::algorithm;

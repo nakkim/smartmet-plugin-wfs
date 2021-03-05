@@ -1,0 +1,1 @@
+GET /wfs?request=getFeature&storedquery_id=contour::temperature&bbox=5,53,35,73&starttime=2015-03-13T12:00:00Z&endtime=2015-03-13T12:00:00Z&source=grid&producer=ecmwf_maailma_pinta.grib&imagefile=contour::temperature::scandinavia::ecmwf_maailma_pinta.jpg HTTP/1.0

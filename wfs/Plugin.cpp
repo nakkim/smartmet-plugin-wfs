@@ -4,7 +4,6 @@
  */
 // ======================================================================
 
-#include <Plugin.h>
 #include "WfsConst.h"
 #include "WfsException.h"
 #include <boost/bind.hpp>
@@ -13,6 +12,7 @@
 #include <macgyver/Exception.h>
 #include <spine/Reactor.h>
 #include <spine/SmartMet.h>
+#include <Plugin.h>
 #include <sstream>
 #include <thread>
 
@@ -93,13 +93,13 @@ void Plugin::init()
     }
 
     clearUsers();
-    if (adminCred) {
+    if (adminCred)
+    {
       addUser(adminCred->first, adminCred->second);
     }
 
-    itsReactor->addPrivateContentHandler(this,
-					 "/wfs/admin",
-					 boost::bind(&Plugin::adminHandler, this, _1, _2, _3));
+    itsReactor->addPrivateContentHandler(
+        this, "/wfs/admin", boost::bind(&Plugin::adminHandler, this, _1, _2, _3));
   }
   catch (...)
   {
@@ -156,13 +156,17 @@ int Plugin::getRequiredAPIVersion() const
 
 bool Plugin::reload(const char* theConfig)
 {
-  if (itsReloading) {
+  if (itsReloading)
+  {
     return false;
-  } else {
+  }
+  else
+  {
     // FIXME: Use atomic
     itsReloading = true;
     std::cout << "Plugin reload requested" << std::endl;
-    try {
+    try
+    {
       itsConfig = theConfig;
       init();
     } catch (...) {
@@ -214,6 +218,9 @@ void Plugin::realRequestHandler(SmartMet::Spine::Reactor& theReactor,
   try
   {
     auto impl = boost::atomic_load(&plugin_impl);
+    std::string data_source = Spine::optional_string(theRequest.getParameter("source"),
+                                                     plugin_impl->get_primary_data_source());
+    impl->set_data_source(data_source);
     impl->realRequestHandler(theReactor, language, theRequest, theResponse);
   }
   catch (...)
@@ -223,60 +230,72 @@ void Plugin::realRequestHandler(SmartMet::Spine::Reactor& theReactor,
 }
 
 void Plugin::adminHandler(SmartMet::Spine::Reactor& theReactor,
-			  const SmartMet::Spine::HTTP::Request& theRequest,
-			  SmartMet::Spine::HTTP::Response& theResponse)
+                          const SmartMet::Spine::HTTP::Request& theRequest,
+                          SmartMet::Spine::HTTP::Response& theResponse)
 {
-  try {
+  try
+  {
     auto impl = boost::atomic_load(&plugin_impl);
     const auto operation = theRequest.getParameter("request");
     auto adminCred = impl->get_config().get_admin_credentials();
-    if (operation) {
-      if (*operation == "help") {
-	theResponse.setStatus(200);
-	theResponse.setHeader("Content-type", "text/plain");
-	theResponse.setContent
-	  ("WFS Plugin admin request:\n\n"
-	   "Supported requests:\n"
-	   "   help            - this message\n"
-	   "   reload          - reload WFS plugin (requires authentication)\n"
-	   "   xmlSchemaCache  - dump XML schema cache\n"
-	   "   constructors    - dump corespondence between stored query constructor_names,\n"
-	   "                     template_fn and return types (JSON format)\n"
-	   );
+    if (operation)
+    {
+      if (*operation == "help")
+      {
+        theResponse.setStatus(200);
+        theResponse.setHeader("Content-type", "text/plain");
+        theResponse.setContent(
+            "WFS Plugin admin request:\n\n"
+            "Supported requests:\n"
+            "   help            - this message\n"
+            "   reload          - reload WFS plugin (requires authentication)\n"
+            "   xmlSchemaCache  - dump XML schema cache\n"
+            "   constructors    - dump corespondence between stored query constructor_names,\n"
+            "                     template_fn and return types (JSON format)\n");
       }
-      else if (adminCred and (*operation == "reload")) {
-	if (authenticateRequest(theRequest, theResponse)) {
-	  bool ok = reload(itsConfig);
-	  theResponse.setStatus(200);
-	  theResponse.setHeader("Content-type", "text/html; charset=UTF-8");
-	  std::ostringstream content;
-	  content << "<html><title>WFS plugin reload</title>";
-	  if (ok) {
-	    content << "<body>Reload successful</body></html>\n";
-	  } else {
-	    content << "<body>Reload failed</body></html>\n";
-	  }
-	  theResponse.setContent(content.str());
-	}
+      else if (adminCred and (*operation == "reload"))
+      {
+        if (authenticateRequest(theRequest, theResponse))
+        {
+          bool ok = reload(itsConfig);
+          theResponse.setStatus(200);
+          theResponse.setHeader("Content-type", "text/html; charset=UTF-8");
+          std::ostringstream content;
+          content << "<html><title>WFS plugin reload</title>";
+          if (ok)
+          {
+            content << "<body>Reload successful</body></html>\n";
+          }
+          else
+          {
+            content << "<body>Reload failed</body></html>\n";
+          }
+          theResponse.setContent(content.str());
+        }
       }
-      else if (*operation == "xmlSchemaCache") {
-	std::ostringstream content;
-	impl->dump_xml_schema_cache(content);
-	theResponse.setStatus(200);
-	theResponse.setHeader("Content-type", "application/octet-stream");
-	theResponse.setContent(content.str());
+      else if (*operation == "xmlSchemaCache")
+      {
+        std::ostringstream content;
+        impl->dump_xml_schema_cache(content);
+        theResponse.setStatus(200);
+        theResponse.setHeader("Content-type", "application/octet-stream");
+        theResponse.setContent(content.str());
       }
-      else if (*operation == "constructors") {
-	std::ostringstream content;
-	impl->dump_constructor_map(content);
-	theResponse.setStatus(200);
-	theResponse.setHeader("Content-type", "application/json");
-	theResponse.setContent(content.str());
+      else if (*operation == "constructors")
+      {
+        std::ostringstream content;
+        impl->dump_constructor_map(content);
+        theResponse.setStatus(200);
+        theResponse.setHeader("Content-type", "application/json");
+        theResponse.setContent(content.str());
       }
-      else {
-	throw std::runtime_error(*operation + " is not supported");
+      else
+      {
+        throw std::runtime_error(*operation + " is not supported");
       }
-    } else {
+    }
+    else
+    {
       throw std::runtime_error("Mandatory parameter request missing");
     }
   } catch (...) {
@@ -292,14 +311,14 @@ bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request& /* theRequest */)
 
 void Plugin::updateLoop()
 {
-  auto updateCheck = [this]() -> bool
+  auto updateCheck = [this]() -> bool {
+    std::unique_lock<std::mutex> lock(itsUpdateNotifyMutex);
+    if (not itsShuttingDown)
     {
-      std::unique_lock<std::mutex> lock(itsUpdateNotifyMutex);
-      if (not itsShuttingDown) {
-	itsUpdateNotifyCond.wait_for(lock, std::chrono::seconds(1));
-      }
-      return not itsShuttingDown;
-    };
+      itsUpdateNotifyCond.wait_for(lock, std::chrono::seconds(1));
+    }
+    return not itsShuttingDown;
+  };
 
   try
   {
@@ -309,15 +328,14 @@ void Plugin::updateLoop()
 
       try
       {
-	impl = boost::atomic_load(&plugin_impl);
-	if (impl
-	    and plugin_impl->get_config().getEnableConfigurationPolling()
-	    and impl->is_reload_required(true))
-	{
-	  bool ok = reload(itsConfig);
-	  std::cout << SmartMet::Spine::log_time_str() << ": [WFS] [INFO] Plugin reload "
-		    << (ok ? "succeeded" : "failed") << std::endl;
-	}
+        impl = boost::atomic_load(&plugin_impl);
+        if (impl and plugin_impl->get_config().getEnableConfigurationPolling() and
+            impl->is_reload_required(true))
+        {
+          bool ok = reload(itsConfig);
+          std::cout << SmartMet::Spine::log_time_str() << ": [WFS] [INFO] Plugin reload "
+                    << (ok ? "succeeded" : "failed") << std::endl;
+        }
       }
       catch (...)
       {
@@ -334,11 +352,13 @@ void Plugin::updateLoop()
 
 void Plugin::ensureUpdateLoopStarted()
 {
-  if (not itsShuttingDown) {
+  if (not itsShuttingDown)
+  {
     itsShuttingDown = false;
     // Begin the update loop if enabled
     std::unique_lock<std::mutex> lock(itsUpdateNotifyMutex);
-    if (not itsUpdateLoopThread) {
+    if (not itsUpdateLoopThread)
+    {
       itsUpdateLoopThread.reset(new std::thread(std::bind(&Plugin::updateLoop, this)));
     }
   }
@@ -349,12 +369,14 @@ void Plugin::stopUpdateLoop()
   itsShuttingDown = true;
   std::unique_ptr<std::thread> tmp;
   std::unique_lock<std::mutex> lock(itsUpdateNotifyMutex);
-  if (itsUpdateLoopThread) {
+  if (itsUpdateLoopThread)
+  {
     std::swap(tmp, itsUpdateLoopThread);
     itsUpdateNotifyCond.notify_all();
   }
   lock.unlock();
-  if (tmp and tmp->joinable()) {
+  if (tmp and tmp->joinable())
+  {
     tmp->join();
   }
   itsShuttingDown = false;

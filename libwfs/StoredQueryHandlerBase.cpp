@@ -264,6 +264,15 @@ void StoredQueryHandlerBase::set_2D_coord(
   }
 }
 
+const std::string& StoredQueryHandlerBase::get_data_source() const
+{
+  return get_plugin_impl().get_data_source();
+}
+bool StoredQueryHandlerBase::is_gridengine_disabled() const
+{
+  return get_plugin_impl().is_gridengine_disabled();
+}
+
 }  // namespace WFS
 }  // namespace Plugin
 }  // namespace SmartMet

@@ -62,7 +62,7 @@ plugins:
 	wfs:
 	{
 		configfile      = "wfs.conf";
-                libfile         = "../../../wfs.so";
+                libfile         = "../../../gribwfs.so";
 	};
 };
 

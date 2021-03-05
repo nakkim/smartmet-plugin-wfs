@@ -33,6 +33,7 @@ class StoredForecastQueryHandler : public StoredQueryHandlerBase,
                                    protected SupportsTimeParameters,
                                    protected SupportsTimeZone
 {
+  public:
   struct Query
   {
     std::list<std::string> models;
@@ -75,6 +76,7 @@ class StoredForecastQueryHandler : public StoredQueryHandlerBase,
     std::size_t last_data_ind;
 
    public:
+    Query();
     Query(boost::shared_ptr<const StoredQueryConfig> config);
     virtual ~Query();
     void set_locale(const std::string& locale_name);

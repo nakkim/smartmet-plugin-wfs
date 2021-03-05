@@ -5,6 +5,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
 #include <macgyver/StringConversion.h>
+#include <macgyver/TimeParser.h>
 #include <macgyver/TimeFormatter.h>
 #include <macgyver/TypeName.h>
 #include <newbase/NFmiPoint.h>
@@ -315,7 +316,7 @@ void bw::StoredForecastQueryHandler::query(const StoredQuery& stored_query,
                 row_data["elev"] = query.result->get(ind_level, i);
               }
 
-              pt::ptime epoch = pt::from_iso_string(query.result->get(ind_epoch, i));
+              pt::ptime epoch = Fmi::TimeParser::parse_iso(query.result->get(ind_epoch, i));
               long long jd = epoch.date().julian_day();
               long seconds = epoch.time_of_day().total_seconds();
               INT_64 s_epoch = 86400LL * (jd - ref_jd) + seconds;

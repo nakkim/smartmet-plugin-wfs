@@ -15,6 +15,7 @@ bw::StoredCoverageQueryHandler::StoredCoverageQueryHandler(
 
     : StoredQueryParamRegistry(config),
       SupportsExtraHandlerParams(config, false),
+      RequiresGridEngine(reactor),
       RequiresContourEngine(reactor),
       RequiresQEngine(reactor),
       RequiresGeoEngine(reactor),

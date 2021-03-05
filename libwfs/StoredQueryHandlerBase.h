@@ -101,6 +101,9 @@ class StoredQueryHandlerBase : virtual protected SupportsExtraHandlerParams,
     return StoredQueryParamRegistry::get_param_names();
   }
 
+  const std::string& get_data_source() const;
+  bool is_gridengine_disabled() const;
+
  protected:
   virtual void init_handler();
 

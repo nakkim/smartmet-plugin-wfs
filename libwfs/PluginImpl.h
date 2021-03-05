@@ -55,6 +55,11 @@ class PluginImpl : public boost::noncopyable
     return itsCRSRegistry;
   }
 
+  void set_data_source(const std::string& ds) { data_source = ds; }
+  inline const std::string& get_data_source() const { return data_source; }
+  inline const std::string& get_primary_data_source() const { return primary_data_source; }
+  inline bool is_gridengine_disabled() const { return gridengine_disabled; }
+
   inline Config& get_config() { return itsConfig; }
 
   inline const Config& get_config() const { return itsConfig; }
@@ -219,6 +224,9 @@ class PluginImpl : public boost::noncopyable
   int debug_level;
   std::string fallback_hostname;
   std::string fallback_protocol;
+  std::string data_source{""};
+  std::string primary_data_source{""};
+  bool gridengine_disabled{false};
 
   /**
    *   @brief Locked timestamp for testing only

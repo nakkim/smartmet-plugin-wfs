@@ -6,9 +6,9 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
 #include <boost/lambda/lambda.hpp>
+#include <macgyver/Exception.h>
 #include <macgyver/StringConversion.h>
 #include <smartmet/spine/Convenience.h>
-#include <smartmet/macgyver/Exception.h>
 #include <smartmet/spine/ParameterTools.h>
 #include <smartmet/spine/TimeSeries.h>
 #include <smartmet/spine/TimeSeriesOutput.h>

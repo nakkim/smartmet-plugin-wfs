@@ -1,0 +1,1 @@
+GET /wfs?request=getFeature&storedquery_id=contour::temperature&starttime=2008-08-05T05:00:00Z&endtime=2008-08-05T05:00:00Z&source=grid&producer=pal&imagefile=contour::temperature::world::pal.jpg HTTP/1.0
