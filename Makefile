@@ -7,6 +7,8 @@ REQUIRES = gdal jsoncpp
 
 include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
+FLAGS += -Wno-variadic-macros
+
 DEFINES = -DUNIX -D_REENTRANT
 
 ifeq ($(origin sysconfdir), undefined)
