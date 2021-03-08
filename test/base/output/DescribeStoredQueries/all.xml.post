@@ -12,6 +12,82 @@
   http://inspire.ec.europa.eu/schemas/common/1.0 http://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
   http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd">
 
+  <StoredQueryDescription id="CoverageTest">
+    <Title>Weather parameter coverage as GML-contours</Title>
+    <Abstract>
+    Weather parameter forecast for an area returned in GML-contours. Contours are polygons. Area can be specified as bbox parameter.
+    </Abstract>
+    
+    <Parameter name="starttime" type="dateTime">
+      <Title>Begin of the time interval</Title>
+      <Abstract>
+      Parameter begin specifies the begin of time interval in ISO-format (for example 2012-02-27T00:00:00Z).
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="origintime" type="dateTime">
+      <Title>Analysis time</Title>
+      <Abstract>
+      Analysis time specifies the time of analysis in ISO-format (for example 2012-02-27T00:00:00Z).
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="endtime" type="dateTime">
+      <Title>End of time interval</Title>
+      <Abstract>
+      End of time interval in ISO-format (for example 2012-02-27T00:00:00Z).
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="timestep" type="int">
+      <Title>The time step of data in minutes</Title>
+      <Abstract>
+      The time step of data in minutes. Notice that timestep is calculated from start of the ongoing hour or day. 
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="timesteps" type="int">
+      <Title>Number of timesteps</Title>
+      <Abstract>
+      Number of timesteps in result set.
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="crs" type="xsi:string">
+      <Title>Coordinate projection to use in results</Title>
+      <Abstract>
+      Coordinate projection to use in results. For example EPSG::3067
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="producer" type="xsi:string">
+      <Title>Producer</Title>
+      <Abstract>
+      Model or process which provides the data.
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="bbox" type="xsi:string">
+      <Title>Bounding box of area for which to return data.</Title>
+      <Abstract>
+      Bounding box of area for which to return data (lon,lat,lon,lat). For example 21,61,22,62
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="timezone" type="xsi:string">
+      <Title>Time zone</Title>
+      <Abstract>
+      Time zone of the time instant of the data point in the form Area/Location (for example America/Costa_Rica). Default value is UTC.
+      </Abstract>
+    </Parameter>
+    
+    <QueryExpressionText xmlns:wfs_001="http://inspire.ec.europa.eu/schemas/omso/3.0"
+                         xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd"
+                         returnFeatureTypes="wfs_001:GridSeriesObservation"
+                         language="urn:ogc:def:queryLanguage:OGC-WFS::WFS_QueryExpression"
+                         isPrivate="true"/>
+  </StoredQueryDescription>
+
   <StoredQueryDescription id="ForecastTest">
     <Title>ForecastTest</Title>
     <Abstract>
@@ -139,6 +215,221 @@
     <QueryExpressionText xmlns:wfs_001="http://inspire.ec.europa.eu/schemas/omso/3.0"
                          xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd"
                          returnFeatureTypes="wfs_001:GridSeriesObservation wfs_001:PointTimeSeriesObservation"
+                         language="urn:ogc:def:queryLanguage:OGC-WFS::WFS_QueryExpression"
+                         isPrivate="true"/>
+  </StoredQueryDescription>
+
+  <StoredQueryDescription id="GridForecastTest">
+    <Title>GridForecastTest</Title>
+    <Abstract>
+    GridForecastTest
+    </Abstract>
+    
+    <Parameter name="begin" type="xsi:dateTime">
+      <Title>The begin of time interval</Title>
+      <Abstract>
+      The begin of time interval
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="end" type="xsi:dateTime">
+      <Title>The end of time interval</Title>
+      <Abstract>
+      The end of time interval
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="origintime" type="xsi:dateTime">
+      <Title>The origin time of the model</Title>
+      <Abstract>
+      The origin time of the model
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="timestep" type="xsi:unsignedInteger">
+      <Title>The time step in minutes</Title>
+      <Abstract>
+      The time step in minutes
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="hours" type="IntegerArray">
+      <Title>Hours</Title>
+      <Abstract>
+      Hours
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="times" type="IntegerArray">
+      <Title>Hours</Title>
+      <Abstract>
+      Hours
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="place" type="xsi:string">
+      <Title>The list of sites for which to provide forecast</Title>
+      <Abstract>
+      The list of sites for which to provide forecast
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="latlons" type="doubleList">
+      <Title>The list of sites for which to provide forecast</Title>
+      <Abstract>
+      The list of sites for which to provide forecast
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="parameter" type="NameList">
+      <Title>Parameters to return</Title>
+      <Abstract>
+      Comma separated list of parameters to return
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="crs" type="string">
+      <Title>Coordinate projection to use in results</Title>
+      <Abstract>
+      Coordinate projection to use in results
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="missingtext" type="string">
+      <Title>string to show for missing values</Title>
+      <Abstract>
+      string to show for missing values
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="tz" type="string">
+      <Title>Time zone</Title>
+      <Abstract>
+      Time zone
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="models" type="NameList">
+      <Title>Forecast model list</Title>
+      <Abstract>
+      Forecast model list
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="heights" type="doubleList">
+      <Title>The list of heights for which to provide forecast</Title>
+      <Abstract>
+      The list of heights for which to provide forecast
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="level" type="integerList">
+      <Title>The list of levels for which to provide forecast</Title>
+      <Abstract>
+      The list of levels for which to provide forecast
+      </Abstract>
+    </Parameter>
+    
+    <QueryExpressionText xmlns:wfs_001="http://inspire.ec.europa.eu/schemas/omso/3.0"
+                         xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd"
+                         returnFeatureTypes="wfs_001:PointTimeSeriesObservation"
+                         language="urn:ogc:def:queryLanguage:OGC-WFS::WFS_QueryExpression"
+                         isPrivate="true"/>
+  </StoredQueryDescription>
+
+  <StoredQueryDescription id="IsolineTest">
+    <Title>Pressure isolines as GML-contours</Title>
+    <Abstract>
+    Weather parameter forecast for an area returned in GML-contours. Contours are isolines. Area can be specified as bbox parameter.
+    </Abstract>
+    
+    <Parameter name="starttime" type="dateTime">
+      <Title>Begin of the time interval</Title>
+      <Abstract>
+      Parameter begin specifies the begin of time interval in ISO-format (for example 2012-02-27T00:00:00Z).
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="origintime" type="dateTime">
+      <Title>Analysis time</Title>
+      <Abstract>
+      Analysis time specifies the time of analysis in ISO-format (for example 2012-02-27T00:00:00Z).
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="endtime" type="dateTime">
+      <Title>End of time interval</Title>
+      <Abstract>
+      End of time interval in ISO-format (for example 2012-02-27T00:00:00Z).
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="timestep" type="int">
+      <Title>The time step of data in minutes</Title>
+      <Abstract>
+      The time step of data in minutes. Notice that timestep is calculated from start of the ongoing hour or day. 
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="timesteps" type="int">
+      <Title>Number of timesteps</Title>
+      <Abstract>
+      Number of timesteps in result set.
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="crs" type="xsi:string">
+      <Title>Coordinate projection to use in results</Title>
+      <Abstract>
+      Coordinate projection to use in results. For example EPSG::3067
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="bbox" type="xsi:string">
+      <Title>Bounding box of area for which to return data.</Title>
+      <Abstract>
+      Bounding box of area for which to return data (lon,lat,lon,lat). For example 21,61,22,62
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="timezone" type="xsi:string">
+      <Title>Time zone</Title>
+      <Abstract>
+      Time zone of the time instant of the data point in the form Area/Location (for example America/Costa_Rica). Default value is UTC.
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="producer" type="xsi:string">
+      <Title>Producer</Title>
+      <Abstract>
+      Model or process which provides the data.
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="smoothing" type="xsi:string">
+      <Title>Smoothing</Title>
+      <Abstract>
+      Isoline will be smoothened if value is &apos;true&apos;. Default value is &apos;false&apos;.
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="smoothing_size" type="xsi:unsignedLong">
+      <Title>Size of smoothing filter</Title>
+      <Abstract>
+      Implies 2*N+1 adjacent points are used in the weighted mean. Default value is 2.
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="smoothing_degree" type="xsi:unsignedLong">
+      <Title>Smoothing degree parameter</Title>
+      <Abstract>
+      Degree of the polynomial to fit to the data. Default value is 2.
+      </Abstract>
+    </Parameter>
+    
+    <QueryExpressionText xmlns:wfs_001="http://inspire.ec.europa.eu/schemas/omso/3.0"
+                         xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd"
+                         returnFeatureTypes="wfs_001:GridSeriesObservation"
                          language="urn:ogc:def:queryLanguage:OGC-WFS::WFS_QueryExpression"
                          isPrivate="true"/>
   </StoredQueryDescription>

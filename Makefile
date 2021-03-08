@@ -1,5 +1,5 @@
 SUBNAME = wfs
-SPEC = smartmet-plugin-grib$(SUBNAME)
+SPEC = smartmet-plugin-$(SUBNAME)
 INCDIR = smartmet/plugins/$(SUBNAME)
 TOP = $(shell pwd)
 
@@ -57,7 +57,7 @@ obj/%.o : %.cpp ; @echo Compiling $<
 
 # What to install
 
-LIBFILE = grib$(SUBNAME).so
+LIBFILE = $(SUBNAME).so
 
 # Compilation directories
 
@@ -82,7 +82,7 @@ CONFIG_FILES = $(wildcard cnf/crs/*.conf) \
 
 .PHONY: test rpm
 
-LIBWFS = $(TOP)/libsmartmet-plugin-gribwfs.a
+LIBWFS = $(TOP)/libsmartmet-plugin-wfs.a
 
 # The rules
 
@@ -116,6 +116,7 @@ clean:	clean-templates
 	$(MAKE) -C testsuite $@
 	$(MAKE) -C examples $@
 	$(MAKE) -C test $@
+	$(MAKE) -C test-grid $@
 
 format:
 	clang-format -i -style=file include/*.h include/*/*.h source/*.cpp source/*/*.cpp test/*.cpp
@@ -124,26 +125,33 @@ format:
 install:
 	mkdir -p $(plugindir)
 	mkdir -p $(libdir)
-	mkdir -p $(includedir)/smartmet/plugin/gribwfs/request
-	mkdir -p $(sysconfdir)/smartmet/plugins/gribwfs/templates
+	mkdir -p $(includedir)/smartmet/plugin/wfs/request
+	mkdir -p $(sysconfdir)/smartmet/plugins/wfs/templates
 	$(INSTALL_PROG) $(LIBFILE) $(plugindir)/$(LIBFILE)
 	@for file in cnf/templates/*.c2t; do \
-	 echo $(INSTALL_DATA) $$file $(sysconfdir)/smartmet/plugins/gribwfs/templates/; \
-	 $(INSTALL_DATA) $$file $(sysconfdir)/smartmet/plugins/gribwfs/templates/; \
+	 echo $(INSTALL_DATA) $$file $(sysconfdir)/smartmet/plugins/wfs/templates/; \
+	 $(INSTALL_DATA) $$file $(sysconfdir)/smartmet/plugins/wfs/templates/; \
 	done
-	$(INSTALL_DATA) cnf/XMLGrammarPool.dump $(sysconfdir)/smartmet/plugins/gribwfs/
-	$(INSTALL_DATA) cnf/XMLSchemas.cache $(sysconfdir)/smartmet/plugins/gribwfs/
-	$(INSTALL_DATA) cnf/XMLSchemas.cache $(sysconfdir)/smartmet/plugins/gribwfs/
-	$(INSTALL_DATA) $(wildcard libwfs/*.h) $(includedir)/smartmet/plugin/gribwfs/
-	$(INSTALL_DATA) $(wildcard libwfs/request/*.h) $(includedir)/smartmet/plugin/gribwfs/request/
+	$(INSTALL_DATA) cnf/XMLGrammarPool.dump $(sysconfdir)/smartmet/plugins/wfs/
+	$(INSTALL_DATA) cnf/XMLSchemas.cache $(sysconfdir)/smartmet/plugins/wfs/
+	$(INSTALL_DATA) cnf/XMLSchemas.cache $(sysconfdir)/smartmet/plugins/wfs/
+	$(INSTALL_DATA) $(wildcard libwfs/*.h) $(includedir)/smartmet/plugin/wfs/
+	$(INSTALL_DATA) $(wildcard libwfs/request/*.h) $(includedir)/smartmet/plugin/wfs/request/
 	$(INSTALL_DATA) $(LIBWFS) $(libdir)
 
 # Separate depend target is no more needed as dependencies are updated automatically
 # and are always up to time
 depend:
 
-test test-sqlite test-oracle test-postgresql:
+test:
+	$(MAKE) -C test test
+	$)MAKE) -C test-grid test
+
+test-sqlite test-oracle test-postgresql:
 	$(MAKE) -C test $@
+
+test-grid:
+	$(MAKE) -C test-grid test
 
 all-templates:
 	$(MAKE) -C cnf/templates all

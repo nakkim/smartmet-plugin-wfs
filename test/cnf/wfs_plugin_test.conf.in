@@ -44,6 +44,12 @@ engines:
                 libfile         = "/usr/share/smartmet/engines/contour.so";
 	};
 
+	grid:
+	{
+		configfile      = "../../cnf/grid/engine/grid-engine.conf";
+                libfile         = "/usr/share/smartmet/engines/grid.so";
+	};
+
 	querydata:
 	{
 		configfile      = "../../cnf/querydata.conf";
@@ -62,7 +68,7 @@ plugins:
 	wfs:
 	{
 		configfile      = "wfs.conf";
-                libfile         = "../../../gribwfs.so";
+                libfile         = "../../../wfs.so";
 	};
 };
 

@@ -3803,7 +3803,7 @@ Global data object:
                                     'country' : "United Kingdom",
                                     'geoid' : "2643743",
                                     'iso2' : "GB",
-                                    'localtz' : "Europe\/London",
+                                    'localtz' : "Europe/London",
                                     'name' : "London",
                                     'region' : "United Kingdom",
                                     'x' : "51.50853",
@@ -3813,7 +3813,7 @@ Global data object:
                                     'country' : "Italy",
                                     'geoid' : "3169070",
                                     'iso2' : "IT",
-                                    'localtz' : "Europe\/Rome",
+                                    'localtz' : "Europe/Rome",
                                     'name' : "Rome",
                                     'region' : "Italy",
                                     'x' : "41.89193",
@@ -3823,7 +3823,7 @@ Global data object:
                                     'country' : "Finland",
                                     'geoid' : "658225",
                                     'iso2' : "FI",
-                                    'localtz' : "Europe\/Helsinki",
+                                    'localtz' : "Europe/Helsinki",
                                     'name' : "Helsinki",
                                     'region' : "Finland",
                                     'x' : "60.16952",
@@ -3841,6 +3841,6 @@ Global data object:
    responseTimestamp = "2012-12-12T12:12:12Z";
    srsDim = 2;
    srsEpochDim = 3;
-   srsEpochName = "http:\/\/xml.fmi.fi\/gml\/crs\/compoundCRS.php?crs=4326&amp;time=unixtime";
-   srsName = "http:\/\/www.opengis.net\/def\/crs\/EPSG\/0\/4326"
+   srsEpochName = "http://xml.fmi.fi/gml/crs/compoundCRS.php?crs=4326&amp;time=unixtime";
+   srsName = "http://www.opengis.net/def/crs/EPSG/0/4326"
  

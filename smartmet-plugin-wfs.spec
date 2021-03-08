@@ -1,9 +1,9 @@
 %bcond_without observation
-%define DIRNAME gribwfs
+%define DIRNAME wfs
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 21.3.3
+Version: 21.3.8
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -33,9 +33,9 @@ BuildRequires: smartmet-engine-contour-devel >= 21.2.18
 BuildRequires: smartmet-engine-geonames-devel >= 21.2.18
 BuildRequires: smartmet-engine-gis-devel >= 21.2.26
 BuildRequires: smartmet-engine-grid-devel >= 21.3.3
-BuildRequires: smartmet-engine-querydata-devel >= 21.3.2
-BuildRequires: smartmet-library-grid-content-devel >= 21.3.3
-BuildRequires: smartmet-library-grid-files-devel >= 21.2.25
+BuildRequires: smartmet-engine-querydata-devel >= 21.3.4
+BuildRequires: smartmet-library-grid-content-devel >= 21.3.4
+BuildRequires: smartmet-library-grid-files-devel >= 21.3.4
 %if %{with observation}
 BuildRequires: smartmet-engine-observation-devel >= 21.3.2
 %endif
@@ -54,12 +54,12 @@ Requires: smartmet-engine-contour >= 21.2.18
 Requires: smartmet-engine-geonames >= 21.2.18
 Requires: smartmet-engine-gis >= 21.2.26
 Requires: smartmet-engine-grid >= 21.3.3
-Requires: smartmet-library-grid-content >= 21.3.3
-Requires: smartmet-library-grid-files >= 21.2.25
+Requires: smartmet-library-grid-content >= 21.3.4
+Requires: smartmet-library-grid-files >= 21.3.4
 %if %{with observation}
 Requires: smartmet-engine-observation >= 21.3.2
 %endif
-Requires: smartmet-engine-querydata >= 21.3.2
+Requires: smartmet-engine-querydata >= 21.3.4
 Requires: smartmet-server >= 21.1.14
 Requires: xerces-c
 Requires: xqilla
@@ -83,7 +83,7 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: smartmet-library-spine-devel >= 21.3.1
 #TestRequires: smartmet-engine-geonames-devel >= 20.8.23
 #TestRequires: smartmet-engine-gis-devel >= 21.2.26
-#TestRequires: smartmet-engine-querydata-devel >= 21.3.2
+#TestRequires: smartmet-engine-querydata-devel >= 21.3.4
 %if %{with observation}
 #TestRequires: smartmet-engine-observation >= 20.10.29
 %endif
@@ -128,18 +128,21 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(0775,root,root,0775)
-%{_datadir}/smartmet/plugins/gribwfs.so
+%{_datadir}/smartmet/plugins/wfs.so
 %defattr(0664,root,root,0775)
-%{_sysconfdir}/smartmet/plugins/gribwfs/templates/*.c2t
-%{_sysconfdir}/smartmet/plugins/gribwfs/XMLGrammarPool.dump
-%{_sysconfdir}/smartmet/plugins/gribwfs/XMLSchemas.cache
+%{_sysconfdir}/smartmet/plugins/wfs/templates/*.c2t
+%{_sysconfdir}/smartmet/plugins/wfs/XMLGrammarPool.dump
+%{_sysconfdir}/smartmet/plugins/wfs/XMLSchemas.cache
 
 %files -n %{SPECNAME}-devel
-%{_libdir}/libsmartmet-plugin-gribwfs.a
-%{_includedir}/smartmet/plugin/gribwfs/*.h
-%{_includedir}/smartmet/plugin/gribwfs/request/*.h
+%{_libdir}/libsmartmet-plugin-wfs.a
+%{_includedir}/smartmet/plugin/wfs/*.h
+%{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Mon Mar  8 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.3.8-1.fmi
+- Merged grid-branch to master
+
 * Wed Mar  3 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.3.3-1.fmi
 - Grid-engine may now be disabled
 

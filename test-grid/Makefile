@@ -74,5 +74,5 @@ test: $(PROG) $(CONFIG_FILES)
 #	@rm -f cnf/grid/redis/redis-server.pid
 #	@rm -f cnf/grid/redis/redis-server.log
 
-$(PROG) : % : %.cpp Makefile ../gribwfs.so
+$(PROG) : % : %.cpp Makefile ../wfs.so
 	$(CXX) $(CFLAGS) -o $@ $@.cpp $(INCLUDES) $(LIBS)
