@@ -45,13 +45,25 @@ LIBS +=  -lsmartmet-spine  \
 	-lbz2 -lz \
 	-lm
 
+TEST_DB_DIR := $(shell pwd)/tmp-geonames-db
+
+TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/gis.conf cnf/local.conf templates
+TEST_FINISH_TARGETS := dummy
+ifdef CI
+GEONAMES_HOST_EDIT := sed -e 's|"smartmet-test"|"$(TEST_DB_DIR)"|g'
+TEST_PREPARE_TARGETS += geonames-database
+TEST_FINISH_TARGETS += stop-test-db
+else
+GEONAMES_HOST_EDIT := cat
+endif
+
 all: $(PROG)
 
 clean:
 	rm -f $(PROG) *~
 	rm -rf failures
 
-test: $(PROG) $(CONFIG_FILES)
+test: $(PROG) $(CONFIG_FILES) $(TEST_PREPARE_TARGETS)
 	@mkdir -p failures
 	@rm -f failures/*
 	@echo 
@@ -76,3 +88,34 @@ test: $(PROG) $(CONFIG_FILES)
 
 $(PROG) : % : %.cpp Makefile ../wfs.so
 	$(CXX) $(CFLAGS) -o $@ $@.cpp $(INCLUDES) $(LIBS)
+
+cnf/geonames.conf: cnf/geonames.conf.in
+	echo $(GEONAMES_HOST_EDIT)
+	$(GEONAMES_HOST_EDIT) $< >$@
+
+cnf/gis.conf: cnf/gis.conf.in
+	echo $(GEONAMES_HOST_EDIT)
+	$(GEONAMES_HOST_EDIT) $< >$@
+
+geonames-database:
+	rm -rf tmp-geonames-db
+	if ! /usr/share/smartmet/test/db/create-local-db.sh $(TEST_DB_DIR) >tmp-geonames-db.log 2>&1 ; then \
+	    cat tmp-geonames-db.log; \
+	    false; \
+	fi
+	/usr/share/smartmet/test/db/test-db-ctl.sh $(TEST_DB_DIR) start -w
+
+stop-test-db:
+	/usr/share/smartmet/test/db/test-db-ctl.sh $(TEST_DB_DIR) stop
+
+templates:
+	$(MAKE) -C ../cnf/templates all
+
+cnf/local.conf: dummy
+	if [ -f /smartmet/cnf/smartmetd/dev/plugins/wfs.conf ] ; then \
+	    awk '/^\s*geoserverConnStr\s*=/{print}' /smartmet/cnf/smartmetd/dev/plugins/wfs.conf >$@; \
+	else \
+	    echo 'geoserverConnStr = "";' >$@ ; \
+	fi
+
+.PHONY: cnf/geonames.conf cnf/gis.conf dummy

@@ -80,7 +80,7 @@ COMPILED_TEMPLATES = $(patsubst %.template, %.c2t, $(TEMPLATES))
 CONFIG_FILES = $(wildcard cnf/crs/*.conf) \
 	$(wildcard cnf/features/*.conf)
 
-.PHONY: test rpm
+.PHONY: test test-grid rpm
 
 LIBWFS = $(TOP)/libsmartmet-plugin-wfs.a
 
@@ -145,7 +145,7 @@ depend:
 
 test:
 	$(MAKE) -C test test
-	$)MAKE) -C test-grid test
+	$(MAKE) -C test-grid test
 
 test-sqlite test-oracle test-postgresql:
 	$(MAKE) -C test $@
