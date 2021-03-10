@@ -1,7 +1,7 @@
-CXX = g++
 
-CXXFLAGS = -O2 -Wall -Wextra -Werror -g -std=c++11
-LIBS = -lboost_serialization -lboost_filesystem -lboost_system -lxerces-c -lcurl -lcrypto
+include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
+
+LIBS += -lboost_serialization -lboost_filesystem -lboost_system -lxerces-c -lcurl -lcrypto
 
 TARGETS = XMLGrammarPoolDump XMLGrammarPool.dump XSDCacheAdd
 
@@ -21,10 +21,10 @@ s-update-responses:
 	( cd xml_samples && ./PerformQueries.sh )
 
 XMLGrammarPoolDump: 	XMLGrammarPoolDump.cpp
-	$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS)
+	$(CXX) -o $@ $(CFLAGS) $(INCLUDES) $< $(LIBS)
 
 XSDCacheAdd: XSDCacheAdd.cpp
-	$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS)
+	$(CXX) -o $@ $(CFLAGS) $(INCLUDES) $< $(LIBS)
 
 XMLGrammarPool.dump:	s-update-responses XMLGrammarPoolDump
 	rm -rf xml_schemas
