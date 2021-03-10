@@ -7,14 +7,14 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:gml="http://www.opengis.net/gml/3.2"
-  xmlns:inspire="http://inspire.ec.europa.eu/schemas/base/3.3"
-  xmlns:ef="http://inspire.ec.europa.eu/schemas/ef/4.0"
-  xmlns:ins_base2="http://inspire.ec.europa.eu/schemas/base2/2.0"
+  xmlns:inspire="https://inspire.ec.europa.eu/schemas/base/3.3"
+  xmlns:ef="https://inspire.ec.europa.eu/schemas/ef/4.0"
+  xmlns:ins_base2="https://inspire.ec.europa.eu/schemas/base2/2.0"
   xmlns:sensorml="http://www.opengis.net/sensorML/1.0.1"
   xmlns:gco="http://www.isotc211.org/2005/gco"
   xmlns:swe="http://www.opengis.net/swe/1.0.1"
   xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd
-  http://inspire.ec.europa.eu/schemas/ef/4.0 http://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
+  https://inspire.ec.europa.eu/schemas/ef/4.0 https://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
   <TMPL_if (networksMatched > 0)><TMPL_if (DEFINED(bbLowerCorner) && DEFINED(bbUpperCorner))><wfs:boundedBy>
     <gml:Envelope<TMPL_if DEFINED(bbAxisLabels)> axisLabels="<TMPL_var bbAxisLabels>"</TMPL_if><TMPL_if DEFINED(bbProjUri)> srsName="<TMPL_var bbProjUri>"</TMPL_if><TMPL_if DEFINED(bbProjSrsDim)> srsDimension="<TMPL_var bbProjSrsDim>"</TMPL_if>>
       <gml:lowerCorner><TMPL_var bbLowerCorner></gml:lowerCorner>
@@ -33,7 +33,7 @@
       </ef:inspireId>
       <ef:name><TMPL_var network.name></ef:name>
       <ef:additionalDescription><TMPL_var network.description></ef:additionalDescription>
-      <ef:mediaMonitored xlink:href="<TMPL_if network.mediaMonitored>http://inspire.ec.europa.eu/codeList/MediaValue/<TMPL_var network.mediaMonitored>" xlink:title="<TMPL_var network.mediaMonitored>"<TMPL_else>" nilReason="missing"</TMPL_if> />
+      <ef:mediaMonitored xlink:href="<TMPL_if network.mediaMonitored>https://inspire.ec.europa.eu/codeList/MediaValue/<TMPL_var network.mediaMonitored>" xlink:title="<TMPL_var network.mediaMonitored>"<TMPL_else>" nilReason="missing"</TMPL_if> />
       <ef:responsibleParty>
         <ins_base2:RelatedParty>
           <ins_base2:organisationName>
@@ -43,7 +43,7 @@
       </ef:responsibleParty><TMPL_comment>
       <ef:onlineResource>http://ilmatieteenlaitos.fi/havaintoverkot/</ef:onlineResource></TMPL_comment>
       <ef:purpose xlink:href="http://www.eionet.europa.eu/gemet/concept/5197" xlink:title="meteorology"/>
-      <ef:organisationLevel xlink:href="http://inspire.ec.europa.eu/codeList/LegislationLevelValue/<TMPL_if network.organisationLevel><TMPL_var network.organisationLevel><TMPL_else>national</TMPL_if>"/>
+      <ef:organisationLevel xlink:href="https://inspire.ec.europa.eu/codeList/LegislationLevelValue/<TMPL_if network.organisationLevel><TMPL_var network.organisationLevel><TMPL_else>national</TMPL_if>"/>
       <ef:contains>
         <ef:NetworkFacility gml:id="nf-<TMPL_var network.id>">
           <ef:linkingTime>

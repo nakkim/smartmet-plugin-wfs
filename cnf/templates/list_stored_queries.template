@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListStoredQueriesResponse xmlns="http://www.opengis.net/wfs/2.0"
-  xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"
-  xmlns:ef="http://inspire.ec.europa.eu/schemas/ef/4.0"
+  xmlns:inspire_common="https://inspire.ec.europa.eu/schemas/common/1.0"
+  xmlns:ef="https://inspire.ec.europa.eu/schemas/ef/4.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd
-  http://inspire.ec.europa.eu/schemas/common/1.0 http://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
-  http://inspire.ec.europa.eu/schemas/ef/4.0 http://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
+  https://inspire.ec.europa.eu/schemas/common/1.0 https://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
+  https://inspire.ec.europa.eu/schemas/ef/4.0 https://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
 <TMPL_foreach queryList as query>
   <StoredQuery id="<TMPL_var query.id>">
     <Title><TMPL_var XMLESCAPE(query.title)></Title>

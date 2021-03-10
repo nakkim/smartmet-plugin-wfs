@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DescribeStoredQueriesResponse xmlns="http://www.opengis.net/wfs/2.0"
-  xmlns:omso="http://inspire.ec.europa.eu/schemas/omso/3.0"
+  xmlns:omso="https://inspire.ec.europa.eu/schemas/omso/3.0"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:ows_common="http://www.opengis.net/ows/1.1"
-  xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"
+  xmlns:inspire_common="https://inspire.ec.europa.eu/schemas/common/1.0"
   xmlns:gml="http://www.opengis.net/gml/3.2"
   xmlns:fe="http://www.opengis.net/fes/2.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd
-  http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
-  http://inspire.ec.europa.eu/schemas/common/1.0 http://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
+  https://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
+  https://inspire.ec.europa.eu/schemas/common/1.0 https://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
   http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd">
 <TMPL_foreach storedQueryList as query>
   <StoredQueryDescription id="<TMPL_var query.id>">

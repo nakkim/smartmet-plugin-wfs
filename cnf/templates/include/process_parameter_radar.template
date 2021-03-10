@@ -1,6 +1,6 @@
 <TMPL_if DEFINED(dataset.params.db_elevation[0])>            <om:parameter>
 		         <om:NamedValue>          
-          		 <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/elevationAngle"/>
+          		 <om:name xlink:href="https://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/elevationAngle"/>
           		 <om:value>
 				<gml:Measure uom="deg"><TMPL_var dataset.params.db_elevation[0]></gml:Measure>
          		</om:value>
@@ -8,7 +8,7 @@
       		 </om:parameter></TMPL_if>
 <TMPL_if DEFINED(dataset.params.db_max_velocity[0])>            <om:parameter>
 		         <om:NamedValue>          
-          		 <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/maxVel"/>
+          		 <om:name xlink:href="https://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/maxVel"/>
           		 <om:value>
 				<gml:Measure uom="m/s"><TMPL_var dataset.params.db_max_velocity[0]></gml:Measure>
          		</om:value>
@@ -16,7 +16,7 @@
       		 </om:parameter></TMPL_if>
 <TMPL_if DEFINED(dataset.params.db_bins[0])>            <om:parameter>
 		         <om:NamedValue>          
-          		 <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/binCount"/>
+          		 <om:name xlink:href="https://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/binCount"/>
           		 <om:value>
 				<gml:Measure uom="int"><TMPL_var dataset.params.db_bins[0]></gml:Measure>
          		</om:value>
@@ -24,7 +24,7 @@
       		 </om:parameter></TMPL_if>
 <TMPL_if DEFINED(dataset.params.db_bin_length[0])>            <om:parameter>
 		         <om:NamedValue>          
-          		 <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/binLength"/>
+          		 <om:name xlink:href="https://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/binLength"/>
           		 <om:value>
 				<gml:Measure uom="m"><TMPL_var dataset.params.db_bin_length[0]></gml:Measure>
          		</om:value>
@@ -32,7 +32,7 @@
       		 </om:parameter></TMPL_if>
 <TMPL_if DEFINED(dataset.params.db_ref_treshhold[0])>            <om:parameter>
 		         <om:NamedValue>          
-          		 <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/reflectivityTreshold"/>
+          		 <om:name xlink:href="https://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/reflectivityTreshold"/>
           		 <om:value>
 				<gml:Measure uom="km"><TMPL_var dataset.params.db_ref_treshhold[0]></gml:Measure>
          		</om:value>
@@ -40,7 +40,7 @@
       		 </om:parameter></TMPL_if>
 <TMPL_if DEFINED(dataset.params.db_gain[0])>            <om:parameter>
 	             <om:NamedValue>
-                        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/linearTransformationGain"/>
+                        <om:name xlink:href="https://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/linearTransformationGain"/>
                         <om:value>
                                 <gml:Measure uom="double"><TMPL_var dataset.params.db_gain[0]></gml:Measure>
                         </om:value>
@@ -48,7 +48,7 @@
                  </om:parameter></TMPL_if>
 <TMPL_if DEFINED(dataset.params.db_d_offset[0])>            <om:parameter>
                      <om:NamedValue>
-                        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/linearTransformationOffset"/>
+                        <om:name xlink:href="https://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/radar/linearTransformationOffset"/>
                         <om:value>
                                 <gml:Measure uom="double"><TMPL_var dataset.params.db_d_offset[0]></gml:Measure>
                         </om:value>

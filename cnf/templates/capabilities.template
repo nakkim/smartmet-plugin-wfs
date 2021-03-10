@@ -4,19 +4,19 @@
   xmlns:fes="http://www.opengis.net/fes/2.0"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:ows="http://www.opengis.net/ows/1.1"
-  xmlns:omso="http://inspire.ec.europa.eu/schemas/omso/3.0"
-  xmlns:ef="http://inspire.ec.europa.eu/schemas/ef/4.0"
-  xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0"
-  xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"
+  xmlns:omso="https://inspire.ec.europa.eu/schemas/omso/3.0"
+  xmlns:ef="https://inspire.ec.europa.eu/schemas/ef/4.0"
+  xmlns:inspire_dls="https://inspire.ec.europa.eu/schemas/inspire_dls/1.0"
+  xmlns:inspire_common="https://inspire.ec.europa.eu/schemas/common/1.0"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   version="2.0.0"
   xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd
   http://www.opengis.net/ows/1.1 http://schemas.opengis.net/ows/1.1.0/owsAll.xsd
-  http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
-  http://inspire.ec.europa.eu/schemas/inspire_dls/1.0 http://inspire.ec.europa.eu/schemas/inspire_dls/1.0/inspire_dls.xsd
-  http://inspire.ec.europa.eu/schemas/common/1.0 http://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
-  http://inspire.ec.europa.eu/schemas/ef/4.0 http://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
+  https://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
+  https://inspire.ec.europa.eu/schemas/inspire_dls/1.0 https://inspire.ec.europa.eu/schemas/inspire_dls/1.0/inspire_dls.xsd
+  https://inspire.ec.europa.eu/schemas/common/1.0 https://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
+  https://inspire.ec.europa.eu/schemas/ef/4.0 https://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
   <ows:ServiceIdentification>
 <TMPL_if (defined(title))>    <ows:Title><TMPL_var XMLESCAPE(title)></ows:Title>
 </TMPL_if><TMPL_if (defined(abstract))>    <ows:Abstract>
