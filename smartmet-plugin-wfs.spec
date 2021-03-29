@@ -88,6 +88,7 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: smartmet-engine-observation >= 20.10.29
 %endif
 #TestRequires: smartmet-engine-grid >= 21.3.29
+#TestRequires: redis
 #TestRequires: smartmet-test-grid
 #TestRequires: gdal32-devel
 #TestRequires: boost169-devel
