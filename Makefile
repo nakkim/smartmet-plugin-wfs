@@ -80,7 +80,7 @@ COMPILED_TEMPLATES = $(patsubst %.template, %.c2t, $(TEMPLATES))
 CONFIG_FILES = $(wildcard cnf/crs/*.conf) \
 	$(wildcard cnf/features/*.conf)
 
-.PHONY: test test-grid rpm
+.PHONY: test rpm
 
 LIBWFS = $(TOP)/libsmartmet-plugin-wfs.a
 
@@ -116,7 +116,6 @@ clean:	clean-templates
 	$(MAKE) -C testsuite $@
 	$(MAKE) -C examples $@
 	$(MAKE) -C test $@
-	$(MAKE) -C test-grid $@
 
 format:
 	clang-format -i -style=file include/*.h include/*/*.h source/*.cpp source/*/*.cpp test/*.cpp
@@ -143,15 +142,8 @@ install:
 # and are always up to time
 depend:
 
-test:
-	$(MAKE) -C test test
-	$(MAKE) -C test-grid test
-
-test-sqlite test-oracle test-postgresql:
+test test-sqlite test-oracle test-postgresql test-grid:
 	$(MAKE) -C test $@
-
-test-grid:
-	$(MAKE) -C test-grid test
 
 all-templates:
 	$(MAKE) -C cnf/templates all
