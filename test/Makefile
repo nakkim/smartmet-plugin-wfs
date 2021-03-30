@@ -72,7 +72,6 @@ stop-test-db:
 start-redis-db:
 	rm -rf cnf/grid
 	cp -pr $(datadir)/smartmet/test/grid cnf/
-	ls -lR conf/grid
 	@echo "*** Creating the Redis configuration file."
 	smartmet-grid-test-config-creator cnf/environment.conf cnf/grid/redis/redis-template.conf cnf/grid/redis/redis.conf
 	@echo "*** Starting the Redis database."
