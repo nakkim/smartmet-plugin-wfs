@@ -25,6 +25,7 @@ clean:
 	rm -f cnf/geonames.conf
 	rm -fr tmp-geonames-db
 	rm -f tmp-geonames-db.log
+	rm -rf conf/grid
 
 test:	$(TEST_PREPARE_TARGETS)
 	@ok=true; \
@@ -69,6 +70,9 @@ stop-test-db:
 	/usr/share/smartmet/test/db/test-db-ctl.sh $(TEST_DB_DIR) stop
 
 start-redis-db:
+	rm -rf cnf/grid
+	cp -pr $(datadir)/smartmet/test/grid cnf/
+	ls -lR conf/grid
 	@echo "*** Creating the Redis configuration file."
 	smartmet-grid-test-config-creator cnf/environment.conf cnf/grid/redis/redis-template.conf cnf/grid/redis/redis.conf
 	@echo "*** Starting the Redis database."
