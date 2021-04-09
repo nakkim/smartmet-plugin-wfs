@@ -8,8 +8,8 @@ include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
 TEST_DB_DIR := $(shell pwd)/tmp-geonames-db
 
-TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/gis.conf cnf/local.conf templates start-redis-db
-TEST_FINISH_TARGETS := dummy stop-redis-db
+TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/gis.conf cnf/local.conf templates
+TEST_FINISH_TARGETS := dummy
 ifdef CI
 GEONAMES_HOST_EDIT := sed -e 's|"smartmet-test"|"$(TEST_DB_DIR)"|g'
 TEST_PREPARE_TARGETS += geonames-database
@@ -25,29 +25,26 @@ clean:
 	rm -f cnf/geonames.conf
 	rm -fr tmp-geonames-db
 	rm -f tmp-geonames-db.log
-	rm -rf conf/grid
+	rm -rf conf/grid # FIXME: remove this
 
 test:	$(TEST_PREPARE_TARGETS)
 	@ok=true; \
 	for test_dir in $(TEST_DIRECTORIES); do \
 		if ! $(MAKE) -C $$test_dir $@ ; then ok=false; fi; \
 	done; \
-	$(MAKE) test-grid-impl || ok=false; \
+	if ! $(MAKE) test-grid; then ok=false; fi; \
 	$(MAKE) $(TEST_FINISH_TARGETS); \
 	$$ok;
 
 test-sqlite test-oracle test-postgresql: $(TEST_PREPARE_TARGETS)
 	@ok=true; \
 	for test_dir in $(TEST_DIRECTORIES); do \
-		if ! $(MAKE) -C $$test_dir $@ ; then ok=false; fi; \
+		if ! $(MAKE) -C $$test_dir $@ ; then ok=false; failed="$$failed $$test_dir"; fi; \
 	done; \
 	$(MAKE) $(TEST_FINISH_TARGETS); \
 	$$ok;
 
 test-grid: $(TEST_PREPARE_TARGETS)
-	if $(MAKE) test-grid-impl; then true; else $(MAKE) $(TEST_FINISH_TARGETS); false; fi
-
-test-grid-impl:
 	$(MAKE) -C grid test
 
 cnf/geonames.conf: cnf/geonames.conf.in
@@ -59,6 +56,7 @@ cnf/gis.conf: cnf/gis.conf.in
 	$(GEONAMES_HOST_EDIT) $< >$@
 
 geonames-database:
+	if [ -f $(TEST_DB_DIR)/postmaster.pid ] ; then $(MAKE) stop-test-db; true; fi
 	rm -rf tmp-geonames-db
 	if ! /usr/share/smartmet/test/db/create-local-db.sh $(TEST_DB_DIR) >tmp-geonames-db.log 2>&1 ; then \
 	    cat tmp-geonames-db.log; \
@@ -67,21 +65,7 @@ geonames-database:
 	/usr/share/smartmet/test/db/test-db-ctl.sh $(TEST_DB_DIR) start -w
 
 stop-test-db:
-	/usr/share/smartmet/test/db/test-db-ctl.sh $(TEST_DB_DIR) stop
-
-start-redis-db:
-	rm -rf cnf/grid
-	cp -pr $(datadir)/smartmet/test/grid cnf/
-	@echo "*** Creating the Redis configuration file."
-	smartmet-grid-test-config-creator cnf/environment.conf cnf/grid/redis/redis-template.conf cnf/grid/redis/redis.conf
-	@echo "*** Starting the Redis database."
-	@redis-server cnf/grid/redis/redis.conf
-
-stop-redis-db:
-	@if [ -f cnf/grid/redis/redis-server.pid ] ; then \
-		cat cnf/grid/redis/redis-server.pid | xargs kill -9; \
-		rm -f cnf/grid/redis/redis-server.pid; \
-	fi
+	/usr/share/smartmet/test/db/test-db-ctl.sh $(TEST_DB_DIR) stop -w
 
 cnf/local.conf: dummy
 	if [ -f /smartmet/cnf/smartmetd/dev/plugins/wfs.conf ] ; then \

@@ -46,7 +46,7 @@ engines:
 
 	grid:
 	{
-		configfile      = "../../cnf/grid/engine/grid-engine.conf";
+		configfile      = "../../cnf/nogrid.conf";
                 libfile         = "/usr/share/smartmet/engines/grid.so";
 	};
 
