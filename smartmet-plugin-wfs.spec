@@ -76,6 +76,7 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 
 #TestRequires: gcc-c++
 #TestRequires: ctpp2
+#TestRequires: redis
 #TestRequires: smartmet-test-db >= 21.3.2
 #TestRequires: smartmet-test-data >= 20.6.30
 #TestRequires: smartmet-library-gis-devel >= 21.3.29
