@@ -1,6 +1,6 @@
             <om:parameter>
                 <om:NamedValue>
-                    <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+                    <om:name xlink:href="https://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
                     <om:value>
                         <gml:TimeInstant gml:id="analysis-time-<TMPL_var group.groupId>-<TMPL_var param.name>-<TMPL_var queryNum>-<TMPL_var dataset.__index__>"> <TMPL_if DEFINED(group.dataOriginTime)>
                             <gml:timePosition><TMPL_var group.dataOriginTime></gml:timePosition>

@@ -12,7 +12,7 @@
   xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd 
                       http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd           
                       http://www.opengis.net/om/2.0 http://schemas.opengis.net/om/2.0/observation.xsd 
-                      http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
+                      http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
                       http://www.opengis.net/sampling/2.0 http://schemas.opengis.net/sampling/2.0/samplingFeature.xsd 
                       http://www.opengis.net/samplingSpatial/2.0 http://schemas.opengis.net/samplingSpatial/2.0/spatialSamplingFeature.xsd 
                       http://xml.fmi.fi/namespace/weather/2015/09/18/coverages metoceancoverages.xsd">
@@ -35,7 +35,7 @@
     <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/hirlam_painepinta"/>
     <om:parameter>
       <om:NamedValue>
-        <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
+        <om:name xlink:href="https://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/numericalModel/analysisTime"/>
         <om:value>
           <gml:TimeInstant gml:id="<TMPL_var CONCAT("analysis-time-wfs-member-",wfs_member.__index__ + 1)>">
             <gml:timePosition><TMPL_var wfs_member.analysis_time></gml:timePosition>

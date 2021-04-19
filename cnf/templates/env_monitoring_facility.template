@@ -12,7 +12,7 @@
   xmlns:ins_base2="http://inspire.ec.europa.eu/schemas/base2/2.0"
   xmlns:ef="http://inspire.ec.europa.eu/schemas/ef/4.0"
   xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd
-  http://inspire.ec.europa.eu/schemas/ef/4.0 http://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
+  http://inspire.ec.europa.eu/schemas/ef/4.0 https://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
   <TMPL_if (stationsMatched > 0) ><TMPL_if DEFINED(stations)><TMPL_foreach stations AS station>
   <wfs:member>
     <ef:EnvironmentalMonitoringFacility gml:id="<TMPL_var station.featureId>">
@@ -41,7 +41,7 @@
       </ef:inspireId>
       <ef:name<TMPL_if DEFINED(station.name)>><TMPL_var station.name></ef:name><TMPL_else> xsi:nil="true" nilReason="missing" /></TMPL_if>
       <TMPL_if DEFINED(station.mediaMonitored)><TMPL_foreach station.mediaMonitored AS media>
-      <ef:mediaMonitored xlink:href="http://inspire.ec.europa.eu/codeList/MediaValue/<TMPL_var media>" xlink:title="<TMPL_var media>"/></TMPL_foreach><TMPL_else><ef:mediaMonitored xlink:href="" nilReason="missing"/></TMPL_if><TMPL_comment>
+      <ef:mediaMonitored xlink:href="https://inspire.ec.europa.eu/codeList/MediaValue/<TMPL_var media>" xlink:title="<TMPL_var media>"/></TMPL_foreach><TMPL_else><ef:mediaMonitored xlink:href="" nilReason="missing"/></TMPL_if><TMPL_comment>
       <ef:onlineResource><TMPL_if station.onlineResource><TMPL_var station.onlineResource><TMPL_else>http://ilmatieteenlaitos.fi/havaintoasemat/</TMPL_if></ef:onlineResource></TMPL_comment><TMPL_if station.observingCapabilities><TMPL_foreach station.observingCapabilities AS capability>
       <ef:observingCapability>
         <ef:ObservingCapability gml:id="<TMPL_var CONCAT("oc-",station.fmisid,"-",capability.__index__ + 1)>">
@@ -52,8 +52,8 @@
               <gml:endPosition<TMPL_if IN_SET(capability.endPosition,"9999-12-31T00:00:00Z")> indeterminatePosition="now"/><TMPL_else>><TMPL_var capability.endPosition></gml:endPosition></TMPL_if>
             </gml:TimePeriod>
           </ef:observingTime>
-          <ef:processType <TMPL_if DEFINED(capability.processType)>xlink:href="http://inspire.ec.europa.eu/codeList/ProcessTypeValue/<TMPL_var capability.processType>"<TMPL_else>xsi:nil="true" nilReason="missing"</TMPL_if> />
-          <ef:resultNature <TMPL_if DEFINED(capability.resultNature)> xlink:href="http://inspire.ec.europa.eu/codeList/ResultNatureValue/<TMPL_var capability.resultNature>"<TMPL_else>xsi:nil="true" nilReason="missing"</TMPL_if> />
+          <ef:processType <TMPL_if DEFINED(capability.processType)>xlink:href="https://inspire.ec.europa.eu/codeList/ProcessTypeValue/<TMPL_var capability.processType>"<TMPL_else>xsi:nil="true" nilReason="missing"</TMPL_if> />
+          <ef:resultNature <TMPL_if DEFINED(capability.resultNature)> xlink:href="https://inspire.ec.europa.eu/codeList/ResultNatureValue/<TMPL_var capability.resultNature>"<TMPL_else>xsi:nil="true" nilReason="missing"</TMPL_if> />
           <ef:procedure xlink:href="<TMPL_if DEFINED(capability.processType)><TMPL_var authorityDomain>/inspire/process/sensor-assembly?processType=<TMPL_var capability.processType>&amp;stationId=<TMPL_var station.fmisid>&amp;since=<TMPL_var capability.beginPosition>&amp;"<TMPL_else>" nilReason="missing"</TMPL_if> />
           <ef:observedProperty xlink:title="<TMPL_var capability.measurandName>" xlink:href="<TMPL_var protocol><TMPL_var hostname><TMPL_var fmi_apikey_prefix><TMPL_var fmi_apikey>/meta?observableProperty=observation&amp;param=<TMPL_var capability.measurandCode><TMPL_if DEFINED(capability.measurandAggregatePeriod)>_<TMPL_var capability.measurandAggregatePeriod><TMPL_if DEFINED(capability.measurandAggregateFunction)>_<TMPL_var capability.measurandAggregateFunction></TMPL_if></TMPL_if>&amp;language=<TMPL_var language>&amp;"/>
         </ef:ObservingCapability>
@@ -88,7 +88,7 @@
           <gml:pos><TMPL_var station.position></gml:pos>
         </gml:Point>
       </ef:representativePoint></TMPL_if>
-      <ef:measurementRegime xlink:href="http://inspire.ec.europa.eu/codelist/MeasurementRegimeValue/<TMPL_if DEFINED(station.measurementRegimeValue)><TMPL_var station.measurementRegimeValue><TMPL_else>continuousDataCollection</TMPL_if>"/>
+      <ef:measurementRegime xlink:href="https://inspire.ec.europa.eu/codelist/MeasurementRegimeValue/<TMPL_if DEFINED(station.measurementRegimeValue)><TMPL_var station.measurementRegimeValue><TMPL_else>continuousDataCollection</TMPL_if>"/>
       <ef:mobile><TMPL_var station.mobile></ef:mobile><TMPL_if station.opActivityPeriods><TMPL_foreach station.opActivityPeriods AS period>
       <ef:operationalActivityPeriod>
         <ef:OperationalActivityPeriod gml:id="<TMPL_var CONCAT("oap-",station.__index__ + 1,"-",period.__index__ +1)>">
