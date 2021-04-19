@@ -175,6 +175,7 @@ class MyEntityResolver : public xercesc::XMLEntityResolver
     const int verbose = this->verbose ? 1 : 0;
     const int autoreferer = 1;
     const int fail_on_error = 1;
+    const long follow_location = 1;
     const int content_decoding = 1;
     const int transfer_cododing = 1;
     const char *accept_encoding = "gzip, deflate";
@@ -190,6 +191,7 @@ class MyEntityResolver : public xercesc::XMLEntityResolver
     curl_easy_setopt(curl, CURLOPT_URL, remote_uri.c_str());
     curl_easy_setopt(curl, CURLOPT_AUTOREFERER, &autoreferer);
     curl_easy_setopt(curl, CURLOPT_FAILONERROR, &fail_on_error);
+    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, &follow_location);
     curl_easy_setopt(curl, CURLOPT_ACCEPT_ENCODING, accept_encoding);
     curl_easy_setopt(curl, CURLOPT_HTTP_CONTENT_DECODING, &content_decoding);
     curl_easy_setopt(curl, CURLOPT_HTTP_TRANSFER_DECODING, &transfer_cododing);
