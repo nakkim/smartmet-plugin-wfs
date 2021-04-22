@@ -24,7 +24,7 @@
     http://www.opengis.net/swe/2.0 http://schemas.opengis.net/sweCommon/2.0/swe.xsd
     http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
     http://inspire.ec.europa.eu/schemas/ompr/3.0 https://inspire.ec.europa.eu/schemas/ompr/3.0/Processes.xsd
-    http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0 http://xml.fmi.fi/schema/om/atmosphericfeatures/1.0/atmosphericfeatures.xsd">
+    http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.1 http://xml.fmi.fi/schema/om/atmosphericfeatures/1.1/atmosphericfeatures.xsd">
 
     <wfs:member>
         <omso:GridSeriesObservation gml:id="WFS-oKKCCWraoEAlHbLDew4yJQ1zPQ2JTowuYWbbpdOs2_llx4efR060aeWzDtdOufXlmw48rp1w36d3R0629dnTTw36d3THv7ZeWHPlhaWLLn07qmnblte_Qo2bBNVCY2PlzrUi0Kcd06aMmrhnZd2Spp25bXv0KNoODNp3ZJ2XDyy8.lbDs05JDMz5d.nJzrMbNXDJk1dGvL577.WS_v7ZeXflp6YcWzLE0tmXtl2VPPDLUzNm_Hh2Za1M2m_GkruvTM4a23D4iaefTDux5aVq6EBrbdPPnp3Z6mXx0rGnYZzK278mXZWZo08tmHayuGHlh21rdMu3hl5YenXllrQ4csvPn15ZW5z6b.WXJx65eXm_pyV5hZtul06zb.WXHh59HTrRp5bMO10659eWbDjyunXDfp3dHTrb12dNPDfp3dMe_tl5Yc.VodNO3LT6ZeE_ITQ6aduW1v3ZaxqtSGA-">
