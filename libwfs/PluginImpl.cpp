@@ -272,7 +272,7 @@ void PluginImpl::create_xml_parser()
       {
         std::cout << "no_proxy='" << itsConfig.getNoProxy() << '\'';
       }
-      std::cout << ']' << std::endl;
+      std::cout << ")]" << std::endl;
 
       xml_parser->enable_schema_download(itsConfig.getProxy(), itsConfig.getNoProxy());
     }
