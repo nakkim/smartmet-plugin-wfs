@@ -12,7 +12,7 @@
     xmlns:sam="http://www.opengis.net/sampling/2.0"
     xmlns:sams="http://www.opengis.net/samplingSpatial/2.0"
     xmlns:wml2="http://www.opengis.net/waterml/2.0"
-    xmlns:target="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0"
+    xmlns:target="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.1"
 </TMPL_if>    xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd<TMPL_if (!DEFINED(hits_only))>
     http://www.opengis.net/gmlcov/1.0 http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd
     http://www.opengis.net/sampling/2.0 http://schemas.opengis.net/sampling/2.0/samplingFeature.xsd

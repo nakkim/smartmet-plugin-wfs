@@ -4,6 +4,7 @@ set -x
 
 # # Example: $HOME/.brainstormrc
 # TARGET_SERVER="data.fmi.fi"
+SMARTMET_SERVER="127.0.0.1:8080"
 # FMI_API_KEY="put_your_fmi-apikey_here"
 
 brainstorm_rc=${HOME}/.brainstormrc
