@@ -24,7 +24,7 @@
 						http://www.opengis.net/swe/2.0 http://schemas.opengis.net/sweCommon/2.0/swe.xsd
 						http://inspire.ec.europa.eu/schemas/ompr/2.0 http://inspire.ec.europa.eu/schemas/ompr/2.0/Processes.xsd
 						http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
-						http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0 http://xml.fmi.fi/schema/om/atmosphericfeatures/1.0/atmosphericfeatures.xsd">
+						http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0 http://xml.fmi.fi/schema/om/atmosphericfeatures/1.1/atmosphericfeatures.xsd">
     <wfs:member>
         <omso:TrajectoryObservation gml:id="WFS-ajheHY3EhK7O2m8f_BrneBmT_ZSJTowuIWbbpdOt.Lnl5dsPTTv3c3Trvlw9NGXk6dc9_Xdk07s7p1t67Omnhv07umPf2y8sOfLC0sWXPp3VNO3LXQyYMXK1g2WsG1RiydMGDpgwtMbHy51qRaFOO6dN2jJmzsu7JU07ctdDJgxcrWDZawbVGLJ0wYOmDC0zs23Tz05OdZjFgxYsGjo15fPffyyX9_bLy78tPTDi2ZY2Zsw9MvPpG1tuHxE08.mHdjy0rV0IDe25emXfQw8sO3L0y8udbFSDQv0KjGnfw9s7W26efPTuz1MvjpWNOwzm1u67Z.an0w9NO_dznCaXDri2acenp5nCa3Hrh2aenmTuzb4mxz39d2TTuz1PPDLOI1ufTD00791Tzwy1oU59WdEkzo7c59N_LLk49cvLzf05K8Qs23S6db8XPLy7Yemnfu5unXfLh6aMvJ0657.u7Jp3Z3Trb12dNPDfp3dMe_tl5Yc.UA--">
             <om:phenomenonTime>
