@@ -27,12 +27,15 @@ XSDCacheAdd: XSDCacheAdd.cpp
 	$(CXX) -o $@ $(CFLAGS) $(INCLUDES) $< $(LIBS)
 
 XMLGrammarPool.dump:	s-update-responses XMLGrammarPoolDump
+	$(MAKE) create-dump
+
+create-dump:
 	rm -rf xml_schemas
 	rm -f XMLGrammarPool.dump
 	done=false; \
 	for x in $(shell seq 1 5) ; do \
 		if ! $$done ; then \
-			./XMLGrammarPoolDump -o $@ \
+			./XMLGrammarPoolDump -o XMLGrammarPool.dump \
 				$$(case $$x in 1) echo -s XMLSchemas.cache ;; *) echo -i XMLGrammarPool.dump ;; esac) \
 				-w xml_schemas $(XML_SAMPLES) | tee XMLGrammarPoolDump.$$x.log; \
 			grep -q -e '##\ \ *Resolving' XMLGrammarPoolDump.$$x.log || done=true; \
