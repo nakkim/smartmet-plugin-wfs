@@ -854,7 +854,7 @@ named_params = (
     {
         name = "intent";
         def = ["atmoshphere",
-"http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/groundObservation/observationIntent"];
+"https://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/groundObservation/observationIntent"];
    }
 
 );
