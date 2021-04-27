@@ -17,7 +17,7 @@
       <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/opendata"/>
       <om:parameter>
         <om:NamedValue>
-          <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/groundObservation/observationIntent"/>
+          <om:name xlink:href="https://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/groundObservation/observationIntent"/>
           <om:value>
 			atmosphere
                     </om:value>
@@ -149,7 +149,7 @@
       <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/opendata"/>
       <om:parameter>
         <om:NamedValue>
-          <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/groundObservation/observationIntent"/>
+          <om:name xlink:href="https://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/groundObservation/observationIntent"/>
           <om:value>
 			atmosphere
                     </om:value>
@@ -281,7 +281,7 @@
       <om:procedure xlink:href="http://xml.fmi.fi/inspire/process/opendata"/>
       <om:parameter>
         <om:NamedValue>
-          <om:name xlink:href="http://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/groundObservation/observationIntent"/>
+          <om:name xlink:href="https://inspire.ec.europa.eu/codeList/ProcessParameterValue/value/groundObservation/observationIntent"/>
           <om:value>
 			atmosphere
                     </om:value>
