@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 21.4.22
+Version: 21.4.27
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -143,6 +143,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Tue May 27 2021 Andris Pavēnis <andris.pavenis@fmi.fi> 21.4.27-1.fmi
+- Use HTTPS for INSPIRE schema locations
+
 * Thu May 22 2021 Andris Pavēnis <andris.pavenis@fmi.fi> 21.4.22-1.fmi
 - XML schema use update
 
