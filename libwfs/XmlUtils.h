@@ -54,6 +54,20 @@ void verify_mandatory_attr_value(const xercesc::DOMElement& elem,
                                  const std::string& exp_value);
 
 /**
+ *   @brief Check mandatory attribute value
+ *
+ *   @param elem XML element to check
+ *   @param ns XML namespace
+ *   @param name the attribute name
+ *   @param checker callback to check attribute value and throw and exception when the value is
+ *                  not acceptable
+ */
+void verify_mandatory_attr_value(const xercesc::DOMElement& elem,
+                                 const std::string& ns,
+                                 const std::string& name,
+                                 std::function<void(const std::string&)> checker);
+
+/**
  *   @brief Extract text from XML DOM element
  *
  *   Text contained in Text and CDATA nodes is extracted.

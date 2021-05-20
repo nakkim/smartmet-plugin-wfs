@@ -1,0 +1,1 @@
+service=WFS&version=2.0.2&fmi-apikey=foobar&request=ListStoredQueries

@@ -5,15 +5,41 @@
 #include "WfsException.h"
 #include "XmlUtils.h"
 #include <boost/algorithm/string.hpp>
+#include <boost/regex.hpp>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TypeName.h>
 #include <macgyver/Exception.h>
+#include <fmt/format.h>
 #include <sstream>
 
 namespace bw = SmartMet::Plugin::WFS;
 namespace bwx = SmartMet::Plugin::WFS::Xml;
 
 namespace ba = boost::algorithm;
+
+namespace {
+
+  boost::regex r_wfs_version("^2\\.0\\.[0-9]$");
+
+  void check_value_equal(const std::string& name, const std::string& value, const std::string& expected)
+  {
+    if (value != expected) {
+      const std::string msg = fmt::format("Unsupported value '{}' of {} ('{}' expected)",
+					  value, name, expected);
+      throw Fmi::Exception(BCP, msg);
+    }
+  }
+
+  void check_wfs_version_string(const std::string& version_string)
+  {
+    if (not boost::regex_match(version_string, r_wfs_version)) {
+      const std::string msg = fmt::format("Unsupported WFS version '{}' (2.0.X expected)",
+					  version_string);
+      throw Fmi::Exception(BCP, msg);
+    }
+  }
+
+} // anonymous namespace
 
 bw::RequestBase::RequestBase(const std::string& language, const PluginImpl& plugin_impl)
   : plugin_impl(plugin_impl)
@@ -225,15 +251,19 @@ void bw::RequestBase::check_mandatory_attributes(const xercesc::DOMDocument& doc
     struct
     {
       const char* name;
-      const char* value;
-    } mandatory_attr_def[] = {{"version", "2.0.0"}, {"service", "WFS"}};
+      std::function<void(const std::string&)> value_checker;
+    } mandatory_attr_def[] =
+	{
+	 {"version", check_wfs_version_string}
+	 ,{"service", [](const std::string& value) { check_value_equal("service", value, "WFS"); }}
+	};
 
     int num_mandatory_attr_def = sizeof(mandatory_attr_def) / sizeof(*mandatory_attr_def);
     const xercesc::DOMElement* root = get_xml_root(document);
     for (int i = 0; i < num_mandatory_attr_def; i++)
     {
       const auto& item = mandatory_attr_def[i];
-      bwx::verify_mandatory_attr_value(*root, WFS_NAMESPACE_URI, item.name, item.value);
+      bwx::verify_mandatory_attr_value(*root, WFS_NAMESPACE_URI, item.name, item.value_checker);
     }
   }
   catch (...)
@@ -326,13 +356,8 @@ void bw::RequestBase::check_wfs_version(const SmartMet::Spine::HTTP::Request& re
   try
   {
     auto version = request.getParameter("version");
-    if (version and *version != "2.0.0")
-    {
-      Fmi::Exception exception(BCP, "Unsupported WFS version!");
-      exception.addDetail("Only version '2.0.0' is supported.");
-      exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
-      exception.addParameter("Requested version", *version);
-      throw exception;
+    if (version) {
+      check_wfs_version_string(*version);
     }
   }
   catch (...)

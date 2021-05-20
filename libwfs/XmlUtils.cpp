@@ -2,6 +2,7 @@
 #include "XmlUtils.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
+#include <boost/regex.hpp>
 #include <macgyver/Exception.h>
 #include <xercesc/dom/DOMImplementation.hpp>
 #include <xercesc/dom/DOMImplementationLS.hpp>
@@ -238,6 +239,15 @@ void verify_mandatory_attr_value(const xercesc::DOMElement& elem,
         << "' expected)";
     throw Fmi::Exception(BCP, msg.str());
   }
+}
+
+void verify_mandatory_attr_value(const xercesc::DOMElement& elem,
+                                 const std::string& ns,
+                                 const std::string& name,
+                                 std::function<void(const std::string&)> checker)
+{
+  const std::string value = get_mandatory_attr(elem, ns, name);
+  checker(value);
 }
 
 std::string extract_text(const xercesc::DOMElement& element)
