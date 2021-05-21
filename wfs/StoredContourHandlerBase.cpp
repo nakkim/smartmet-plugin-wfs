@@ -1,15 +1,15 @@
 #include "StoredContourHandlerBase.h"
+#include <boost/algorithm/string/replace.hpp>
+#include <boost/format.hpp>
 #include <gis/Box.h>
 #include <grid-content/queryServer/definition/QueryConfigurator.h>
 #include <grid-files/common/GraphFunctions.h>
 #include <grid-files/common/ImageFunctions.h>
 #include <grid-files/common/ImagePaint.h>
+#include <macgyver/Hash.h>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TimeParser.h>
 #include <newbase/NFmiEnumConverter.h>
-
-#include <boost/algorithm/string/replace.hpp>
-#include <boost/format.hpp>
 #include <iomanip>
 
 namespace bw = SmartMet::Plugin::WFS;
@@ -74,8 +74,7 @@ bw::StoredContourQueryHandler::StoredContourQueryHandler(
     std::string pname = ec.ToString(cpid);
     if (pname.empty())
     {
-      Fmi::Exception exception(
-          BCP, "Invalid contour parameter id '" + std::to_string(cpid) + "'!");
+      Fmi::Exception exception(BCP, "Invalid contour parameter id '" + std::to_string(cpid) + "'!");
       exception.addParameter(WFS_EXCEPTION_CODE, WFS_INVALID_PARAMETER_VALUE);
       throw exception;
     }
@@ -136,16 +135,15 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_qEngine(
 
       try
       {
-        std::size_t qhash = SmartMet::Engine::Querydata::hash_value(queryParameter.q);
+        auto qhash = queryParameter.q->hashValue();
         auto valueshash = qhash;
-        boost::hash_combine(valueshash, options.data_hash_value());
+        Fmi::hash_combine(valueshash, options.data_hash_value());
 
         // Select the data
 
         if (!queryParameter.q->param(options.parameter.number()))
         {
-          throw Fmi::Exception(
-              BCP, "Parameter '" + options.parameter.name() + "' unavailable.");
+          throw Fmi::Exception(BCP, "Parameter '" + options.parameter.name() + "' unavailable.");
         }
 
         if (!queryParameter.q->firstLevel())
@@ -318,8 +316,10 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
       throw exception;
     }
 
-    T::Attribute* imageDir = queryParameter.gridQuery.mAttributeList.getAttribute("contour.imageDir");
-    T::Attribute* imageFile = queryParameter.gridQuery.mAttributeList.getAttribute("contour.imageFile");
+    T::Attribute* imageDir =
+        queryParameter.gridQuery.mAttributeList.getAttribute("contour.imageDir");
+    T::Attribute* imageFile =
+        queryParameter.gridQuery.mAttributeList.getAttribute("contour.imageFile");
 
     for (auto param = queryParameter.gridQuery.mQueryParameterList.begin();
          param != queryParameter.gridQuery.mQueryParameterList.end();
@@ -329,7 +329,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
       {
         std::vector<OGRGeometryPtr> geoms;
         boost::posix_time::ptime utcTime = boost::posix_time::from_time_t((*val)->mForecastTimeUTC);
-        //boost::posix_time::ptime utcTime = Fmi::TimeParser::parse_iso((*val)->mForecastTime);
+        // boost::posix_time::ptime utcTime = Fmi::TimeParser::parse_iso((*val)->mForecastTime);
 
         if ((*val)->mValueData.size() > 0)
         {
@@ -346,7 +346,8 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
             }
           }
 
-          if (imageDir != nullptr && imageDir->mValue > " " && imageFile != nullptr && imageFile->mValue > " ")
+          if (imageDir != nullptr && imageDir->mValue > " " && imageFile != nullptr &&
+              imageFile->mValue > " ")
           {
             // Contours can be painted and saved as images. This functionality
             // is usually used for debugging purposes.
@@ -382,7 +383,6 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
               }
 
               // ### Saving the image and releasing the image data:
-
 
               std::string filename = imageDir->mValue + "/" + imageFile->mValue;
 
@@ -463,7 +463,8 @@ void bw::StoredContourQueryHandler::query(const StoredQuery& stored_query,
     std::string dataSource = get_plugin_impl().get_data_source();
     bool gridengine_disabled = get_plugin_impl().is_gridengine_disabled();
 
-    if (!gridengine_disabled && dataSource == P_GRID && grid_engine->isEnabled() && grid_engine->isGridProducer(producerName))
+    if (!gridengine_disabled && dataSource == P_GRID && grid_engine->isEnabled() &&
+        grid_engine->isGridProducer(producerName))
     {
       query_gridEngine(stored_query, language, output);
     }
@@ -624,8 +625,9 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
     auto pos = pName.find(".raw");
     if (pos != std::string::npos)
     {
-      attributeList.addAttribute("areaInterpolationMethod",std::to_string(T::AreaInterpolationMethod::Linear));
-      pName.erase(pos,4);
+      attributeList.addAttribute("areaInterpolationMethod",
+                                 std::to_string(T::AreaInterpolationMethod::Linear));
+      pName.erase(pos, 4);
     }
 
     std::string key = producer + ";" + pName;
@@ -805,12 +807,10 @@ void bw::StoredContourQueryHandler::query_gridEngine(const StoredQuery& stored_q
     boost::posix_time::ptime modificationtime;
 
     if (analysisTimeStr > " ")
-      origintime =
-          boost::posix_time::ptime(Fmi::TimeParser::parse_iso(analysisTimeStr));
+      origintime = boost::posix_time::ptime(Fmi::TimeParser::parse_iso(analysisTimeStr));
 
     if (modificationTimeStr > " ")
-      modificationtime =
-          boost::posix_time::ptime(Fmi::TimeParser::parse_iso(modificationTimeStr));
+      modificationtime = boost::posix_time::ptime(Fmi::TimeParser::parse_iso(modificationTimeStr));
 
     parseQueryResults(query_results,
                       query_param->bbox,

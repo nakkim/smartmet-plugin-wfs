@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 21.5.6
+Version: 21.5.21
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -25,19 +25,19 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel < 1:7.0
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 21.4.16
-BuildRequires: smartmet-library-gis-devel >= 21.5.5
-BuildRequires: smartmet-library-locus-devel >= 21.2.18
-BuildRequires: smartmet-library-macgyver-devel >= 21.2.25
-BuildRequires: smartmet-engine-contour-devel >= 21.5.6
-BuildRequires: smartmet-engine-geonames-devel >= 21.4.12
-BuildRequires: smartmet-engine-gis-devel >= 21.3.23
+BuildRequires: smartmet-library-spine-devel >= 21.5.21
+BuildRequires: smartmet-library-gis-devel >= 21.5.20
+BuildRequires: smartmet-library-locus-devel >= 21.5.20
+BuildRequires: smartmet-library-macgyver-devel >= 21.5.21
+BuildRequires: smartmet-engine-contour-devel >= 21.5.20
+BuildRequires: smartmet-engine-geonames-devel >= 21.5.20
+BuildRequires: smartmet-engine-gis-devel >= 21.5.20
 BuildRequires: smartmet-engine-grid-devel >= 21.4.27
-BuildRequires: smartmet-engine-querydata-devel >= 21.5.6
+BuildRequires: smartmet-engine-querydata-devel >= 21.5.21
 BuildRequires: smartmet-library-grid-content-devel >= 21.3.29
 BuildRequires: smartmet-library-grid-files-devel >= 21.4.13
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 21.4.20
+BuildRequires: smartmet-engine-observation-devel >= 21.5.20
 %endif
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
@@ -46,20 +46,20 @@ Requires: libconfig >= 1.7.2
 Requires: libcurl
 Requires: libpqxx < 1:7.0
 Requires: jsoncpp
-Requires: smartmet-library-locus >= 21.2.18
-Requires: smartmet-library-macgyver >= 21.2.25
-Requires: smartmet-library-spine >= 21.4.16
-Requires: smartmet-library-gis >= 21.5.5
-Requires: smartmet-engine-contour >= 21.5.6
-Requires: smartmet-engine-geonames >= 21.4.12
-Requires: smartmet-engine-gis >= 21.3.23
+Requires: smartmet-library-locus >= 21.5.20
+Requires: smartmet-library-macgyver >= 21.5.21
+Requires: smartmet-library-spine >= 21.5.21
+Requires: smartmet-library-gis >= 21.5.20
+Requires: smartmet-engine-contour >= 21.5.20
+Requires: smartmet-engine-geonames >= 21.5.20
+Requires: smartmet-engine-gis >= 21.5.20
 Requires: smartmet-engine-grid >= 21.4.27
 Requires: smartmet-library-grid-content >= 21.3.29
 Requires: smartmet-library-grid-files >= 21.4.13
 %if %{with observation}
-Requires: smartmet-engine-observation >= 21.4.20
+Requires: smartmet-engine-observation >= 21.5.20
 %endif
-Requires: smartmet-engine-querydata >= 21.5.6
+Requires: smartmet-engine-querydata >= 21.5.21
 Requires: smartmet-server >= 21.1.14
 Requires: xerces-c
 Requires: xqilla
@@ -78,12 +78,12 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: ctpp2
 #TestRequires: smartmet-test-db >= 21.3.2
 #TestRequires: smartmet-test-data >= 20.6.30
-#TestRequires: smartmet-library-gis-devel >= 21.5.5
+#TestRequires: smartmet-library-gis-devel >= 21.5.20
 #TestRequires: smartmet-library-newbase-devel >= 20.10.28
-#TestRequires: smartmet-library-spine-devel >= 21.4.16
+#TestRequires: smartmet-library-spine-devel >= 21.5.21
 #TestRequires: smartmet-engine-geonames-devel >= 20.8.23
-#TestRequires: smartmet-engine-gis-devel >= 21.3.23
-#TestRequires: smartmet-engine-querydata-devel >= 21.5.6
+#TestRequires: smartmet-engine-gis-devel >= 21.5.20
+#TestRequires: smartmet-engine-querydata-devel >= 21.5.21
 %if %{with observation}
 #TestRequires: smartmet-engine-observation >= 20.10.29
 %endif
@@ -143,6 +143,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Fri May 21 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.5.21-1.fmi
+- Use FMI hash functions
+
 * Thu May  6 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.5.6-1.fmi
 - Repackaged due to ABI changes in NFmiAzimuthalArea
 
