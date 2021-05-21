@@ -24,7 +24,7 @@
 						http://www.opengis.net/swe/2.0 http://schemas.opengis.net/sweCommon/2.0/swe.xsd
 						http://inspire.ec.europa.eu/schemas/ompr/2.0 https://inspire.ec.europa.eu/schemas/ompr/2.0/Processes.xsd
 						http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
-						http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.1 http://xml.fmi.fi/schema/om/atmosphericfeatures/1.1/atmosphericfeatures.xsd">
+						http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.1 https://xml.fmi.fi/schema/om/atmosphericfeatures/1.1/atmosphericfeatures.xsd">
     <TMPL_if (numberReturned > 0)><TMPL_if DEFINED(groups)><TMPL_foreach groups as group><wfs:member>
         <omso:TrajectoryObservation gml:id="<TMPL_var group.featureId>">
             <om:phenomenonTime>
