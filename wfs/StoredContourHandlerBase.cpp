@@ -358,7 +358,7 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
             if (width > 0 && height > 0)
             {
               double mp = 10;
-              ImagePaint imagePaint(width, height, 0xFFFFFF, false, true);
+              ImagePaint imagePaint(width, height, 0xFFFFFFFF,0x000000,0xFFFF00,false,true);
 
               // ### Painting contours into the image:
 
@@ -372,14 +372,16 @@ bw::ContourQueryResultSet bw::StoredContourQueryHandler::getContours_gridEngine(
                   for (auto it = (*val)->mValueData.begin(); it != (*val)->mValueData.end(); ++it)
                   {
                     uint col = (c << 16) + (c << 8) + c;
-                    imagePaint.paintWkb(mp, mp, 180, 90, *it, col);
+                    imagePaint.setFillColor(col);
+                    imagePaint.paintWkb(mp, mp, 180, 90, *it);
                     c = c - step;
                   }
                 }
               }
               else
               {
-                imagePaint.paintWkb(mp, mp, 180, 90, (*val)->mValueData, 0x00);
+                imagePaint.setDrawColor(0x000000);
+                imagePaint.paintWkb(mp, mp, 180, 90, (*val)->mValueData);
               }
 
               // ### Saving the image and releasing the image data:
