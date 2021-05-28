@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 21.5.25
+Version: 21.5.28
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -143,6 +143,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
+* Fri Jun 28 2021 Andris Pavēnis <andris.pavenis@fmi.fi> 21.5.28-1.fmi
+- Use https://xml.fmi.fi for corresponding XML schema locations
+
 * Tue May 25 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.5.25-1.fmi
 - Grid-engine API for image painting changed
 
