@@ -13,7 +13,7 @@
                       http://www.opengis.net/om/2.0 http://schemas.opengis.net/om/2.0/observation.xsd
                       http://www.opengis.net/sampling/2.0 http://schemas.opengis.net/sampling/2.0/samplingFeature.xsd
                       http://www.opengis.net/samplingSpatial/2.0 http://schemas.opengis.net/samplingSpatial/2.0/spatialSamplingFeature.xsd
-                      http://xml.fmi.fi/namespace/aviation-weather/special-products/2015/09/28 http://xml.fmi.fi/schema/aviation-weather/special-products/2015/09/29/WinterPrecipitation.xsd">
+                      http://xml.fmi.fi/namespace/aviation-weather/special-products/2015/09/28 https://xml.fmi.fi/schema/aviation-weather/special-products/2015/09/29/WinterPrecipitation.xsd">
   <wfs:boundedBy>
     <gml:Envelope axisLabels="<TMPL_var axis_labels>" srsName="<TMPL_var proj_uri>" srsDimension="2">
       <gml:lowerCorner><TMPL_var bbox_lower_corner></gml:lowerCorner>

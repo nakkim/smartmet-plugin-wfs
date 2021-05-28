@@ -15,7 +15,7 @@
                       http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
                       http://www.opengis.net/sampling/2.0 https://schemas.opengis.net/sampling/2.0/samplingFeature.xsd 
                       http://www.opengis.net/samplingSpatial/2.0 https://schemas.opengis.net/samplingSpatial/2.0/spatialSamplingFeature.xsd 
-                      http://xml.fmi.fi/namespace/weather/2015/09/18/coverages metoceancoverages.xsd">
+                      http://xml.fmi.fi/namespace/weather/2015/09/18/coverages https://xml.fmi.fi/schema/weather/2015/09/18/coverages/metoceancoverages.xsd">
   <!-- One member per time and parameter type -->
   <TMPL_foreach wfs_members as wfs_member>
     <wfs:member>
