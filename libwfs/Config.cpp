@@ -736,7 +736,7 @@ Some examples:
   name  = "WGS84";
   epsg = 4326;
   swapCoord = true;
-  projEpochUri = "http://xml.fmi.fi/gml/crs/compoundCRS.php?crs=4326&amp;time=unixtime";
+  projEpochUri = "https://xml.fmi.fi/gml/crs/compoundCRS.php?crs=4326&amp;time=unixtime";
   projUri = "http://www.opengis.net/def/crs/EPSG/0/4326";
   @endverbatim
 
@@ -748,7 +748,7 @@ Some examples:
   swapCoord = true;
   projUri = "http://www.opengis.net/def/crs/EPSG/0/7243";
   epsgCode = 7423;
-  projEpochUri = "http://xml.fmi.fi/gml/crs/compoundCRS.php?crs=7423&amp;time=unixtime";
+  projEpochUri = "https://xml.fmi.fi/gml/crs/compoundCRS.php?crs=7423&amp;time=unixtime";
   showHeight = true;
   @endverbatim
 
