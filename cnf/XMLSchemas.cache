@@ -22538,226 +22538,6 @@ constructs, e.g.
 	</complexType>		
 	
 </schema>
- 75 http://xml.fmi.fi/schema/om/atmosphericfeatures/1.1/atmosphericfeatures.xsd 11009 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.1"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:gml="http://www.opengis.net/gml/3.2"
-  xmlns:omop="http://inspire.ec.europa.eu/schemas/omop/2.0"
-  xmlns:atm="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.1"
-  targetNamespace="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.1"
-  elementFormDefault="qualified" version="1.1">
-
-  <xs:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
-  <xs:import namespace="http://inspire.ec.europa.eu/schemas/omop/2.0" schemaLocation="https://inspire.ec.europa.eu/schemas/omop/2.0/ObservableProperties.xsd"/>
-
-  <xs:element name="SurfaceWeatherTargetArea" type="SurfaceWeatherTargetAreaType" substitutionGroup="gml:AbstractFeature">
-    <xs:annotation>
-      <xs:documentation>SurfaceWeatherTargetArea is a region in atmosphere close to the ground,
-      where people on foot or traveling on the ground typically face weather phenomena.
-      Even though the geometry of this feature is 2-dimensional for practical reasons, it is assumed that
-      the area reaches about 10-25 meters in the atmosphere above the ground.
-
-      The observable properties of the area should reflect the atmospheric properties available for
-      making observations. If given, this is a superset of the observable properties
-      included in any Observation instances targeting this area.
-      </xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:complexType name="SurfaceWeatherTargetAreaType">
-    <xs:complexContent>
-      <xs:extension base="gml:AbstractFeatureType">
-        <xs:sequence>
-          <xs:element name="geometry" type="gml:SurfacePropertyType"/>
-          <xs:element name="observableProperty" type="omop:AbstractObservablePropertyPropertyType" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:element name="AtmosphericRegionTargetVolume" type="AtmosphericRegionTargetVolumeType" substitutionGroup="gml:AbstractFeature">
-    <xs:annotation>
-      <xs:documentation>AtmosphericRegionTargetVolume can be any 3-dimensional region of atmosphere.
-      This feature is meant for modeling atmospheric regions that are located either
-      completely above the surface weather layer or have vertical span that reaches above the
-      surface weather layer.
-
-      The observable properties of the area should reflect the atmospheric properties available for
-      making observations. If given, this is a superset of the observable properties
-      included in any specific Observation instance targeting this area.
-      </xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:complexType name="AtmosphericRegionTargetVolumeType">
-    <xs:complexContent>
-      <xs:extension base="gml:AbstractFeatureType">
-        <xs:sequence>
-          <xs:element name="geometry" type="gml:SolidPropertyType" />
-          <xs:element name="observableProperty" type="omop:AbstractObservablePropertyPropertyType" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:element name="LocationCollection" type="LocationCollectionType" substitutionGroup="gml:AbstractFeature">
-    <xs:annotation>
-      <xs:documentation>
-        LocationCollection is used as the sampledFeature (featureOfInterest) in measurement or forecast Observations
-        when the returned results contain an irregular, named grid points, like observation stations or
-        cities. The menbers of the collection are typically picked at request time based on the user spatial or
-        query placial query terms.
-
-        The LocationCollection implements the GML 3.2.1 feature collection by having a member property
-        of a type inherited from gml:AbstractFeatureMemberType.
-      </xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:complexType name="LocationCollectionType">
-   <xs:complexContent>
-     <xs:extension base="gml:AbstractFeatureType">
-       <xs:sequence>
-         <xs:element name="member" type="LocationMemberType" minOccurs="0" maxOccurs="unbounded"/>
-       </xs:sequence>
-     </xs:extension>
-   </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="LocationMemberType">
-    <xs:complexContent>
-      <xs:extension base="gml:AbstractFeatureMemberType">
-        <xs:sequence minOccurs="0">
-          <xs:element ref="GeneralLocation"/>
-        </xs:sequence>
-        <xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:element name="GeneralLocation" type="GeneralLocationType" abstract="true" substitutionGroup="gml:AbstractFeature">
-    <xs:annotation>
-      <xs:documentation>
-        Extension point for defining specific Location types
-      </xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:complexType name="GeneralLocationType" abstract="true">
-    <xs:complexContent>
-      <xs:extension base="gml:AbstractFeatureType">
-        <xs:sequence>
-          <xs:element name="representativePoint" type="gml:PointPropertyType" minOccurs="1"/>
-          <xs:element name="country" type="gml:CodeType" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="timezone" type="gml:CodeType" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="region" type="gml:CodeType" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="generalLocationProperty" type="GeneralLocationPropertyType"/>
-  <xs:complexType name="GeneralLocationPropertyType">
-    <xs:annotation>
-      <xs:documentation>To be used when using this object type as property of n GML object type according to the GML object-property-association model (it is not allowed for GML Objects to contain other GML Objects as direct children). Enables referencing to an existing object using xlink:href attribute.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence minOccurs="0">
-      <xs:element ref="atm:GeneralLocation"/>
-    </xs:sequence>
-    <xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
-  </xs:complexType>
-
-  <xs:element name="Location" type="LocationType" substitutionGroup="GeneralLocation">
-    <xs:annotation>
-      <xs:documentation>
-        Basic named place with geo-reference.
-      </xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:complexType name="LocationType">
-    <xs:complexContent>
-      <xs:extension base="GeneralLocationType">
-        <xs:sequence>
-          <xs:element name="relatedFacility" type="gml:ReferenceType" minOccurs="0" maxOccurs="unbounded"/>
-          <xs:element name="referenceLocation" type="ReferenceLocationPropertyType" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="locationProperty" type="LocationPropertyType" />
-  <xs:complexType name="LocationPropertyType">
-    <xs:annotation>
-      <xs:documentation>To be used when using this object type as property of n GML object type according to the GML object-property-association model (it is not allowed for GML Objects to contain other GML Objects as direct children). Enables referencing to an existing object using xlink:href attribute.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence minOccurs="0">
-      <xs:element ref="atm:Location"/>
-    </xs:sequence>
-    <xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
-  </xs:complexType>
-
-  <xs:element name="ReferenceLocation" type="ReferenceLocationType" substitutionGroup="GeneralLocation">
-    <xs:annotation>
-      <xs:documentation>
-        Reference location is a place related to another location. Distance and bearing from the
-        ReferenceLocation to the referencing location may be given using distanceToReferencingLocation
-        and directionToTheReferencingLocation properties.
-      </xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:complexType name="ReferenceLocationType">
-    <xs:complexContent>
-      <xs:extension base="GeneralLocationType">
-        <xs:sequence>
-          <xs:element name="distanceToReferencingLocation" type="gml:MeasureType" minOccurs="0"/>
-          <xs:element name="directionToReferencingLocation" type="CompassAngleDirectionType" minOccurs="0"/>
-        </xs:sequence>
-      </xs:extension>
-     </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="referenceLocationProperty" type="ReferenceLocationPropertyType" />
-  <xs:complexType name="ReferenceLocationPropertyType">
-    <xs:annotation>
-      <xs:documentation>To be used when using this object type as property of n GML object type according to the GML object-property-association model (it is not allowed for GML Objects to contain other GML Objects as direct children). Enables referencing to an existing object using xlink:href attribute.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence minOccurs="0">
-      <xs:element ref="atm:ReferenceLocation"/>
-    </xs:sequence>
-    <xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
-  </xs:complexType>
-
-  <xs:element name="CompassAngleDirection" type="CompassAngleDirectionType">
-    <xs:annotation>
-      <xs:documentation>
-        CompassAngleDirection restricts gml:MeasureType to only allow a fixed uom "deg".
-        The degree value
-      </xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:complexType name="CompassAngleDirectionType">
-    <xs:annotation>
-      <xs:documentation>
-        Restriction of gml:MeasurementType, uom is fixed to "deg".
-        The value must be a double number between [0-360[
-      </xs:documentation>
-    </xs:annotation>
-    <xs:simpleContent>
-      <xs:restriction base="gml:MeasureType">
-        <xs:simpleType>
-          <xs:restriction base="xs:double">
-            <xs:minInclusive value="0"/>
-            <xs:maxExclusive value="360"/>
-          </xs:restriction>
-        </xs:simpleType>
-        <xs:attribute name="uom" fixed="deg" use="required" type="gml:UomIdentifier"/>
-      </xs:restriction>
-    </xs:simpleContent>
-  </xs:complexType>
-  <xs:element name="compassAngleDirectionProperty" type="CompassAngleDirectionPropertyType" />
-  <xs:complexType name="CompassAngleDirectionPropertyType">
-    <xs:annotation>
-      <xs:documentation>To be used when using this object type as property of n GML object type according to the GML object-property-association model (it is not allowed for GML Objects to contain other GML Objects as direct children). Enables referencing to an existing object using xlink:href attribute.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence minOccurs="0">
-      <xs:element ref="atm:CompassAngleDirection"/>
-    </xs:sequence>
-    <xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
-  </xs:complexType>
-</xs:schema>
  58 http://xml.fmi.fi/schema/wfs/2.0/fmi_wfs_simplefeature.xsd 3088 <?xml version="1.0" encoding="UTF-8"?>
 <!--
     BsWfsElement contains Location, Time and Elevation property elements that are used in GeoServer layer setup.
@@ -40763,4 +40543,224 @@ Relative vertical position of the transport element.</documentation>
     <attributeGroup ref="gml:OwnershipAttributeGroup"/>
   </complexType>
 </schema>
+ 76 https://xml.fmi.fi/schema/om/atmosphericfeatures/1.1/atmosphericfeatures.xsd 11009 <?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:gml="http://www.opengis.net/gml/3.2"
+  xmlns:omop="http://inspire.ec.europa.eu/schemas/omop/2.0"
+  xmlns:atm="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.1"
+  targetNamespace="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.1"
+  elementFormDefault="qualified" version="1.1">
+
+  <xs:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+  <xs:import namespace="http://inspire.ec.europa.eu/schemas/omop/2.0" schemaLocation="https://inspire.ec.europa.eu/schemas/omop/2.0/ObservableProperties.xsd"/>
+
+  <xs:element name="SurfaceWeatherTargetArea" type="SurfaceWeatherTargetAreaType" substitutionGroup="gml:AbstractFeature">
+    <xs:annotation>
+      <xs:documentation>SurfaceWeatherTargetArea is a region in atmosphere close to the ground,
+      where people on foot or traveling on the ground typically face weather phenomena.
+      Even though the geometry of this feature is 2-dimensional for practical reasons, it is assumed that
+      the area reaches about 10-25 meters in the atmosphere above the ground.
+
+      The observable properties of the area should reflect the atmospheric properties available for
+      making observations. If given, this is a superset of the observable properties
+      included in any Observation instances targeting this area.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SurfaceWeatherTargetAreaType">
+    <xs:complexContent>
+      <xs:extension base="gml:AbstractFeatureType">
+        <xs:sequence>
+          <xs:element name="geometry" type="gml:SurfacePropertyType"/>
+          <xs:element name="observableProperty" type="omop:AbstractObservablePropertyPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="AtmosphericRegionTargetVolume" type="AtmosphericRegionTargetVolumeType" substitutionGroup="gml:AbstractFeature">
+    <xs:annotation>
+      <xs:documentation>AtmosphericRegionTargetVolume can be any 3-dimensional region of atmosphere.
+      This feature is meant for modeling atmospheric regions that are located either
+      completely above the surface weather layer or have vertical span that reaches above the
+      surface weather layer.
+
+      The observable properties of the area should reflect the atmospheric properties available for
+      making observations. If given, this is a superset of the observable properties
+      included in any specific Observation instance targeting this area.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AtmosphericRegionTargetVolumeType">
+    <xs:complexContent>
+      <xs:extension base="gml:AbstractFeatureType">
+        <xs:sequence>
+          <xs:element name="geometry" type="gml:SolidPropertyType" />
+          <xs:element name="observableProperty" type="omop:AbstractObservablePropertyPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="LocationCollection" type="LocationCollectionType" substitutionGroup="gml:AbstractFeature">
+    <xs:annotation>
+      <xs:documentation>
+        LocationCollection is used as the sampledFeature (featureOfInterest) in measurement or forecast Observations
+        when the returned results contain an irregular, named grid points, like observation stations or
+        cities. The menbers of the collection are typically picked at request time based on the user spatial or
+        query placial query terms.
+
+        The LocationCollection implements the GML 3.2.1 feature collection by having a member property
+        of a type inherited from gml:AbstractFeatureMemberType.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="LocationCollectionType">
+   <xs:complexContent>
+     <xs:extension base="gml:AbstractFeatureType">
+       <xs:sequence>
+         <xs:element name="member" type="LocationMemberType" minOccurs="0" maxOccurs="unbounded"/>
+       </xs:sequence>
+     </xs:extension>
+   </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LocationMemberType">
+    <xs:complexContent>
+      <xs:extension base="gml:AbstractFeatureMemberType">
+        <xs:sequence minOccurs="0">
+          <xs:element ref="GeneralLocation"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GeneralLocation" type="GeneralLocationType" abstract="true" substitutionGroup="gml:AbstractFeature">
+    <xs:annotation>
+      <xs:documentation>
+        Extension point for defining specific Location types
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GeneralLocationType" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="gml:AbstractFeatureType">
+        <xs:sequence>
+          <xs:element name="representativePoint" type="gml:PointPropertyType" minOccurs="1"/>
+          <xs:element name="country" type="gml:CodeType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="timezone" type="gml:CodeType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="region" type="gml:CodeType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="generalLocationProperty" type="GeneralLocationPropertyType"/>
+  <xs:complexType name="GeneralLocationPropertyType">
+    <xs:annotation>
+      <xs:documentation>To be used when using this object type as property of n GML object type according to the GML object-property-association model (it is not allowed for GML Objects to contain other GML Objects as direct children). Enables referencing to an existing object using xlink:href attribute.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence minOccurs="0">
+      <xs:element ref="atm:GeneralLocation"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </xs:complexType>
+
+  <xs:element name="Location" type="LocationType" substitutionGroup="GeneralLocation">
+    <xs:annotation>
+      <xs:documentation>
+        Basic named place with geo-reference.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="LocationType">
+    <xs:complexContent>
+      <xs:extension base="GeneralLocationType">
+        <xs:sequence>
+          <xs:element name="relatedFacility" type="gml:ReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="referenceLocation" type="ReferenceLocationPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="locationProperty" type="LocationPropertyType" />
+  <xs:complexType name="LocationPropertyType">
+    <xs:annotation>
+      <xs:documentation>To be used when using this object type as property of n GML object type according to the GML object-property-association model (it is not allowed for GML Objects to contain other GML Objects as direct children). Enables referencing to an existing object using xlink:href attribute.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence minOccurs="0">
+      <xs:element ref="atm:Location"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </xs:complexType>
+
+  <xs:element name="ReferenceLocation" type="ReferenceLocationType" substitutionGroup="GeneralLocation">
+    <xs:annotation>
+      <xs:documentation>
+        Reference location is a place related to another location. Distance and bearing from the
+        ReferenceLocation to the referencing location may be given using distanceToReferencingLocation
+        and directionToTheReferencingLocation properties.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ReferenceLocationType">
+    <xs:complexContent>
+      <xs:extension base="GeneralLocationType">
+        <xs:sequence>
+          <xs:element name="distanceToReferencingLocation" type="gml:MeasureType" minOccurs="0"/>
+          <xs:element name="directionToReferencingLocation" type="CompassAngleDirectionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+     </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="referenceLocationProperty" type="ReferenceLocationPropertyType" />
+  <xs:complexType name="ReferenceLocationPropertyType">
+    <xs:annotation>
+      <xs:documentation>To be used when using this object type as property of n GML object type according to the GML object-property-association model (it is not allowed for GML Objects to contain other GML Objects as direct children). Enables referencing to an existing object using xlink:href attribute.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence minOccurs="0">
+      <xs:element ref="atm:ReferenceLocation"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </xs:complexType>
+
+  <xs:element name="CompassAngleDirection" type="CompassAngleDirectionType">
+    <xs:annotation>
+      <xs:documentation>
+        CompassAngleDirection restricts gml:MeasureType to only allow a fixed uom "deg".
+        The degree value
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CompassAngleDirectionType">
+    <xs:annotation>
+      <xs:documentation>
+        Restriction of gml:MeasurementType, uom is fixed to "deg".
+        The value must be a double number between [0-360[
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:restriction base="gml:MeasureType">
+        <xs:simpleType>
+          <xs:restriction base="xs:double">
+            <xs:minInclusive value="0"/>
+            <xs:maxExclusive value="360"/>
+          </xs:restriction>
+        </xs:simpleType>
+        <xs:attribute name="uom" fixed="deg" use="required" type="gml:UomIdentifier"/>
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="compassAngleDirectionProperty" type="CompassAngleDirectionPropertyType" />
+  <xs:complexType name="CompassAngleDirectionPropertyType">
+    <xs:annotation>
+      <xs:documentation>To be used when using this object type as property of n GML object type according to the GML object-property-association model (it is not allowed for GML Objects to contain other GML Objects as direct children). Enables referencing to an existing object using xlink:href attribute.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence minOccurs="0">
+      <xs:element ref="atm:CompassAngleDirection"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </xs:complexType>
+</xs:schema>
 
