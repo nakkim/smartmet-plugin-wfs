@@ -83,7 +83,7 @@
               <om:result>
         <gmlcov:MultiPointCoverage gml:id="mpcv-1-1">
           <gml:domainSet>
-            <gmlcov:SimpleMultiPoint gml:id="mp-1-1" srsName="http://xml.fmi.fi/gml/crs/compoundCRS.php?crs=4258&amp;time=unixtime" srsDimension="3">
+            <gmlcov:SimpleMultiPoint gml:id="mp-1-1" srsName="https://xml.fmi.fi/gml/crs/compoundCRS.php?crs=4258&amp;time=unixtime" srsDimension="3">
               <gmlcov:positions>
                 60.16952 24.93545  1363694400
                 60.16952 24.93545  1363698000

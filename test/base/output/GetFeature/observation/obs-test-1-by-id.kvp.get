@@ -83,7 +83,7 @@ Global data object:
    numParam = 1;
    numReturned = 1;
    projEpochSrsDim = 3;
-   projEpochSrsName = "http://xml.fmi.fi/gml/crs/compoundCRS.php?crs=4326&amp;time=unixtime";
+   projEpochSrsName = "https://xml.fmi.fi/gml/crs/compoundCRS.php?crs=4326&amp;time=unixtime";
    projSrsDim = 2;
    projSrsName = "http://www.opengis.net/def/crs/EPSG/0/4326";
    protocol = "http://";

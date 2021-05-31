@@ -7,6 +7,6 @@
   attributeFormDefault="unqualified">
   <xsd:include schemaLocation="https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd"/>
   <xsd:import namespace="http://www.example.com/test" schemaLocation="http://www.example.com/test/testType.xsd"/>
-  <xsd:import namespace="http://xml.fmi.fi/namespace/aviation-weather/2014/02/15" schemaLocation="http://xml.fmi.fi/schema/aviation-weather/2014/02/15/fmiavi.xsd"/>
-  <xsd:import namespace="http://xml.fmi.fi/schema/wfs/2.0" schemaLocation="http://xml.fmi.fi/schema/wfs/2.0/fmi_wfs_simplefeature.xsd"/>
+  <xsd:import namespace="http://xml.fmi.fi/namespace/aviation-weather/2014/02/15" schemaLocation="https://xml.fmi.fi/schema/aviation-weather/2014/02/15/fmiavi.xsd"/>
+  <xsd:import namespace="http://xml.fmi.fi/schema/wfs/2.0" schemaLocation="https://xml.fmi.fi/schema/wfs/2.0/fmi_wfs_simplefeature.xsd"/>
   </xsd:schema>
