@@ -3,7 +3,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet WFS plugin
 Name: %{SPECNAME}
-Version: 21.5.28
+Version: 21.6.1
 Release: 1%{?dist}.fmi
 License: MIT
 Group: SmartMet/Plugins
@@ -25,19 +25,19 @@ BuildRequires: xqilla-devel
 BuildRequires: libpqxx-devel < 1:7.0
 BuildRequires: openssl-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-spine-devel >= 21.5.21
+BuildRequires: smartmet-library-spine-devel >= 21.5.31
 BuildRequires: smartmet-library-gis-devel >= 21.5.24
 BuildRequires: smartmet-library-locus-devel >= 21.5.20
-BuildRequires: smartmet-library-macgyver-devel >= 21.5.21
+BuildRequires: smartmet-library-macgyver-devel >= 21.5.31
 BuildRequires: smartmet-engine-contour-devel >= 21.5.20
 BuildRequires: smartmet-engine-geonames-devel >= 21.5.20
-BuildRequires: smartmet-engine-gis-devel >= 21.5.20
-BuildRequires: smartmet-engine-grid-devel >= 21.5.25
-BuildRequires: smartmet-engine-querydata-devel >= 21.5.21
-BuildRequires: smartmet-library-grid-content-devel >= 21.5.25
-BuildRequires: smartmet-library-grid-files-devel >= 21.5.25
+BuildRequires: smartmet-engine-gis-devel >= 21.5.27
+BuildRequires: smartmet-engine-grid-devel >= 21.6.1
+BuildRequires: smartmet-engine-querydata-devel >= 21.5.31
+BuildRequires: smartmet-library-grid-content-devel >= 21.6.1
+BuildRequires: smartmet-library-grid-files-devel >= 21.6.1
 %if %{with observation}
-BuildRequires: smartmet-engine-observation-devel >= 21.5.20
+BuildRequires: smartmet-engine-observation-devel >= 21.5.31
 %endif
 # BuildRequires: postgresql95-libs
 Requires: ctpp2
@@ -47,19 +47,19 @@ Requires: libcurl
 Requires: libpqxx < 1:7.0
 Requires: jsoncpp
 Requires: smartmet-library-locus >= 21.5.20
-Requires: smartmet-library-macgyver >= 21.5.21
-Requires: smartmet-library-spine >= 21.5.21
+Requires: smartmet-library-macgyver >= 21.5.31
+Requires: smartmet-library-spine >= 21.5.31
 Requires: smartmet-library-gis >= 21.5.24
 Requires: smartmet-engine-contour >= 21.5.20
 Requires: smartmet-engine-geonames >= 21.5.20
-Requires: smartmet-engine-gis >= 21.5.20
-Requires: smartmet-engine-grid >= 21.5.25
-Requires: smartmet-library-grid-content >= 21.5.25
-Requires: smartmet-library-grid-files >= 21.5.25
+Requires: smartmet-engine-gis >= 21.5.27
+Requires: smartmet-engine-grid >= 21.6.1
+Requires: smartmet-library-grid-content >= 21.6.1
+Requires: smartmet-library-grid-files >= 21.6.1
 %if %{with observation}
-Requires: smartmet-engine-observation >= 21.5.20
+Requires: smartmet-engine-observation >= 21.5.31
 %endif
-Requires: smartmet-engine-querydata >= 21.5.21
+Requires: smartmet-engine-querydata >= 21.5.31
 Requires: smartmet-server >= 21.1.14
 Requires: xerces-c
 Requires: xqilla
@@ -80,14 +80,14 @@ Obsoletes: smartmet-brainstorm-wfs-debuginfo < 16.11.1
 #TestRequires: smartmet-test-data >= 20.6.30
 #TestRequires: smartmet-library-gis-devel >= 21.5.24
 #TestRequires: smartmet-library-newbase-devel >= 20.10.28
-#TestRequires: smartmet-library-spine-devel >= 21.5.21
+#TestRequires: smartmet-library-spine-devel >= 21.5.31
 #TestRequires: smartmet-engine-geonames-devel >= 20.8.23
-#TestRequires: smartmet-engine-gis-devel >= 21.5.20
-#TestRequires: smartmet-engine-querydata-devel >= 21.5.21
+#TestRequires: smartmet-engine-gis-devel >= 21.5.27
+#TestRequires: smartmet-engine-querydata-devel >= 21.5.31
 %if %{with observation}
 #TestRequires: smartmet-engine-observation >= 20.10.29
 %endif
-#TestRequires: smartmet-engine-grid >= 21.5.25
+#TestRequires: smartmet-engine-grid >= 21.6.1
 #TestRequires: redis
 #TestRequires: smartmet-engine-grid-test
 #TestRequires: gdal32-devel
@@ -143,7 +143,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/smartmet/plugin/wfs/request/*.h
 
 %changelog
-* Fri Jun 28 2021 Andris Pavēnis <andris.pavenis@fmi.fi> 21.5.28-1.fmi
+* Tue Jun  1 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.6.1-1.fmi
+- Repackaged due to ABI changes in grid libraries
+
+* Fri May 28 2021 Andris Pavēnis <andris.pavenis@fmi.fi> 21.5.28-1.fmi
 - Use https://xml.fmi.fi for corresponding XML schema locations
 
 * Tue May 25 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.5.25-1.fmi
