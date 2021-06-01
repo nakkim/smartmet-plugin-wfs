@@ -80,7 +80,7 @@ Global data object:
                                 ]
               }
             ];
-   hostname = "brainstormgw.fmi.fi";
+   hostname = "opendata.fmi.fi";
    language = "eng";
    numMatched = 1;
    numParam = 1;

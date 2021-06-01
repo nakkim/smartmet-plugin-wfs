@@ -45,7 +45,7 @@
                     <om:value>meteorology</om:value>
                 </om:NamedValue>
             </om:parameter>
-            <om:observedProperty  xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=TAP_PT1S_avg&amp;language=eng"/>
+            <om:observedProperty  xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=TAP_PT1S_avg&amp;language=eng"/>
             <om:featureOfInterest>
                 <sams:SF_SpatialSamplingFeature gml:id="foi-ssf-1-fmisid-101104">
                     <sam:sampledFeature xlink:href="http://xml.fmi.fi/sampledFeature/soundingArea.php?id=101104" xlink:title="Jokioinen Ilmala sounding target area"/>
@@ -5342,7 +5342,7 @@
                     </gml:coverageFunction>
                     <gmlcov:rangeType>
                         <swe:DataRecord>
-                          <swe:field name="TAP_PT1S_avg"  xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=TAP_PT1S_avg&amp;language=eng"/>
+                          <swe:field name="TAP_PT1S_avg"  xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=TAP_PT1S_avg&amp;language=eng"/>
                       
                     </swe:DataRecord>
                   </gmlcov:rangeType>
@@ -5369,7 +5369,7 @@
                     <om:value>meteorology</om:value>
                 </om:NamedValue>
             </om:parameter>
-            <om:observedProperty  xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=TAP_PT1S_avg&amp;language=eng"/>
+            <om:observedProperty  xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=TAP_PT1S_avg&amp;language=eng"/>
             <om:featureOfInterest>
                 <sams:SF_SpatialSamplingFeature gml:id="foi-ssf-2-fmisid-101932">
                     <sam:sampledFeature xlink:href="http://xml.fmi.fi/sampledFeature/soundingArea.php?id=101932" xlink:title="Sodankylä Tähtelä sounding target area"/>
@@ -11200,7 +11200,7 @@
                     </gml:coverageFunction>
                     <gmlcov:rangeType>
                         <swe:DataRecord>
-                          <swe:field name="TAP_PT1S_avg"  xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=TAP_PT1S_avg&amp;language=eng"/>
+                          <swe:field name="TAP_PT1S_avg"  xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=TAP_PT1S_avg&amp;language=eng"/>
                       
                     </swe:DataRecord>
                   </gmlcov:rangeType>

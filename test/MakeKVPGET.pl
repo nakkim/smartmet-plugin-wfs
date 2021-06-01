@@ -13,7 +13,7 @@ sub MakeXMLPost
     open $output, ">$output_fn" or die "Failed to open output file $output_fn: $!";
     # print "Writing $output_fn\n";
     print $output "GET $url_path?$data HTTP/1.1\r\n";
-    print $output "Host: brainstormgw.fmi.fi\r\n";
+    print $output "Host: opendata.fmi.fi\r\n";
     print $output "fmi-apikey: foobar\r\n";
     print $output  "\r\n";
     print $output  "\r\n";

@@ -51,7 +51,7 @@
                     </om:value>
                 </om:NamedValue>
             </om:parameter>
-            <om:observedProperty  xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature,pressure&amp;language=eng"/>
+            <om:observedProperty  xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature,pressure&amp;language=eng"/>
 	                <om:featureOfInterest>
                 <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-">
           <sam:sampledFeature>
@@ -128,8 +128,8 @@
           </gml:coverageFunction>
           <gmlcov:rangeType>
             <swe:DataRecord>
-              <swe:field name="temperature"  xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
-              <swe:field name="pressure"  xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=pressure&amp;language=eng"/>
+              <swe:field name="temperature"  xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+              <swe:field name="pressure"  xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=pressure&amp;language=eng"/>
               </swe:DataRecord>
           </gmlcov:rangeType>
         </gmlcov:MultiPointCoverage>

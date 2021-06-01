@@ -69,8 +69,8 @@
     <ows:Operation name="GetCapabilities">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
-          <ows:Post xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Get xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Post xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="AcceptVersions">
@@ -82,8 +82,8 @@
     <ows:Operation name="DescribeFeatureType">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
-          <ows:Post xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Get xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Post xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="outputFormat">
@@ -98,32 +98,32 @@
     <ows:Operation name="ListStoredQueries">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
-          <ows:Post xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Get xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Post xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
         </ows:HTTP>
       </ows:DCP>
     </ows:Operation>
     <ows:Operation name="DescribeStoredQueries">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
-          <ows:Post xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Get xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Post xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
         </ows:HTTP>
       </ows:DCP>
     </ows:Operation>
     <ows:Operation name="GetPropertyValue">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
-          <ows:Post xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Get xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Post xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
         </ows:HTTP>
       </ows:DCP>
     </ows:Operation>
     <ows:Operation name="GetFeature">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
-          <ows:Post xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Get xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Post xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="outputFormat">

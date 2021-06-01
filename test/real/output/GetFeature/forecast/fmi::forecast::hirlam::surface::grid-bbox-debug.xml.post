@@ -6,7 +6,7 @@ Global data object:
 
    fmi_apikey = &quot;foobar&quot;;
    fmi_apikey_prefix = &quot;/fmi-apikey/&quot;;
-   hostname = &quot;beta.fmi.fi&quot;;
+   hostname = &quot;opendata.fmi.fi&quot;;
    hosts = {
              &#39;wms&#39; : &quot;wms.fmi.fi&quot;
            };

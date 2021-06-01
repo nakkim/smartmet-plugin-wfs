@@ -44,7 +44,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-1">
       <sam:sampledFeature/>
@@ -113,7 +113,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-2">
       <sam:sampledFeature/>
@@ -182,7 +182,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-3">
       <sam:sampledFeature/>
@@ -251,7 +251,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-4">
       <sam:sampledFeature/>
@@ -320,7 +320,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-5">
       <sam:sampledFeature/>
@@ -389,7 +389,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-6">
       <sam:sampledFeature/>
@@ -458,7 +458,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-7">
       <sam:sampledFeature/>
@@ -527,7 +527,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-8">
       <sam:sampledFeature/>
@@ -596,7 +596,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-9">
       <sam:sampledFeature/>
@@ -665,7 +665,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-10">
       <sam:sampledFeature/>
@@ -734,7 +734,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-11">
       <sam:sampledFeature/>
@@ -803,7 +803,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-12">
       <sam:sampledFeature/>
@@ -872,7 +872,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-13">
       <sam:sampledFeature/>
@@ -941,7 +941,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-14">
       <sam:sampledFeature/>
@@ -1010,7 +1010,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-15">
       <sam:sampledFeature/>
@@ -1079,7 +1079,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-16">
       <sam:sampledFeature/>
@@ -1148,7 +1148,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-17">
       <sam:sampledFeature/>
@@ -1217,7 +1217,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-18">
       <sam:sampledFeature/>
@@ -1286,7 +1286,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-19">
       <sam:sampledFeature/>
@@ -1355,7 +1355,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-20">
       <sam:sampledFeature/>
@@ -1424,7 +1424,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-21">
       <sam:sampledFeature/>
@@ -1493,7 +1493,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-22">
       <sam:sampledFeature/>
@@ -1562,7 +1562,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-23">
       <sam:sampledFeature/>
@@ -1631,7 +1631,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-24">
       <sam:sampledFeature/>
@@ -1700,7 +1700,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-25">
       <sam:sampledFeature/>
@@ -1769,7 +1769,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-26">
       <sam:sampledFeature/>
@@ -1838,7 +1838,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-27">
       <sam:sampledFeature/>
@@ -1907,7 +1907,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-28">
       <sam:sampledFeature/>
@@ -1976,7 +1976,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-29">
       <sam:sampledFeature/>
@@ -2045,7 +2045,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-30">
       <sam:sampledFeature/>
@@ -2114,7 +2114,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-31">
       <sam:sampledFeature/>
@@ -2183,7 +2183,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-32">
       <sam:sampledFeature/>
@@ -2252,7 +2252,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-33">
       <sam:sampledFeature/>
@@ -2321,7 +2321,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-34">
       <sam:sampledFeature/>
@@ -2390,7 +2390,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-35">
       <sam:sampledFeature/>
@@ -2459,7 +2459,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-36">
       <sam:sampledFeature/>
@@ -2528,7 +2528,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-37">
       <sam:sampledFeature/>
@@ -2597,7 +2597,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-38">
       <sam:sampledFeature/>
@@ -2666,7 +2666,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-39">
       <sam:sampledFeature/>
@@ -2735,7 +2735,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-40">
       <sam:sampledFeature/>
@@ -2804,7 +2804,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-41">
       <sam:sampledFeature/>
@@ -2873,7 +2873,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-42">
       <sam:sampledFeature/>
@@ -2942,7 +2942,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-43">
       <sam:sampledFeature/>
@@ -3011,7 +3011,7 @@
       </om:NamedValue>
     </om:parameter>
     <om:observedProperty
-        xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
+        xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=temperature&amp;language=eng"/>
     <om:featureOfInterest>
       <sams:SF_SpatialSamplingFeature gml:id="spatial-sampling-feature-wfs-member-44">
       <sam:sampledFeature/>

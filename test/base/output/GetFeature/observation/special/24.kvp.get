@@ -172,7 +172,7 @@ Global data object:
                 'timestep' : 60
               }
             ];
-   hostname = "brainstormgw.fmi.fi";
+   hostname = "opendata.fmi.fi";
    language = "eng";
    named_parameters = {
                         'defaultmeteoparam' : [

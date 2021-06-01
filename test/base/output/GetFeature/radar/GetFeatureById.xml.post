@@ -2,7 +2,7 @@ Global data object:
 
    fmi_apikey = "foobar";
    fmi_apikey_prefix = "/fmi-apikey/";
-   hostname = "beta.fmi.fi";
+   hostname = "opendata.fmi.fi";
    hosts = {
              'wms' : "wms.fmi.fi"
            };

@@ -23,7 +23,7 @@
                     </om:value>
         </om:NamedValue>
       </om:parameter>
-      <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=t2m&amp;language=eng"/>
+      <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=t2m&amp;language=eng"/>
       <om:featureOfInterest>
         <sams:SF_SpatialSamplingFeature gml:id="fi-1-1-t2m">
           <sam:sampledFeature>
@@ -155,7 +155,7 @@
                     </om:value>
         </om:NamedValue>
       </om:parameter>
-      <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=t2m&amp;language=eng"/>
+      <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=t2m&amp;language=eng"/>
       <om:featureOfInterest>
         <sams:SF_SpatialSamplingFeature gml:id="fi-1-2-t2m">
           <sam:sampledFeature>
@@ -287,7 +287,7 @@
                     </om:value>
         </om:NamedValue>
       </om:parameter>
-      <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=t2m&amp;language=eng"/>
+      <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=observation&amp;param=t2m&amp;language=eng"/>
       <om:featureOfInterest>
         <sams:SF_SpatialSamplingFeature gml:id="fi-1-3-t2m">
           <sam:sampledFeature>

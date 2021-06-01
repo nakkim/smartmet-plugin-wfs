@@ -1187,7 +1187,7 @@ Global data object:
                                 ]
               }
             ];
-   hostname = "beta.fmi.fi";
+   hostname = "opendata.fmi.fi";
    language = "eng";
    numMatched = 1;
    numParam = 2;
