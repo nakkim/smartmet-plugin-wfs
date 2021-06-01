@@ -36,6 +36,7 @@ class WfsFeatureDef
   inline std::string get_default_crs() const { return default_crs_url; }
   inline const std::vector<std::string>& get_other_crs() const { return other_crs_urls; }
   inline const std::array<double, 4> get_bbox() const { return bbox; }
+  inline bool is_hidden() const { return hidden; }
 
  private:
   static std::string resolve_crs_url(const std::string& name,
@@ -51,6 +52,7 @@ class WfsFeatureDef
   std::string default_crs_url;
   std::vector<std::string> other_crs_urls;
   std::array<double, 4> bbox;
+  bool hidden;
 };
 
 }  // namespace WFS

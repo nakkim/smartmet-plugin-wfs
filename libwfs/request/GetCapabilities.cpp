@@ -69,26 +69,28 @@ void GetCapabilities::execute(std::ostream& output) const
     BOOST_FOREACH (const std::string& name, capabilities.get_used_features())
     {
       auto feature = capabilities.get_features().at(name);
-      CTPP::CDT& f = hash["features"][ind++];
+      if (not feature->is_hidden()) {
+	CTPP::CDT& f = hash["features"][ind++];
 
-      std::string ns_alias = "wfsns001";
-      std::size_t pos = feature->get_name().find_first_of(":");
-      if (pos != std::string::npos)
-        ns_alias = feature->get_name().substr(0, pos);
-      f["nsAlias"] = ns_alias;
-      f["xmlType"] = feature->get_xml_type();
-      f["name"] = feature->get_name();
-      f["ns"] = feature->get_xml_namespace();
-      auto loc = feature->get_xml_namespace_loc();
-      if (loc)
-        f["loc"] = *loc;
-      f["title"] = feature->get_title(language);
-      f["abstract"] = feature->get_abstract(language);
-      f["defaultCrs"] = feature->get_default_crs();
-      int k = 0;
-      BOOST_FOREACH (const std::string& crs, feature->get_other_crs())
-      {
-        f["otherCrs"][k++] = crs;
+	std::string ns_alias = "wfsns001";
+	std::size_t pos = feature->get_name().find_first_of(":");
+	if (pos != std::string::npos)
+	  ns_alias = feature->get_name().substr(0, pos);
+	f["nsAlias"] = ns_alias;
+	f["xmlType"] = feature->get_xml_type();
+	f["name"] = feature->get_name();
+	f["ns"] = feature->get_xml_namespace();
+	auto loc = feature->get_xml_namespace_loc();
+	if (loc)
+	  f["loc"] = *loc;
+	f["title"] = feature->get_title(language);
+	f["abstract"] = feature->get_abstract(language);
+	f["defaultCrs"] = feature->get_default_crs();
+	int k = 0;
+	BOOST_FOREACH (const std::string& crs, feature->get_other_crs())
+	  {
+	    f["otherCrs"][k++] = crs;
+	  }
       }
     }
 

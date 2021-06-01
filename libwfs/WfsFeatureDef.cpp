@@ -53,6 +53,8 @@ bw::WfsFeatureDef::WfsFeatureDef(SmartMet::Spine::CRSRegistry& crs_registry,
     {
       std::copy(tmp2.begin(), tmp2.end(), bbox.data());
     }
+
+    hidden = config->get_optional_config_param<bool>("hidden", false);
   }
   catch (...)
   {
