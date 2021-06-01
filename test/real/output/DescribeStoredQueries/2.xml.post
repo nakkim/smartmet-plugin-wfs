@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DescribeStoredQueriesResponse xmlns="http://www.opengis.net/wfs/2.0"
+  xmlns:omso="http://inspire.ec.europa.eu/schemas/omso/3.0"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:ows_common="http://www.opengis.net/ows/1.1"
+  xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"
+  xmlns:gml="http://www.opengis.net/gml/3.2"
+  xmlns:fe="http://www.opengis.net/fes/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd
+  http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
+  http://inspire.ec.europa.eu/schemas/common/1.0 https://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
+  http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd">
+
+  <StoredQueryDescription id="fmi::forecast::hirlam::surface::point::multipointcoverage">
+    <Title>Hirlam Point Weather Forecast as multipointcoverage</Title>
+    <Abstract>
+    Hirlam weather forecast fetched to a specific location returned in multi point coverage format. Location need to be specified as place or geoid or latlon query parameters.
+    </Abstract>
+    
+    <Parameter name="starttime" type="dateTime">
+      <Title>Begin of time interval</Title>
+      <Abstract>
+      Parameter specifies the begin of time interval in ISO 8601 format (for example 2012-02-27T00:00:00Z).
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="endtime" type="dateTime">
+      <Title>End of time interval</Title>
+      <Abstract>
+      Parameter specifies the end of time interval in ISO 8601 format (for example 2012-02-27T00:00:00Z).
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="timestep" type="int">
+      <Title>The time step of data in minutes</Title>
+      <Abstract>
+      The time step of data in minutes. Notice that timestep is calculated from start of the ongoing hour or day. 
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="parameters" type="NameList">
+      <Title>Parameters to return</Title>
+      <Abstract>
+      Comma separated list of meteorological parameters to return.
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="crs" type="xsi:string">
+      <Title>Coordinate projection to use in results</Title>
+      <Abstract>
+      Coordinate projection to use in results. For example EPSG::3067
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="place" type="xsi:string">
+      <Title>The location for which to provide data</Title>
+      <Abstract>
+      The location for which to provide forecast. Region can be given after location name separated by comma (for example Kumpula,Kolari).
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="latlon" type="gml:pos">
+      <Title>Location coordinates to return data.</Title>
+      <Abstract>
+      Location coordinates to return data  (lat,lon). For example 61.2,21
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="geoid" type="int">
+      <Title>Geoid of the location for which to return data.</Title>
+      <Abstract>
+      Geoid of the location for which to return data. (ID from geonames.org)
+      </Abstract>
+    </Parameter>
+    
+    <QueryExpressionText xmlns:wfs_001="http://inspire.ec.europa.eu/schemas/omso/3.0"
+                         xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd"
+                         returnFeatureTypes="wfs_001:GridSeriesObservation"
+                         language="urn:ogc:def:queryLanguage:OGC-WFS::WFS_QueryExpression"
+                         isPrivate="true"/>
+  </StoredQueryDescription>
+
+  <StoredQueryDescription id="fmi::forecast::hirlam::surface::point::timevaluepair">
+    <Title>Hirlam Point Weather Forecast as time value pairs</Title>
+    <Abstract>
+    Hirlam weather forecast fetched to a specific location returned in time value pair format. Location need to be specified as place or geoid or latlon query parameters.
+    </Abstract>
+    
+    <Parameter name="starttime" type="dateTime">
+      <Title>Begin of time interval</Title>
+      <Abstract>
+      Parameter specifies the begin of time interval in ISO 8601 format (for example 2012-02-27T00:00:00Z).
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="endtime" type="dateTime">
+      <Title>End of time interval</Title>
+      <Abstract>
+      Parameter specifies the end of time interval in ISO 8601 format (for example 2012-02-27T00:00:00Z).
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="timestep" type="int">
+      <Title>The time step of data in minutes</Title>
+      <Abstract>
+      The time step of data in minutes. Notice that timestep is calculated from start of the ongoing hour or day. 
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="parameters" type="NameList">
+      <Title>Parameters to return</Title>
+      <Abstract>
+      Comma separated list of meteorological parameters to return.
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="crs" type="xsi:string">
+      <Title>Coordinate projection to use in results</Title>
+      <Abstract>
+      Coordinate projection to use in results. For example EPSG::3067
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="place" type="xsi:string">
+      <Title>The location for which to provide data</Title>
+      <Abstract>
+      The location for which to provide forecast. Region can be given after location name separated by comma (for example Kumpula,Kolari).
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="latlon" type="gml:pos">
+      <Title>Location coordinates to return data.</Title>
+      <Abstract>
+      Location coordinates to return data  (lat,lon). For example 61.2,21
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="geoid" type="int">
+      <Title>Geoid of the location for which to return data.</Title>
+      <Abstract>
+      Geoid of the location for which to return data. (ID from geonames.org)
+      </Abstract>
+    </Parameter>
+    
+    <Parameter name="timezone" type="xsi:string">
+      <Title>Time zone</Title>
+      <Abstract>
+      Time zone of the time instant of the data point in the form Area/Location (for example America/Costa_Rica). Default value is UTC.
+      </Abstract>
+    </Parameter>
+    
+    <QueryExpressionText xmlns:wfs_001="http://inspire.ec.europa.eu/schemas/omso/3.0"
+                         xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd"
+                         returnFeatureTypes="wfs_001:PointTimeSeriesObservation"
+                         language="urn:ogc:def:queryLanguage:OGC-WFS::WFS_QueryExpression"
+                         isPrivate="true"/>
+  </StoredQueryDescription>
+
+</DescribeStoredQueriesResponse>
