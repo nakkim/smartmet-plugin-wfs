@@ -39,11 +39,13 @@ bw::Request::DescribeStoredQueries::DescribeStoredQueries(const std::string& lan
       // Ensure that stored query IDs are sorted if not specified explicitly.
       // This is mostly to get repeatable results when running tests.
       std::sort(this->ids.begin(), this->ids.end());
+      show_all = true;
     }
     else
     {
       show_hidden = true;
       this->ids = ids;
+      show_all = false;
     }
   }
   catch (...)
@@ -88,7 +90,25 @@ void bw::Request::DescribeStoredQueries::execute(std::ostream& output) const
 
       if (show_hidden or not handler->is_hidden())
       {
-        CTPP::CDT& sq = hash["storedQueryList"][cnt++];
+        const std::vector<std::string> return_types = handler->get_return_types();
+
+	// If all descriptions required then skip those at least one feature type is hidden.
+	bool skip_this_id = false;
+	if (show_all) {
+	  for (std::size_t k = 0; k < return_types.size(); k++)
+	    {
+	      const std::string& name = return_types[k];
+	      const auto* feature = plugin_impl.get_capabilities().find_feature(name);
+	      if (feature->is_hidden()) {
+		skip_this_id = true;
+	      }
+	    }
+	}
+	if (skip_this_id) {
+	  continue;
+	}
+
+	CTPP::CDT& sq = hash["storedQueryList"][cnt++];
 
         boost::shared_ptr<const StoredQueryConfig> config = handler->get_config();
         sq["id"] = config->get_query_id();
@@ -106,7 +126,6 @@ void bw::Request::DescribeStoredQueries::execute(std::ostream& output) const
 
         bool have_ns_loc = false;
         std::map<std::string, std::string> ns_map;
-        const std::vector<std::string> return_types = handler->get_return_types();
         for (std::size_t k = 0; k < return_types.size(); k++)
         {
           const std::string& name = return_types[k];

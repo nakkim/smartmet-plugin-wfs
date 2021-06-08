@@ -20,6 +20,7 @@ class DescribeStoredQueries : public RequestBase
 {
   std::vector<std::string> ids;
   bool show_hidden;
+  bool show_all;
 
  private:
   DescribeStoredQueries(const std::string& language,
