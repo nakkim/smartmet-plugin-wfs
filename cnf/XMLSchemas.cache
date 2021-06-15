@@ -1,4 +1,4 @@
-22 serialization::archive 17 0 0 0 0 192 0 0 0 40 http://portele.de/ShapeChangeAppinfo.xsd 1124 <?xml version="1.0" encoding="UTF-8"?>
+22 serialization::archive 17 0 0 0 0 186 0 0 0 40 http://portele.de/ShapeChangeAppinfo.xsd 1124 <?xml version="1.0" encoding="UTF-8"?>
 <schema targetNamespace="http://www.interactive-instruments.de/ShapeChange/AppInfo"
  xmlns="http://www.w3.org/2001/XMLSchema"
  xmlns:sc="http://www.interactive-instruments.de/ShapeChange/AppInfo" elementFormDefault="qualified"
@@ -30,874 +30,6 @@
  <element name="geometryType" type="string"/>
  <element name="srid" type="positiveInteger"/>
 </schema>
- 46 http://schemas.opengis.net/filter/2.0/expr.xsd 1472 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema
-   targetNamespace="http://www.opengis.net/fes/2.0"
-   xmlns:fes="http://www.opengis.net/fes/2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-   elementFormDefault="qualified"
-   version="2.0.3">
-
-   <xsd:annotation>
-      <xsd:documentation>
-         Filter Encoding is an OGC Standard.
-         Copyright (c) 2010, 2014 Open Geospatial Consortium.
-         To obtain additional rights of use, visit http://www.opengeospatial.org/legal/ .
-      </xsd:documentation>
-   </xsd:annotation>
-
-   <xsd:include schemaLocation="filterAll.xsd"/>
-
-   <xsd:element name="expression" abstract="true"/>
-
-   <xsd:element name="ValueReference" type="xsd:string"
-                substitutionGroup="fes:expression"/>
-
-   <xsd:element name="Function" type="fes:FunctionType"
-                substitutionGroup="fes:expression"/>
-   <xsd:complexType name="FunctionType">
-      <xsd:sequence>
-         <xsd:element ref="fes:expression"
-                      minOccurs="0" maxOccurs="unbounded"/>
-      </xsd:sequence>
-      <xsd:attribute name="name" type="xsd:string" use="required"/>
-   </xsd:complexType> 
-
-   <xsd:element name="Literal" type="fes:LiteralType"
-                substitutionGroup="fes:expression"/>
-   <xsd:complexType name="LiteralType" mixed="true">
-      <xsd:sequence>
-         <xsd:any minOccurs="0"/>
-      </xsd:sequence>
-      <xsd:attribute name="type" type="xsd:QName"/>
-   </xsd:complexType>
-
-</xsd:schema>
-
- 48 http://schemas.opengis.net/filter/2.0/filter.xsd 17082 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema
-   targetNamespace="http://www.opengis.net/fes/2.0"
-   xmlns:fes="http://www.opengis.net/fes/2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-   elementFormDefault="qualified"
-   version="2.0.3">
-
-   <xsd:annotation>
-      <xsd:documentation>
-         Filter Encoding is an OGC Standard.
-         Copyright (c) 2010, 2014 Open Geospatial Consortium.
-         To obtain additional rights of use, visit http://www.opengeospatial.org/legal/ .
-      </xsd:documentation>
-   </xsd:annotation>
-
-   <xsd:include schemaLocation="filterAll.xsd"/>
-   <xsd:include schemaLocation="expr.xsd"/>
-   <xsd:include schemaLocation="query.xsd"/>
-   <xsd:include schemaLocation="filterCapabilities.xsd"/>
-
-   <xsd:element name="Filter"
-                type="fes:FilterType"
-                substitutionGroup="fes:AbstractSelectionClause"/>
-   <xsd:complexType name="FilterType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:AbstractSelectionClauseType">
-            <xsd:sequence>
-               <xsd:group ref="fes:FilterPredicates"/>
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-
-   <!-- =================================================================== -->
-   <!-- FILTER PREDICATES                                                   -->
-   <!-- =================================================================== -->
-   <xsd:group name="FilterPredicates">
-     <xsd:choice>
-         <xsd:element ref="fes:comparisonOps"/>
-         <xsd:element ref="fes:spatialOps"/>
-         <xsd:element ref="fes:temporalOps"/>
-         <xsd:element ref="fes:logicOps"/>
-         <xsd:element ref="fes:extensionOps"/>
-         <xsd:element ref="fes:Function"/> 
-         <xsd:element ref="fes:_Id" maxOccurs="unbounded"/>
-      </xsd:choice>
-   </xsd:group>
-
-   <!-- =================================================================== -->
-   <!-- COMPARISON OPERATORS                                                -->
-   <!-- =================================================================== -->
-   <xsd:element name="comparisonOps"
-                type="fes:ComparisonOpsType"
-                abstract="true"/>
-   <xsd:complexType name="ComparisonOpsType" abstract="true"/>
-   <xsd:element name="PropertyIsEqualTo"
-                type="fes:BinaryComparisonOpType"
-                substitutionGroup="fes:comparisonOps"/>
-   <xsd:element name="PropertyIsNotEqualTo"
-                type="fes:BinaryComparisonOpType"
-                substitutionGroup="fes:comparisonOps"/>
-   <xsd:element name="PropertyIsLessThan"
-                type="fes:BinaryComparisonOpType"
-                substitutionGroup="fes:comparisonOps"/>
-   <xsd:element name="PropertyIsGreaterThan"
-                type="fes:BinaryComparisonOpType"
-                substitutionGroup="fes:comparisonOps"/>
-   <xsd:element name="PropertyIsLessThanOrEqualTo"
-                type="fes:BinaryComparisonOpType"
-                substitutionGroup="fes:comparisonOps"/>
-   <xsd:element name="PropertyIsGreaterThanOrEqualTo"
-                type="fes:BinaryComparisonOpType"
-                substitutionGroup="fes:comparisonOps"/>
-   <xsd:element name="PropertyIsLike"
-                type="fes:PropertyIsLikeType"
-                substitutionGroup="fes:comparisonOps"/>
-   <xsd:element name="PropertyIsNull"
-                type="fes:PropertyIsNullType"
-                substitutionGroup="fes:comparisonOps"/>
-   <xsd:element name="PropertyIsNil"
-                type="fes:PropertyIsNilType"
-                substitutionGroup="fes:comparisonOps"/>
-   <xsd:element name="PropertyIsBetween"
-                type="fes:PropertyIsBetweenType"
-                substitutionGroup="fes:comparisonOps"/>
-
-   <!-- =================================================================== -->
-   <!-- SPATIAL OPERATORS                                                   -->
-   <!-- =================================================================== -->
-   <xsd:element name="spatialOps" type="fes:SpatialOpsType" abstract="true"/>
-   <xsd:complexType name="SpatialOpsType" abstract="true"/>
-   <xsd:element name="Equals"
-                type="fes:BinarySpatialOpType"
-                substitutionGroup="fes:spatialOps"/>
-   <xsd:element name="Disjoint"
-                type="fes:BinarySpatialOpType"
-                substitutionGroup="fes:spatialOps"/>
-   <xsd:element name="Touches"
-                type="fes:BinarySpatialOpType"
-                substitutionGroup="fes:spatialOps"/>
-   <xsd:element name="Within"
-                type="fes:BinarySpatialOpType"
-                substitutionGroup="fes:spatialOps"/>
-   <xsd:element name="Overlaps"
-                type="fes:BinarySpatialOpType"
-                substitutionGroup="fes:spatialOps"/>
-   <xsd:element name="Crosses"
-                type="fes:BinarySpatialOpType"
-                substitutionGroup="fes:spatialOps"/>
-   <xsd:element name="Intersects"
-                type="fes:BinarySpatialOpType"
-                substitutionGroup="fes:spatialOps"/>
-   <xsd:element name="Contains"
-                type="fes:BinarySpatialOpType"
-                substitutionGroup="fes:spatialOps"/>
-   <xsd:element name="DWithin"
-                type="fes:DistanceBufferType"
-                substitutionGroup="fes:spatialOps"/>
-   <xsd:element name="Beyond"
-                type="fes:DistanceBufferType"
-                substitutionGroup="fes:spatialOps"/>
-   <xsd:element name="BBOX"
-                type="fes:BBOXType"
-                substitutionGroup="fes:spatialOps"/>
-
-   <!-- =================================================================== -->
-   <!-- TEMPORAL OPERATORS                                                  -->
-   <!-- =================================================================== -->
-   <xsd:element name="temporalOps" type="fes:TemporalOpsType" abstract="true"/>
-   <xsd:complexType name="TemporalOpsType" abstract="true"/>
-   <xsd:element name="After"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-   <xsd:element name="Before"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-   <xsd:element name="Begins"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-   <xsd:element name="BegunBy"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-   <xsd:element name="TContains"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-   <xsd:element name="During"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-   <xsd:element name="EndedBy"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-   <xsd:element name="Ends"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-   <xsd:element name="TEquals"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-   <xsd:element name="Meets"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-   <xsd:element name="MetBy"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-   <xsd:element name="TOverlaps"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-   <xsd:element name="OverlappedBy"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-   <xsd:element name="AnyInteracts"
-                type="fes:BinaryTemporalOpType"
-                substitutionGroup="fes:temporalOps"/>
-
-   <!-- =================================================================== -->
-   <!-- LOGICAL OPERATORS                                                   -->
-   <!-- =================================================================== -->
-   <xsd:element name="logicOps" type="fes:LogicOpsType" abstract="true"/>
-   <xsd:complexType name="LogicOpsType" abstract="true"/>
-   <xsd:element name="And"
-                type="fes:BinaryLogicOpType"
-                substitutionGroup="fes:logicOps"/>
-   <xsd:element name="Or"
-                type="fes:BinaryLogicOpType"
-                substitutionGroup="fes:logicOps"/>
-   <xsd:element name="Not"
-                type="fes:UnaryLogicOpType"
-                substitutionGroup="fes:logicOps"/>
-
-   <!-- =================================================================== -->
-   <!-- EXTENSION OPERATORS                                                 -->
-   <!-- =================================================================== -->
-   <xsd:element name="extensionOps"
-                type="fes:ExtensionOpsType"
-                abstract="true"/>
-   <xsd:complexType name="ExtensionOpsType" abstract="true"/>
-
-   <!-- =================================================================== -->
-   <!-- OBJECT/RECORDS IDENTIFIERS                                          -->
-   <!-- =================================================================== -->
-   <xsd:element name="_Id" type="fes:AbstractIdType" abstract="true"/>
-   <xsd:complexType name="AbstractIdType" abstract="true"/>
-
-   <!-- =================================================================== -->
-   <!-- CONCRETE OBJECT IDENTIFIERS                                         -->
-   <!-- =================================================================== -->
-   <xsd:element name="ResourceId"
-                type="fes:ResourceIdType"
-                substitutionGroup="fes:_Id"/>
-   <xsd:complexType name="ResourceIdType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:AbstractIdType">
-            <xsd:attribute name="rid" type="xsd:string" use="required"/>
-            <xsd:attribute name="previousRid" type="xsd:string"/>
-            <xsd:attribute name="version" type="fes:VersionType"/>
-            <xsd:attribute name="startDate" type="xsd:dateTime"/>
-            <xsd:attribute name="endDate" type="xsd:dateTime"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:simpleType name="VersionType">
-      <xsd:union memberTypes="fes:VersionActionTokens
-                              xsd:positiveInteger
-                              xsd:dateTime">
-      </xsd:union>
-   </xsd:simpleType>
-   <xsd:simpleType name="VersionActionTokens">
-      <xsd:restriction base="xsd:string">
-         <xsd:enumeration value="FIRST"/>
-         <xsd:enumeration value="LAST"/>
-         <xsd:enumeration value="PREVIOUS"/>
-         <xsd:enumeration value="NEXT"/>
-         <xsd:enumeration value="ALL"/>
-      </xsd:restriction>
-   </xsd:simpleType>
-
-   <!-- =================================================================== -->
-   <!-- TYPE DECLARATIONS                                                   -->
-   <!-- =================================================================== -->
-   <xsd:complexType name="BinaryComparisonOpType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:ComparisonOpsType">
-            <xsd:sequence>
-               <xsd:element ref="fes:expression" minOccurs="2" maxOccurs="2"/>
-            </xsd:sequence>
-            <xsd:attribute name="matchCase" type="xsd:boolean"
-                           use="optional" default="true"/>
-            <xsd:attribute name="matchAction" type="fes:MatchActionType"
-                           use="optional" default="Any"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:simpleType name="MatchActionType">
-      <xsd:restriction base="xsd:string">
-         <xsd:enumeration value="All"/>
-         <xsd:enumeration value="Any"/>
-         <xsd:enumeration value="One"/>
-      </xsd:restriction>
-   </xsd:simpleType>
-   <xsd:complexType name="PropertyIsLikeType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:ComparisonOpsType">
-            <xsd:sequence>
-               <xsd:element ref="fes:expression" minOccurs="2" maxOccurs="2"/>
-            </xsd:sequence>
-            <xsd:attribute name="wildCard" type="xsd:string" use="required"/>
-            <xsd:attribute name="singleChar" type="xsd:string" use="required"/>
-            <xsd:attribute name="escapeChar" type="xsd:string" use="required"/>
-            <xsd:attribute name="matchCase" type="xsd:boolean" use="optional" default="true"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="PropertyIsNullType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:ComparisonOpsType">
-            <xsd:sequence>
-               <xsd:element ref="fes:expression"/>
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="PropertyIsNilType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:ComparisonOpsType">
-            <xsd:sequence>
-               <xsd:element ref="fes:expression"/>
-            </xsd:sequence>
-            <xsd:attribute name="nilReason" type="xsd:string"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="PropertyIsBetweenType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:ComparisonOpsType">
-            <xsd:sequence>
-               <xsd:element ref="fes:expression"/>
-               <xsd:element name="LowerBoundary" type="fes:LowerBoundaryType"/>
-               <xsd:element name="UpperBoundary" type="fes:UpperBoundaryType"/>
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="LowerBoundaryType">
-      <xsd:choice>
-         <xsd:element ref="fes:expression"/>
-      </xsd:choice>
-   </xsd:complexType>
-   <xsd:complexType name="UpperBoundaryType">
-      <xsd:sequence>
-         <xsd:element ref="fes:expression"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="BinarySpatialOpType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:SpatialOpsType">
-            <xsd:choice maxOccurs="2">
-               <xsd:element ref="fes:expression"/>
-               <xsd:any namespace="##other"/>
-            </xsd:choice>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="BinaryTemporalOpType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:TemporalOpsType">
-            <xsd:choice maxOccurs="2">
-               <xsd:element ref="fes:expression"/>
-               <xsd:any namespace="##other"/>
-            </xsd:choice>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="BBOXType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:SpatialOpsType">
-            <xsd:choice maxOccurs="2">
-               <xsd:element ref="fes:expression"/>
-               <xsd:any namespace="##other"/>
-            </xsd:choice>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="DistanceBufferType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:SpatialOpsType">
-            <xsd:sequence>
-               <xsd:choice maxOccurs="2">
-                  <xsd:element ref="fes:expression"/>
-                  <xsd:any namespace="##other"/>
-               </xsd:choice>
-               <xsd:element name="Distance" type="fes:MeasureType"/>
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="BinaryLogicOpType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:LogicOpsType">
-            <xsd:choice minOccurs="2" maxOccurs="unbounded">
-               <xsd:group ref="fes:FilterPredicates"/>
-            </xsd:choice>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="UnaryLogicOpType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:LogicOpsType">
-            <xsd:sequence>
-               <xsd:choice>
-                  <xsd:group ref="fes:FilterPredicates"/>
-               </xsd:choice>
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="MeasureType">
-      <xsd:simpleContent>
-         <xsd:extension base="xsd:double">
-            <xsd:attribute name="uom" type="fes:UomIdentifier" use="required"/>
-         </xsd:extension>
-      </xsd:simpleContent>
-   </xsd:complexType>
-   <xsd:simpleType name="UomIdentifier">
-      <xsd:union memberTypes="fes:UomSymbol fes:UomURI"/>
-   </xsd:simpleType>
-   <xsd:simpleType name="UomSymbol">
-      <xsd:restriction base="xsd:string">
-         <xsd:pattern value="[^: \n\r\t]+"/>
-      </xsd:restriction>
-   </xsd:simpleType>
-   <xsd:simpleType name="UomURI">
-      <xsd:restriction base="xsd:anyURI">
-         <xsd:pattern value="([a-zA-Z][a-zA-Z0-9\-\+\.]*:|\.\./|\./|#).*"/>
-      </xsd:restriction>
-   </xsd:simpleType>
-</xsd:schema>
- 51 http://schemas.opengis.net/filter/2.0/filterAll.xsd 843 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema
-   targetNamespace="http://www.opengis.net/fes/2.0"
-   xmlns:fes="http://www.opengis.net/fes/2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-   elementFormDefault="qualified"
-   version="2.0.3">
-
-   <xsd:annotation>
-      <xsd:documentation>
-         This XML Schema document includes and imports, directly or indirectly,
-         all the XML Schema defined by the Filter Encoding Standard.
-
-         Filter Encoding is an OGC Standard.
-         Copyright (c) 2010, 2014 Open Geospatial Consortium.
-         To obtain additional rights of use, visit http://www.opengeospatial.org/legal/ .
-      </xsd:documentation>
-   </xsd:annotation>
-
-   <xsd:include schemaLocation="query.xsd"/>
-   <xsd:include schemaLocation="filter.xsd"/>
-   <xsd:include schemaLocation="sort.xsd"/>
-</xsd:schema>
- 60 http://schemas.opengis.net/filter/2.0/filterCapabilities.xsd 11315 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema
-   targetNamespace="http://www.opengis.net/fes/2.0"
-   xmlns:fes="http://www.opengis.net/fes/2.0"
-   xmlns:ows="http://www.opengis.net/ows/1.1"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-   xmlns:xml="http://www.w3.org/XML/1998/namespace"
-   elementFormDefault="qualified"
-   version="2.0.3">
-
-   <xsd:annotation>
-      <xsd:documentation>
-         This XML Schema defines OGC query filter capabilities documents.
-
-         Filter Encoding is an OGC Standard.
-         Copyright (c) 2010, 2014 Open Geospatial Consortium.
-         To obtain additional rights of use, visit http://www.opengeospatial.org/legal/ .
-      </xsd:documentation>
-   </xsd:annotation>
-
-   <xsd:include schemaLocation="filterAll.xsd"/>
-   <xsd:import namespace="http://www.w3.org/XML/1998/namespace"
-               schemaLocation="http://www.w3.org/2001/xml.xsd"/>
-
-   <xsd:import namespace="http://www.opengis.net/ows/1.1"
-        schemaLocation="http://schemas.opengis.net/ows/1.1.0/owsAll.xsd"/>
-
-   <xsd:element name="Filter_Capabilities">
-      <xsd:complexType>
-         <xsd:sequence>
-            <xsd:element name="Conformance"
-                         type="fes:ConformanceType"/>
-            <xsd:element name="Id_Capabilities"
-                         type="fes:Id_CapabilitiesType"
-                         minOccurs="0"/>
-            <xsd:element name="Scalar_Capabilities"
-                         type="fes:Scalar_CapabilitiesType"
-                         minOccurs="0"/>
-            <xsd:element name="Spatial_Capabilities"
-                         type="fes:Spatial_CapabilitiesType"
-                         minOccurs="0"/>
-            <xsd:element name="Temporal_Capabilities"
-                         type="fes:Temporal_CapabilitiesType"
-                         minOccurs="0"/>
-            <xsd:element name="Functions"
-                         type="fes:AvailableFunctionsType" minOccurs="0"/>
-            <xsd:element name="Extended_Capabilities"
-                         type="fes:Extended_CapabilitiesType"
-                         minOccurs="0"/>
-         </xsd:sequence>
-      </xsd:complexType>
-   </xsd:element>
-
-   <!-- CONFORMANCE -->
-   <xsd:complexType name="ConformanceType">
-      <xsd:sequence>
-         <xsd:element name="Constraint"
-                      type="ows:DomainType" maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-
-   <!-- RESOURCE IDENTIFIERS -->
-   <xsd:complexType name="Id_CapabilitiesType">
-      <xsd:sequence>
-         <xsd:element name="ResourceIdentifier"
-                      type="fes:ResourceIdentifierType" maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="ResourceIdentifierType">
-      <xsd:sequence>
-         <xsd:element ref="ows:Metadata" minOccurs="0"/>
-      </xsd:sequence>
-      <xsd:attribute name="name" type="xsd:QName" use="required"/>
-   </xsd:complexType>
-
-   <!-- SCALAR CAPABILITIES -->
-   <xsd:complexType name="Scalar_CapabilitiesType">
-      <xsd:sequence>
-         <xsd:element ref="fes:LogicalOperators" minOccurs="0"/>
-         <xsd:element name="ComparisonOperators"
-                      type="fes:ComparisonOperatorsType" minOccurs="0"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:element name="LogicalOperators">
-      <xsd:complexType/>
-   </xsd:element>
-   <xsd:complexType name="ComparisonOperatorsType">
-      <xsd:sequence maxOccurs="unbounded">
-         <xsd:element name="ComparisonOperator"
-                      type="fes:ComparisonOperatorType"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="ComparisonOperatorType">
-      <xsd:attribute name="name"
-                     type="fes:ComparisonOperatorNameType" use="required"/>
-   </xsd:complexType>
-   <xsd:simpleType name="ComparisonOperatorNameType">
-      <xsd:union>
-         <xsd:simpleType>
-            <xsd:restriction base="xsd:string">
-               <xsd:enumeration value="PropertyIsEqualTo"/>
-               <xsd:enumeration value="PropertyIsNotEqualTo"/>
-               <xsd:enumeration value="PropertyIsLessThan"/>
-               <xsd:enumeration value="PropertyIsGreaterThan"/>
-               <xsd:enumeration value="PropertyIsLessThanOrEqualTo"/>
-               <xsd:enumeration value="PropertyIsGreaterThanOrEqualTo"/>
-               <xsd:enumeration value="PropertyIsLike"/>
-               <xsd:enumeration value="PropertyIsNull"/>
-               <xsd:enumeration value="PropertyIsNil"/>
-               <xsd:enumeration value="PropertyIsBetween"/>
-            </xsd:restriction>
-         </xsd:simpleType>
-         <xsd:simpleType>
-            <xsd:restriction base="xsd:string">
-               <xsd:pattern value="extension:\w{2,}"/>
-            </xsd:restriction>
-         </xsd:simpleType>
-      </xsd:union>
-   </xsd:simpleType>
-   <xsd:complexType name="AvailableFunctionsType">
-      <xsd:sequence>
-         <xsd:element name="Function"
-                      type="fes:AvailableFunctionType" maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="AvailableFunctionType">
-      <xsd:sequence>
-         <xsd:element ref="ows:Metadata" minOccurs="0"/>
-         <xsd:element name="Returns" type="xsd:QName"/>
-         <xsd:element name="Arguments"
-                      type="fes:ArgumentsType" minOccurs="0"/>
-      </xsd:sequence>
-      <xsd:attribute name="name" type="xsd:string" use="required"/>
-   </xsd:complexType>
-   <xsd:complexType name="ArgumentsType">
-      <xsd:sequence>
-         <xsd:element name="Argument"
-                      type="fes:ArgumentType" maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="ArgumentType">
-      <xsd:sequence>
-         <xsd:element ref="ows:Metadata" minOccurs="0"/>
-         <xsd:element name="Type" type="xsd:QName"/>
-      </xsd:sequence>
-      <xsd:attribute name="name" type="xsd:string" use="required"/>
-   </xsd:complexType>
-
-   <!-- SPATIAL CAPABILITIES -->
-   <xsd:complexType name="Spatial_CapabilitiesType">
-      <xsd:sequence>
-         <xsd:element name="GeometryOperands"
-                      type="fes:GeometryOperandsType"/>
-         <xsd:element name="SpatialOperators"
-                      type="fes:SpatialOperatorsType"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="GeometryOperandsType">
-      <xsd:sequence>
-         <xsd:element name="GeometryOperand" maxOccurs="unbounded">
-            <xsd:complexType>
-               <xsd:attribute name="name" type="xsd:QName" use="required"/>
-            </xsd:complexType>
-         </xsd:element>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="SpatialOperatorsType">
-      <xsd:sequence>
-         <xsd:element name="SpatialOperator"
-                      type="fes:SpatialOperatorType"
-                      maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="SpatialOperatorType">
-      <xsd:sequence>
-         <xsd:element name="GeometryOperands"
-                      type="fes:GeometryOperandsType"
-                      minOccurs="0"/>
-      </xsd:sequence>
-      <xsd:attribute name="name" type="fes:SpatialOperatorNameType"/>
-   </xsd:complexType>
-   <xsd:simpleType name="SpatialOperatorNameType">
-      <xsd:union>
-         <xsd:simpleType>
-            <xsd:restriction base="xsd:string">
-               <xsd:enumeration value="BBOX"/>
-               <xsd:enumeration value="Equals"/>
-               <xsd:enumeration value="Disjoint"/>
-               <xsd:enumeration value="Intersects"/>
-               <xsd:enumeration value="Touches"/>
-               <xsd:enumeration value="Crosses"/>
-               <xsd:enumeration value="Within"/>
-               <xsd:enumeration value="Contains"/>
-               <xsd:enumeration value="Overlaps"/>
-               <xsd:enumeration value="Beyond"/>
-               <xsd:enumeration value="DWithin"/>
-            </xsd:restriction>
-         </xsd:simpleType>
-         <xsd:simpleType>
-            <xsd:restriction base="xsd:string">
-               <xsd:pattern value="extension:\w{2,}"/>
-            </xsd:restriction>
-         </xsd:simpleType>
-      </xsd:union>
-   </xsd:simpleType>
-
-   <!-- TEMPORAL CAPABILITIES -->
-   <xsd:complexType name="Temporal_CapabilitiesType">
-      <xsd:sequence>
-         <xsd:element name="TemporalOperands"
-                      type="fes:TemporalOperandsType"/>
-         <xsd:element name="TemporalOperators"
-                      type="fes:TemporalOperatorsType"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="TemporalOperandsType">
-      <xsd:sequence>
-         <xsd:element name="TemporalOperand" maxOccurs="unbounded">
-            <xsd:complexType>
-               <xsd:attribute name="name" type="xsd:QName" use="required"/>
-            </xsd:complexType>
-         </xsd:element>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="TemporalOperatorsType">
-      <xsd:sequence>
-         <xsd:element name="TemporalOperator"
-                      type="fes:TemporalOperatorType"
-                      maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="TemporalOperatorType">
-      <xsd:sequence>
-         <xsd:element name="TemporalOperands"
-                      type="fes:TemporalOperandsType"
-                      minOccurs="0"/>
-      </xsd:sequence>
-      <xsd:attribute name="name"
-                     type="fes:TemporalOperatorNameType" use="required"/>
-   </xsd:complexType>
-   <xsd:simpleType name="TemporalOperatorNameType">
-      <xsd:union>
-         <xsd:simpleType>
-            <xsd:restriction base="xsd:string">
-               <xsd:enumeration value="After"/>
-               <xsd:enumeration value="Before"/>
-               <xsd:enumeration value="Begins"/>
-               <xsd:enumeration value="BegunBy"/>
-               <xsd:enumeration value="TContains"/>
-               <xsd:enumeration value="During"/>
-               <xsd:enumeration value="TEquals"/>
-               <xsd:enumeration value="TOverlaps"/>
-               <xsd:enumeration value="Meets"/>
-               <xsd:enumeration value="OverlappedBy"/>
-               <xsd:enumeration value="MetBy"/>
-               <xsd:enumeration value="Ends"/>
-               <xsd:enumeration value="EndedBy"/>
-            </xsd:restriction>
-         </xsd:simpleType>
-         <xsd:simpleType>
-            <xsd:restriction base="xsd:string">
-               <xsd:pattern value="extension:\w{2,}"/>
-            </xsd:restriction>
-         </xsd:simpleType>
-      </xsd:union>
-   </xsd:simpleType>
-
-   <!-- EXTENSION CAPABILITIES -->
-   <xsd:complexType name="Extended_CapabilitiesType">
-      <xsd:sequence>
-         <xsd:element name="AdditionalOperators"
-                      type="fes:AdditionalOperatorsType" minOccurs="0"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="AdditionalOperatorsType">
-      <xsd:sequence>
-         <xsd:element name="Operator"
-                      type="fes:ExtensionOperatorType"
-                      minOccurs="0" maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="ExtensionOperatorType">
-      <xsd:attribute name="name" type="xsd:QName" use="required"/>
-   </xsd:complexType>
-
-</xsd:schema>
- 47 http://schemas.opengis.net/filter/2.0/query.xsd 2819 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema
-   targetNamespace="http://www.opengis.net/fes/2.0"
-   xmlns:fes="http://www.opengis.net/fes/2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-   elementFormDefault="qualified"
-   version="2.0.3">
-
-   <xsd:annotation>
-      <xsd:documentation>
-         Filter Encoding is an OGC Standard.
-         Copyright (c) 2010, 2014 Open Geospatial Consortium.
-         To obtain additional rights of use, visit http://www.opengeospatial.org/legal/ .
-      </xsd:documentation>
-   </xsd:annotation>
-
-   <xsd:include schemaLocation="filterAll.xsd"/>
-
-   <xsd:element name="AbstractQueryExpression"
-                type="fes:AbstractQueryExpressionType" abstract="true"/>
-   <xsd:complexType name="AbstractQueryExpressionType" abstract="true">
-      <xsd:attribute name="handle" type="xsd:string"/>
-   </xsd:complexType>
-
-   <xsd:element name="AbstractAdhocQueryExpression"
-                type="fes:AbstractAdhocQueryExpressionType"
-                substitutionGroup="fes:AbstractQueryExpression"
-                abstract="true"/>
-   <xsd:complexType name="AbstractAdhocQueryExpressionType" abstract="true">
-      <xsd:complexContent>
-         <xsd:extension base="fes:AbstractQueryExpressionType">
-            <xsd:sequence>
-               <xsd:element ref="fes:AbstractProjectionClause"
-                            minOccurs="0" maxOccurs="unbounded"/>
-               <xsd:element ref="fes:AbstractSelectionClause" minOccurs="0"/>
-               <xsd:element ref="fes:AbstractSortingClause" minOccurs="0"/>
-            </xsd:sequence>
-            <xsd:attribute name="typeNames"
-                           type="fes:TypeNamesListType" use="required"/>
-            <xsd:attribute name="aliases"
-                           type="fes:AliasesType"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-
-   <xsd:simpleType name="TypeNamesListType">
-       <xsd:list itemType="fes:TypeNamesType"/>
-   </xsd:simpleType>
-   <xsd:simpleType name="TypeNamesType">
-       <xsd:union memberTypes="fes:SchemaElement xsd:QName"/>
-   </xsd:simpleType>
-   <xsd:simpleType name="SchemaElement">
-      <xsd:restriction base="xsd:string">
-         <xsd:pattern value="schema\-element\(.+\)"/>
-      </xsd:restriction>
-   </xsd:simpleType>
-   <xsd:simpleType name="AliasesType">
-      <xsd:list itemType="xsd:NCName"/>
-   </xsd:simpleType>
-
-   <xsd:element name="AbstractProjectionClause" abstract="true"/>
-   <xsd:complexType name="AbstractProjectionClauseType" abstract="true"/>
-
-   <xsd:element name="AbstractSelectionClause" abstract="true"/>
-   <xsd:complexType name="AbstractSelectionClauseType" abstract="true"/>
-
-   <xsd:element name="AbstractSortingClause" abstract="true"/>
-   <xsd:complexType name="AbstractSortingClauseType" abstract="true"/>
-
-</xsd:schema>
- 46 http://schemas.opengis.net/filter/2.0/sort.xsd 1847 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema
-   targetNamespace="http://www.opengis.net/fes/2.0"
-   xmlns:fes="http://www.opengis.net/fes/2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-   elementFormDefault="qualified"
-   version="2.0.3">
-
-   <xsd:annotation>
-      <xsd:documentation>
-         Filter Encoding is an OGC Standard.
-         Copyright (c) 2010, 2014 Open Geospatial Consortium.
-         To obtain additional rights of use, visit http://www.opengeospatial.org/legal/ .
-      </xsd:documentation>
-   </xsd:annotation>
-
-   <xsd:include schemaLocation="filterAll.xsd"/>
-   <xsd:include schemaLocation="query.xsd"/>
-   <xsd:include schemaLocation="expr.xsd"/>
-
-   <!-- ============================================= -->
-   <!-- SORTBY EXPRESSION                             -->
-   <!-- ============================================= -->
-   <xsd:element name="SortBy"
-                type="fes:SortByType"
-                substitutionGroup="fes:AbstractSortingClause"/>
-
-   <!-- ============================================= -->
-   <!-- COMPLEX TYPES                                 -->
-   <!-- ============================================= -->
-   <xsd:complexType name="SortByType">
-      <xsd:sequence>
-         <xsd:element name="SortProperty"
-                      type="fes:SortPropertyType" maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="SortPropertyType">
-      <xsd:sequence>
-         <xsd:element ref="fes:ValueReference"/>
-         <xsd:element name="SortOrder" type="fes:SortOrderType" minOccurs="0"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:simpleType name="SortOrderType">
-      <xsd:restriction base="xsd:string">
-         <xsd:enumeration value="DESC"/>
-         <xsd:enumeration value="ASC"/>
-      </xsd:restriction>
-   </xsd:simpleType>
-</xsd:schema>
  51 http://schemas.opengis.net/gml/3.2.1/basicTypes.xsd 14905 <?xml version="1.0" encoding="UTF-8"?>
 <schema targetNamespace="http://www.opengis.net/gml/3.2" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="3.2.2">
 	<annotation>
@@ -16503,792 +15635,6 @@ It is also required that the symbol be an identifier for a unit of measure as sp
   <include schemaLocation="timeseriesObservationMetadata.xsd"/>
   <include schemaLocation="timeseries.xsd"/>
 </schema>
- 42 http://schemas.opengis.net/wfs/2.0/wfs.xsd 35855 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-   targetNamespace="http://www.opengis.net/wfs/2.0"
-   xmlns:wfs="http://www.opengis.net/wfs/2.0"
-   xmlns:fes="http://www.opengis.net/fes/2.0"
-   xmlns:ows="http://www.opengis.net/ows/1.1"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:xml="http://www.w3.org/XML/1998/namespace"
-   elementFormDefault="qualified" version="2.0.2">
-   <xsd:annotation>
-      <xsd:documentation>This XML Schema Document includes and imports, 
-      directly or indirectly, all the XML Schemas defined by the 
-      Web Feature Service (WFS) Implementation Specification.
-
-      WFS is an OGC Standard.
-      Copyright (c) 2010, 2014 Open Geospatial Consortium.
-      To obtain additional rights of use, visit http://www.opengeospatial.org/legal/ .     
-      </xsd:documentation>
-   </xsd:annotation>
-   <!-- ==============================================================
-        Includes and Imports
-        ============================================================== -->
-   <xsd:import namespace="http://www.w3.org/XML/1998/namespace"
-      schemaLocation="http://www.w3.org/2001/xml.xsd"/>
-   <xsd:import namespace="http://www.w3.org/1999/xlink"
-      schemaLocation="http://www.w3.org/1999/xlink.xsd"/>
-   <xsd:import namespace="http://www.opengis.net/ows/1.1"
-      schemaLocation="http://schemas.opengis.net/ows/1.1.0/owsAll.xsd"/>
-   <xsd:import namespace="http://www.opengis.net/fes/2.0"
-      schemaLocation="http://schemas.opengis.net/filter/2.0/filterAll.xsd"/>
-   <!-- ================================================================== -->
-   <!-- =   BASE REQUEST TYPE                                            = -->
-   <!-- ================================================================== -->
-   <xsd:complexType name="BaseRequestType" abstract="true">
-      <xsd:attribute name="service"
-                     type="xsd:string" use="required" fixed="WFS"/>
-      <xsd:attribute name="version" type="wfs:VersionStringType"
-         use="required"/>
-      <xsd:attribute name="handle" type="xsd:string"/>
-   </xsd:complexType>
-   <xsd:simpleType name="VersionStringType">
-      <xsd:restriction base="xsd:string">
-         <xsd:pattern value="2\.0\.\d+"/>
-      </xsd:restriction>
-   </xsd:simpleType>
-   <!-- ================================================================== -->
-   <!-- =   STANDARD QUERY PARAMETERS                                    = -->
-   <!-- ================================================================== -->
-   <xsd:attributeGroup name="StandardPresentationParameters">
-      <xsd:attribute name="startIndex"
-                     type="xsd:nonNegativeInteger" default="0"/>
-      <xsd:attribute name="count" type="xsd:nonNegativeInteger"/>
-      <xsd:attribute name="resultType" type="wfs:ResultTypeType"
-         default="results"/>
-      <xsd:attribute name="outputFormat" type="xsd:string"
-         default="application/gml+xml; version=3.2"/>
-   </xsd:attributeGroup>
-   <xsd:simpleType name="ResultTypeType">
-      <xsd:restriction base="xsd:string">
-         <xsd:enumeration value="results"/>
-         <xsd:enumeration value="hits"/>
-      </xsd:restriction>
-   </xsd:simpleType>
-   <!-- ================================================================== -->
-   <!-- =   RESOLVE PARAMETERS                                           = -->
-   <!-- ================================================================== -->
-   <xsd:attributeGroup name="StandardResolveParameters">
-      <xsd:attribute name="resolve" type="wfs:ResolveValueType" default="none"/>
-      <xsd:attribute name="resolveDepth" type="wfs:positiveIntegerWithStar"
-         default="*"/>
-      <xsd:attribute name="resolveTimeout" type="xsd:positiveInteger"
-         default="300"/>
-   </xsd:attributeGroup>
-   <xsd:simpleType name="ResolveValueType">
-      <xsd:restriction base="xsd:string">
-         <xsd:enumeration value="local"/>
-         <xsd:enumeration value="remote"/>
-         <xsd:enumeration value="all"/>
-         <xsd:enumeration value="none"/>
-      </xsd:restriction>
-   </xsd:simpleType>
-   <xsd:simpleType name="positiveIntegerWithStar">
-      <xsd:union memberTypes="xsd:positiveInteger wfs:StarStringType"/>
-   </xsd:simpleType>
-   <xsd:simpleType name="StarStringType">
-      <xsd:restriction base="xsd:string">
-         <xsd:enumeration value="*"/>
-      </xsd:restriction>
-   </xsd:simpleType>
-   <!-- ================================================================== -->
-   <!-- =   STANDARD FEATURE INPUT PARAMETERS                            = -->
-   <!-- ================================================================== -->
-   <xsd:attributeGroup name="StandardInputParameters">
-      <xsd:attribute name="inputFormat" type="xsd:string"
-         default="application/gml+xml; version=3.2"/>
-      <xsd:attribute name="srsName" type="xsd:anyURI"/>
-   </xsd:attributeGroup>
-   <!-- ================================================================== -->
-   <!-- =   RESPONSE METADATA                                            = -->
-   <!-- ================================================================== -->
-   <xsd:attributeGroup name="StandardResponseParameters">
-      <xsd:attribute name="timeStamp" type="xsd:dateTime" use="required"/>
-      <xsd:attribute name="numberMatched" type="wfs:nonNegativeIntegerOrUnknown"
-         use="required"/>
-      <xsd:attribute name="numberReturned" type="xsd:nonNegativeInteger"
-         use="required"/>
-      <xsd:attribute name="next" type="xsd:anyURI"/>
-      <xsd:attribute name="previous" type="xsd:anyURI"/>
-   </xsd:attributeGroup>
-   <xsd:simpleType name="nonNegativeIntegerOrUnknown">
-      <xsd:union>
-         <xsd:simpleType>
-            <xsd:restriction base="xsd:string">
-               <xsd:enumeration value="unknown"/>
-            </xsd:restriction>
-         </xsd:simpleType>
-         <xsd:simpleType>
-            <xsd:restriction base="xsd:nonNegativeInteger"/>
-         </xsd:simpleType>
-      </xsd:union>
-   </xsd:simpleType>
-   <!-- ================================================================== -->
-   <!-- =   COMMON FEATURE METADATA ELEMENTS                             = -->
-   <!-- ================================================================== -->
-   <xsd:element name="Title">
-      <xsd:complexType>
-         <xsd:simpleContent>
-            <xsd:extension base="xsd:string">
-               <xsd:attribute ref="xml:lang" default="en"/>
-            </xsd:extension>
-         </xsd:simpleContent>
-      </xsd:complexType>
-   </xsd:element>
-   <xsd:element name="Abstract">
-      <xsd:complexType>
-         <xsd:simpleContent>
-            <xsd:extension base="xsd:string">
-               <xsd:attribute ref="xml:lang" default="en"/>
-            </xsd:extension>
-         </xsd:simpleContent>
-      </xsd:complexType>
-   </xsd:element>
-   <!-- ================================================================== -->
-   <!-- =   QUERY ELEMENTS                                               = -->
-   <!-- ================================================================== -->
-   <!-- === ADHOC QUERY ================================================== -->
-   <xsd:element name="Query" type="wfs:QueryType"
-      substitutionGroup="fes:AbstractAdhocQueryExpression"/>
-   <xsd:complexType name="QueryType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:AbstractAdhocQueryExpressionType">
-            <xsd:attribute name="srsName" type="xsd:anyURI"/>
-            <xsd:attribute name="featureVersion" type="xsd:string"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <!-- === STORED QUERY ================================================= -->
-   <xsd:element name="StoredQuery" type="wfs:StoredQueryType"
-      substitutionGroup="fes:AbstractQueryExpression"/>
-   <xsd:complexType name="StoredQueryType">
-      <xsd:complexContent>
-         <xsd:extension base="fes:AbstractQueryExpressionType">
-            <xsd:sequence>
-               <xsd:element name="Parameter" type="wfs:ParameterType"
-                  minOccurs="0" maxOccurs="unbounded"/>
-            </xsd:sequence>
-            <xsd:attribute name="id" type="xsd:anyURI" use="required"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="ParameterType" mixed="true">
-      <xsd:sequence>
-         <xsd:any namespace="##other" processContents="lax" minOccurs="0"
-            maxOccurs="1"/>
-      </xsd:sequence>
-      <xsd:attribute name="name" type="xsd:string" use="required"/>
-   </xsd:complexType>
-   <!-- ================================================================== -->
-   <!-- =   GETCAPABILITIES Request and Response                         = -->
-   <!-- ================================================================== -->
-   <!-- REQUEST -->
-   <xsd:element name="GetCapabilities" type="wfs:GetCapabilitiesType"/>
-   <xsd:complexType name="GetCapabilitiesType">
-      <xsd:complexContent>
-         <xsd:extension base="ows:GetCapabilitiesType">
-            <xsd:attribute name="service" type="ows:ServiceType" use="required"
-               fixed="WFS"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <!-- RESPONSE -->
-   <xsd:element name="WFS_Capabilities" type="wfs:WFS_CapabilitiesType"/>
-   <xsd:complexType name="WFS_CapabilitiesType">
-      <xsd:complexContent>
-         <xsd:extension base="ows:CapabilitiesBaseType">
-            <xsd:sequence>
-               <xsd:element name="WSDL" minOccurs="0">
-                  <xsd:complexType>
-                     <xsd:complexContent>
-                        <xsd:restriction base="xsd:anyType">
-                           <xsd:attributeGroup ref="xlink:simpleAttrs"/>
-                        </xsd:restriction>
-                     </xsd:complexContent>
-                  </xsd:complexType>
-               </xsd:element>
-               <xsd:element ref="wfs:FeatureTypeList" minOccurs="0"/>
-               <xsd:element ref="fes:Filter_Capabilities" minOccurs="0"/>
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:element name="FeatureTypeList" type="wfs:FeatureTypeListType"/>
-   <xsd:complexType name="FeatureTypeListType">
-      <xsd:sequence>
-         <xsd:element name="FeatureType" type="wfs:FeatureTypeType"
-            maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="FeatureTypeType">
-      <xsd:sequence>
-         <xsd:element name="Name" type="xsd:QName"/>
-         <xsd:element ref="wfs:Title" minOccurs="0" maxOccurs="unbounded"/>
-         <xsd:element ref="wfs:Abstract" minOccurs="0" maxOccurs="unbounded"/>
-         <xsd:element ref="ows:Keywords" minOccurs="0" maxOccurs="unbounded"/>
-         <xsd:choice>
-            <xsd:sequence>
-               <xsd:element name="DefaultCRS" type="xsd:anyURI"/>
-               <xsd:element name="OtherCRS" type="xsd:anyURI" minOccurs="0"
-                  maxOccurs="unbounded"/>
-            </xsd:sequence>
-            <xsd:element name="NoCRS">
-               <xsd:complexType/>
-            </xsd:element>
-         </xsd:choice>
-         <xsd:element name="OutputFormats" type="wfs:OutputFormatListType"
-            minOccurs="0"/>
-         <xsd:element ref="ows:WGS84BoundingBox" minOccurs="0"
-            maxOccurs="unbounded"/>
-         <xsd:element name="MetadataURL" type="wfs:MetadataURLType"
-            minOccurs="0" maxOccurs="unbounded"/>
-         <xsd:element name="ExtendedDescription"
-            type="wfs:ExtendedDescriptionType" minOccurs="0"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="OutputFormatListType">
-      <xsd:sequence maxOccurs="unbounded">
-         <xsd:element name="Format" type="xsd:string"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="MetadataURLType">
-      <xsd:attributeGroup ref="xlink:simpleAttrs"/>
-      <xsd:attribute name="about" type="xsd:anyURI"/>
-   </xsd:complexType>
-   <xsd:complexType name="ExtendedDescriptionType">
-      <xsd:sequence>
-         <xsd:element ref="wfs:Element" maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:element name="Element" type="wfs:ElementType"/>
-   <xsd:complexType name="ElementType">
-      <xsd:sequence>
-         <xsd:element ref="ows:Metadata"/>
-         <xsd:element ref="wfs:ValueList"/>
-      </xsd:sequence>
-      <xsd:attribute name="name" type="xsd:string" use="required"/>
-      <xsd:attribute name="type" type="xsd:QName" use="required"/>
-   </xsd:complexType>
-   <xsd:element name="ValueList" type="wfs:ValueListType"/>
-   <xsd:complexType name="ValueListType">
-      <xsd:sequence maxOccurs="unbounded">
-         <xsd:element ref="wfs:Value"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:element name="Value" type="xsd:anyType"/>
-   <!-- ================================================================== -->
-   <!-- =   DESCRIBEFEATURETYPE Request and Response                     = -->
-   <!-- ================================================================== -->
-   <!-- REQUEST -->
-   <xsd:element name="DescribeFeatureType" type="wfs:DescribeFeatureTypeType"/>
-   <xsd:complexType name="DescribeFeatureTypeType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:BaseRequestType">
-            <xsd:sequence>
-               <xsd:element name="TypeName" type="xsd:QName" minOccurs="0"
-                  maxOccurs="unbounded"/>
-            </xsd:sequence>
-            <xsd:attribute name="outputFormat" type="xsd:string"
-               default="application/gml+xml; version=3.2"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <!-- RESPONSE -->
-   <!-- ================================================================== -->
-   <!-- For the outputFormat value of 'application/gml+xml; version=3.2'   -->
-   <!-- a WFS shall generate a valid XML-Schema/GML3 application schema    -->
-   <!-- that describes that requested feature type(s).                     -->
-   <!-- ================================================================== -->
-   <!-- ================================================================== -->
-   <!-- =   GETPROPERTYVALUE Request and Response                        = -->
-   <!-- ================================================================== -->
-   <!-- REQUEST -->
-   <xsd:element name="GetPropertyValue" type="wfs:GetPropertyValueType"/>
-   <xsd:complexType name="GetPropertyValueType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:BaseRequestType">
-            <xsd:sequence>
-               <xsd:element ref="fes:AbstractQueryExpression"/>
-            </xsd:sequence>
-            <xsd:attribute name="valueReference" type="xsd:string"
-               use="required"/>
-            <xsd:attribute name="resolvePath" type="xsd:string"/>
-            <xsd:attributeGroup ref="wfs:StandardPresentationParameters"/>
-            <xsd:attributeGroup ref="wfs:StandardResolveParameters"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <!-- RESPONSE -->
-   <xsd:element name="ValueCollection" type="wfs:ValueCollectionType"/>
-   <xsd:complexType name="ValueCollectionType">
-      <xsd:sequence>
-         <xsd:element ref="wfs:member" minOccurs="0" maxOccurs="unbounded"/>
-         <xsd:element ref="wfs:additionalValues" minOccurs="0"/>
-         <xsd:element ref="wfs:truncatedResponse" minOccurs="0"/>
-      </xsd:sequence>
-      <xsd:attributeGroup ref="wfs:StandardResponseParameters"/>
-   </xsd:complexType>
-   <xsd:element name="member" type="wfs:MemberPropertyType"/>
-   <xsd:complexType name="MemberPropertyType" mixed="true">
-      <xsd:choice minOccurs="0">
-         <xsd:any processContents="lax" namespace="##other"/>
-         <xsd:element ref="wfs:Tuple"/>
-         <xsd:element ref="wfs:SimpleFeatureCollection"/>
-      </xsd:choice>
-      <xsd:attribute name="state" type="wfs:StateValueType"/>
-      <xsd:attributeGroup ref="xlink:simpleAttrs"/>
-   </xsd:complexType>
-   <xsd:element name="Tuple" type="wfs:TupleType"/>
-   <xsd:complexType name="TupleType">
-      <xsd:sequence>
-         <xsd:element ref="wfs:member" minOccurs="2" maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:element name="additionalValues">
-      <xsd:complexType>
-         <xsd:choice>
-            <xsd:element ref="wfs:ValueCollection"/>
-            <xsd:element ref="wfs:SimpleFeatureCollection"/>
-         </xsd:choice>
-      </xsd:complexType>
-   </xsd:element>
-   <xsd:element name="truncatedResponse">
-      <xsd:complexType>
-         <xsd:sequence>
-            <xsd:element ref="ows:ExceptionReport"/>
-         </xsd:sequence>
-      </xsd:complexType>
-   </xsd:element>
-   <xsd:simpleType name="StateValueType">
-      <xsd:union>
-         <xsd:simpleType>
-            <xsd:restriction base="xsd:string">
-               <xsd:enumeration value="valid"/>
-               <xsd:enumeration value="superseded"/>
-               <xsd:enumeration value="retired"/>
-               <xsd:enumeration value="future"/>
-            </xsd:restriction>
-         </xsd:simpleType>
-         <xsd:simpleType>
-            <xsd:restriction base="xsd:string">
-               <xsd:pattern value="other:\w{2,}"/>
-            </xsd:restriction>
-         </xsd:simpleType>
-      </xsd:union>
-   </xsd:simpleType>
-   <!-- ================================================================== -->
-   <!-- =   GETFEATURE Request & Response                                = -->
-   <!-- ================================================================== -->
-   <xsd:element name="GetFeature" type="wfs:GetFeatureType"/>
-   <xsd:complexType name="GetFeatureType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:BaseRequestType">
-            <xsd:sequence>
-               <xsd:element ref="fes:AbstractQueryExpression"
-                  maxOccurs="unbounded"/>
-            </xsd:sequence>
-            <xsd:attributeGroup ref="wfs:StandardPresentationParameters"/>
-            <xsd:attributeGroup ref="wfs:StandardResolveParameters"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <!-- === GETFEATUREWITHLOCK REQUEST =================================== -->
-   <xsd:element name="GetFeatureWithLock" type="wfs:GetFeatureWithLockType"/>
-   <xsd:complexType name="GetFeatureWithLockType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:GetFeatureType">
-            <xsd:attribute name="expiry" type="xsd:positiveInteger"
-               default="300"/>
-            <xsd:attribute name="lockAction" type="wfs:AllSomeType"
-               default="ALL"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <!-- === PROPERTYNAME (Projection clause) ============================= -->
-   <xsd:element name="PropertyName"
-      substitutionGroup="fes:AbstractProjectionClause">
-      <xsd:complexType>
-         <xsd:simpleContent>
-            <xsd:extension base="xsd:QName">
-               <xsd:attributeGroup ref="wfs:StandardResolveParameters"/>
-               <xsd:attribute name="resolvePath" type="xsd:string"/>
-            </xsd:extension>
-         </xsd:simpleContent>
-      </xsd:complexType>
-   </xsd:element>
-   <!-- === GETFEATURE & GETFEATUREWITHLOCK RESPONSE ===================== -->
-   <xsd:element name="FeatureCollection" type="wfs:FeatureCollectionType"
-      substitutionGroup="wfs:SimpleFeatureCollection"/>
-   <xsd:complexType name="FeatureCollectionType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:SimpleFeatureCollectionType">
-            <xsd:sequence>
-               <xsd:element ref="wfs:additionalObjects" minOccurs="0"/>
-               <xsd:element ref="wfs:truncatedResponse" minOccurs="0"/>
-            </xsd:sequence>
-            <xsd:attributeGroup ref="wfs:StandardResponseParameters"/>
-            <xsd:attribute name="lockId" type="xsd:string"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:element name="additionalObjects">
-      <xsd:complexType>
-         <xsd:choice>
-            <xsd:element ref="wfs:ValueCollection"/>
-            <xsd:element ref="wfs:SimpleFeatureCollection"/>
-         </xsd:choice>
-      </xsd:complexType>
-   </xsd:element>
-   <xsd:element name="SimpleFeatureCollection"
-                type="wfs:SimpleFeatureCollectionType"/>
-   <xsd:complexType name="SimpleFeatureCollectionType">
-      <xsd:sequence>
-         <xsd:element ref="wfs:boundedBy" minOccurs="0"/>
-         <xsd:element ref="wfs:member" minOccurs="0" maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:element name="boundedBy" type="wfs:EnvelopePropertyType"/>
-   <xsd:complexType name="EnvelopePropertyType">
-      <xsd:sequence>
-         <xsd:any namespace="##other"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <!-- ================================================================== -->
-   <!-- =   LIST STORED QUERIES                                          = -->
-   <!-- ================================================================== -->
-   <!-- REQUEST -->
-   <xsd:element name="ListStoredQueries" type="wfs:ListStoredQueriesType"/>
-   <xsd:complexType name="ListStoredQueriesType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:BaseRequestType"/>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <!-- RESPONSE -->
-   <xsd:element name="ListStoredQueriesResponse"
-      type="wfs:ListStoredQueriesResponseType"/>
-   <xsd:complexType name="ListStoredQueriesResponseType">
-      <xsd:sequence>
-         <xsd:element name="StoredQuery" type="wfs:StoredQueryListItemType"
-            minOccurs="0" maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="StoredQueryListItemType">
-      <xsd:sequence>
-         <xsd:element ref="wfs:Title" minOccurs="0" maxOccurs="unbounded"/>
-         <xsd:element name="ReturnFeatureType" type="xsd:QName"
-            minOccurs="0" maxOccurs="unbounded"/>
-      </xsd:sequence>
-      <xsd:attribute name="id" type="xsd:anyURI" use="required"/>
-   </xsd:complexType>
-   <!-- ================================================================== -->
-   <!-- =   DESCRIBE STORED QUERIES                                      = -->
-   <!-- ================================================================== -->
-   <!-- REQUEST -->
-   <xsd:element name="DescribeStoredQueries"
-      type="wfs:DescribeStoredQueriesType"/>
-   <xsd:complexType name="DescribeStoredQueriesType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:BaseRequestType">
-            <xsd:sequence>
-               <xsd:element name="StoredQueryId" type="xsd:anyURI" minOccurs="0"
-                  maxOccurs="unbounded"/>
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <!-- RESPONSE -->
-   <xsd:element name="DescribeStoredQueriesResponse"
-      type="wfs:DescribeStoredQueriesResponseType"/>
-   <xsd:complexType name="DescribeStoredQueriesResponseType">
-      <xsd:sequence>
-         <xsd:element name="StoredQueryDescription"
-                      type="wfs:StoredQueryDescriptionType"
-                      minOccurs="0" maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="StoredQueryDescriptionType">
-      <xsd:sequence>
-         <xsd:element ref="wfs:Title" minOccurs="0" maxOccurs="unbounded"/>
-         <xsd:element ref="wfs:Abstract" minOccurs="0" maxOccurs="unbounded"/>
-         <xsd:element ref="ows:Metadata" minOccurs="0" maxOccurs="unbounded"/>
-         <xsd:element name="Parameter"
-                      type="wfs:ParameterExpressionType"
-                      minOccurs="0" maxOccurs="unbounded"/>
-         <xsd:element name="QueryExpressionText"
-                      type="wfs:QueryExpressionTextType"
-                      minOccurs="1" maxOccurs="unbounded"/>
-      </xsd:sequence>
-      <xsd:attribute name="id" type="xsd:anyURI" use="required"/>
-   </xsd:complexType>
-   <!-- ================================================================== -->
-   <!-- =   CREATE STORED QUERIES                                        = -->
-   <!-- ================================================================== -->
-   <!-- REQUEST -->
-   <xsd:element name="CreateStoredQuery" type="wfs:CreateStoredQueryType"/>
-   <xsd:complexType name="CreateStoredQueryType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:BaseRequestType">
-            <xsd:sequence>
-               <xsd:element name="StoredQueryDefinition"
-                  type="wfs:StoredQueryDescriptionType" minOccurs="0"
-                  maxOccurs="unbounded"/>
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="ParameterExpressionType">
-      <xsd:sequence>
-         <xsd:element ref="wfs:Title" minOccurs="0" maxOccurs="unbounded"/>
-         <xsd:element ref="wfs:Abstract" minOccurs="0" maxOccurs="unbounded"/>
-         <xsd:element ref="ows:Metadata" minOccurs="0" maxOccurs="unbounded"/>
-      </xsd:sequence>
-      <xsd:attribute name="name" type="xsd:string" use="required"/>
-      <xsd:attribute name="type" type="xsd:QName" use="required"/>
-   </xsd:complexType>
-   <xsd:complexType name="QueryExpressionTextType" mixed="true">
-      <xsd:choice>
-         <xsd:any namespace="##other" processContents="skip"
-                  minOccurs="0" maxOccurs="unbounded"/>
-         <xsd:any namespace="##targetNamespace" processContents="skip"
-                  minOccurs="0" maxOccurs="unbounded"/>
-      </xsd:choice>
-      <xsd:attribute name="returnFeatureTypes"
-                     type="wfs:ReturnFeatureTypesListType" use="required"/>
-      <xsd:attribute name="language" type="xsd:anyURI" use="required"/>
-      <xsd:attribute name="isPrivate" type="xsd:boolean" default="false"/>
-   </xsd:complexType>
-   <xsd:simpleType name="ReturnFeatureTypesListType">
-      <xsd:list itemType="xsd:QName"/>
-   </xsd:simpleType>
-   <!-- RESPONSE -->
-   <xsd:element name="CreateStoredQueryResponse"
-      type="wfs:CreateStoredQueryResponseType"/>
-   <xsd:complexType name="ExecutionStatusType">
-      <xsd:attribute name="status" type="xsd:string" fixed="OK"/>
-   </xsd:complexType>
-   <xsd:complexType name="CreateStoredQueryResponseType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:ExecutionStatusType"/>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <!-- ================================================================== -->
-   <!-- =   DROP STORED QUERIES                                          = -->
-   <!-- ================================================================== -->
-   <!-- REQUEST -->
-   <xsd:element name="DropStoredQuery">
-      <xsd:complexType>
-         <xsd:complexContent>
-            <xsd:extension base="wfs:BaseRequestType">
-               <xsd:attribute name="id" type="xsd:anyURI" use="required"/>
-            </xsd:extension>
-         </xsd:complexContent>
-      </xsd:complexType>
-   </xsd:element>
-   <!-- RESPONSE -->
-   <xsd:element name="DropStoredQueryResponse" type="wfs:ExecutionStatusType"/>
-   <!-- ================================================================== -->
-   <!-- =   LOCKFEATURE Request and Response                             = -->
-   <!-- ================================================================== -->
-   <!-- REQUEST -->
-   <xsd:element name="LockFeature" type="wfs:LockFeatureType"/>
-   <xsd:complexType name="LockFeatureType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:BaseRequestType">
-            <xsd:sequence>
-               <xsd:element ref="fes:AbstractQueryExpression"
-                  minOccurs="0" maxOccurs="unbounded"/>
-            </xsd:sequence>
-            <xsd:attribute name="lockId" type="xsd:string"/>
-            <xsd:attribute name="expiry" type="xsd:positiveInteger"
-               default="300"/>
-            <xsd:attribute name="lockAction" type="wfs:AllSomeType"
-               default="ALL"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:simpleType name="AllSomeType">
-      <xsd:restriction base="xsd:string">
-         <xsd:enumeration value="ALL"/>
-         <xsd:enumeration value="SOME"/>
-      </xsd:restriction>
-   </xsd:simpleType>
-   <!-- RESPONSE -->
-   <xsd:element name="LockFeatureResponse" type="wfs:LockFeatureResponseType"/>
-   <xsd:complexType name="LockFeatureResponseType">
-      <xsd:sequence>
-         <xsd:element name="FeaturesLocked" type="wfs:FeaturesLockedType"
-            minOccurs="0"/>
-         <xsd:element name="FeaturesNotLocked" type="wfs:FeaturesNotLockedType"
-            minOccurs="0"/>
-      </xsd:sequence>
-      <xsd:attribute name="lockId" type="xsd:string"/>
-   </xsd:complexType>
-   <xsd:complexType name="FeaturesLockedType">
-      <xsd:sequence maxOccurs="unbounded">
-         <xsd:element ref="fes:ResourceId"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="FeaturesNotLockedType">
-      <xsd:sequence maxOccurs="unbounded">
-         <xsd:element ref="fes:ResourceId"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <!-- ================================================================== -->
-   <!-- =   TRANSACTION Request and Response                             = -->
-   <!-- ================================================================== -->
-   <!-- REQUEST -->
-   <xsd:element name="Transaction" type="wfs:TransactionType"/>
-   <xsd:complexType name="TransactionType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:BaseRequestType">
-            <xsd:sequence>
-               <xsd:sequence minOccurs="0" maxOccurs="unbounded">
-                  <xsd:element ref="wfs:AbstractTransactionAction"/>
-               </xsd:sequence>
-            </xsd:sequence>
-            <xsd:attribute name="lockId" type="xsd:string"/>
-            <xsd:attribute name="releaseAction" type="wfs:AllSomeType"
-               default="ALL"/>
-            <xsd:attribute name="srsName" type="xsd:anyURI"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:element name="AbstractTransactionAction"
-      type="wfs:AbstractTransactionActionType" abstract="true"/>
-   <xsd:complexType name="AbstractTransactionActionType" abstract="true">
-      <xsd:attribute name="handle" type="xsd:string"/>
-   </xsd:complexType>
-   <xsd:element name="Insert" type="wfs:InsertType"
-      substitutionGroup="wfs:AbstractTransactionAction"/>
-   <xsd:complexType name="InsertType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:AbstractTransactionActionType">
-            <xsd:sequence>
-               <xsd:any namespace="##other" maxOccurs="unbounded"/>
-            </xsd:sequence>
-            <xsd:attributeGroup ref="wfs:StandardInputParameters"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:element name="Update" type="wfs:UpdateType"
-      substitutionGroup="wfs:AbstractTransactionAction"/>
-   <xsd:complexType name="UpdateType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:AbstractTransactionActionType">
-            <xsd:sequence>
-               <xsd:element ref="wfs:Property" maxOccurs="unbounded"/>
-               <xsd:element ref="fes:Filter" minOccurs="0"/>
-            </xsd:sequence>
-            <xsd:attribute name="typeName" type="xsd:QName" use="required"/>
-            <xsd:attributeGroup ref="wfs:StandardInputParameters"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:element name="Property" type="wfs:PropertyType"/>
-   <xsd:complexType name="PropertyType">
-      <xsd:sequence>
-         <xsd:element name="ValueReference">
-            <xsd:complexType>
-               <xsd:simpleContent>
-                  <xsd:extension base="xsd:string">
-                     <xsd:attribute name="action" type="wfs:UpdateActionType"
-                        default="replace"/>
-                  </xsd:extension>
-               </xsd:simpleContent>
-            </xsd:complexType>
-         </xsd:element>
-         <xsd:element name="Value" minOccurs="0"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:simpleType name="UpdateActionType">
-      <xsd:restriction base="xsd:string">
-         <xsd:enumeration value="replace"/>
-         <xsd:enumeration value="insertBefore"/>
-         <xsd:enumeration value="insertAfter"/>
-         <xsd:enumeration value="remove"/>
-      </xsd:restriction>
-   </xsd:simpleType>
-   <xsd:element name="Replace" type="wfs:ReplaceType"
-      substitutionGroup="wfs:AbstractTransactionAction"/>
-   <xsd:complexType name="ReplaceType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:AbstractTransactionActionType">
-            <xsd:sequence>
-               <xsd:any namespace="##other"/>
-               <xsd:element ref="fes:Filter"/>
-            </xsd:sequence>
-            <xsd:attributeGroup ref="wfs:StandardInputParameters"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:element name="Delete" type="wfs:DeleteType"
-      substitutionGroup="wfs:AbstractTransactionAction"/>
-   <xsd:complexType name="DeleteType">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:AbstractTransactionActionType">
-            <xsd:sequence>
-               <xsd:element ref="fes:Filter"/>
-            </xsd:sequence>
-            <xsd:attribute name="typeName" type="xsd:QName" use="required"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:element name="Native" type="wfs:NativeType"
-      substitutionGroup="wfs:AbstractTransactionAction"/>
-   <xsd:complexType name="NativeType" mixed="true">
-      <xsd:complexContent>
-         <xsd:extension base="wfs:AbstractTransactionActionType">
-            <xsd:sequence>
-               <xsd:any processContents="lax" namespace="##other" minOccurs="0"/>
-            </xsd:sequence>
-            <xsd:attribute name="vendorId" type="xsd:string" use="required"/>
-            <xsd:attribute name="safeToIgnore" type="xsd:boolean" use="required"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <!-- REPONSE -->
-   <xsd:element name="TransactionResponse" type="wfs:TransactionResponseType"/>
-   <xsd:complexType name="TransactionResponseType">
-      <xsd:sequence>
-         <xsd:element name="TransactionSummary"
-            type="wfs:TransactionSummaryType"/>
-         <xsd:element name="InsertResults" type="wfs:ActionResultsType"
-            minOccurs="0"/>
-         <xsd:element name="UpdateResults" type="wfs:ActionResultsType"
-            minOccurs="0"/>
-         <xsd:element name="ReplaceResults" type="wfs:ActionResultsType"
-            minOccurs="0"/>
-      </xsd:sequence>
-      <xsd:attribute name="version" type="wfs:VersionStringType"
-         use="required"/>
-   </xsd:complexType>
-   <xsd:complexType name="TransactionSummaryType">
-      <xsd:sequence>
-         <xsd:element name="totalInserted" type="xsd:nonNegativeInteger"
-            minOccurs="0"/>
-         <xsd:element name="totalUpdated" type="xsd:nonNegativeInteger"
-            minOccurs="0"/>
-         <xsd:element name="totalReplaced" type="xsd:nonNegativeInteger"
-            minOccurs="0"/>
-         <xsd:element name="totalDeleted" type="xsd:nonNegativeInteger"
-            minOccurs="0"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="ActionResultsType">
-      <xsd:sequence>
-         <xsd:element name="Feature" type="wfs:CreatedOrModifiedFeatureType"
-            maxOccurs="unbounded"/>
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="CreatedOrModifiedFeatureType">
-      <xsd:sequence maxOccurs="unbounded">
-         <xsd:element ref="fes:ResourceId"/>
-      </xsd:sequence>
-      <xsd:attribute name="handle" type="xsd:string"/>
-   </xsd:complexType>
-   <xsd:complexType name="EmptyType"/>
-</xsd:schema>
  43 http://schemas.wmo.int/iwxxm/1.0/common.xsd 13246 <?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:iwxxm="http://icao.int/iwxxm/1.0" xmlns:saf="http://icao.int/saf/1.0" targetNamespace="http://icao.int/iwxxm/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
    <annotation>
       <documentation>References to WMO and ICAO Technical Regulations within this XML schema shall have
@@ -22299,287 +20645,6 @@ constructs, e.g.
 
 </xs:schema>
 
- 63 http://xml.fmi.fi/schema/aviation-weather/2014/02/15/fmiavi.xsd 7289 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema"
-    xmlns:avi="http://xml.fmi.fi/namespace/aviation-weather/2014/02/15"
-    xmlns:gml="http://www.opengis.net/gml/3.2"
-    xmlns:iwxxm="http://icao.int/iwxxm/1.0"
-    xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
-    xmlns:sch="http://www.ascc.net/xml/schematron"
-    targetNamespace="http://xml.fmi.fi/namespace/aviation-weather/2014/02/15" elementFormDefault="qualified" version="0.1">
-    
-    <annotation>
-        <appinfo>
-            <sch:title>Schematron validation</sch:title>
-            <sch:ns prefix="avi" uri="http://xml.fmi.fi/namespace/aviation/2014/02/15"/>
-            <sch:ns prefix="gml" uri="http://www.opengis.net/gml/3.2"/>
-            <sch:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
-            
-            <sch:pattern name="Check either href or content not both">                
-                <sch:rule abstract="true" id="hrefOrContent">
-                    <sch:report test="@xlink:href and (*|text())"
-                        >Property element may not carry both a reference to an object and contain an object.</sch:report>
-                    <sch:assert test="@xlink:href | (*|text())"
-                        >Property element must either carry a reference to an object or contain an object.</sch:assert>
-                </sch:rule>
-            </sch:pattern>            
-        </appinfo>
-        <documentation>
-            Additional metadata for XML Aviation weather messages
-        </documentation>
-    </annotation>
-    
-    <import namespace="http://www.opengis.net/gml/3.2" 
-        schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd" />
-    <import namespace="http://www.w3.org/2000/09/xmldsig#" 
-        schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
-    <import namespace="http://icao.int/iwxxm/1.0" 
-        schemaLocation="http://schemas.wmo.int/iwxxm/1.0/iwxxm.xsd"/>
-    
-    <element name="VerifiableMessage" type="avi:VerifiableMessageType" substitutionGroup="gml:AbstractGML"/>
-    <complexType name="VerifiableMessageType">
-        <annotation></annotation>
-        <complexContent>
-            <extension base="gml:AbstractGMLType">
-                <sequence>
-                    <element name="message" type="anyType"/>
-                    <element name="metadata" type="avi:MessageMetadataPropertyType" minOccurs="0"/>
-                </sequence>
-            </extension>
-        </complexContent>
-    </complexType>
-    
-    <element name="MessageMetadata" type="avi:MessageMetadataType" substitutionGroup="gml:AbstractGML"/>    
-    <complexType name="MessageMetadataType">
-        <annotation></annotation>
-        <complexContent>
-            <extension base="gml:AbstractGMLType">
-                <sequence>
-                    <element name="source" type="avi:ProcessPropertyType" minOccurs="0"/>
-                    <element name="envelopedSignature" type="avi:IdentifiableSignaturePropertyType" minOccurs="0"/>
-                </sequence>
-            </extension>
-        </complexContent>
-    </complexType>
-    <complexType name="MessageMetadataPropertyType">           
-            <annotation>
-                <documentation>To be used when using this object type as property of n GML object
-                    type according to the GML object-property-association model (it is not allowed for
-                    GML Objects to contain other GML Objects as direct children). Enables referencing to
-                    an existing object using xlink:href attribute.</documentation>
-            </annotation>            
-            <sequence minOccurs="0">
-                <element ref="avi:MessageMetadata" />
-            </sequence>
-            <attributeGroup ref="gml:AssociationAttributeGroup" />
-                    
-    </complexType>
-    
-    <element name="IdentifiableSignature" type="avi:IdentifiableSignatureType" substitutionGroup="gml:AbstractGML"/>
-    <complexType name="IdentifiableSignatureType">
-      <complexContent>
-        <extension base="gml:AbstractGMLType">
-          <sequence>
-            <element name="signingAuthority" type="string"/>
-            <element name="signingTime" type="dateTime"/>
-            <element name="signature" type="avi:DigitalSignaturePropertyType"/>
-          </sequence>
-        </extension>
-      </complexContent>
-    </complexType>
-    <complexType name="IdentifiableSignaturePropertyType">
-        <annotation>
-            <documentation>To be used when using this object type as property of n GML object
-                type according to the GML object-property-association model (it is not allowed for
-                GML Objects to contain other GML Objects as direct children). Enables referencing to
-                an existing object using xlink:href attribute.</documentation>
-        </annotation>
-        
-        <sequence minOccurs="0">
-            <element ref="avi:IdentifiableSignature" />
-        </sequence>
-        <attributeGroup ref="gml:AssociationAttributeGroup" />
-    </complexType>
-    
-    <complexType name="DigitalSignaturePropertyType">
-        <annotation>
-            <documentation>To be used when using this object type as property of n GML object
-                type according to the GML object-property-association model (it is not allowed for
-                GML Objects to contain other GML Objects as direct children). Enables referencing to
-                an existing object using xlink:href attribute.</documentation>
-        </annotation>
-        
-        <sequence minOccurs="0">
-            <element ref="dsig:Signature" />
-        </sequence>
-        <attributeGroup ref="gml:AssociationAttributeGroup" />
-    </complexType>
-    
-    <element name="Process" type="avi:ProcessType" substitutionGroup="gml:AbstractGML"/>
-    <complexType name="ProcessType">
-        <annotation></annotation>
-        <complexContent>
-            <extension base="gml:AbstractGMLType">
-                <sequence>
-                    <element name="name" type="gml:ReferenceType"/>
-                    <element name="actor" type="gml:ReferenceType" minOccurs="0"/>
-                    <element name="processingTime" type="dateTime" minOccurs="0"/>
-                    <element name="description" minOccurs="0"/>
-                    <choice minOccurs="0">
-                        <element name="input" type="string"/>
-                        <element name="inputProcess" type="avi:ProcessPropertyType"/>
-                    </choice>
-                </sequence>
-            </extension>
-        </complexContent>
-    </complexType>
-    
-    <complexType name="ProcessPropertyType">
-        <annotation>
-            <documentation>To be used when using this object type as property of n GML object
-                type according to the GML object-property-association model (it is not allowed for
-                GML Objects to contain other GML Objects as direct children). Enables referencing to
-                an existing object using xlink:href attribute.</documentation>
-        </annotation>
-        <sequence minOccurs="0">
-            <element ref="avi:Process" />
-        </sequence>
-        <attributeGroup ref="gml:AssociationAttributeGroup" />
-    </complexType>
-      
-</schema>
- 93 http://xml.fmi.fi/schema/aviation-weather/special-products/2015/09/29/WinterPrecipitation.xsd 3614 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2"
-	xmlns:gmlcov="http://www.opengis.net/gmlcov/1.0"
-	xmlns:om="http://www.opengis.net/om/2.0"	
-	xmlns:tns="http://xml.fmi.fi/namespace/aviation-weather/special-products/2015/09/28"
-	targetNamespace="http://xml.fmi.fi/namespace/aviation-weather/special-products/2015/09/28"
-	elementFormDefault="qualified">
-
-	<import namespace="http://www.opengis.net/gml/3.2"
-		schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
-	<import namespace="http://www.opengis.net/gmlcov/1.0"
-		schemaLocation="http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd"/>
-	<import namespace="http://www.opengis.net/om/2.0"
-		schemaLocation="http://schemas.opengis.net/om/2.0/observation.xsd" />
-
-	<!-- Product 1 -->
-	<element name="DrizzlePrecipitation" type="om:OM_ObservationType" />
-	<element name="FreezingDrizzlePrecipitation" type="om:OM_ObservationType" />
-	<element name="FreezingRainPrecipitation" type="om:OM_ObservationType" />
-	<element name="RainPrecipitation" type="om:OM_ObservationType" />
-	<element name="SleetPrecipitation" type="om:OM_ObservationType" />
-	<element name="SnowPrecipitation" type="om:OM_ObservationType" />		
-			
-	<complexType name="PrecipitationProbability">		 
-		<attribute name="probabilityValue" type="double" use="required"/>
-		<attribute name="probabilityUnit" type="tns:ProbabilityUnits" use="required"/>
-		<attribute name="dateTime" type="dateTime" use="required"/>
-		<attribute name="icaoCode" type="string" use="required"/>
-		<attribute name="latitude" type="double" use="required"/>
-		<attribute name="longitude" type="double" use="required"/>		
-	</complexType>
-
-	<!-- Product 2 -->	
-	<element name="WinterWeather" type="om:OM_ObservationType" />
-	
-	<simpleType name="WinterWeatherType">
-		<restriction base="string">
-			<enumeration value="LIGHT"/>
-			<enumeration value="MODERATE"/>
-			<enumeration value="HEAVY"/>
-		</restriction>
-	</simpleType>
-	
-	<element name="WinterWeatherContours" type="tns:DatedWinterWeatherContours" substitutionGroup="gml:AbstractGML"/>
-	
-	<complexType name="DatedWinterWeatherContours">
-		<complexContent>
-			<extension base="gml:MultiSurfaceType">
-				<sequence>
-					<element name="WeatherContour" type="gml:MultiSurfaceType" maxOccurs="unbounded" minOccurs="0"/>
-				</sequence>
-				<attribute name="dateTime" type="dateTime" use="required"/>
-				<attribute name="winterWeatherType" type="tns:WinterWeatherType" use="required"/>
-			</extension>
-		</complexContent>
-	</complexType>
-
-
-	<!-- Product 3 -->
-	<element name="GeneralWinterWeather" type="om:OM_ObservationType" />
-	
-	<simpleType name="GeneralWinterWeatherType">
-		<restriction base="string">
-			<enumeration value="LIGHT"/>
-			<enumeration value="MODERATE"/>
-			<enumeration value="HEAVY"/>
-		</restriction>
-	</simpleType>
-	
-	<simpleType name="ProbabilityUnits">
-		<restriction base="string">
-			<enumeration value="percent"/>
-		</restriction>
-	</simpleType>
-	
-	<element name="GeneralWinterWeatherContours" type="tns:DatedGeneralWinterWeatherContours" substitutionGroup="gml:AbstractGML"/>
-	
-	<complexType name="DatedGeneralWinterWeatherContours">
-		<complexContent>
-			<extension base="gml:MultiSurfaceType">
-				<sequence>
-					<element name="WeatherContour" type="gml:MultiSurfaceType" maxOccurs="unbounded" minOccurs="0"/>
-				</sequence>
-				<attribute name="dateTime" type="dateTime" use="required"/>
-				<attribute name="winterWeatherType" type="tns:GeneralWinterWeatherType" use="required" />
-			</extension>
-		</complexContent>
-	</complexType>		
-	
-</schema>
- 58 http://xml.fmi.fi/schema/wfs/2.0/fmi_wfs_simplefeature.xsd 3088 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    BsWfsElement contains Location, Time and Elevation property elements that are used in GeoServer layer setup.
-    Also, additional property elements are defined as strings to provide information about the magnitude and direction
-    for the queried parameter. Then, SLD-styles may use property element values when styles are defined in GeoServer.
-    Element strings may be string, integer, decimal, etc. values that GeoServer may parse properly when it uses SLD style.
-    Notice, all property elements are not needed for all the queries and unnecessary properties may be left without content.
-    Also notice, GeoServer Edit Layer page lists all the property elements in Feature Type Details section even if some of
-    them would not be necessary for that layer.
--->
-<xsd:schema
-    xmlns:BsWfs="http://xml.fmi.fi/schema/wfs/2.0"
-    xmlns:gml="http://www.opengis.net/gml/3.2"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    elementFormDefault="qualified"
-    targetNamespace="http://xml.fmi.fi/schema/wfs/2.0">
-    <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
-    <xsd:complexType name="BsWfsType">
-        <xsd:complexContent>
-            <xsd:extension base="gml:AbstractFeatureType">
-                <xsd:sequence>
-                    <!-- GeoServer layer setup elements. -->
-                    <xsd:element maxOccurs="1" minOccurs="0" name="Location" nillable="true" type="gml:PointPropertyType"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="Time" nillable="true" type="xsd:dateTime"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="Elevation" nillable="true" type="xsd:int"/>
-                    <!-- Additional GeoServer layer property elements for SLD style. -->
-                    <!-- Location elements. -->
-                    <xsd:element maxOccurs="1" minOccurs="0" name="LocationName" nillable="true" type="xsd:string"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="Region" nillable="true" type="xsd:string"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="Country" nillable="true" type="xsd:string"/>
-                    <!-- Parameter content elements. -->
-                    <xsd:element maxOccurs="1" minOccurs="0" name="ParameterName" nillable="true" type="xsd:string"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="ParameterValue" nillable="true" type="xsd:string"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="ParameterComponentX" nillable="true" type="xsd:string"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="ParameterComponentY" nillable="true" type="xsd:string"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="ParameterComponentZ" nillable="true" type="xsd:string"/>
-                </xsd:sequence>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    <xsd:element name="BsWfsElement" type="BsWfs:BsWfsType"/>
-</xsd:schema>
  72 https://inspire.ec.europa.eu/draft-schemas/waterml/2.0rfc/collection.xsd 8512 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" 
   xmlns:wml2="http://www.opengis.net/waterml/2.0" xmlns:om="http://www.opengis.net/om/2.0" 
@@ -40543,6 +38608,245 @@ Relative vertical position of the transport element.</documentation>
     <attributeGroup ref="gml:OwnershipAttributeGroup"/>
   </complexType>
 </schema>
+ 64 https://xml.fmi.fi/schema/aviation-weather/2014/02/15/fmiavi.xsd 7289 <?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+    xmlns:avi="http://xml.fmi.fi/namespace/aviation-weather/2014/02/15"
+    xmlns:gml="http://www.opengis.net/gml/3.2"
+    xmlns:iwxxm="http://icao.int/iwxxm/1.0"
+    xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:sch="http://www.ascc.net/xml/schematron"
+    targetNamespace="http://xml.fmi.fi/namespace/aviation-weather/2014/02/15" elementFormDefault="qualified" version="0.1">
+    
+    <annotation>
+        <appinfo>
+            <sch:title>Schematron validation</sch:title>
+            <sch:ns prefix="avi" uri="http://xml.fmi.fi/namespace/aviation/2014/02/15"/>
+            <sch:ns prefix="gml" uri="http://www.opengis.net/gml/3.2"/>
+            <sch:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
+            
+            <sch:pattern name="Check either href or content not both">                
+                <sch:rule abstract="true" id="hrefOrContent">
+                    <sch:report test="@xlink:href and (*|text())"
+                        >Property element may not carry both a reference to an object and contain an object.</sch:report>
+                    <sch:assert test="@xlink:href | (*|text())"
+                        >Property element must either carry a reference to an object or contain an object.</sch:assert>
+                </sch:rule>
+            </sch:pattern>            
+        </appinfo>
+        <documentation>
+            Additional metadata for XML Aviation weather messages
+        </documentation>
+    </annotation>
+    
+    <import namespace="http://www.opengis.net/gml/3.2" 
+        schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd" />
+    <import namespace="http://www.w3.org/2000/09/xmldsig#" 
+        schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
+    <import namespace="http://icao.int/iwxxm/1.0" 
+        schemaLocation="http://schemas.wmo.int/iwxxm/1.0/iwxxm.xsd"/>
+    
+    <element name="VerifiableMessage" type="avi:VerifiableMessageType" substitutionGroup="gml:AbstractGML"/>
+    <complexType name="VerifiableMessageType">
+        <annotation></annotation>
+        <complexContent>
+            <extension base="gml:AbstractGMLType">
+                <sequence>
+                    <element name="message" type="anyType"/>
+                    <element name="metadata" type="avi:MessageMetadataPropertyType" minOccurs="0"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    
+    <element name="MessageMetadata" type="avi:MessageMetadataType" substitutionGroup="gml:AbstractGML"/>    
+    <complexType name="MessageMetadataType">
+        <annotation></annotation>
+        <complexContent>
+            <extension base="gml:AbstractGMLType">
+                <sequence>
+                    <element name="source" type="avi:ProcessPropertyType" minOccurs="0"/>
+                    <element name="envelopedSignature" type="avi:IdentifiableSignaturePropertyType" minOccurs="0"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="MessageMetadataPropertyType">           
+            <annotation>
+                <documentation>To be used when using this object type as property of n GML object
+                    type according to the GML object-property-association model (it is not allowed for
+                    GML Objects to contain other GML Objects as direct children). Enables referencing to
+                    an existing object using xlink:href attribute.</documentation>
+            </annotation>            
+            <sequence minOccurs="0">
+                <element ref="avi:MessageMetadata" />
+            </sequence>
+            <attributeGroup ref="gml:AssociationAttributeGroup" />
+                    
+    </complexType>
+    
+    <element name="IdentifiableSignature" type="avi:IdentifiableSignatureType" substitutionGroup="gml:AbstractGML"/>
+    <complexType name="IdentifiableSignatureType">
+      <complexContent>
+        <extension base="gml:AbstractGMLType">
+          <sequence>
+            <element name="signingAuthority" type="string"/>
+            <element name="signingTime" type="dateTime"/>
+            <element name="signature" type="avi:DigitalSignaturePropertyType"/>
+          </sequence>
+        </extension>
+      </complexContent>
+    </complexType>
+    <complexType name="IdentifiableSignaturePropertyType">
+        <annotation>
+            <documentation>To be used when using this object type as property of n GML object
+                type according to the GML object-property-association model (it is not allowed for
+                GML Objects to contain other GML Objects as direct children). Enables referencing to
+                an existing object using xlink:href attribute.</documentation>
+        </annotation>
+        
+        <sequence minOccurs="0">
+            <element ref="avi:IdentifiableSignature" />
+        </sequence>
+        <attributeGroup ref="gml:AssociationAttributeGroup" />
+    </complexType>
+    
+    <complexType name="DigitalSignaturePropertyType">
+        <annotation>
+            <documentation>To be used when using this object type as property of n GML object
+                type according to the GML object-property-association model (it is not allowed for
+                GML Objects to contain other GML Objects as direct children). Enables referencing to
+                an existing object using xlink:href attribute.</documentation>
+        </annotation>
+        
+        <sequence minOccurs="0">
+            <element ref="dsig:Signature" />
+        </sequence>
+        <attributeGroup ref="gml:AssociationAttributeGroup" />
+    </complexType>
+    
+    <element name="Process" type="avi:ProcessType" substitutionGroup="gml:AbstractGML"/>
+    <complexType name="ProcessType">
+        <annotation></annotation>
+        <complexContent>
+            <extension base="gml:AbstractGMLType">
+                <sequence>
+                    <element name="name" type="gml:ReferenceType"/>
+                    <element name="actor" type="gml:ReferenceType" minOccurs="0"/>
+                    <element name="processingTime" type="dateTime" minOccurs="0"/>
+                    <element name="description" minOccurs="0"/>
+                    <choice minOccurs="0">
+                        <element name="input" type="string"/>
+                        <element name="inputProcess" type="avi:ProcessPropertyType"/>
+                    </choice>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    
+    <complexType name="ProcessPropertyType">
+        <annotation>
+            <documentation>To be used when using this object type as property of n GML object
+                type according to the GML object-property-association model (it is not allowed for
+                GML Objects to contain other GML Objects as direct children). Enables referencing to
+                an existing object using xlink:href attribute.</documentation>
+        </annotation>
+        <sequence minOccurs="0">
+            <element ref="avi:Process" />
+        </sequence>
+        <attributeGroup ref="gml:AssociationAttributeGroup" />
+    </complexType>
+      
+</schema>
+ 94 https://xml.fmi.fi/schema/aviation-weather/special-products/2015/09/29/WinterPrecipitation.xsd 3614 <?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2"
+	xmlns:gmlcov="http://www.opengis.net/gmlcov/1.0"
+	xmlns:om="http://www.opengis.net/om/2.0"	
+	xmlns:tns="http://xml.fmi.fi/namespace/aviation-weather/special-products/2015/09/28"
+	targetNamespace="http://xml.fmi.fi/namespace/aviation-weather/special-products/2015/09/28"
+	elementFormDefault="qualified">
+
+	<import namespace="http://www.opengis.net/gml/3.2"
+		schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+	<import namespace="http://www.opengis.net/gmlcov/1.0"
+		schemaLocation="http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd"/>
+	<import namespace="http://www.opengis.net/om/2.0"
+		schemaLocation="http://schemas.opengis.net/om/2.0/observation.xsd" />
+
+	<!-- Product 1 -->
+	<element name="DrizzlePrecipitation" type="om:OM_ObservationType" />
+	<element name="FreezingDrizzlePrecipitation" type="om:OM_ObservationType" />
+	<element name="FreezingRainPrecipitation" type="om:OM_ObservationType" />
+	<element name="RainPrecipitation" type="om:OM_ObservationType" />
+	<element name="SleetPrecipitation" type="om:OM_ObservationType" />
+	<element name="SnowPrecipitation" type="om:OM_ObservationType" />		
+			
+	<complexType name="PrecipitationProbability">		 
+		<attribute name="probabilityValue" type="double" use="required"/>
+		<attribute name="probabilityUnit" type="tns:ProbabilityUnits" use="required"/>
+		<attribute name="dateTime" type="dateTime" use="required"/>
+		<attribute name="icaoCode" type="string" use="required"/>
+		<attribute name="latitude" type="double" use="required"/>
+		<attribute name="longitude" type="double" use="required"/>		
+	</complexType>
+
+	<!-- Product 2 -->	
+	<element name="WinterWeather" type="om:OM_ObservationType" />
+	
+	<simpleType name="WinterWeatherType">
+		<restriction base="string">
+			<enumeration value="LIGHT"/>
+			<enumeration value="MODERATE"/>
+			<enumeration value="HEAVY"/>
+		</restriction>
+	</simpleType>
+	
+	<element name="WinterWeatherContours" type="tns:DatedWinterWeatherContours" substitutionGroup="gml:AbstractGML"/>
+	
+	<complexType name="DatedWinterWeatherContours">
+		<complexContent>
+			<extension base="gml:MultiSurfaceType">
+				<sequence>
+					<element name="WeatherContour" type="gml:MultiSurfaceType" maxOccurs="unbounded" minOccurs="0"/>
+				</sequence>
+				<attribute name="dateTime" type="dateTime" use="required"/>
+				<attribute name="winterWeatherType" type="tns:WinterWeatherType" use="required"/>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<!-- Product 3 -->
+	<element name="GeneralWinterWeather" type="om:OM_ObservationType" />
+	
+	<simpleType name="GeneralWinterWeatherType">
+		<restriction base="string">
+			<enumeration value="LIGHT"/>
+			<enumeration value="MODERATE"/>
+			<enumeration value="HEAVY"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="ProbabilityUnits">
+		<restriction base="string">
+			<enumeration value="percent"/>
+		</restriction>
+	</simpleType>
+	
+	<element name="GeneralWinterWeatherContours" type="tns:DatedGeneralWinterWeatherContours" substitutionGroup="gml:AbstractGML"/>
+	
+	<complexType name="DatedGeneralWinterWeatherContours">
+		<complexContent>
+			<extension base="gml:MultiSurfaceType">
+				<sequence>
+					<element name="WeatherContour" type="gml:MultiSurfaceType" maxOccurs="unbounded" minOccurs="0"/>
+				</sequence>
+				<attribute name="dateTime" type="dateTime" use="required"/>
+				<attribute name="winterWeatherType" type="tns:GeneralWinterWeatherType" use="required" />
+			</extension>
+		</complexContent>
+	</complexType>		
+	
+</schema>
  76 https://xml.fmi.fi/schema/om/atmosphericfeatures/1.1/atmosphericfeatures.xsd 11009 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.1"
@@ -40763,4 +39067,83 @@ Relative vertical position of the transport element.</documentation>
     <xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
   </xs:complexType>
 </xs:schema>
+ 76 https://xml.fmi.fi/schema/weather/2015/09/18/coverages/metoceancoverages.xsd 1496 <?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2"
+	xmlns:gmlcov="http://www.opengis.net/gmlcov/1.0"
+	xmlns:om="http://www.opengis.net/om/2.0"	
+	xmlns:tns="http://xml.fmi.fi/namespace/weather/2015/09/18/coverages"
+	targetNamespace="http://xml.fmi.fi/namespace/weather/2015/09/18/coverages"
+	elementFormDefault="qualified">
+
+	<import namespace="http://www.opengis.net/gml/3.2"
+		schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+	<import namespace="http://www.opengis.net/gmlcov/1.0"
+		schemaLocation="http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd"/>
+	<import namespace="http://www.opengis.net/om/2.0"
+		schemaLocation="http://schemas.opengis.net/om/2.0/observation.xsd" />
+
+	<!-- Coverage -->	
+	<element name="phenomenomArea" type="tns:MetOceanCoverageType" substitutionGroup="gml:AbstractGML"/>
+	
+	<complexType name="MetOceanCoverageType">
+		<complexContent>
+			<extension base="gml:MultiSurfaceType">
+				<sequence>
+					<element name="Surface" type="gml:MultiSurfaceType" maxOccurs="unbounded" minOccurs="0"/>
+				</sequence>
+				<attribute name="dateTime" type="dateTime" use="required"/>
+				<attribute name="paramterer" type="string" use="required"/>
+				<attribute name="unit" type="string" use="optional"/>
+				<attribute name="low" type="float" use="required"/>
+				<attribute name="high" type="float" use="required"/>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	
+	
+</schema>
+ 59 https://xml.fmi.fi/schema/wfs/2.0/fmi_wfs_simplefeature.xsd 3088 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    BsWfsElement contains Location, Time and Elevation property elements that are used in GeoServer layer setup.
+    Also, additional property elements are defined as strings to provide information about the magnitude and direction
+    for the queried parameter. Then, SLD-styles may use property element values when styles are defined in GeoServer.
+    Element strings may be string, integer, decimal, etc. values that GeoServer may parse properly when it uses SLD style.
+    Notice, all property elements are not needed for all the queries and unnecessary properties may be left without content.
+    Also notice, GeoServer Edit Layer page lists all the property elements in Feature Type Details section even if some of
+    them would not be necessary for that layer.
+-->
+<xsd:schema
+    xmlns:BsWfs="http://xml.fmi.fi/schema/wfs/2.0"
+    xmlns:gml="http://www.opengis.net/gml/3.2"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified"
+    targetNamespace="http://xml.fmi.fi/schema/wfs/2.0">
+    <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+    <xsd:complexType name="BsWfsType">
+        <xsd:complexContent>
+            <xsd:extension base="gml:AbstractFeatureType">
+                <xsd:sequence>
+                    <!-- GeoServer layer setup elements. -->
+                    <xsd:element maxOccurs="1" minOccurs="0" name="Location" nillable="true" type="gml:PointPropertyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="Time" nillable="true" type="xsd:dateTime"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="Elevation" nillable="true" type="xsd:int"/>
+                    <!-- Additional GeoServer layer property elements for SLD style. -->
+                    <!-- Location elements. -->
+                    <xsd:element maxOccurs="1" minOccurs="0" name="LocationName" nillable="true" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="Region" nillable="true" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="Country" nillable="true" type="xsd:string"/>
+                    <!-- Parameter content elements. -->
+                    <xsd:element maxOccurs="1" minOccurs="0" name="ParameterName" nillable="true" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="ParameterValue" nillable="true" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="ParameterComponentX" nillable="true" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="ParameterComponentY" nillable="true" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="ParameterComponentZ" nillable="true" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="BsWfsElement" type="BsWfs:BsWfsType"/>
+</xsd:schema>
 
