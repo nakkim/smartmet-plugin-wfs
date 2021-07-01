@@ -13,10 +13,10 @@
   version="2.0.0"
   xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd
   http://www.opengis.net/ows/1.1 http://schemas.opengis.net/ows/1.1.0/owsAll.xsd
-  http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
-  http://inspire.ec.europa.eu/schemas/inspire_dls/1.0 https://inspire.ec.europa.eu/schemas/inspire_dls/1.0/inspire_dls.xsd
-  http://inspire.ec.europa.eu/schemas/common/1.0 https://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
-  http://inspire.ec.europa.eu/schemas/ef/4.0 https://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
+  http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd
+  http://inspire.ec.europa.eu/schemas/inspire_dls/1.0 http://inspire.ec.europa.eu/schemas/inspire_dls/1.0/inspire_dls.xsd
+  http://inspire.ec.europa.eu/schemas/common/1.0 http://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
+  http://inspire.ec.europa.eu/schemas/ef/4.0 http://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
   <ows:ServiceIdentification>
     <ows:Title>Finnish Meteorological Institute&apos;s Commercial Data Download Service</ows:Title>
     <ows:Abstract>
@@ -69,8 +69,8 @@
     <ows:Operation name="GetCapabilities">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
-          <ows:Post xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Get xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Post xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="AcceptVersions">
@@ -82,8 +82,8 @@
     <ows:Operation name="DescribeFeatureType">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
-          <ows:Post xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Get xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Post xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="outputFormat">
@@ -98,32 +98,32 @@
     <ows:Operation name="ListStoredQueries">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
-          <ows:Post xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Get xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Post xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
         </ows:HTTP>
       </ows:DCP>
     </ows:Operation>
     <ows:Operation name="DescribeStoredQueries">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
-          <ows:Post xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Get xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Post xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
         </ows:HTTP>
       </ows:DCP>
     </ows:Operation>
     <ows:Operation name="GetPropertyValue">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
-          <ows:Post xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Get xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Post xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
         </ows:HTTP>
       </ows:DCP>
     </ows:Operation>
     <ows:Operation name="GetFeature">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
-          <ows:Post xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Get xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
+          <ows:Post xlink:href="http://brainstormgw.fmi.fi/fmi-apikey/foobar/wfs/eng"/>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="outputFormat">
@@ -276,7 +276,7 @@
 
   <!-- Returned FeatureTypes -->
   <FeatureTypeList>
-    <FeatureType xmlns:omso="http://inspire.ec.europa.eu/schemas/omso/3.0" xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">
+    <FeatureType xmlns:omso="http://inspire.ec.europa.eu/schemas/omso/3.0" xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">
       <Name>omso:GridSeriesObservation</Name>
       <Title>Observation</Title>
       <Abstract>Timeseries data of surface weather observations from meteorological and road
@@ -296,7 +296,7 @@
         <ows:UpperCorner>180 90</ows:UpperCorner>
       </ows:WGS84BoundingBox>
     </FeatureType>
-    <FeatureType xmlns:omso="http://inspire.ec.europa.eu/schemas/omso/3.0" xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">
+    <FeatureType xmlns:omso="http://inspire.ec.europa.eu/schemas/omso/3.0" xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">
       <Name>omso:PointTimeSeriesObservation</Name>
       <Title>Observation</Title>
       <Abstract>Timeseries data of surface weather observations from meteorological and

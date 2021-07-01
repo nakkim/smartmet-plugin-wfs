@@ -1,1 +1,62 @@
-ListStoredQueries.xml.post
+<?xml version="1.0" encoding="UTF-8"?>
+<ListStoredQueriesResponse xmlns="http://www.opengis.net/wfs/2.0"
+  xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"
+  xmlns:ef="http://inspire.ec.europa.eu/schemas/ef/4.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd
+  http://inspire.ec.europa.eu/schemas/common/1.0 https://inspire.ec.europa.eu/schemas/common/1.0/common.xsd
+  http://inspire.ec.europa.eu/schemas/ef/4.0 https://inspire.ec.europa.eu/schemas/ef/4.0/EnvironmentalMonitoringFacilities.xsd">
+
+  <StoredQuery id="CoverageTest">
+    <Title>Weather parameter coverage as GML-contours</Title>
+    <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:GridSeriesObservation</ReturnFeatureType>
+  </StoredQuery>
+
+  <StoredQuery id="ForecastTest">
+    <Title>ForecastTest</Title>
+    <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:PointTimeSeriesObservation</ReturnFeatureType>
+  </StoredQuery>
+
+  <StoredQuery id="GetDataSetById">
+    <Title>GetDataSetById</Title>
+    <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:GridSeriesObservation</ReturnFeatureType>
+  <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:PointTimeSeriesObservation</ReturnFeatureType>
+  </StoredQuery>
+
+  <StoredQuery id="GridForecastTest">
+    <Title>GridForecastTest</Title>
+    <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:PointTimeSeriesObservation</ReturnFeatureType>
+  </StoredQuery>
+
+  <StoredQuery id="IsolineTest">
+    <Title>Pressure isolines as GML-contours</Title>
+    <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:GridSeriesObservation</ReturnFeatureType>
+  </StoredQuery>
+
+  <StoredQuery id="ObsQcTest">
+    <Title>FMI WFS &lt;test&gt; stored query with QC parameters enabled</Title>
+    <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:PointTimeSeriesObservation</ReturnFeatureType>
+  </StoredQuery>
+
+  <StoredQuery id="ObsTest">
+    <Title>FMI WFS &lt;test&gt; stored query</Title>
+    <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:PointTimeSeriesObservation</ReturnFeatureType>
+  </StoredQuery>
+
+  <StoredQuery id="RadarHclassTest">
+    <Title>Weather radar - hydro class - lowest angle.</Title>
+    <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:GridSeriesObservation</ReturnFeatureType>
+  </StoredQuery>
+
+  <StoredQuery id="RadarHclassTest2">
+    <Title>Weather radar - hydro class - lowest angle.</Title>
+    <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:GridSeriesObservation</ReturnFeatureType>
+  </StoredQuery>
+
+  <StoredQuery id="urn:ogc:def:query:OGC-WFS::GetFeatureById">
+    <Title>GetFeatureById</Title>
+    <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:GridSeriesObservation</ReturnFeatureType>
+  <ReturnFeatureType xmlns:wfstype="http://inspire.ec.europa.eu/schemas/omso/3.0"  xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0 https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd">wfstype:PointTimeSeriesObservation</ReturnFeatureType>
+  </StoredQuery>
+
+</ListStoredQueriesResponse>

@@ -2,7 +2,7 @@
 <wfs:FeatureCollection xmlns:wfs="http://www.opengis.net/wfs/2.0" numberMatched="24" numberReturned="24" timeStamp="2012-12-12T12:12:12Z" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd">
 
   <wfs:member>
-    <wfs:FeatureCollection numberMatched="1" numberReturned="1" timeStamp="2012-12-12T12:12:12Z" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlcov="http://www.opengis.net/gmlcov/1.0" xmlns:om="http://www.opengis.net/om/2.0" xmlns:ompr="http://inspire.ec.europa.eu/schemas/ompr/3.0" xmlns:omso="http://inspire.ec.europa.eu/schemas/omso/3.0" xmlns:sam="http://www.opengis.net/sampling/2.0" xmlns:sams="http://www.opengis.net/samplingSpatial/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:target="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0" xmlns:wfs="http://www.opengis.net/wfs/2.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd     http://www.opengis.net/gmlcov/1.0 http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd     http://www.opengis.net/sampling/2.0 http://schemas.opengis.net/sampling/2.0/samplingFeature.xsd     http://www.opengis.net/samplingSpatial/2.0 http://schemas.opengis.net/samplingSpatial/2.0/spatialSamplingFeature.xsd     http://www.opengis.net/swe/2.0 http://schemas.opengis.net/sweCommon/2.0/swe.xsd     http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd     http://inspire.ec.europa.eu/schemas/ompr/3.0 http://inspire.ec.europa.eu/schemas/ompr/3.0/Processes.xsd     http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0 http://xml.fmi.fi/schema/om/atmosphericfeatures/1.1/atmosphericfeatures.xsd">
+    <wfs:FeatureCollection numberMatched="1" numberReturned="1" timeStamp="2012-12-12T12:12:12Z" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlcov="http://www.opengis.net/gmlcov/1.0" xmlns:om="http://www.opengis.net/om/2.0" xmlns:ompr="http://inspire.ec.europa.eu/schemas/ompr/3.0" xmlns:omso="http://inspire.ec.europa.eu/schemas/omso/3.0" xmlns:sam="http://www.opengis.net/sampling/2.0" xmlns:sams="http://www.opengis.net/samplingSpatial/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:target="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0" xmlns:wfs="http://www.opengis.net/wfs/2.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd     http://www.opengis.net/gmlcov/1.0 http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd     http://www.opengis.net/sampling/2.0 http://schemas.opengis.net/sampling/2.0/samplingFeature.xsd     http://www.opengis.net/samplingSpatial/2.0 http://schemas.opengis.net/samplingSpatial/2.0/spatialSamplingFeature.xsd     http://www.opengis.net/swe/2.0 http://schemas.opengis.net/sweCommon/2.0/swe.xsd     http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd     http://inspire.ec.europa.eu/schemas/ompr/3.0 http://inspire.ec.europa.eu/schemas/ompr/3.0/Processes.xsd     http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0 http://xml.fmi.fi/schema/om/atmosphericfeatures/1.0/atmosphericfeatures.xsd">
       <wfs:member>
         <omso:GridSeriesObservation gml:id="WFS-YXchiy1KeOas.HorNTucA5u5PLOJTowuYWbbpdOs2_llx4efR060aeWzDtdOufXlmw48rp1w36d3R0629dnTTw36d3THv7ZeWHPlhaWLLn07qmnblte_Qo2bBNVCY2PlzrUi0Kcd06aMmrhnZd2Spp25bXv0KNm4bWwnBm07sk7Lh5ZefSth2ackhmZ8u_Tk51mNmjJg1bOjXl899_LJf39svLvy09MOLZliaWzL2y7KnnhlqZmzfjw7MtambTfjSV3XpmcNbbh8RNPPph3Y8tK1dCA1tunnz07s9TL46VjTsM5lbd.TLsrM0aeWzDtZXDDyw7a1I.XfwkZdOfR0rWqZdvDLyw9OvLLWhQ5ZefPryy1oSOu3Tk09PNbVfTuyRNPLLj6ad.6tavp3ZKfDLlyTadZ1fTuyVZtOs6vp3ZK02nWtNw.NO3rtr6d2StCvp3ZI_Xn0rQiZe9Dfp3dK3qm_ph2Q9m_rkh7.2XlW5Xy4emjLyp.duLfsZ1tTN_eHs39ckPf2y8q4JuXJp67Yezf1yQ9_bLyrckac.iHs39ckPf2y8q3qHLLj08NPTD0079zHRXNQ5Zcenhp6Yemnfug7d_Xd0r2pYcmnD00790fZvxYdkHHj67euzD00791d1LDk04emnfumV4OPH129dmHpp37qwwqWHJpw9NO_dOy9KfXlmw48syvBx4.u3rsw9NO_dWGFSw5NOHpp37p2XpT68s2HHlp14OPH129dmHpp37q.KWHJpw9NO_dE05s3Xnlg48fXb12YemnfubnPpv5ZcnHrl5eb.nJXmFm26XTrNv5ZceHn0dOtGnlsw7XTrn15ZsOPK6dcN.nd0dOtvXZ008N.nd0x7.2Xlhz5Wh007ctPpl4T8hNDpp25bW_dlrGq1IYA">
           <om:phenomenonTime>
@@ -27,7 +27,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=GeopHeight,Temperature,Pressure,Humidity,WindDirection,WindSpeedMS,WindUMS,WindVMS,MaximumWind,WindGust,DewPoint,TotalCloudCover,WeatherSymbol3,LowCloudCover,MediumCloudCover,HighCloudCover,Precipitation1h,PrecipitationAmount,RadiationGlobalAccumulation,RadiationLWAccumulation,RadiationNetSurfaceLWAccumulation,RadiationNetSurfaceSWAccumulation,RadiationDiffuseAccumulation&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=GeopHeight,Temperature,Pressure,Humidity,WindDirection,WindSpeedMS,WindUMS,WindVMS,MaximumWind,WindGust,DewPoint,TotalCloudCover,WeatherSymbol3,LowCloudCover,MediumCloudCover,HighCloudCover,Precipitation1h,PrecipitationAmount,RadiationGlobalAccumulation,RadiationLWAccumulation,RadiationNetSurfaceLWAccumulation,RadiationNetSurfaceSWAccumulation,RadiationDiffuseAccumulation&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-">
               <sam:sampledFeature>
@@ -83,29 +83,29 @@
               </gml:coverageFunction>
               <gmlcov:rangeType>
                 <swe:DataRecord>
-                  <swe:field name="GeopHeight" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=GeopHeight&amp;language=eng"/>
-                  <swe:field name="Temperature" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Temperature&amp;language=eng"/>
-                  <swe:field name="Pressure" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Pressure&amp;language=eng"/>
-                  <swe:field name="Humidity" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Humidity&amp;language=eng"/>
-                  <swe:field name="WindDirection" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindDirection&amp;language=eng"/>
-                  <swe:field name="WindSpeedMS" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindSpeedMS&amp;language=eng"/>
-                  <swe:field name="WindUMS" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindUMS&amp;language=eng"/>
-                  <swe:field name="WindVMS" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindVMS&amp;language=eng"/>
-                  <swe:field name="MaximumWind" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=MaximumWind&amp;language=eng"/>
-                  <swe:field name="WindGust" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindGust&amp;language=eng"/>
-                  <swe:field name="DewPoint" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=DewPoint&amp;language=eng"/>
-                  <swe:field name="TotalCloudCover" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=TotalCloudCover&amp;language=eng"/>
-                  <swe:field name="WeatherSymbol3" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WeatherSymbol3&amp;language=eng"/>
-                  <swe:field name="LowCloudCover" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=LowCloudCover&amp;language=eng"/>
-                  <swe:field name="MediumCloudCover" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=MediumCloudCover&amp;language=eng"/>
-                  <swe:field name="HighCloudCover" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=HighCloudCover&amp;language=eng"/>
-                  <swe:field name="Precipitation1h" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Precipitation1h&amp;language=eng"/>
-                  <swe:field name="PrecipitationAmount" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=PrecipitationAmount&amp;language=eng"/>
-                  <swe:field name="RadiationGlobalAccumulation" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationGlobalAccumulation&amp;language=eng"/>
-                  <swe:field name="RadiationLWAccumulation" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationLWAccumulation&amp;language=eng"/>
-                  <swe:field name="RadiationNetSurfaceLWAccumulation" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationNetSurfaceLWAccumulation&amp;language=eng"/>
-                  <swe:field name="RadiationNetSurfaceSWAccumulation" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationNetSurfaceSWAccumulation&amp;language=eng"/>
-                  <swe:field name="RadiationDiffuseAccumulation" xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationDiffuseAccumulation&amp;language=eng"/>
+                  <swe:field name="GeopHeight" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=GeopHeight&amp;language=eng"/>
+                  <swe:field name="Temperature" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Temperature&amp;language=eng"/>
+                  <swe:field name="Pressure" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Pressure&amp;language=eng"/>
+                  <swe:field name="Humidity" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Humidity&amp;language=eng"/>
+                  <swe:field name="WindDirection" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindDirection&amp;language=eng"/>
+                  <swe:field name="WindSpeedMS" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindSpeedMS&amp;language=eng"/>
+                  <swe:field name="WindUMS" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindUMS&amp;language=eng"/>
+                  <swe:field name="WindVMS" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindVMS&amp;language=eng"/>
+                  <swe:field name="MaximumWind" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=MaximumWind&amp;language=eng"/>
+                  <swe:field name="WindGust" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindGust&amp;language=eng"/>
+                  <swe:field name="DewPoint" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=DewPoint&amp;language=eng"/>
+                  <swe:field name="TotalCloudCover" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=TotalCloudCover&amp;language=eng"/>
+                  <swe:field name="WeatherSymbol3" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WeatherSymbol3&amp;language=eng"/>
+                  <swe:field name="LowCloudCover" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=LowCloudCover&amp;language=eng"/>
+                  <swe:field name="MediumCloudCover" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=MediumCloudCover&amp;language=eng"/>
+                  <swe:field name="HighCloudCover" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=HighCloudCover&amp;language=eng"/>
+                  <swe:field name="Precipitation1h" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Precipitation1h&amp;language=eng"/>
+                  <swe:field name="PrecipitationAmount" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=PrecipitationAmount&amp;language=eng"/>
+                  <swe:field name="RadiationGlobalAccumulation" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationGlobalAccumulation&amp;language=eng"/>
+                  <swe:field name="RadiationLWAccumulation" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationLWAccumulation&amp;language=eng"/>
+                  <swe:field name="RadiationNetSurfaceLWAccumulation" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationNetSurfaceLWAccumulation&amp;language=eng"/>
+                  <swe:field name="RadiationNetSurfaceSWAccumulation" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationNetSurfaceSWAccumulation&amp;language=eng"/>
+                  <swe:field name="RadiationDiffuseAccumulation" xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationDiffuseAccumulation&amp;language=eng"/>
                 </swe:DataRecord>
               </gmlcov:rangeType>
             </gmlcov:MultiPointCoverage>
@@ -116,7 +116,7 @@
   </wfs:member>
 
   <wfs:member>
-    <wfs:FeatureCollection numberMatched="23" numberReturned="23" timeStamp="2012-12-12T12:12:12Z" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlcov="http://www.opengis.net/gmlcov/1.0" xmlns:om="http://www.opengis.net/om/2.0" xmlns:ompr="http://inspire.ec.europa.eu/schemas/ompr/3.0" xmlns:omso="http://inspire.ec.europa.eu/schemas/omso/3.0" xmlns:sam="http://www.opengis.net/sampling/2.0" xmlns:sams="http://www.opengis.net/samplingSpatial/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:target="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0" xmlns:wfs="http://www.opengis.net/wfs/2.0" xmlns:wml2="http://www.opengis.net/waterml/2.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd     http://www.opengis.net/gmlcov/1.0 http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd     http://www.opengis.net/sampling/2.0 http://schemas.opengis.net/sampling/2.0/samplingFeature.xsd     http://www.opengis.net/samplingSpatial/2.0 http://schemas.opengis.net/samplingSpatial/2.0/spatialSamplingFeature.xsd     http://www.opengis.net/swe/2.0 http://schemas.opengis.net/sweCommon/2.0/swe.xsd     http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd     http://inspire.ec.europa.eu/schemas/ompr/3.0 http://inspire.ec.europa.eu/schemas/ompr/3.0/Processes.xsd     http://www.opengis.net/waterml/2.0 http://schemas.opengis.net/waterml/2.0/waterml2.xsd     http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0 http://xml.fmi.fi/schema/om/atmosphericfeatures/1.1/atmosphericfeatures.xsd">
+    <wfs:FeatureCollection numberMatched="23" numberReturned="23" timeStamp="2012-12-12T12:12:12Z" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlcov="http://www.opengis.net/gmlcov/1.0" xmlns:om="http://www.opengis.net/om/2.0" xmlns:ompr="http://inspire.ec.europa.eu/schemas/ompr/3.0" xmlns:omso="http://inspire.ec.europa.eu/schemas/omso/3.0" xmlns:sam="http://www.opengis.net/sampling/2.0" xmlns:sams="http://www.opengis.net/samplingSpatial/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:target="http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0" xmlns:wfs="http://www.opengis.net/wfs/2.0" xmlns:wml2="http://www.opengis.net/waterml/2.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd     http://www.opengis.net/gmlcov/1.0 http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd     http://www.opengis.net/sampling/2.0 http://schemas.opengis.net/sampling/2.0/samplingFeature.xsd     http://www.opengis.net/samplingSpatial/2.0 http://schemas.opengis.net/samplingSpatial/2.0/spatialSamplingFeature.xsd     http://www.opengis.net/swe/2.0 http://schemas.opengis.net/sweCommon/2.0/swe.xsd     http://inspire.ec.europa.eu/schemas/omso/3.0 http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd     http://inspire.ec.europa.eu/schemas/ompr/3.0 http://inspire.ec.europa.eu/schemas/ompr/3.0/Processes.xsd     http://www.opengis.net/waterml/2.0 http://schemas.opengis.net/waterml/2.0/waterml2.xsd     http://xml.fmi.fi/namespace/om/atmosphericfeatures/1.0 http://xml.fmi.fi/schema/om/atmosphericfeatures/1.0/atmosphericfeatures.xsd">
       <wfs:member>
         <omso:PointTimeSeriesObservation gml:id="WFS-g3nySFxhKuCk4AYKTMuokHOIikSJTowtIWbbpdOs2_llx4efR060aeWzDtdOufXlmw48rp1w36d3R066aduXth2dcvDDp5QtLFlz6d1TTty2vfoUbQY2PlzrUi0Kcd06aMmrhnZd2Spp25bXv0KNoODNp3ZJ2XDyy8.lbDs05JDMz5d.nJzrMbNGTBq2dGvL577.WS_v7ZeXflp6YcWzLE0tmXtl2VPPDLUzNm_Hh2Za1M2m_GkruvTM4a23D4iaefTDux5aVq6EBrbdPPnp3Z6mXx0rGnYZzK278mXZWZo08tmHayuGHlh21qR8u_hIy6c.jo3OfTfyy5OPXLy839OSukLNt0unWbfyy48PPo6daNPLZh2unXPryzYceV064b9O7o6ddNO3L2w7OuXhh08mh007ctPpl4T8hNDpp25bW_dlrGq1IYA--GeopHeight">
           <om:phenomenonTime>
@@ -141,7 +141,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=GeopHeight&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=GeopHeight&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-GeopHeight">
               <sam:sampledFeature>
@@ -198,7 +198,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Temperature&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Temperature&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-Temperature">
               <sam:sampledFeature>
@@ -255,7 +255,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Pressure&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Pressure&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-Pressure">
               <sam:sampledFeature>
@@ -312,7 +312,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Humidity&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Humidity&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-Humidity">
               <sam:sampledFeature>
@@ -369,7 +369,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindDirection&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindDirection&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-WindDirection">
               <sam:sampledFeature>
@@ -426,7 +426,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindSpeedMS&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindSpeedMS&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-WindSpeedMS">
               <sam:sampledFeature>
@@ -483,7 +483,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindUMS&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindUMS&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-WindUMS">
               <sam:sampledFeature>
@@ -540,7 +540,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindVMS&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindVMS&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-WindVMS">
               <sam:sampledFeature>
@@ -597,7 +597,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=MaximumWind&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=MaximumWind&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-MaximumWind">
               <sam:sampledFeature>
@@ -654,7 +654,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindGust&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WindGust&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-WindGust">
               <sam:sampledFeature>
@@ -711,7 +711,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=DewPoint&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=DewPoint&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-DewPoint">
               <sam:sampledFeature>
@@ -768,7 +768,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=TotalCloudCover&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=TotalCloudCover&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-TotalCloudCover">
               <sam:sampledFeature>
@@ -825,7 +825,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WeatherSymbol3&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=WeatherSymbol3&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-WeatherSymbol3">
               <sam:sampledFeature>
@@ -882,7 +882,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=LowCloudCover&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=LowCloudCover&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-LowCloudCover">
               <sam:sampledFeature>
@@ -939,7 +939,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=MediumCloudCover&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=MediumCloudCover&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-MediumCloudCover">
               <sam:sampledFeature>
@@ -996,7 +996,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=HighCloudCover&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=HighCloudCover&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-HighCloudCover">
               <sam:sampledFeature>
@@ -1053,7 +1053,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Precipitation1h&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=Precipitation1h&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-Precipitation1h">
               <sam:sampledFeature>
@@ -1110,7 +1110,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=PrecipitationAmount&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=PrecipitationAmount&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-PrecipitationAmount">
               <sam:sampledFeature>
@@ -1167,7 +1167,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationGlobalAccumulation&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationGlobalAccumulation&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-RadiationGlobalAccumulation">
               <sam:sampledFeature>
@@ -1224,7 +1224,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationLWAccumulation&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationLWAccumulation&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-RadiationLWAccumulation">
               <sam:sampledFeature>
@@ -1281,7 +1281,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationNetSurfaceLWAccumulation&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationNetSurfaceLWAccumulation&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-RadiationNetSurfaceLWAccumulation">
               <sam:sampledFeature>
@@ -1338,7 +1338,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationNetSurfaceSWAccumulation&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationNetSurfaceSWAccumulation&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-RadiationNetSurfaceSWAccumulation">
               <sam:sampledFeature>
@@ -1395,7 +1395,7 @@
               </om:value>
             </om:NamedValue>
           </om:parameter>
-          <om:observedProperty xlink:href="http://opendata.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationDiffuseAccumulation&amp;language=eng"/>
+          <om:observedProperty xlink:href="http://beta.fmi.fi/fmi-apikey/foobar/meta?observableProperty=forecast&amp;param=RadiationDiffuseAccumulation&amp;language=eng"/>
           <om:featureOfInterest>
             <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-RadiationDiffuseAccumulation">
               <sam:sampledFeature>

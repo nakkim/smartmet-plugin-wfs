@@ -5,5 +5,5 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   elementFormDefault="qualified"
   attributeFormDefault="unqualified">
-  <xsd:include schemaLocation="https://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd"/>
+  <xsd:include schemaLocation="http://inspire.ec.europa.eu/schemas/omso/3.0/SpecialisedObservations.xsd"/>
   </xsd:schema>
