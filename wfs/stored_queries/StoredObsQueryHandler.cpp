@@ -880,7 +880,7 @@ bool StoredObsQueryHandler::add_parameters(const RequestParameterMap& params,
       }
       else
       {
-        throw Fmi::Exception::Trace(BCP, "Unrecognozed parameter '" + name + "'")
+        throw Fmi::Exception::Trace(BCP, "Unrecognized parameter '" + name + "'")
             .disableStackTrace();
       }
     }
